@@ -166,7 +166,8 @@
   @media (max-width:760px){ section{padding:0 24px;} }
   .wrap{max-width:1180px;margin:0 auto;}
 
-  .sec-counter{position:absolute;top:104px;right:48px;z-index:6;font-family:'Fraunces',serif;font-style:italic;font-size:12px;letter-spacing:0.08em;color:var(--stone);}
+  .sec-counter{position:absolute;top:104px;right:48px;z-index:6;font-family:'Fraunces',serif;font-style:italic;font-size:12px;letter-spacing:0.08em;color:var(--stone);pointer-events:none;}
+  .hscroll-sticky > .sec-counter{top:clamp(84px,10vh,110px);right:clamp(24px,7vw,110px);}
   @media (max-width:900px){ .sec-counter{display:none;} }
 
   /* ============================================================
@@ -226,25 +227,61 @@
   .js-ready .scroll-words{opacity:1;transform:none;}
 
   /* ============================================================
-     WORK
+     WORK — scroll horizontal: al seguir bajando, los paneles se
+     deslizan de lado. El alto del contenedor se calcula desde el
+     ancho real del track, asi 1px de scroll vertical = 1px lateral
+     y la transicion se siente natural, no acelerada.
      ============================================================ */
-  #work{padding-top:16vh;padding-bottom:12vh;}
-  .work-head{margin-bottom:60px;max-width:58ch;}
-  .work-head h2{font-size:clamp(30px,4.2vw,56px);margin-top:18px;line-height:1.06;}
-  .work-head p{margin-top:20px;font-size:16px;color:var(--bone-dim);line-height:1.8;}
+  .hscroll-wrap{position:relative;}
+  /* El area util deja aire arriba (nav + contador) y abajo (barra de
+     progreso), asi cada panel entra completo en la pantalla. */
+  .hscroll-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;
+    padding-top:15vh;padding-bottom:14vh;}
+  .hscroll-track{display:flex;align-items:center;gap:clamp(40px,5vw,80px);padding:0 clamp(24px,7vw,110px);will-change:transform;}
+  .hpanel{flex:0 0 auto;}
+  .hpanel-intro{width:min(78vw,500px);}
+  /* El ancho se deriva del alto disponible: el monitor es 16/10, asi que
+     atarlo a vh es lo que garantiza que monitor + texto entren en pantalla. */
+  .hpanel-case{width:clamp(300px,56vh,560px);display:flex;flex-direction:column;}
 
-  .case{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;padding:70px 0;border-top:1px solid var(--line);}
-  .case:last-child{border-bottom:1px solid var(--line);}
-  .case.flip .case-visual{order:2;}
-  @media (max-width:960px){ .case,.case.flip{grid-template-columns:1fr;gap:32px;} .case.flip .case-visual{order:0;} }
-  .case-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:14px;}
-  .case h3{font-size:clamp(26px,3.2vw,42px);}
-  .case > div > p{margin-top:18px;font-size:15px;line-height:1.85;color:var(--bone-dim);max-width:46ch;}
-  .case-meta{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap;}
-  .case-meta div{font-size:11.5px;color:var(--stone);letter-spacing:0.04em;max-width:22ch;}
-  .case-meta strong{display:block;color:var(--bone);font-family:'Fraunces',serif;font-size:16px;font-weight:400;margin-bottom:5px;}
-  .case-link{margin-top:28px;display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--brass-2);border-bottom:1px solid var(--brass);padding-bottom:3px;transition:gap .3s;}
+  .work-head{max-width:58ch;}
+  .work-head h2{font-size:clamp(28px,3.8vw,52px);margin-top:16px;line-height:1.06;}
+  .work-head p{margin-top:18px;font-size:15px;color:var(--bone-dim);line-height:1.75;}
+
+  .case-tag{font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:10px;}
+  .hpanel-case h3{font-size:clamp(21px,2.4vw,32px);line-height:1.1;}
+  .hpanel-case .case-copy{margin-top:11px;font-size:13.5px;line-height:1.7;color:var(--bone-dim);max-width:52ch;}
+  .case-meta{display:flex;gap:26px;margin-top:16px;flex-wrap:wrap;}
+  .case-meta div{font-size:11px;color:var(--stone);letter-spacing:0.04em;max-width:21ch;line-height:1.5;}
+  .case-meta strong{display:block;color:var(--bone);font-family:'Fraunces',serif;font-size:14.5px;font-weight:400;margin-bottom:3px;}
+  .case-link{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--brass-2);border-bottom:1px solid var(--brass);padding-bottom:3px;transition:gap .3s;align-self:flex-start;}
   .case-link:hover{gap:14px;}
+  .case-body{margin-top:20px;}
+  /* En pantallas bajas el detalle se saca antes que romper el encuadre */
+  @media (min-width:901px) and (max-height:760px){
+    .case-meta{display:none;}
+    .hpanel-case .case-copy{-webkit-line-clamp:3;}
+  }
+
+  /* barra de progreso del recorrido lateral */
+  .hscroll-progress{position:absolute;left:clamp(24px,7vw,110px);right:clamp(24px,7vw,110px);bottom:7vh;z-index:5;
+    display:flex;align-items:center;gap:16px;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--stone);}
+  .hscroll-progress .track{flex:1;height:1px;background:var(--line-strong);position:relative;}
+  .hscroll-progress .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--brass-2);box-shadow:0 0 10px 1px rgba(224,190,130,0.5);}
+  .hscroll-hint{display:inline-flex;align-items:center;gap:7px;}
+  .hscroll-hint svg{width:15px;height:15px;stroke:var(--brass-2);animation:nudge 2.4s ease-in-out infinite;}
+  @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
+
+  /* En movil el pin lateral se siente pesado: se apila en vertical. */
+  @media (max-width:900px){
+    .hscroll-wrap{height:auto !important;padding:14vh 24px 12vh;}
+    .hscroll-sticky{position:static;height:auto;overflow:visible;}
+    .hscroll-track{display:block;padding:0;transform:none !important;}
+    .hpanel{width:auto !important;}
+    .hpanel-intro{margin-bottom:56px;}
+    .hpanel-case{padding-top:48px;border-top:1px solid var(--line);margin-top:48px;}
+    .hscroll-progress{display:none;}
+  }
 
   /* ---- mockup de monitor (como en la referencia) ---- */
   .monitor{position:relative;width:100%;perspective:1400px;}
@@ -482,18 +519,21 @@
   </section>
 </div>
 
-<!-- ==================== WORK ==================== -->
-<section id="work">
-  <span class="sec-counter">02 — <span data-i18n="sec_work">Work</span></span>
-  <div class="wrap">
-    <div class="work-head reveal">
-      <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
-      <h2 data-i18n="work_h2">Two problems.<br>Two different builds.</h2>
-      <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
-    </div>
+<!-- ==================== WORK — recorrido lateral ==================== -->
+<section class="hscroll-wrap" id="work">
+  <div class="hscroll-sticky">
+    <span class="sec-counter">02 — <span data-i18n="sec_work">Work</span></span>
 
-    <article class="case reveal">
-      <div class="case-visual">
+    <div class="hscroll-track" id="hscroll-track">
+      <div class="hpanel hpanel-intro">
+        <div class="work-head">
+          <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
+          <h2 data-i18n="work_h2">Two problems.<br>Two different builds.</h2>
+          <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
+        </div>
+      </div>
+
+      <article class="hpanel hpanel-case">
         <div class="monitor">
           <div class="monitor-screen">
             <div class="monitor-bar"><i></i><i></i><i></i><span class="monitor-url">ta-maison-est-ma-maison-inc.com</span></div>
@@ -504,20 +544,18 @@
           </div>
           <div class="monitor-stand"></div><div class="monitor-base"></div>
         </div>
-      </div>
-      <div>
-        <p class="case-tag" data-i18n="case1_tag">Cinematic web · Construction &amp; renovation</p>
-        <h3>Ta maison est ma maison</h3>
-        <p data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
-        <div class="case-meta">
-          <div><strong data-i18n="case1_m1s">Scroll-scrub</strong><span data-i18n="case1_m1">Video tied to scroll position, not autoplay</span></div>
-          <div><strong data-i18n="case1_m2s">4 → 1</strong><span data-i18n="case1_m2">Services consolidated into one clear path</span></div>
+        <div class="case-body">
+          <p class="case-tag" data-i18n="case1_tag">Cinematic web · Construction &amp; renovation</p>
+          <h3>Ta maison est ma maison</h3>
+          <p class="case-copy" data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
+          <div class="case-meta">
+            <div><strong data-i18n="case1_m1s">Scroll-scrub</strong><span data-i18n="case1_m1">Video tied to scroll position, not autoplay</span></div>
+            <div><strong data-i18n="case1_m2s">4 → 1</strong><span data-i18n="case1_m2">Services consolidated into one clear path</span></div>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
 
-    <article class="case flip reveal">
-      <div class="case-visual">
+      <article class="hpanel hpanel-case">
         <div class="monitor">
           <div class="monitor-screen">
             <div class="monitor-bar"><i></i><i></i><i></i><span class="monitor-url">trimm.online</span></div>
@@ -537,20 +575,28 @@
             </div>
           </div>
           <div class="monitor-stand"></div><div class="monitor-base"></div>
-          <p class="monitor-caption" data-i18n="case2_caption">Live product — trimm.online</p>
         </div>
-      </div>
-      <div>
-        <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
-        <h3>Trimm</h3>
-        <p data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
-        <div class="case-meta">
-          <div><strong data-i18n="case2_m1s">All-in-one</strong><span data-i18n="case2_m1">Bookings, payments and clients in one system</span></div>
-          <div><strong data-i18n="case2_m2s">Automated</strong><span data-i18n="case2_m2">Reminders sent without manual follow-up</span></div>
+        <div class="case-body">
+          <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
+          <h3>Trimm</h3>
+          <p class="case-copy" data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
+          <div class="case-meta">
+            <div><strong data-i18n="case2_m1s">All-in-one</strong><span data-i18n="case2_m1">Bookings, payments and clients in one system</span></div>
+            <div><strong data-i18n="case2_m2s">Automated</strong><span data-i18n="case2_m2">Reminders sent without manual follow-up</span></div>
+          </div>
+          <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visit trimm.online</span> →</a>
         </div>
-        <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visit trimm.online</span> →</a>
-      </div>
-    </article>
+      </article>
+    </div>
+
+    <div class="hscroll-progress">
+      <span class="hscroll-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span data-i18n="hscroll_hint">Keep scrolling</span>
+      </span>
+      <span class="track"><span class="fill" id="hscroll-fill"></span></span>
+      <span id="hscroll-count">01 / 03</span>
+    </div>
   </div>
 </section>
 
@@ -807,7 +853,7 @@
       hero_eyebrow:"Web & product studio", hero_h1:"Sites that move<br>like <em>film</em>.",
       hero_sub:"We design cinematic, scroll-driven websites and the software behind real businesses — from construction firms to salon management platforms.",
       hero_btn:"See our work", hero_btn2:"Get a free quote", hero_cue:"Scroll to explore",
-      work_eyebrow:"Selected work", work_h2:"Two problems.<br>Two different builds.",
+      hscroll_hint:"Keep scrolling", work_eyebrow:"Selected work", work_h2:"Two problems.<br>Two different builds.",
       work_p:"Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?",
       case1_tag:"Cinematic web · Construction & renovation",
       case1_p:"A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.",
@@ -861,7 +907,7 @@
       hero_eyebrow:"Estudio de web y software", hero_h1:"Webs que se mueven<br>como <em>cine</em>.",
       hero_sub:"Diseñamos sitios web cinematográficos controlados por scroll y el software detrás de negocios reales — desde empresas de construcción hasta plataformas de gestión para salones.",
       hero_btn:"Ver nuestro trabajo", hero_btn2:"Cotización gratis", hero_cue:"Desliza para explorar",
-      work_eyebrow:"Proyectos destacados", work_h2:"Dos problemas.<br>Dos soluciones distintas.",
+      hscroll_hint:"Seguí bajando", work_eyebrow:"Proyectos destacados", work_h2:"Dos problemas.<br>Dos soluciones distintas.",
       work_p:"Cada proyecto parte de la misma pregunta: ¿qué necesita este negocio para avanzar más rápido — una historia que se recorre con scroll, o un sistema con el que gestiona su día a día?",
       case1_tag:"Web cinematográfica · Construcción y renovación",
       case1_p:"Un video controlado por scroll corre detrás de toda la página: mientras el visitante hace scroll, una obra en construcción se transforma fotograma a fotograma en un interior de lujo terminado — la propia transformación del sitio es el argumento de venta.",
@@ -915,7 +961,7 @@
       hero_eyebrow:"Studio web & logiciel", hero_h1:"Des sites qui bougent<br>comme un <em>film</em>.",
       hero_sub:"Nous concevons des sites cinématographiques pilotés par le scroll ainsi que les logiciels qui font tourner de vraies entreprises — des entreprises de construction aux plateformes de gestion de salons.",
       hero_btn:"Voir nos projets", hero_btn2:"Devis gratuit", hero_cue:"Défilez pour découvrir",
-      work_eyebrow:"Projets sélectionnés", work_h2:"Deux problèmes.<br>Deux réponses différentes.",
+      hscroll_hint:"Continuez à défiler", work_eyebrow:"Projets sélectionnés", work_h2:"Deux problèmes.<br>Deux réponses différentes.",
       work_p:"Chaque projet part de la même question : de quoi cette entreprise a-t-elle vraiment besoin pour avancer plus vite — une histoire à parcourir au scroll, ou un système pour gérer son quotidien ?",
       case1_tag:"Site cinématographique · Construction & rénovation",
       case1_p:"Un film piloté par le scroll défile en fond sur toute la page : à mesure que le visiteur avance, un chantier brut se transforme image par image en un intérieur de luxe terminé — la transformation du site devient l'argument de vente.",
@@ -969,7 +1015,7 @@
       hero_eyebrow:"Studio web & software", hero_h1:"Siti che si muovono<br>come un <em>film</em>.",
       hero_sub:"Progettiamo siti cinematografici guidati dallo scroll e il software dietro aziende reali — da imprese edili a piattaforme di gestione per saloni.",
       hero_btn:"Guarda i lavori", hero_btn2:"Preventivo gratuito", hero_cue:"Scorri per esplorare",
-      work_eyebrow:"Progetti selezionati", work_h2:"Due problemi.<br>Due soluzioni diverse.",
+      hscroll_hint:"Continua a scorrere", work_eyebrow:"Progetti selezionati", work_h2:"Due problemi.<br>Due soluzioni diverse.",
       work_p:"Ogni progetto parte dalla stessa domanda: di cosa ha davvero bisogno questa attività per andare più veloce — una storia da scorrere, o un sistema con cui gestire la giornata?",
       case1_tag:"Sito cinematografico · Edilizia & ristrutturazione",
       case1_p:"Un video guidato dallo scroll scorre dietro l'intera homepage: mentre il visitatore scorre, un cantiere grezzo si trasforma fotogramma dopo fotogramma in un interno di lusso finito — la trasformazione del sito diventa l'argomento di vendita.",
@@ -1037,6 +1083,7 @@
     try{ localStorage.setItem('digitatex_lang', lang); }catch(e){}
     splitScrollWords();
     if(typeof renderEstimate === 'function') renderEstimate();
+    if(typeof window.hscrollRemeasure === 'function') window.hscrollRemeasure();
     renderTestimonials();
   }
   document.querySelectorAll('.langsw button').forEach(b=>{
@@ -1215,6 +1262,60 @@
     document.addEventListener('scroll', onScrollScrub, {passive:true});
     window.addEventListener('resize', onScrollScrub);
     onScrollScrub();
+  }
+
+  /* ============================================================
+     Recorrido lateral de la seccion Work.
+     El alto del contenedor se deriva del ancho real del track,
+     asi cada pixel de scroll vertical mueve un pixel lateral y la
+     transicion se siente como una continuacion del scroll, no como
+     un salto. Debajo de 901px se apila en vertical (el pin lateral
+     en movil se siente pesado y pelea con el scroll tactil).
+     ============================================================ */
+  function initHorizontalScroll(){
+    const wrap = document.getElementById('work');
+    const track = document.getElementById('hscroll-track');
+    const fill = document.getElementById('hscroll-fill');
+    const count = document.getElementById('hscroll-count');
+    if(!wrap || !track) return;
+
+    const desktop = window.matchMedia('(min-width: 901px)');
+    const panels = track.querySelectorAll('.hpanel');
+    let distance = 0;
+
+    function measure(){
+      if(!desktop.matches){
+        wrap.style.height = '';
+        track.style.transform = '';
+        distance = 0;
+        return;
+      }
+      // margen extra para que el ultimo panel no quede pegado al borde
+      distance = Math.max(track.scrollWidth - window.innerWidth + 40, 0);
+      wrap.style.height = (window.innerHeight + distance) + 'px';
+    }
+
+    function update(){
+      if(!desktop.matches || distance <= 0) return;
+      const rect = wrap.getBoundingClientRect();
+      const total = wrap.offsetHeight - window.innerHeight;
+      if(total <= 0) return;
+      const progress = Math.min(Math.max(-rect.top / total, 0), 1);
+      track.style.transform = 'translate3d(' + (-progress * distance).toFixed(2) + 'px,0,0)';
+      if(fill) fill.style.width = (progress * 100) + '%';
+      if(count){
+        const idx = Math.min(Math.floor(progress * panels.length) + 1, panels.length);
+        count.textContent = String(idx).padStart(2,'0') + ' / ' + String(panels.length).padStart(2,'0');
+      }
+    }
+
+    measure(); update();
+    window.addEventListener('resize', ()=>{ measure(); update(); });
+    if(desktop.addEventListener) desktop.addEventListener('change', ()=>{ measure(); update(); });
+    document.addEventListener('scroll', update, {passive:true});
+    // el ancho del track cambia cuando cargan las fuentes o cambia el idioma
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measure(); update(); });
+    window.hscrollRemeasure = ()=>{ measure(); update(); };
   }
 
   /* ============================================================
@@ -1712,6 +1813,7 @@
   /* ---- arranque ---- */
   splitScrollWords();
   initScrubChapters();
+  initHorizontalScroll();
   loadTestimonials();
   document.addEventListener('scroll', updateScrollWords, {passive:true});
   window.addEventListener('resize', updateScrollWords);
