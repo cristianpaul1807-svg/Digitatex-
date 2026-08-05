@@ -261,7 +261,7 @@
   .hpanel-intro{width:min(78vw,500px);}
   /* El ancho se deriva del alto disponible: el monitor es 16/10, asi que
      atarlo a vh es lo que garantiza que monitor + texto entren en pantalla. */
-  .hpanel-case{width:clamp(300px,56vh,560px);display:flex;flex-direction:column;}
+  .hpanel-case{width:clamp(300px,64vh,600px);display:flex;flex-direction:column;}
 
   .work-head{max-width:58ch;}
   .work-head h2{font-size:clamp(28px,3.8vw,52px);margin-top:16px;line-height:1.06;}
@@ -312,7 +312,9 @@
   .monitor-bar i:first-child{background:#5b4b3a;}
   .monitor-url{flex:1;margin-left:8px;height:17px;border-radius:9px;background:rgba(239,233,221,0.07);display:flex;align-items:center;padding:0 10px;
     font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.05em;color:var(--stone);overflow:hidden;white-space:nowrap;}
-  .monitor-view{position:relative;aspect-ratio:16/10;background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);overflow:hidden;}
+  /* 16/9: es la relacion nativa de una grabacion de pantalla, asi el video
+     del producto entra a sangre sin franjas negras a los costados. */
+  .monitor-view{position:relative;aspect-ratio:16/9;background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);overflow:hidden;}
   .monitor-view video,.monitor-view img{width:100%;height:100%;object-fit:cover;display:block;}
   .monitor-glare{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg, rgba(239,233,221,0.09) 0%, transparent 34%, transparent 66%, rgba(239,233,221,0.04) 100%);}
   .monitor-stand{width:132px;height:12px;margin:0 auto;background:linear-gradient(180deg,#161618,#0e0e0f);border-radius:0 0 4px 4px;}
@@ -585,12 +587,14 @@
           <div class="monitor-screen">
             <div class="monitor-bar"><i></i><i></i><i></i><span class="monitor-url">trimm.online</span></div>
             <div class="monitor-view">
-              <!-- Cuando subas el video de Trimm, poné el archivo en assets/trimm-demo.mp4
-                   y descomentá el <video> de abajo (borrá el div .mock-trimm). -->
-              <!--
-              <video src="assets/trimm-demo.mp4" muted loop playsinline autoplay preload="metadata"></video>
-              -->
-              <div class="mock-trimm">
+              <!-- Para mostrar el software real: dejá la grabacion en
+                   assets/trimm-demo.mp4 y listo. El JS la detecta sola y
+                   reemplaza la maqueta; si el archivo no esta, se queda
+                   la maqueta y no se rompe nada. -->
+              <video id="trimm-demo" muted loop playsinline preload="none"
+                     style="display:none;" aria-hidden="true" tabindex="-1"
+                     disablePictureInPicture controlsList="nodownload nofullscreen"></video>
+              <div class="mock-trimm" id="trimm-mock">
                 <div class="panel"></div><div class="side"></div>
                 <div class="bar s1"></div><div class="bar s2"></div><div class="bar s3"></div>
                 <div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div>
@@ -1415,6 +1419,37 @@
   }
 
   /* ============================================================
+     Demo de Trimm dentro del monitor.
+     Si existe assets/trimm-demo.mp4 se muestra en lugar de la
+     maqueta; si no existe, la maqueta se queda y no pasa nada.
+     Asi subir la grabacion no requiere tocar el HTML.
+     ============================================================ */
+  function initTrimmDemo(){
+    const video = document.getElementById('trimm-demo');
+    const mock = document.getElementById('trimm-mock');
+    if(!video || !mock) return;
+
+    video.addEventListener('loadeddata', ()=>{
+      mock.style.display = 'none';
+      video.style.display = 'block';
+      const p = video.play();
+      if(p && typeof p.catch === 'function') p.catch(()=>{});
+    }, { once:true });
+    // si el archivo no esta todavia, se descarta en silencio
+    video.addEventListener('error', ()=>{ video.remove(); }, { once:true });
+
+    // solo se carga cuando el monitor se acerca a pantalla
+    const io = new IntersectionObserver((entries)=>{
+      if(entries.some(e=>e.isIntersecting)){
+        video.preload = 'auto';
+        video.src = 'assets/trimm-demo.mp4';
+        io.disconnect();
+      }
+    }, { rootMargin:'300px' });
+    io.observe(video.closest('.monitor') || video);
+  }
+
+  /* ============================================================
      Recorrido lateral de la seccion Work.
      El alto del contenedor se deriva del ancho real del track,
      asi cada pixel de scroll vertical mueve un pixel lateral y la
@@ -1965,6 +2000,7 @@
   initScrubChapters();
   initHorizontalScroll();
   initDepthField();
+  initTrimmDemo();
   loadTestimonials();
   document.addEventListener('scroll', updateScrollWords, {passive:true});
   window.addEventListener('resize', updateScrollWords);
