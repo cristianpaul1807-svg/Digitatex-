@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitatex — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0c0d; --ink-2:#151513;
+    --bone:#efe9dd; --bone-dim:#c9c2b2; --stone:#8f8a7d;
+    --brass:#b9924f; --brass-2:#e0be82;
+    --line:rgba(239,233,221,0.14); --line-strong:rgba(239,233,221,0.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--ink);color:var(--bone);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--brass);color:var(--ink);}
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-2);font-weight:500;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--brass);display:inline-block;}
+
+  #seam{position:fixed;top:0;left:24px;width:1px;height:100vh;background:linear-gradient(to bottom, var(--stone), var(--brass));z-index:40;transform-origin:top;transform:scaleY(0);opacity:0.6;}
+  #seam::after{content:'';position:absolute;left:-3px;width:7px;height:7px;border-radius:50%;background:var(--brass-2);top:0;box-shadow:0 0 12px 2px var(--brass);}
+  @media (max-width:860px){ #seam{display:none;} }
+
+  .wa-fab-group{position:fixed;right:22px;bottom:22px;z-index:90;display:flex;align-items:center;gap:12px;}
+  .wa-label{background:#25d366;border:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.35;letter-spacing:0.01em;padding:11px 16px;border-radius:10px;white-space:nowrap;box-shadow:0 8px 24px rgba(37,211,102,0.45);animation:wa-label-pulse 2.6s ease-in-out infinite;}
+  .wa-label strong{font-weight:600;text-decoration:underline;text-underline-offset:2px;}
+  .wa-bubble{width:58px;height:58px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 24px rgba(37,211,102,0.35);animation:wa-pulse 2.6s ease-in-out infinite;}
+  .wa-bubble svg{width:30px;height:30px;fill:#fff;}
+  @keyframes wa-pulse{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,0.35);}50%{box-shadow:0 8px 24px rgba(37,211,102,0.35),0 0 0 8px rgba(37,211,102,0.14);}}
+  @keyframes wa-label-pulse{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,0.45);}50%{box-shadow:0 8px 24px rgba(37,211,102,0.45),0 0 0 6px rgba(37,211,102,0.16);}}
+  @media (max-width:760px){
+    .wa-fab-group{right:14px;bottom:14px;gap:8px;}
+    .wa-label{font-size:11px;padding:8px 12px;max-width:120px;white-space:normal;}
+    .wa-bubble{width:52px;height:52px;}
+  }
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:26px 48px;background:linear-gradient(to bottom, rgba(12,12,13,0.85), transparent);}
+  .brand-mark{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-size:16px;letter-spacing:0.03em;font-weight:500;}
+  .logo-badge{display:flex;align-items:center;flex-shrink:0;background:#ffffff;border-radius:12px;padding:6px 9px;box-shadow:0 2px 12px rgba(0,0,0,0.28);}
+  .brand-logo{height:26px;width:auto;display:block;}
+  @media (max-width:760px){ .logo-badge{padding:5px 7px;border-radius:10px;} .brand-logo{height:20px;} }
+  .navlinks{display:flex;align-items:center;gap:32px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;}
+  .navlinks a{opacity:0.75;transition:opacity .3s;}
+  .navlinks a:hover{opacity:1;}
+  .langsw{display:flex;gap:2px;border:1px solid var(--line-strong);border-radius:20px;padding:4px;}
+  .langsw button{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--bone);font-family:'Inter';font-size:10px;letter-spacing:0.06em;padding:6px 11px;border-radius:16px;cursor:pointer;opacity:0.6;transition:all .3s;}
+  .langsw button.active{background:var(--brass);color:var(--ink);opacity:1;}
+  .langsw .flag{font-size:12px;line-height:1;}
+  @media (max-width:760px){ .navlinks a{display:none;} nav{padding:22px 24px;} }
+
+  section{position:relative;padding:0 48px;}
+  @media (max-width:760px){ section{padding:0 24px;} }
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  .scrub-wrap{position:relative;height:320vh;}
+  .scrub-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;}
+  .scrub-sticky{background:radial-gradient(ellipse 70% 60% at 70% 20%, rgba(224,190,130,0.18), transparent 60%), linear-gradient(160deg, #1c1a16 0%, #0c0c0d 60%);}
+  .scrub-bg{position:absolute;inset:0;z-index:0;background:var(--ink);}
+  .scrub-bg video{width:100%;height:100%;object-fit:cover;object-position:82% center;display:block;}
+  @media (max-width:760px){
+    .scrub-bg{inset:auto;right:5vw;top:50%;bottom:auto;left:auto;width:88vw;height:49.5vw;max-width:380px;max-height:214px;transform:translateY(-50%);background:none;}
+    .scrub-bg video{object-fit:cover;object-position:82% center;}
+  }
+  .chapter-content{position:relative;z-index:2;transition:opacity .3s linear, transform .3s linear;}
+  #hero h1{font-size:clamp(40px,7vw,102px);line-height:0.98;max-width:16ch;position:relative;z-index:2;}
+  #hero h1 em{font-style:italic;color:var(--brass-2);}
+  .hero-sub{display:flex;flex-direction:column;align-items:flex-start;gap:26px;max-width:420px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line);position:relative;z-index:2;}
+  .hero-sub p{max-width:38ch;font-size:15px;line-height:1.75;color:var(--bone-dim);}
+  .scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone-dim);}
+  .scroll-cue .line{width:1px;height:40px;background:linear-gradient(to bottom, var(--brass), transparent);animation:pulseline 2.2s ease-in-out infinite;}
+  @keyframes pulseline{0%,100%{opacity:0.3;}50%{opacity:1;}}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border:1px solid var(--line-strong);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;transition:all .35s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;}
+  .btn span{position:relative;z-index:1;transition:color .35s;}
+  .btn::before{content:'';position:absolute;inset:0;background:var(--brass);transform:translateY(101%);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+  .btn:hover::before{transform:translateY(0);}
+  .btn:hover span{color:var(--ink);}
+  .btn:hover{border-color:var(--brass);}
+  .btn svg{width:14px;height:14px;position:relative;z-index:1;}
+
+  .reveal{opacity:1;transform:translateY(0);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);}
+  .js-ready .reveal{opacity:0;transform:translateY(36px);}
+  .js-ready .reveal.in{opacity:1;transform:translateY(0);}
+  .d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;}
+
+  #work{padding-top:14vh;padding-bottom:12vh;}
+  .work-head{margin-bottom:64px;max-width:56ch;}
+  .work-head h2{font-size:clamp(30px,4vw,52px);margin-top:18px;}
+  .work-head p{margin-top:18px;font-size:15px;color:var(--bone-dim);line-height:1.75;}
+
+  .case{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:center;padding:64px 0;border-top:1px solid var(--line);}
+  .case:last-child{border-bottom:1px solid var(--line);}
+  @media (max-width:860px){ .case{grid-template-columns:1fr;gap:28px;} }
+  .case-visual{aspect-ratio:16/11;border-radius:2px;overflow:hidden;position:relative;background:var(--ink-2);border:1px solid var(--line);}
+  .case-visual .mock{position:absolute;inset:0;}
+  .case-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:14px;}
+  .case h3{font-size:clamp(24px,2.8vw,36px);}
+  .case p{margin-top:16px;font-size:14px;line-height:1.8;color:var(--bone-dim);max-width:48ch;}
+  .case-meta{display:flex;gap:28px;margin-top:26px;flex-wrap:wrap;}
+  .case-meta div{font-size:11px;color:var(--stone);letter-spacing:0.04em;}
+  .case-meta strong{display:block;color:var(--bone);font-family:'Fraunces',serif;font-size:15px;font-weight:400;margin-bottom:4px;}
+  .case-link{margin-top:26px;display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--brass-2);border-bottom:1px solid var(--brass);padding-bottom:3px;}
+
+  /* mock visuals per case */
+  .mock-tamaison{background:
+      radial-gradient(ellipse 70% 60% at 70% 20%, rgba(224,190,130,0.18), transparent 60%),
+      linear-gradient(160deg, #1c1a16 0%, #0c0c0d 60%);}
+  .mock-tamaison .grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);background-size:36px 36px;opacity:0.5;}
+  .mock-tamaison .frame{position:absolute;left:14%;top:20%;width:44%;height:50%;border:1px solid rgba(224,190,130,0.5);}
+  .mock-tamaison .beam{position:absolute;left:14%;top:70%;width:60%;height:1px;background:rgba(224,190,130,0.5);}
+  .mock-trimm{background:linear-gradient(150deg, #14202b 0%, #0c0c0d 65%);}
+  .mock-trimm .panel{position:absolute;left:10%;right:10%;top:16%;bottom:16%;border:1px solid var(--line);border-radius:6px;background:rgba(239,233,221,0.03);}
+  .mock-trimm .bar{position:absolute;left:6%;right:6%;height:10px;border-radius:5px;background:rgba(224,190,130,0.35);}
+  .mock-trimm .bar.b1{top:30%;width:70%;}
+  .mock-trimm .bar.b2{top:46%;width:50%;background:rgba(224,190,130,0.22);}
+  .mock-trimm .bar.b3{top:62%;width:60%;background:rgba(224,190,130,0.22);}
+  .mock-trimm .dot{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--brass-2);left:10%;top:30%;transform:translateY(-50%);}
+
+  #services{padding-top:6vh;padding-bottom:16vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  #services{padding-top:14vh;}
+  .serv-head{margin-bottom:56px;max-width:52ch;}
+  .serv-head h2{font-size:clamp(28px,3.6vw,46px);margin-top:18px;}
+  .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+  .serv-card{background:var(--ink-2);padding:40px 32px;}
+  .serv-num{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--brass-2);}
+  .serv-card h3{font-size:20px;margin-top:20px;font-weight:400;}
+  .serv-card p{margin-top:14px;font-size:13.5px;color:var(--bone-dim);line-height:1.8;}
+  @media (max-width:860px){ .serv-grid{grid-template-columns:1fr;} }
+
+  #about{padding-top:16vh;padding-bottom:16vh;}
+  .about-grid{display:grid;grid-template-columns:0.9fr 1.4fr;gap:60px;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-stat{margin-top:50px;display:flex;gap:40px;flex-wrap:wrap;}
+  .stat-num{font-family:'Fraunces',serif;font-size:38px;color:var(--brass-2);line-height:1;}
+  .stat-label{font-size:12px;color:var(--bone-dim);margin-top:8px;max-width:16ch;}
+  .about-lead{font-size:clamp(24px,3.2vw,40px);line-height:1.3;font-weight:300;}
+  .about-lead em{font-style:italic;color:var(--brass-2);}
+  .about-body{margin-top:26px;font-size:16px;line-height:1.85;color:var(--bone-dim);max-width:56ch;}
+
+  #contact{padding-top:16vh;padding-bottom:12vh;text-align:center;}
+  #contact h2{font-size:clamp(36px,6vw,78px);line-height:1.02;max-width:900px;margin:0 auto;}
+  #contact h2 em{font-style:italic;color:var(--brass-2);}
+  .cta-actions{display:flex;justify-content:center;gap:18px;margin-top:40px;flex-wrap:wrap;}
+
+  footer{margin-top:10vh;padding:28px 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:11px;color:var(--stone);letter-spacing:0.04em;}
+  @media (max-width:760px){ footer{flex-direction:column;gap:10px;padding:24px;} }
+
+  /* ---- quote form ---- */
+  #quote{padding-top:6vh;padding-bottom:16vh;}
+  .quote-grid{display:grid;grid-template-columns:1fr 0.85fr;gap:56px;align-items:start;}
+  @media (max-width:900px){ .quote-grid{grid-template-columns:1fr;gap:40px;} }
+  .quote-form{display:flex;flex-direction:column;gap:26px;}
+  .field{display:flex;flex-direction:column;gap:10px;}
+  .field > label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field input[type=url],.field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-strong);color:var(--bone);font-family:'Inter',sans-serif;font-size:15px;padding:10px 0;outline:none;transition:border-color .3s;}
+  .field textarea{resize:vertical;min-height:100px;}
+  .field input:focus,.field textarea:focus{border-color:var(--brass-2);}
+  .radio-group,.check-group{display:flex;flex-direction:column;gap:12px;}
+  .radio-opt,.check-opt{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--bone-dim);cursor:pointer;}
+  .radio-opt input,.check-opt input{accent-color:var(--brass);width:16px;height:16px;cursor:pointer;flex-shrink:0;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media (max-width:600px){ .two-col{grid-template-columns:1fr;} }
+  .file-drop{border:1px dashed var(--line-strong);padding:20px;text-align:center;font-size:12.5px;color:var(--bone-dim);cursor:pointer;transition:border-color .3s;}
+  .file-drop:hover{border-color:var(--brass-2);}
+  .photo-previews{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .photo-previews img{width:64px;height:64px;object-fit:cover;border-radius:2px;border:1px solid var(--line-strong);}
+  .estimate-box{position:sticky;top:110px;border:1px solid var(--line-strong);padding:34px 30px;background:var(--ink-2);}
+  .estimate-box h4{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:18px;}
+  .estimate-range{font-family:'Fraunces',serif;font-size:clamp(24px,2.4vw,32px);line-height:1.3;color:var(--bone);}
+  .estimate-range strong{color:var(--brass-2);font-weight:400;}
+  .estimate-maint{margin-top:14px;font-size:13px;color:var(--bone-dim);}
+  .estimate-note{margin-top:20px;font-size:12.5px;line-height:1.7;color:var(--stone);}
+  .estimate-premium{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.7;color:var(--brass-2);}
+  .quote-form .submit-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:6px;}
+  .form-status{font-size:13px;color:var(--bone-dim);}
+  .form-status.ok{color:var(--brass-2);}
+  .form-status.err{color:#e08a82;}
+</style>
+</head>
+<body>
+
+<div id="seam"></div>
+
+<a href="https://wa.me/393290914158" target="_blank" rel="noopener" class="wa-fab-group" aria-label="Free personalized consultation via WhatsApp">
+  <span class="wa-label" data-i18n="wa_bubble">Free personalized <strong>consultation</strong></span>
+  <span class="wa-bubble">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.001 3C9.096 3 3.5 8.596 3.5 15.5c0 2.42.687 4.68 1.878 6.598L3 29l7.106-2.34a12.44 12.44 0 0 0 5.895 1.5h.005c6.905 0 12.5-5.596 12.5-12.5S22.906 3 16.001 3zm0 22.7h-.004a10.2 10.2 0 0 1-5.2-1.424l-.373-.222-3.86 1.272 1.29-3.762-.243-.386a10.166 10.166 0 0 1-1.56-5.428c0-5.63 4.583-10.213 10.216-10.213 2.73 0 5.293 1.064 7.222 2.995a10.15 10.15 0 0 1 2.988 7.223c0 5.63-4.583 10.213-10.216 10.213l-.26.132zm5.6-7.65c-.307-.154-1.815-.896-2.096-.998-.281-.102-.486-.154-.69.154-.205.307-.79.997-.97 1.202-.178.205-.357.23-.663.077-.307-.154-1.294-.477-2.465-1.522-.911-.812-1.526-1.816-1.705-2.123-.178-.307-.02-.473.135-.626.138-.138.307-.358.46-.537.154-.18.205-.307.307-.512.102-.205.05-.384-.026-.538-.077-.154-.69-1.663-.945-2.278-.249-.598-.501-.518-.69-.528-.178-.008-.383-.01-.588-.01a1.13 1.13 0 0 0-.818.384c-.281.307-1.074 1.05-1.074 2.56s1.1 2.97 1.253 3.176c.154.205 2.164 3.305 5.243 4.633.732.316 1.303.505 1.748.646.734.234 1.402.201 1.93.122.588-.088 1.815-.742 2.07-1.459.256-.717.256-1.331.179-1.459-.077-.128-.281-.205-.588-.359z"/></svg>
+  </span>
+</a>
+
+<nav>
+  <div class="brand-mark"><span class="logo-badge"><img src="assets/logo.png" alt="Digitatex" class="brand-logo"></span>DIGITATEX</div>
+  <div class="navlinks">
+    <a href="#work" data-i18n="nav_work">Work</a>
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#quote" data-i18n="nav_quote">Quote</a>
+    <div class="langsw">
+      <button data-lang="en" class="active"><span class="flag">🇬🇧</span>EN</button>
+      <button data-lang="es"><span class="flag">🇪🇸</span>ES</button>
+      <button data-lang="fr"><span class="flag">🇫🇷</span>FR</button>
+      <button data-lang="it"><span class="flag">🇮🇹</span>IT</button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrub-wrap" id="hero">
+  <section class="scrub-sticky">
+    <div class="scrub-bg">
+      <video id="hero-logo-film" muted playsinline webkit-playsinline="true" autoplay preload="auto"
+        disablePictureInPicture disableRemotePlayback controlsList="nodownload noplaybackrate nofullscreen">
+        <source src="assets/hero-logo-spin.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap chapter-content">
+      <p class="eyebrow" data-i18n="hero_eyebrow">Web &amp; product studio</p>
+      <h1 data-i18n="hero_h1">Sites that move<br>like <em>film</em>.</h1>
+      <div class="hero-sub">
+        <p data-i18n="hero_sub">We design cinematic, scroll-driven websites and the software behind real businesses — from construction firms to salon management platforms.</p>
+        <a href="#work" class="btn"><span data-i18n="hero_btn">See our work</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span data-i18n="hero_cue">Scroll to explore</span><span class="line"></span></div>
+  </section>
+</div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="work-head reveal">
+      <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
+      <h2 data-i18n="work_h2">Two problems.<br>Two different builds.</h2>
+      <p data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-visual">
+        <div class="mock mock-tamaison"><div class="grid"></div><div class="frame"></div><div class="beam"></div></div>
+      </div>
+      <div>
+        <p class="case-tag" data-i18n="case1_tag">Cinematic web · Construction &amp; renovation</p>
+        <h3>Ta maison est ma maison</h3>
+        <p data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
+        <div class="case-meta">
+          <div><strong data-i18n="case1_m1s">Scroll-scrub</strong><span data-i18n="case1_m1">Video tied to scroll position, not autoplay</span></div>
+          <div><strong data-i18n="case1_m2s">4 → 1</strong><span data-i18n="case1_m2">Services consolidated into one clear path</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-visual">
+        <div class="mock mock-trimm"><div class="panel"></div><div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div><div class="dot"></div></div>
+      </div>
+      <div>
+        <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
+        <h3>Trimm</h3>
+        <p data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
+        <div class="case-meta">
+          <div><strong data-i18n="case2_m1s">All-in-one</strong><span data-i18n="case2_m1">Bookings, payments and clients in one system</span></div>
+          <div><strong data-i18n="case2_m2s">Automated</strong><span data-i18n="case2_m2">Reminders sent without manual follow-up</span></div>
+        </div>
+        <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visit trimm.online</span> →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="serv-head reveal">
+      <p class="eyebrow" data-i18n="serv_eyebrow">What we build</p>
+      <h2 data-i18n="serv_h2">One studio, three disciplines.</h2>
+    </div>
+    <div class="serv-grid">
+      <div class="serv-card reveal">
+        <span class="serv-num">01</span>
+        <h3 data-i18n="serv1_h">Cinematic web design</h3>
+        <p data-i18n="serv1_p">Scroll-driven, story-led sites for brands that need to feel premium from the first second — built for conversion, not just looks.</p>
+      </div>
+      <div class="serv-card reveal d1">
+        <span class="serv-num">02</span>
+        <h3 data-i18n="serv2_h">Business software</h3>
+        <p data-i18n="serv2_p">Booking systems, client management and internal tools built around how your business actually runs day to day.</p>
+      </div>
+      <div class="serv-card reveal d2">
+        <span class="serv-num">03</span>
+        <h3 data-i18n="serv3_h">Brand &amp; digital identity</h3>
+        <p data-i18n="serv3_p">Naming, visual system and tone of voice that hold together across your site, product and social presence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <p class="eyebrow" data-i18n="about_eyebrow">Studio</p>
+      <div class="about-stat">
+        <div><div class="stat-num">2</div><div class="stat-label" data-i18n="about_stat1">disciplines under one roof: web and software</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-label" data-i18n="about_stat2">of projects led end-to-end by the same person</div></div>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <p class="about-lead" data-i18n="about_lead">We don't separate the website from the tool that runs the business behind it. <em>Both are built by the same hand,</em> so they actually work together.</p>
+      <p class="about-body" data-i18n="about_body">Digitatex is a small studio focused on two things: websites that feel like an experience, and the internal software that keeps a service business running — bookings, payments, clients, reminders. We take on a limited number of projects at a time, so every build gets full attention from first sketch to launch.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="justify-content:center;" data-i18n="contact_eyebrow">Start a project</p>
+    <h2 class="reveal d1" style="margin-top:20px;" data-i18n="contact_h2">Let's build <em>yours</em> next.</h2>
+    <p class="reveal d2" style="text-align:center;max-width:52ch;margin:20px auto 0;font-size:15px;color:var(--bone-dim);line-height:1.75;" data-i18n="contact_sub">Tell us about your project below and get an instant price estimate — the final price is always confirmed by Digitatex by email.</p>
+    <div class="cta-actions reveal d3">
+      <a href="#quote" class="btn"><span data-i18n="contact_btn1">Request a quote</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="https://wa.me/393290914158" target="_blank" rel="noopener" class="btn"><span data-i18n="contact_btn3">WhatsApp</span></a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" class="btn"><span data-i18n="contact_btn2">Instagram</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="quote">
+  <div class="wrap">
+    <div class="work-head reveal">
+      <p class="eyebrow" data-i18n="quote_eyebrow">Request a quote</p>
+      <h2 data-i18n="quote_h2">Tell us about your project.</h2>
+      <p data-i18n="quote_p">Fill in the details below — you'll see a live price estimate as you go. This is orientative only; Digitatex always confirms the final price by email.</p>
+    </div>
+
+    <div class="quote-grid">
+      <form id="quote-form" class="quote-form reveal d1" novalidate>
+        <div class="field">
+          <label data-i18n="q_type_label">Project type *</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="project_type" value="crear_desde_cero" required><span data-i18n="q_type_new">Create a website from scratch</span></label>
+            <label class="radio-opt"><input type="radio" name="project_type" value="arreglar_existente"><span data-i18n="q_type_fix">Fix or improve an existing website</span></label>
+            <label class="radio-opt"><input type="radio" name="project_type" value="integrar_funcionalidad"><span data-i18n="q_type_integrate">Integrate a feature into an existing website</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label data-i18n="q_addons_label">Integrations you'd like</label>
+          <div class="check-group">
+            <label class="check-opt"><input type="checkbox" name="integrations" value="db_panel"><span data-i18n="q_addon_db">Database / admin panel</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="form_advanced"><span data-i18n="q_addon_form">Advanced form (multi-step, files)</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="payments_booking"><span data-i18n="q_addon_pay">Payments or bookings</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="whatsapp"><span data-i18n="q_addon_wa">WhatsApp</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="multilang"><span data-i18n="q_addon_lang">Multi-language</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="video3d"><span data-i18n="q_addon_video">Scroll-driven product video / 3D</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="existing_url" data-i18n="q_url_label">Existing website URL (optional)</label>
+          <input type="url" id="existing_url" name="existing_url" placeholder="https://">
+        </div>
+
+        <div class="field">
+          <label data-i18n="q_photos_label">Product photos (optional, up to 5)</label>
+          <div class="file-drop" id="photo-drop">
+            <span data-i18n="q_photos_hint">Click to select up to 5 photos — especially useful if you selected the scroll video/3D option.</span>
+            <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" multiple style="display:none;">
+          </div>
+          <div class="photo-previews" id="photo-previews"></div>
+        </div>
+
+        <div class="two-col">
+          <div class="field"><label for="q_name" data-i18n="q_name_label">Name *</label><input type="text" id="q_name" name="name" required></div>
+          <div class="field"><label for="q_email" data-i18n="q_email_label">Email</label><input type="email" id="q_email" name="email"></div>
+        </div>
+        <div class="field"><label for="q_phone" data-i18n="q_phone_label">Phone</label><input type="tel" id="q_phone" name="phone"></div>
+        <div class="field"><label for="q_message" data-i18n="q_message_label">Message</label><textarea id="q_message" name="message"></textarea></div>
+
+        <div class="submit-row">
+          <button type="submit" class="btn"><span data-i18n="q_submit">Send request</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span id="quote-status" class="form-status"></span>
+        </div>
+      </form>
+
+      <div class="estimate-box reveal d2">
+        <h4 data-i18n="q_estimate_label">Your estimate</h4>
+        <div class="estimate-range" id="estimate-range" data-i18n="q_estimate_placeholder">Select a project type to see your estimate.</div>
+        <div class="estimate-maint" id="estimate-maint"></div>
+        <div class="estimate-premium" id="estimate-premium" style="display:none;"></div>
+        <p class="estimate-note" data-i18n="q_estimate_note">Orientative estimate only. Digitatex always confirms the final price by email after reviewing your project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Digitatex</span>
+  <span data-i18n="footer_tag">Web &amp; product studio</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  document.documentElement.classList.add('js-ready');
+
+  const i18n = {
+    en: {
+      nav_work:"Work", nav_services:"Services", nav_about:"About", nav_quote:"Quote",
+      hero_eyebrow:"Web & product studio", hero_h1:"Sites that move<br>like <em>film</em>.",
+      hero_sub:"We design cinematic, scroll-driven websites and the software behind real businesses — from construction firms to salon management platforms.",
+      hero_btn:"See our work", hero_cue:"Scroll to explore",
+      work_eyebrow:"Selected work", work_h2:"Two problems.<br>Two different builds.",
+      work_p:"Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?",
+      case1_tag:"Cinematic web · Construction & renovation",
+      case1_p:"A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.",
+      case1_m1s:"Scroll-scrub", case1_m1:"Video tied to scroll position, not autoplay",
+      case1_m2s:"4 → 1", case1_m2:"Services consolidated into one clear path",
+      case2_tag:"SaaS · Booking & business management",
+      case2_p:"An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.",
+      case2_m1s:"All-in-one", case2_m1:"Bookings, payments and clients in one system",
+      case2_m2s:"Automated", case2_m2:"Reminders sent without manual follow-up",
+      case2_link:"Visit trimm.online",
+      serv_eyebrow:"What we build", serv_h2:"One studio, three disciplines.",
+      serv1_h:"Cinematic web design", serv1_p:"Scroll-driven, story-led sites for brands that need to feel premium from the first second — built for conversion, not just looks.",
+      serv2_h:"Business software", serv2_p:"Booking systems, client management and internal tools built around how your business actually runs day to day.",
+      serv3_h:"Brand & digital identity", serv3_p:"Naming, visual system and tone of voice that hold together across your site, product and social presence.",
+      about_eyebrow:"Studio", about_stat1:"disciplines under one roof: web and software", about_stat2:"of projects led end-to-end by the same person",
+      about_lead:"We don't separate the website from the tool that runs the business behind it. <em>Both are built by the same hand,</em> so they actually work together.",
+      about_body:"Digitatex is a small studio focused on two things: websites that feel like an experience, and the internal software that keeps a service business running — bookings, payments, clients, reminders. We take on a limited number of projects at a time, so every build gets full attention from first sketch to launch.",
+      contact_eyebrow:"Start a project", contact_h2:"Let's build <em>yours</em> next.",
+      contact_sub:"Tell us about your project below and get an instant price estimate — the final price is always confirmed by Digitatex by email.",
+      contact_btn1:"Request a quote", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
+      wa_bubble:"Free personalized <strong>consultation</strong>",
+      quote_eyebrow:"Request a quote", quote_h2:"Tell us about your project.",
+      quote_p:"Fill in the details below — you'll see a live price estimate as you go. This is orientative only; Digitatex always confirms the final price by email.",
+      q_type_label:"Project type *", q_type_new:"Create a website from scratch", q_type_fix:"Fix or improve an existing website", q_type_integrate:"Integrate a feature into an existing website",
+      q_addons_label:"Integrations you'd like", q_addon_db:"Database / admin panel", q_addon_form:"Advanced form (multi-step, files)", q_addon_pay:"Payments or bookings", q_addon_wa:"WhatsApp", q_addon_lang:"Multi-language", q_addon_video:"Scroll-driven product video / 3D",
+      q_url_label:"Existing website URL (optional)",
+      q_photos_label:"Product photos (optional, up to 5)", q_photos_hint:"Click to select up to 5 photos — especially useful if you selected the scroll video/3D option.",
+      q_name_label:"Name *", q_email_label:"Email", q_phone_label:"Phone", q_message_label:"Message",
+      q_submit:"Send request",
+      q_estimate_label:"Your estimate", q_estimate_placeholder:"Select a project type to see your estimate.",
+      q_estimate_note:"Orientative estimate only. Digitatex always confirms the final price by email after reviewing your project.",
+      footer_tag:"Web & product studio"
+    },
+    es: {
+      nav_work:"Proyectos", nav_services:"Servicios", nav_about:"Nosotros", nav_quote:"Cotización",
+      hero_eyebrow:"Estudio de web y software", hero_h1:"Webs que se mueven<br>como <em>cine</em>.",
+      hero_sub:"Diseñamos sitios web cinematográficos controlados por scroll y el software detrás de negocios reales — desde empresas de construcción hasta plataformas de gestión para salones.",
+      hero_btn:"Ver nuestro trabajo", hero_cue:"Desliza para explorar",
+      work_eyebrow:"Proyectos destacados", work_h2:"Dos problemas.<br>Dos soluciones distintas.",
+      work_p:"Cada proyecto parte de la misma pregunta: ¿qué necesita este negocio para avanzar más rápido — una historia que se recorre con scroll, o un sistema con el que gestiona su día a día?",
+      case1_tag:"Web cinematográfica · Construcción y renovación",
+      case1_p:"Un video controlado por scroll corre detrás de toda la página: mientras el visitante hace scroll, una obra en construcción se transforma fotograma a fotograma en un interior de lujo terminado — la propia transformación del sitio es el argumento de venta.",
+      case1_m1s:"Scroll-scrub", case1_m1:"Video sincronizado con el scroll, no en reproducción automática",
+      case1_m2s:"4 → 1", case1_m2:"Servicios consolidados en un solo camino claro",
+      case2_tag:"SaaS · Reservas y gestión de negocio",
+      case2_p:"Una plataforma todo en uno para negocios de servicios — salones y más — que maneja reservas, pagos en caja, ficha de clientes y recordatorios automáticos por correo y WhatsApp.",
+      case2_m1s:"Todo en uno", case2_m1:"Reservas, pagos y clientes en un solo sistema",
+      case2_m2s:"Automatizado", case2_m2:"Recordatorios enviados sin seguimiento manual",
+      case2_link:"Visitar trimm.online",
+      serv_eyebrow:"Qué construimos", serv_h2:"Un estudio, tres disciplinas.",
+      serv1_h:"Diseño web cinematográfico", serv1_p:"Sitios narrativos controlados por scroll para marcas que necesitan sentirse premium desde el primer segundo — pensados para convertir, no solo para verse bien.",
+      serv2_h:"Software de negocio", serv2_p:"Sistemas de reservas, gestión de clientes y herramientas internas construidas alrededor de cómo tu negocio funciona realmente cada día.",
+      serv3_h:"Marca e identidad digital", serv3_p:"Naming, sistema visual y tono de voz coherentes en tu web, tu producto y tus redes.",
+      about_eyebrow:"Estudio", about_stat1:"disciplinas bajo un mismo techo: web y software", about_stat2:"de los proyectos liderados de principio a fin por la misma persona",
+      about_lead:"No separamos la web de la herramienta que gestiona el negocio detrás de ella. <em>Ambas las construye la misma mano,</em> por eso funcionan de verdad juntas.",
+      about_body:"Digitatex es un estudio pequeño enfocado en dos cosas: webs que se sienten como una experiencia, y el software interno que mantiene funcionando un negocio de servicios — reservas, pagos, clientes, recordatorios. Tomamos un número limitado de proyectos a la vez, para que cada uno reciba atención completa desde el primer boceto hasta el lanzamiento.",
+      contact_eyebrow:"Empieza un proyecto", contact_h2:"Construyamos <em>el tuyo</em> ahora.",
+      contact_sub:"Cuéntanos sobre tu proyecto aquí abajo y recibe un estimado de precio al instante — el precio final siempre lo confirma Digitatex por correo.",
+      contact_btn1:"Solicitar cotización", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
+      wa_bubble:"Consulta personalizada <strong>gratuita</strong>",
+      quote_eyebrow:"Solicitar cotización", quote_h2:"Cuéntanos sobre tu proyecto.",
+      quote_p:"Completa los datos aquí abajo — verás un estimado de precio en vivo a medida que avanzas. Es solo orientativo; Digitatex siempre confirma el precio final por correo.",
+      q_type_label:"Tipo de proyecto *", q_type_new:"Crear web desde cero", q_type_fix:"Arreglar o mejorar una web existente", q_type_integrate:"Integrar una funcionalidad a una web existente",
+      q_addons_label:"Integraciones deseadas", q_addon_db:"Base de datos / panel admin", q_addon_form:"Formulario avanzado (multi-paso, archivos)", q_addon_pay:"Pagos o reservas", q_addon_wa:"WhatsApp", q_addon_lang:"Multi-idioma", q_addon_video:"Video/3D del producto con scroll",
+      q_url_label:"URL del sitio existente (opcional)",
+      q_photos_label:"Fotos del producto (opcional, hasta 5)", q_photos_hint:"Haz clic para seleccionar hasta 5 fotos — especialmente útil si elegiste la opción de video/3D con scroll.",
+      q_name_label:"Nombre *", q_email_label:"Correo", q_phone_label:"Teléfono", q_message_label:"Mensaje",
+      q_submit:"Enviar solicitud",
+      q_estimate_label:"Tu estimado", q_estimate_placeholder:"Selecciona un tipo de proyecto para ver tu estimado.",
+      q_estimate_note:"Estimado solo orientativo. Digitatex siempre confirma el precio final por correo tras revisar tu proyecto.",
+      footer_tag:"Estudio de web y software"
+    },
+    fr: {
+      nav_work:"Projets", nav_services:"Services", nav_about:"À propos", nav_quote:"Devis",
+      hero_eyebrow:"Studio web & logiciel", hero_h1:"Des sites qui bougent<br>comme un <em>film</em>.",
+      hero_sub:"Nous concevons des sites cinématographiques pilotés par le scroll ainsi que les logiciels qui font tourner de vraies entreprises — des entreprises de construction aux plateformes de gestion de salons.",
+      hero_btn:"Voir nos projets", hero_cue:"Défilez pour découvrir",
+      work_eyebrow:"Projets sélectionnés", work_h2:"Deux problèmes.<br>Deux réponses différentes.",
+      work_p:"Chaque projet part de la même question : de quoi cette entreprise a-t-elle vraiment besoin pour avancer plus vite — une histoire à parcourir au scroll, ou un système pour gérer son quotidien ?",
+      case1_tag:"Site cinématographique · Construction & rénovation",
+      case1_p:"Un film piloté par le scroll défile en fond sur toute la page : à mesure que le visiteur avance, un chantier brut se transforme image par image en un intérieur de luxe terminé — la transformation du site devient l'argument de vente.",
+      case1_m1s:"Scroll-scrub", case1_m1:"Vidéo synchronisée à la position du scroll, pas en lecture automatique",
+      case1_m2s:"4 → 1", case1_m2:"Services regroupés en un parcours clair",
+      case2_tag:"SaaS · Réservations & gestion d'entreprise",
+      case2_p:"Une plateforme tout-en-un pour les entreprises de services — salons et au-delà — gérant réservations, paiements en caisse, fiches clients et rappels automatiques par e-mail et WhatsApp.",
+      case2_m1s:"Tout-en-un", case2_m1:"Réservations, paiements et clients dans un seul système",
+      case2_m2s:"Automatisé", case2_m2:"Rappels envoyés sans suivi manuel",
+      case2_link:"Visiter trimm.online",
+      serv_eyebrow:"Ce que nous construisons", serv_h2:"Un studio, trois disciplines.",
+      serv1_h:"Design web cinématographique", serv1_p:"Des sites narratifs pilotés par le scroll pour les marques qui doivent paraître premium dès la première seconde — pensés pour convertir, pas seulement pour être beaux.",
+      serv2_h:"Logiciel d'entreprise", serv2_p:"Systèmes de réservation, gestion des clients et outils internes conçus autour du fonctionnement réel de votre entreprise au quotidien.",
+      serv3_h:"Marque & identité digitale", serv3_p:"Nommage, système visuel et ton cohérents sur votre site, votre produit et vos réseaux.",
+      about_eyebrow:"Studio", about_stat1:"disciplines réunies : web et logiciel", about_stat2:"des projets menés de bout en bout par la même personne",
+      about_lead:"Nous ne séparons pas le site de l'outil qui fait tourner l'entreprise derrière lui. <em>Les deux sont construits par la même main,</em> pour qu'ils fonctionnent vraiment ensemble.",
+      about_body:"Digitatex est un petit studio concentré sur deux choses : des sites qui se vivent comme une expérience, et le logiciel interne qui fait tourner une entreprise de services — réservations, paiements, clients, rappels. Nous prenons un nombre limité de projets à la fois, pour que chacun reçoive une attention complète, du premier croquis au lancement.",
+      contact_eyebrow:"Démarrer un projet", contact_h2:"Construisons <em>le vôtre</em> maintenant.",
+      contact_sub:"Parlez-nous de votre projet ci-dessous et obtenez une estimation de prix instantanée — le prix final est toujours confirmé par Digitatex par e-mail.",
+      contact_btn1:"Demander un devis", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
+      wa_bubble:"Consultation personnalisée <strong>gratuite</strong>",
+      quote_eyebrow:"Demander un devis", quote_h2:"Parlez-nous de votre projet.",
+      quote_p:"Remplissez les détails ci-dessous — vous verrez une estimation de prix en direct au fur et à mesure. C'est indicatif uniquement ; Digitatex confirme toujours le prix final par e-mail.",
+      q_type_label:"Type de projet *", q_type_new:"Créer un site depuis zéro", q_type_fix:"Réparer ou améliorer un site existant", q_type_integrate:"Intégrer une fonctionnalité à un site existant",
+      q_addons_label:"Intégrations souhaitées", q_addon_db:"Base de données / panneau admin", q_addon_form:"Formulaire avancé (multi-étapes, fichiers)", q_addon_pay:"Paiements ou réservations", q_addon_wa:"WhatsApp", q_addon_lang:"Multilingue", q_addon_video:"Vidéo/3D du produit pilotée par le scroll",
+      q_url_label:"URL du site existant (facultatif)",
+      q_photos_label:"Photos du produit (facultatif, jusqu'à 5)", q_photos_hint:"Cliquez pour sélectionner jusqu'à 5 photos — particulièrement utile si vous avez choisi l'option vidéo/3D avec scroll.",
+      q_name_label:"Nom *", q_email_label:"E-mail", q_phone_label:"Téléphone", q_message_label:"Message",
+      q_submit:"Envoyer la demande",
+      q_estimate_label:"Votre estimation", q_estimate_placeholder:"Sélectionnez un type de projet pour voir votre estimation.",
+      q_estimate_note:"Estimation indicative uniquement. Digitatex confirme toujours le prix final par e-mail après examen de votre projet.",
+      footer_tag:"Studio web & logiciel"
+    },
+    it: {
+      nav_work:"Progetti", nav_services:"Servizi", nav_about:"Chi siamo", nav_quote:"Preventivo",
+      hero_eyebrow:"Studio web & software", hero_h1:"Siti che si muovono<br>come un <em>film</em>.",
+      hero_sub:"Progettiamo siti cinematografici guidati dallo scroll e il software dietro aziende reali — da imprese edili a piattaforme di gestione per saloni.",
+      hero_btn:"Guarda i lavori", hero_cue:"Scorri per esplorare",
+      work_eyebrow:"Progetti selezionati", work_h2:"Due problemi.<br>Due soluzioni diverse.",
+      work_p:"Ogni progetto parte dalla stessa domanda: di cosa ha davvero bisogno questa attività per andare più veloce — una storia da scorrere, o un sistema con cui gestire la giornata?",
+      case1_tag:"Sito cinematografico · Edilizia & ristrutturazione",
+      case1_p:"Un video guidato dallo scroll scorre dietro l'intera homepage: mentre il visitatore scorre, un cantiere grezzo si trasforma fotogramma dopo fotogramma in un interno di lusso finito — la trasformazione del sito diventa l'argomento di vendita.",
+      case1_m1s:"Scroll-scrub", case1_m1:"Video sincronizzato con la posizione dello scroll, non in autoplay",
+      case1_m2s:"4 → 1", case1_m2:"Servizi riuniti in un unico percorso chiaro",
+      case2_tag:"SaaS · Prenotazioni & gestione aziendale",
+      case2_p:"Una piattaforma all-in-one per attività di servizi — saloni e non solo — che gestisce prenotazioni, pagamenti in negozio, schede clienti e promemoria automatici via email e WhatsApp.",
+      case2_m1s:"Tutto in uno", case2_m1:"Prenotazioni, pagamenti e clienti in un unico sistema",
+      case2_m2s:"Automatizzato", case2_m2:"Promemoria inviati senza follow-up manuale",
+      case2_link:"Visita trimm.online",
+      serv_eyebrow:"Cosa costruiamo", serv_h2:"Uno studio, tre discipline.",
+      serv1_h:"Design web cinematografico", serv1_p:"Siti narrativi guidati dallo scroll per marchi che devono sembrare premium dal primo secondo — pensati per convertire, non solo per apparire belli.",
+      serv2_h:"Software aziendale", serv2_p:"Sistemi di prenotazione, gestione clienti e strumenti interni costruiti attorno a come la tua attività funziona davvero ogni giorno.",
+      serv3_h:"Brand & identità digitale", serv3_p:"Naming, sistema visivo e tono di voce coerenti su sito, prodotto e social.",
+      about_eyebrow:"Studio", about_stat1:"discipline sotto lo stesso tetto: web e software", about_stat2:"dei progetti seguiti dall'inizio alla fine dalla stessa persona",
+      about_lead:"Non separiamo il sito dallo strumento che gestisce l'attività dietro di esso. <em>Entrambi sono costruiti dalla stessa mano,</em> per questo funzionano davvero insieme.",
+      about_body:"Digitatex è un piccolo studio concentrato su due cose: siti che si vivono come un'esperienza, e il software interno che tiene in funzione un'attività di servizi — prenotazioni, pagamenti, clienti, promemoria. Seguiamo un numero limitato di progetti alla volta, così ognuno riceve piena attenzione dal primo schizzo al lancio.",
+      contact_eyebrow:"Inizia un progetto", contact_h2:"Costruiamo <em>il tuo</em> ora.",
+      contact_sub:"Raccontaci il tuo progetto qui sotto e ricevi subito una stima di prezzo — il prezzo finale è sempre confermato da Digitatex via email.",
+      contact_btn1:"Richiedi un preventivo", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
+      wa_bubble:"Consulenza personalizzata <strong>gratuita</strong>",
+      quote_eyebrow:"Richiedi un preventivo", quote_h2:"Raccontaci il tuo progetto.",
+      quote_p:"Compila i dati qui sotto — vedrai una stima di prezzo in tempo reale man mano che procedi. È solo indicativa; Digitatex conferma sempre il prezzo finale via email.",
+      q_type_label:"Tipo di progetto *", q_type_new:"Creare un sito da zero", q_type_fix:"Sistemare o migliorare un sito esistente", q_type_integrate:"Integrare una funzionalità in un sito esistente",
+      q_addons_label:"Integrazioni desiderate", q_addon_db:"Database / pannello admin", q_addon_form:"Modulo avanzato (multi-step, file)", q_addon_pay:"Pagamenti o prenotazioni", q_addon_wa:"WhatsApp", q_addon_lang:"Multilingua", q_addon_video:"Video/3D del prodotto guidato dallo scroll",
+      q_url_label:"URL del sito esistente (opzionale)",
+      q_photos_label:"Foto del prodotto (opzionale, fino a 5)", q_photos_hint:"Clicca per selezionare fino a 5 foto — particolarmente utile se hai scelto l'opzione video/3D con scroll.",
+      q_name_label:"Nome *", q_email_label:"Email", q_phone_label:"Telefono", q_message_label:"Messaggio",
+      q_submit:"Invia richiesta",
+      q_estimate_label:"La tua stima", q_estimate_placeholder:"Seleziona un tipo di progetto per vedere la tua stima.",
+      q_estimate_note:"Stima solo indicativa. Digitatex conferma sempre il prezzo finale via email dopo aver esaminato il tuo progetto.",
+      footer_tag:"Studio web & software"
+    }
+  };
+
+  let currentLang = 'en';
+  function applyLang(lang){
+    const dict = i18n[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.langsw button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    currentLang = lang;
+    if(typeof renderEstimate === 'function') renderEstimate();
+  }
+  document.querySelectorAll('.langsw button').forEach(b=>{
+    b.addEventListener('click', ()=> applyLang(b.dataset.lang));
+  });
+
+  const seam = document.getElementById('seam');
+  function onScroll(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    seam.style.transform = 'scaleY(' + Math.min(scrolled * 1.05, 1) + ')';
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ============================================================
+     Hero scroll-scrub — same engine as the scroll-scrub-site skill
+     (Ta Maison): scroll position drives video.currentTime instead
+     of normal playback, so scrolling fast spins the logo fast.
+     ============================================================ */
+  function initScrubChapters(){
+    const chapters = Array.from(document.querySelectorAll('.scrub-wrap')).map((wrap) => {
+      const video = wrap.querySelector('video');
+      const content = wrap.querySelector('.chapter-content');
+      const cue = wrap.querySelector('.scroll-cue');
+      const state = { wrap, video, content, cue, ready:false, duration:0 };
+      if(video){
+        const markReady = () => { state.ready = true; state.duration = video.duration; };
+        video.addEventListener('loadedmetadata', markReady);
+        // autoplay+preload can load metadata before this script runs (fast local/
+        // cached video), which would fire loadedmetadata before we're listening —
+        // catch that case immediately instead of waiting on an event that already happened.
+        if(video.readyState >= 1) markReady();
+        // iOS Safari shows its native play button over any "paused" video no matter
+        // how it got there — the only fix is to keep it genuinely playing at speed 0
+        // and let scroll alone move the frame via currentTime. Never call .pause().
+        const primeVideo = () => {
+          const p = video.play();
+          const freeze = () => { video.playbackRate = 0; };
+          if(p && typeof p.then === 'function'){
+            p.then(freeze).catch(() => { try { video.currentTime = 0.01; } catch(e){} });
+          } else {
+            freeze();
+          }
+        };
+        if(video.readyState >= 1) primeVideo();
+        else { video.load(); video.addEventListener('loadedmetadata', primeVideo, {once:true}); }
+        video.addEventListener('pause', primeVideo);
+      }
+      return state;
+    });
+
+    function updateChapter(ch){
+      const rect = ch.wrap.getBoundingClientRect();
+      const total = ch.wrap.offsetHeight - window.innerHeight;
+      if(total <= 0) return;
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const progress = scrolled / total;
+      const visible = rect.top < window.innerHeight && rect.bottom > 0;
+      if(visible && ch.video && ch.ready && ch.duration) ch.video.currentTime = progress * ch.duration;
+      if(ch.content){
+        // Unlike a mid-page scrub chapter, the hero's text must be visible the
+        // instant the page loads (progress 0) — only fade it out near the end.
+        const op = progress > 0.88 ? Math.max(1 - (progress - 0.88) / 0.12, 0) : 1;
+        ch.content.style.opacity = op;
+        ch.content.style.transform = 'translateY(' + (18 - op * 18) + 'px)';
+      }
+      if(ch.cue) ch.cue.style.opacity = progress < 0.04 ? 1 : 0;
+    }
+
+    if(!chapters.length) return;
+    let ticking = false;
+    function onScrollScrub(){
+      if(!ticking){
+        requestAnimationFrame(() => { chapters.forEach(updateChapter); ticking = false; });
+        ticking = true;
+      }
+    }
+    document.addEventListener('scroll', onScrollScrub, {passive:true});
+    window.addEventListener('resize', onScrollScrub);
+    onScrollScrub();
+  }
+  initScrubChapters();
+
+  /* ============================================================
+     Quote form — pricing engine (numbers straight from the
+     Digitatex price sheet, nothing invented, no cap: totals can
+     climb into / past the Premium Project range as add-ons stack).
+     ============================================================ */
+  const PRICING = {
+    base: {
+      crear_desde_cero:       { min:700, max:1600, maintMin:40, maintMax:150 },
+      arreglar_existente:     { min:700, max:900,  maintMin:40, maintMax:60  },
+      integrar_funcionalidad: { min:700, max:900,  maintMin:40, maintMax:60  }
+    },
+    addons: {
+      db_panel:         { min:500, max:800, maintMin:30, maintMax:50 },
+      form_advanced:    { min:150, max:300 },
+      payments_booking: { min:250, max:500 },
+      whatsapp:         { min:250, max:500 },
+      multilang:        { min:150, max:300 },
+      video3d:          { min:600, max:2500 }
+    },
+    premium: { min:3000, max:6000, maintMin:200, maintMax:400 }
+  };
+
+  const quoteI18n = {
+    en: {
+      placeholder:"Select a project type to see your estimate.",
+      range:(min,max)=>`Between <strong>€${min.toLocaleString('en')}</strong> and <strong>€${max.toLocaleString('en')}</strong>`,
+      maint:(mMin,mMax)=>`Plus €${mMin}–€${mMax}/month maintenance`,
+      premium:(min,max,mMin,mMax)=>`This scope is close to our Full Premium Project (€${min.toLocaleString('en')}–€${max.toLocaleString('en')} one-time, €${mMin}–€${mMax}/month) — let's talk to fine-tune it.`,
+      sending:"Sending…", success:"Thanks! We'll get back to you soon.",
+      errType:"Please select a project type.", errContact:"Please add your name and an email or phone number.",
+      errGeneric:"Something failed. Please try again or email us directly."
+    },
+    es: {
+      placeholder:"Selecciona un tipo de proyecto para ver tu estimado.",
+      range:(min,max)=>`Entre <strong>${min.toLocaleString('es')}€</strong> y <strong>${max.toLocaleString('es')}€</strong>`,
+      maint:(mMin,mMax)=>`Más ${mMin}€–${mMax}€/mes de mantenimiento`,
+      premium:(min,max,mMin,mMax)=>`Este alcance se acerca a nuestro Proyecto Premium Completo (${min.toLocaleString('es')}€–${max.toLocaleString('es')}€ único, ${mMin}€–${mMax}€/mes) — hablemos para afinarlo.`,
+      sending:"Enviando…", success:"¡Gracias! Te contactaremos pronto.",
+      errType:"Selecciona un tipo de proyecto.", errContact:"Agrega tu nombre y un correo o teléfono.",
+      errGeneric:"Algo falló. Intenta de nuevo o escríbenos directamente."
+    },
+    fr: {
+      placeholder:"Sélectionnez un type de projet pour voir votre estimation.",
+      range:(min,max)=>`Entre <strong>${min.toLocaleString('fr')}€</strong> et <strong>${max.toLocaleString('fr')}€</strong>`,
+      maint:(mMin,mMax)=>`Plus ${mMin}€–${mMax}€/mois de maintenance`,
+      premium:(min,max,mMin,mMax)=>`Cette envergure se rapproche de notre Projet Premium Complet (${min.toLocaleString('fr')}€–${max.toLocaleString('fr')}€ unique, ${mMin}€–${mMax}€/mois) — parlons-en pour l'affiner.`,
+      sending:"Envoi…", success:"Merci ! Nous vous recontacterons bientôt.",
+      errType:"Veuillez sélectionner un type de projet.", errContact:"Ajoutez votre nom et un e-mail ou téléphone.",
+      errGeneric:"Échec de l'envoi. Réessayez ou écrivez-nous directement."
+    },
+    it: {
+      placeholder:"Seleziona un tipo di progetto per vedere la tua stima.",
+      range:(min,max)=>`Tra <strong>${min.toLocaleString('it')}€</strong> e <strong>${max.toLocaleString('it')}€</strong>`,
+      maint:(mMin,mMax)=>`Più ${mMin}€–${mMax}€/mese di manutenzione`,
+      premium:(min,max,mMin,mMax)=>`Questo ambito si avvicina al nostro Progetto Premium Completo (${min.toLocaleString('it')}€–${max.toLocaleString('it')}€ una tantum, ${mMin}€–${mMax}€/mese) — parliamone per definirlo.`,
+      sending:"Invio…", success:"Grazie! Ti ricontatteremo presto.",
+      errType:"Seleziona un tipo di progetto.", errContact:"Aggiungi il tuo nome e un'email o telefono.",
+      errGeneric:"Qualcosa è andato storto. Riprova o scrivici direttamente."
+    }
+  };
+
+  const quoteForm = document.getElementById('quote-form');
+
+  function calcEstimate(){
+    const typeInput = quoteForm.querySelector('input[name="project_type"]:checked');
+    if(!typeInput) return null;
+    const base = PRICING.base[typeInput.value];
+    let min = base.min, max = base.max, maintMin = base.maintMin, maintMax = base.maintMax;
+    const integrations = Array.from(quoteForm.querySelectorAll('input[name="integrations"]:checked')).map(el=>el.value);
+    integrations.forEach(key=>{
+      const a = PRICING.addons[key];
+      if(!a) return;
+      min += a.min; max += a.max;
+      if(a.maintMin) maintMin += a.maintMin;
+      if(a.maintMax) maintMax += a.maintMax;
+    });
+    return { min, max, maintMin, maintMax, integrations, projectType: typeInput.value };
+  }
+
+  function renderEstimate(){
+    const rangeEl = document.getElementById('estimate-range');
+    const maintEl = document.getElementById('estimate-maint');
+    const premiumEl = document.getElementById('estimate-premium');
+    if(!rangeEl) return null;
+    const t = quoteI18n[currentLang] || quoteI18n.en;
+    const result = calcEstimate();
+    if(!result){
+      rangeEl.textContent = t.placeholder;
+      maintEl.textContent = '';
+      premiumEl.style.display = 'none';
+      return null;
+    }
+    rangeEl.innerHTML = t.range(result.min, result.max);
+    maintEl.textContent = t.maint(result.maintMin, result.maintMax);
+    if(result.max >= PRICING.premium.min){
+      premiumEl.style.display = 'block';
+      premiumEl.textContent = t.premium(PRICING.premium.min, PRICING.premium.max, PRICING.premium.maintMin, PRICING.premium.maintMax);
+    } else {
+      premiumEl.style.display = 'none';
+    }
+    return result;
+  }
+
+  if(quoteForm){
+    quoteForm.addEventListener('change', renderEstimate);
+    renderEstimate();
+  }
+
+  // ---- Client-side photo compression: resize to ~1600px wide, JPEG q=0.8 ----
+  function compressImage(file, maxWidth, quality){
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = (e)=>{
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = ()=>{
+          const scale = Math.min(1, maxWidth / img.width);
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(blob=>resolve(blob), 'image/jpeg', quality);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  let compressedPhotos = [];
+  const photoInput = document.getElementById('photo-input');
+  const photoDrop = document.getElementById('photo-drop');
+  const photoPreviews = document.getElementById('photo-previews');
+
+  if(photoDrop && photoInput){
+    photoDrop.addEventListener('click', ()=>photoInput.click());
+    photoInput.addEventListener('change', async (e)=>{
+      const files = Array.from(e.target.files).slice(0,5);
+      compressedPhotos = [];
+      photoPreviews.innerHTML = '';
+      for(const file of files){
+        try{
+          const blob = await compressImage(file, 1600, 0.8);
+          compressedPhotos.push(blob);
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(blob);
+          photoPreviews.appendChild(img);
+        }catch(err){ /* skip file that failed to process */ }
+      }
+    });
+  }
+
+  // ---- Supabase client (anon key — safe for the browser, RLS policies already applied) ----
+  const SUPABASE_URL = 'https://nzpbqlxmaretkfaspfag.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56cGJxbHhtYXJldGtmYXNwZmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5MjExNjgsImV4cCI6MjEwMTQ5NzE2OH0.SbZQUMpJUxNWDkvvVPGjQWGpc3pQGJ2pRiB933bymek';
+  const supabaseClient = (typeof window.supabase !== 'undefined')
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xyegywvk';
+
+  if(quoteForm){
+    quoteForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const status = document.getElementById('quote-status');
+      const t = quoteI18n[currentLang] || quoteI18n.en;
+      const est = renderEstimate();
+      if(!est){ status.textContent = t.errType; status.className = 'form-status err'; return; }
+
+      const name = quoteForm.name.value.trim();
+      const email = quoteForm.email.value.trim();
+      const phone = quoteForm.phone.value.trim();
+      if(!name || (!email && !phone)){
+        status.textContent = t.errContact;
+        status.className = 'form-status err';
+        return;
+      }
+
+      status.textContent = t.sending;
+      status.className = 'form-status';
+
+      try{
+        let photoUrls = [];
+        if(compressedPhotos.length && supabaseClient){
+          for(let i=0;i<compressedPhotos.length;i++){
+            const path = `${Date.now()}-${i}.jpg`;
+            const { error: upErr } = await supabaseClient.storage.from('product-photos').upload(path, compressedPhotos[i], { contentType:'image/jpeg' });
+            if(!upErr){
+              const { data } = supabaseClient.storage.from('product-photos').getPublicUrl(path);
+              if(data && data.publicUrl) photoUrls.push(data.publicUrl);
+            }
+          }
+        }
+
+        const leadPayload = {
+          name,
+          email: email || null,
+          phone: phone || null,
+          project_type: est.projectType,
+          integrations: est.integrations,
+          existing_url: quoteForm.existing_url.value.trim() || null,
+          wants_3d_scroll: est.integrations.includes('video3d'),
+          product_photo_urls: photoUrls,
+          message: quoteForm.message.value.trim() || null,
+          estimated_price_min: est.min,
+          estimated_price_max: est.max,
+          estimated_maintenance_min: est.maintMin,
+          estimated_maintenance_max: est.maintMax
+        };
+
+        const tasks = [];
+        if(supabaseClient) tasks.push(supabaseClient.from('leads').insert(leadPayload));
+        if(FORMSPREE_ENDPOINT){
+          const fd = new FormData();
+          Object.entries(leadPayload).forEach(([k,v])=>{
+            fd.append(k, Array.isArray(v) ? v.join(', ') : (v === null ? '' : v));
+          });
+          tasks.push(fetch(FORMSPREE_ENDPOINT, { method:'POST', body: fd, headers:{ Accept:'application/json' } }));
+        }
+
+        const results = await Promise.allSettled(tasks);
+        const okAny = tasks.length > 0 && results.some(r => {
+          if(r.status !== 'fulfilled') return false;
+          const v = r.value;
+          if(v instanceof Response) return v.ok;
+          return !(v && v.error);
+        });
+
+        if(okAny){
+          status.textContent = t.success;
+          status.className = 'form-status ok';
+          quoteForm.reset();
+          compressedPhotos = [];
+          if(photoPreviews) photoPreviews.innerHTML = '';
+          renderEstimate();
+        } else {
+          status.textContent = t.errGeneric;
+          status.className = 'form-status err';
+        }
+      }catch(err){
+        status.textContent = t.errGeneric;
+        status.className = 'form-status err';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

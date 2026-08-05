@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- VARIABLE: title tag — nom d'entreprise + proposition de valeur + ville/région si SEO local -->
+<title>Entrepreneur Général Rive-Sud de Montréal — Ta Maison Est Ma Maison Inc.</title>
+<!-- VARIABLE: meta description — 150-160 caractères, services + zone desservie + CTA -->
+<meta name="description" content="Rénovations complètes, aire de vie communes, agrandissements et rénovations extérieures à Greenfield Park et sur la Rive-Sud de Montréal. Soumission gratuite.">
+<meta name="robots" content="index, follow">
+<!-- VARIABLE: canonical / OG / JSON-LD — voir bloc schema.org plus bas -->
+<link rel="canonical" href="https://www.ta-maison-est-ma-maison-inc.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ta Maison Est Ma Maison Inc.">
+<meta property="og:title" content="Entrepreneur Général Rive-Sud de Montréal — Ta Maison Est Ma Maison Inc.">
+<meta property="og:description" content="Rénovations complètes, aire de vie communes, agrandissements et rénovations extérieures. Soumission gratuite.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- VARIABLE: JSON-LD — type schema.org selon le secteur (LocalBusiness, GeneralContractor,
+     Restaurant, Dentist, etc.), coordonnées et zone desservie du client -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  "name": "Ta Maison Est Ma Maison Inc.",
+  "url": "https://www.ta-maison-est-ma-maison-inc.com/",
+  "telephone": "+1-438-508-6720",
+  "priceRange": "$$",
+  "address": { "@type": "PostalAddress", "addressLocality": "Greenfield Park", "addressRegion": "QC", "addressCountry": "CA" },
+  "areaServed": [{ "@type": "AdministrativeArea", "name": "Rive-Sud de Montréal" }]
+}
+</script>
+
+<style>
+/* ============================================================================
+   BASE FIJA — sistema de diseño scroll-scrub-site. NO MODIFICAR estructura,
+   selectores, mecánica de scroll ni tipografía entre generaciones. La única
+   variable de color permitida es --brass / --brass-2 (ver comentario abajo).
+   ============================================================================ */
+:root{
+  --ink:#0c0c0d;
+  --ink-2:#151513;
+  --bone:#efe9dd;
+  --bone-dim:#c9c2b2;
+  --stone:#8f8a7d;
+  /* VARIABLE (solo si el nicho lo justifica): paleta de acento. Por defecto,
+     latón/dorado. Cambiar únicamente estos dos valores — nunca --ink/--bone. */
+  --brass-0:#7a6a4d;
+  --brass:#b9924f;
+  --brass-2:#e0be82;
+  --line:rgba(239,233,221,0.14);
+  --line-strong:rgba(239,233,221,0.28);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--bone);font-family:'Inter',sans-serif;font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--brass);color:var(--ink);}
+h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.01em;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+.eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-2);font-weight:500;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--brass);display:inline-block;}
+section{position:relative;padding:0 48px;}
+@media (max-width:760px){ section{padding:0 24px;} }
+.wrap{max-width:1180px;margin:0 auto;}
+
+/* ---- nav (fija) ---- */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:26px 48px;}
+/* el mix-blend-mode va en el texto/links, nunca en <nav>, para que cualquier
+   insignia de logo con fondo sólido conviva al lado sin invertirse */
+.brand-mark{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-size:15px;letter-spacing:0.02em;font-weight:500;}
+.brand-text{mix-blend-mode:difference;}
+.brand-text .accent{color:var(--brass-2);}
+.logo-badge{display:flex;align-items:center;flex-shrink:0;background:#ffffff;border-radius:14px;padding:8px 12px;box-shadow:0 2px 12px rgba(0,0,0,0.28);}
+.logo-badge img{height:34px;width:auto;display:block;}
+@media (max-width:760px){ .brand-mark{gap:8px;} .brand-text{font-size:13px;} .logo-badge{padding:6px 9px;border-radius:11px;} .logo-badge img{height:22px;} }
+.navlinks{display:flex;gap:36px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:difference;}
+.navlinks a{opacity:0.75;transition:opacity .3s;}
+.navlinks a:hover,.navlinks a.current{opacity:1;}
+@media (max-width:760px){ .navlinks{display:none;} nav{padding:22px 24px;} }
+.nav-toggle{display:none;background:none;border:none;color:var(--bone);cursor:pointer;padding:6px;mix-blend-mode:difference;}
+.nav-toggle svg{width:22px;height:22px;}
+.nav-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:58;opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.nav-backdrop.open{opacity:1;pointer-events:auto;}
+.nav-drawer-close{display:none;}
+@media (max-width:760px){
+  .nav-toggle{display:block;} .nav-backdrop{display:block;}
+  .navlinks{display:flex;position:fixed;top:0;left:0;bottom:0;width:78vw;max-width:300px;z-index:64;background:var(--ink-2);border-right:1px solid var(--line-strong);flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:88px 32px 32px;font-size:15px;mix-blend-mode:normal;transform:translateX(-100%);transition:transform .35s cubic-bezier(.22,1,.36,1);box-shadow:20px 0 60px rgba(0,0,0,0.4);}
+  .navlinks.mobile-open{transform:translateX(0);}
+  .navlinks a{width:100%;padding:16px 0;border-bottom:1px solid var(--line);opacity:1;}
+  .nav-drawer-close{display:flex;position:absolute;top:26px;right:24px;background:none;border:none;color:var(--bone-dim);cursor:pointer;padding:6px;}
+  .nav-drawer-close svg{width:20px;height:20px;}
+}
+
+/* ---- barra de progreso horizontal (fija) ---- */
+.page-progress{position:fixed;top:0;left:0;height:2px;background:var(--brass-2);z-index:70;width:0%;box-shadow:0 0 10px 1px var(--brass);}
+
+/* ---- firma visual: línea vertical de acento que se construye con el scroll (fija) ---- */
+.scroll-spine{position:fixed;top:0;right:22px;width:2px;height:100vh;z-index:70;background:var(--line);pointer-events:none;}
+.scroll-spine .fill{position:absolute;top:0;left:0;width:100%;height:0%;background:linear-gradient(to bottom, var(--brass-2), var(--brass));}
+.scroll-spine .dot{position:absolute;left:50%;top:0%;width:7px;height:7px;border-radius:50%;background:var(--brass-2);box-shadow:0 0 10px 2px var(--brass);transform:translate(-50%,-50%);}
+@media (max-width:760px){ .scroll-spine{display:none;} }
+
+/* ---- botones (fija) ---- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border:1px solid var(--line-strong);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;transition:all .35s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;background:none;cursor:pointer;color:var(--bone);font-family:'Inter',sans-serif;}
+.btn span{position:relative;z-index:1;transition:color .35s;}
+.btn::before{content:'';position:absolute;inset:0;background:var(--brass);transform:translateY(101%);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.btn:hover::before{transform:translateY(0);}
+.btn:hover span{color:var(--ink);}
+.btn:hover{border-color:var(--brass);}
+.btn svg{width:14px;height:14px;position:relative;z-index:1;}
+.btn-ghost{border-color:var(--line-strong);}
+
+/* ---- reveal-on-scroll (fija) ---- */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-scale{opacity:0;transform:scale(0.96);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);}
+.reveal-scale.in{opacity:1;transform:scale(1);}
+.d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;} .d4{transition-delay:.32s;}
+
+/* ---- hero scroll-scrub (fija) — motor descrito en el JS más abajo ---- */
+.scrub-wrap{position:relative;height:340vh;}
+.scrub-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:9vh;}
+.scrub-bg{position:absolute;inset:0;z-index:0;background:var(--ink);}
+.scrub-bg video{width:100%;height:100%;object-fit:cover;display:block;}
+.scrub-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(12,12,13,0.92) 10%, transparent 60%),linear-gradient(to bottom, rgba(12,12,13,0.6) 0%, rgba(12,12,13,0.08) 32%, rgba(12,12,13,0.9) 100%);}
+.chapter-index{position:absolute;top:104px;left:48px;z-index:2;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--stone);letter-spacing:0.05em;}
+@media (max-width:760px){ .chapter-index{left:24px;top:96px;} }
+.chapter-track{position:absolute;top:106px;right:48px;z-index:2;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--bone-dim);}
+.chapter-track .track{width:100px;height:1px;background:var(--line-strong);position:relative;}
+.chapter-track .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--brass-2);}
+@media (max-width:760px){ .chapter-track{display:none;} }
+.chapter-content{position:relative;z-index:2;max-width:640px;transition:opacity .3s linear, transform .3s linear;}
+@media (min-width:861px){ .chapter-content{margin-left:44px;} }
+.chapter-content h1{font-size:clamp(34px,5.4vw,68px);line-height:1.02;font-weight:400;}
+.chapter-content p{margin-top:20px;font-size:15.5px;line-height:1.75;color:var(--bone-dim);max-width:46ch;}
+.chapter-cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;}
+.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone-dim);}
+.scroll-cue .line{width:1px;height:40px;background:linear-gradient(to bottom, var(--brass), transparent);animation:pulseline 2.2s ease-in-out infinite;}
+@keyframes pulseline{0%,100%{opacity:0.3;}50%{opacity:1;}}
+
+/* ---- manifiesto (fija) ---- */
+#manifesto{padding-top:15vh;padding-bottom:15vh;}
+.manifesto-grid{display:grid;grid-template-columns:0.9fr 1.4fr;gap:60px;align-items:start;}
+@media (max-width:860px){ .manifesto-grid{grid-template-columns:1fr;} }
+#manifesto .eyebrow{margin-bottom:24px;}
+.manifesto-stat{margin-top:56px;display:flex;gap:44px;flex-wrap:wrap;}
+.stat-num{font-family:'Fraunces',serif;font-size:40px;color:var(--brass-2);line-height:1;}
+.stat-label{font-size:12px;color:var(--bone-dim);margin-top:8px;max-width:16ch;letter-spacing:0.02em;}
+.manifesto-lead{font-size:clamp(26px,3.4vw,44px);line-height:1.28;font-weight:300;}
+.manifesto-lead .accent{color:var(--brass-2);font-style:italic;}
+.manifesto-body{margin-top:28px;font-size:16px;line-height:1.85;color:var(--bone-dim);max-width:58ch;}
+
+/* ---- servicios: filas horizontales con hover (fija) ---- */
+#services{padding-top:14vh;padding-bottom:10vh;border-top:1px solid var(--line);}
+.services-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:64px;flex-wrap:wrap;}
+.services-head h2{font-size:clamp(30px,4vw,54px);max-width:14ch;font-weight:400;}
+.services-head p{max-width:36ch;font-size:14px;color:var(--bone-dim);line-height:1.7;}
+.service-list{display:flex;flex-direction:column;}
+.service-row{display:grid;grid-template-columns:70px 1fr 1.1fr 90px;gap:32px;align-items:center;padding:40px 0;border-top:1px solid var(--line);transition:background .4s;cursor:default;}
+.service-row:last-child{border-bottom:1px solid var(--line);}
+.service-row:hover{background:rgba(239,233,221,0.025);}
+.service-num{font-family:'Fraunces',serif;font-size:14px;color:var(--stone);font-style:italic;}
+.service-name{font-family:'Fraunces',serif;font-size:clamp(22px,2.6vw,32px);font-weight:400;}
+.service-list-items{font-size:13px;color:var(--bone-dim);line-height:2;letter-spacing:0.01em;}
+.service-arrow{width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;justify-self:end;transition:all .4s cubic-bezier(.22,1,.36,1);}
+.service-row:hover .service-arrow{background:var(--brass);border-color:var(--brass);transform:rotate(45deg);}
+.service-arrow svg{width:14px;height:14px;transition:stroke .4s;}
+.service-row:hover .service-arrow svg{stroke:var(--ink);}
+@media (max-width:760px){ .service-row{grid-template-columns:40px 1fr;row-gap:14px;} .service-list-items{grid-column:1/-1;} .service-arrow{display:none;} }
+
+/* ---- proceso en 3 fases (fija) ---- */
+#approach{padding-top:16vh;padding-bottom:16vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.approach-head{max-width:52ch;margin-bottom:72px;}
+.approach-head h2{font-size:clamp(30px,4vw,50px);margin-top:20px;}
+.approach-head p{margin-top:20px;font-size:15px;color:var(--bone-dim);line-height:1.8;}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+.phase{background:var(--ink-2);padding:44px 36px;position:relative;}
+.phase-index{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--brass-2);}
+.phase h3{font-size:22px;margin-top:22px;font-weight:400;}
+.phase p{margin-top:14px;font-size:13.5px;color:var(--bone-dim);line-height:1.8;}
+@media (max-width:860px){ .phases{grid-template-columns:1fr;} }
+
+/* ---- testimonios en grid (fija) ---- */
+#testimonios{padding-top:14vh;padding-bottom:14vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.testi-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap;}
+.testi-head h2{font-size:clamp(28px,3.6vw,46px);max-width:16ch;}
+.google-badge{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--bone-dim);}
+.google-badge .stars{color:var(--brass-2);letter-spacing:2px;font-size:14px;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+@media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+.testi-card{background:var(--ink-2);padding:36px 32px;}
+.testi-card .stars{color:var(--brass-2);letter-spacing:2px;font-size:13px;margin-bottom:18px;}
+.testi-card p{font-size:14.5px;line-height:1.85;color:var(--bone-dim);}
+.testi-card .author{margin-top:22px;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--bone);}
+
+/* ---- CTA final + formulario (fija) ---- */
+#contact{padding-top:16vh;padding-bottom:8vh;position:relative;overflow:hidden;}
+.cta-core{text-align:center;max-width:760px;margin:0 auto;}
+#contact h2{font-size:clamp(38px,6.4vw,80px);line-height:1.02;}
+#contact h2 em{font-style:italic;color:var(--brass-2);}
+.cta-actions{display:flex;justify-content:center;gap:18px;margin-top:44px;flex-wrap:wrap;}
+#contact-form-section{padding-top:10vh;padding-bottom:16vh;}
+#lead-form{scroll-margin-top:100px;}
+.contact-form-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:start;max-width:1180px;margin:0 auto;}
+@media (max-width:900px){ .contact-form-grid{grid-template-columns:1fr;gap:48px;} }
+.contact-col h4{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:16px;}
+.contact-col p, .contact-col a{font-size:14px;line-height:2;color:var(--bone-dim);display:block;}
+.contact-col a:hover{color:var(--brass-2);}
+.lead-form{display:flex;flex-direction:column;gap:22px;}
+.field label{display:block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin-bottom:10px;}
+.field input,.field textarea,.field select{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-strong);color:var(--bone);font-family:'Inter',sans-serif;font-size:15px;padding:10px 0;outline:none;transition:border-color .3s;}
+.field textarea{resize:vertical;min-height:110px;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--brass-2);}
+.field select option{background:var(--ink);}
+.lead-form .submit-row{margin-top:10px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.form-status{font-size:13px;color:var(--bone-dim);}
+.form-status.ok{color:var(--brass-2);}
+.form-status.err{color:#e08a82;}
+
+/* ---- footer (fija) ---- */
+footer{padding:28px 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;font-size:11px;color:var(--stone);letter-spacing:0.04em;}
+footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
+@media (max-width:760px){ footer{flex-direction:column;gap:10px;padding:24px;} footer .tagline{order:-1;} }
+</style>
+</head>
+<body>
+
+<div class="page-progress" id="page-progress"></div>
+<div class="scroll-spine" id="scroll-spine"><div class="fill"></div><div class="dot"></div></div>
+
+<!-- VARIABLE: logo del cliente en logo.png (fondo blanco, esquinas redondeadas) si lo tiene;
+     si no, quitar .logo-badge y dejar solo el texto de marca. Nombre de empresa en .brand-text. -->
+<nav>
+  <div class="brand-mark">
+    <a href="#" class="logo-badge"><img src="logo.png" alt="Ta Maison Est Ma Maison Inc."></a>
+    <span class="brand-text">TA MAISON <span class="accent">EST MA MAISON</span></span>
+  </div>
+  <!-- VARIABLE: anclas de navegación — deben apuntar a los id= de las secciones reales de la página -->
+  <div class="navlinks">
+    <a href="#hero" class="current">Accueil</a>
+    <a href="#services">Services</a>
+    <a href="#approach">Processus</a>
+    <a href="#testimonios">Avis</a>
+    <a href="#lead-form">Contact</a>
+  </div>
+</nav>
+
+<!-- ============================================================================
+     HERO — scroll-scrubbed video. FIJO: estructura, position:sticky, mecánica JS.
+     VARIABLE: fuente del video (la da el usuario, nunca generarlo), las dos
+     palabras del indicador de progreso, y todo el copy (eyebrow/h1/p/CTA).
+     ============================================================================ -->
+<div class="scrub-wrap" id="hero">
+  <section class="scrub-sticky">
+    <div class="scrub-bg">
+      <!-- VARIABLE: reemplazar src por el video que entregue el usuario -->
+      <video id="renov-film" class="scrub-video" muted playsinline webkit-playsinline="true" autoplay preload="auto"
+        disablePictureInPicture disableRemotePlayback controlsList="nodownload noplaybackrate nofullscreen">
+        <source src="hero-video.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="scrub-vignette"></div>
+    <span class="chapter-index">01 — Vision</span>
+    <!-- VARIABLE: las dos palabras del indicador (ej. "Avant"/"Après", "Matière première"/"Produit fini") -->
+    <div class="chapter-track"><span>Avant</span><span class="track"><span class="fill"></span></span><span>Après</span></div>
+    <div class="chapter-content">
+      <p class="eyebrow">Construction &amp; rénovation</p>
+      <h1>Construire votre avenir,<br>un <em style="font-style:italic;color:var(--brass-2);">projet</em> à la fois.</h1>
+      <p>Nous transformons vos visions de construction en réalités solides. Expertise, qualité et dévouement à chaque projet, grand ou petit.</p>
+      <div class="chapter-cta">
+        <a href="#lead-form" class="btn"><span>Soumission gratuite</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#services" class="btn btn-ghost"><span>Voir nos services</span></a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>Défilez pour découvrir</span><span class="line"></span></div>
+  </section>
+</div>
+
+<!-- ============================================================================
+     MANIFIESTO / FILOSOFÍA — FIJO: layout de 2 columnas, cifras destacadas.
+     VARIABLE: las dos cifras (o quitar una si el nicho no aplica), todo el copy.
+     ============================================================================ -->
+<section id="manifesto">
+  <div class="wrap manifesto-grid">
+    <div class="reveal">
+      <p class="eyebrow">Notre philosophie</p>
+      <div class="manifesto-stat">
+        <div><div class="stat-num">10+</div><div class="stat-label">années de métier en chantier, à travers toute l'équipe</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-label">projets avec un seul responsable, du début à la fin</div></div>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <p class="manifesto-lead">Rénover n'est jamais un détail mineur. Chaque décision <span class="accent">fait désormais partie de votre quotidien.</span></p>
+      <p class="manifesto-body">C'est pourquoi nous abordons chaque chantier avec la même exigence : comprendre l'usage réel de l'espace avant de tracer le premier plan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     SERVICIOS — filas horizontales con hover. FIJO: grid de 4 columnas
+     (num/nombre/detalle/flecha), comportamiento hover. VARIABLE: cantidad de
+     filas (3-6 recomendado) y su contenido, reescrito para el nicho del cliente.
+     ============================================================================ -->
+<section id="services">
+  <div class="wrap">
+    <div class="services-head reveal">
+      <h2>Nos services de<br>construction &amp; rénovation.</h2>
+      <p>Nous sommes fiers de notre adaptabilité et de notre engagement envers l'excellence.</p>
+    </div>
+    <div class="service-list">
+      <div class="service-row reveal">
+        <span class="service-num">01</span>
+        <span class="service-name">Rénovations complètes</span>
+        <span class="service-list-items">Reconfiguration de l'espace · Changements structurels</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="service-row reveal">
+        <span class="service-num">02</span>
+        <span class="service-name">Aire de vie communes</span>
+        <span class="service-list-items">Cuisines · Salles de bain · Sous-sols</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="service-row reveal">
+        <span class="service-num">03</span>
+        <span class="service-name">Agrandissements</span>
+        <span class="service-list-items">Extensions · Garages · Ajouts d'étage</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="service-row reveal">
+        <span class="service-num">04</span>
+        <span class="service-name">Rénovations extérieures</span>
+        <span class="service-list-items">Patios · Terrasses · Revêtements extérieurs</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     PROCESO EN 3 FASES — FIJO: exactamente 3 columnas. VARIABLE: título y
+     descripción de cada fase, adaptados al proceso real del negocio.
+     ============================================================================ -->
+<section id="approach">
+  <div class="wrap">
+    <div class="approach-head reveal">
+      <p class="eyebrow">Pourquoi nous choisir</p>
+      <h2>Chaque projet est réalisé<br>avec rigueur.</h2>
+    </div>
+    <div class="phases">
+      <div class="phase reveal">
+        <span class="phase-index">01</span>
+        <h3>Rigueur &amp; précision</h3>
+        <p>Que ce soit pour une construction neuve ou une rénovation, nous bâtissons des espaces durables et adaptés à vos besoins.</p>
+      </div>
+      <div class="phase reveal d1">
+        <span class="phase-index">02</span>
+        <h3>Une équipe de confiance</h3>
+        <p>Portés par un profond respect de la qualité, nous nous consacrons à offrir des solutions fiables et innovantes.</p>
+      </div>
+      <div class="phase reveal d2">
+        <span class="phase-index">03</span>
+        <h3>Votre vision, notre gestion</h3>
+        <p>Une approche axée sur la précision, l'efficacité et une communication constante à chaque étape.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     TESTIMONIOS EN GRID — FIJO: grid de 3 columnas. VARIABLE: contenido real
+     de cada reseña (nunca inventar reseñas falsas — usar placeholders claros
+     como "Exemple — à remplacer" si el cliente aún no las tiene).
+     ============================================================================ -->
+<section id="testimonios">
+  <div class="wrap">
+    <div class="testi-head reveal">
+      <h2>Ce que disent<br>nos clients.</h2>
+      <div class="google-badge"><span class="stars">★★★★★</span><span>Avis de vrais clients</span></div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Exemple d'avis — à remplacer par un commentaire réel du client."</p>
+        <div class="author">— Client, projet d'exemple</div>
+      </div>
+      <div class="testi-card reveal d1">
+        <div class="stars">★★★★★</div>
+        <p>"Exemple d'avis — à remplacer par un commentaire réel du client."</p>
+        <div class="author">— Client, projet d'exemple</div>
+      </div>
+      <div class="testi-card reveal d2">
+        <div class="stars">★★★★★</div>
+        <p>"Exemple d'avis — à remplacer par un commentaire réel du client."</p>
+        <div class="author">— Client, projet d'exemple</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     CTA FINAL + FORMULARIO + FOOTER — FIJO: layout de 2 columnas (datos de
+     contacto / formulario). VARIABLE: campos del formulario según el tipo de
+     negocio, texto del botón de envío, y todos los datos de contacto/footer.
+     ============================================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-core reveal">
+      <p class="eyebrow" style="justify-content:center;">Prêts à démarrer</p>
+      <h2 style="margin-top:20px;">Parlons de <em>votre</em><br>prochain projet.</h2>
+    </div>
+  </div>
+</section>
+
+<section id="contact-form-section">
+  <div class="contact-form-grid">
+    <div class="reveal">
+      <div class="contact-col" style="margin-bottom:40px;">
+        <h4>Contact direct</h4>
+        <a href="mailto:contact@exemple.com">contact@exemple.com</a>
+        <a href="tel:0000000000">000 000-0000</a>
+      </div>
+      <div class="contact-col">
+        <h4>Horaire</h4>
+        <p>Lundi - Vendredi: 9h00 - 17h00</p>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <!-- VARIABLE: campos del formulario — adaptar según el tipo de negocio
+           (ej. "tipo de proyecto", "metros cuadrados", "presupuesto estimado",
+           "fecha preferida de cita", etc.) -->
+      <form id="lead-form" class="lead-form">
+        <div class="field"><label for="name">Nom *</label><input type="text" id="name" name="name" required></div>
+        <div class="field"><label for="phone">Téléphone *</label><input type="tel" id="phone" name="phone" required></div>
+        <div class="field"><label for="email">Courriel</label><input type="email" id="email" name="email"></div>
+        <div class="field"><label for="message">Décrivez votre projet *</label><textarea id="message" name="message" required></textarea></div>
+        <div class="submit-row">
+          <!-- VARIABLE: texto del CTA principal (cotización, cita, demo, reserva, etc.) -->
+          <button type="submit" class="btn"><span>Envoyer et demander une soumission</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span id="form-status" class="form-status"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Ta Maison Est Ma Maison Inc.</span>
+  <span class="tagline">Construction &amp; rénovation — Rive-Sud de Montréal</span>
+</footer>
+
+<script>
+/* ============================================================================
+   BASE FIJA — motor de scroll-scrub + reveal + progreso. NO MODIFICAR la
+   lógica interna (solo el FORM_ENDPOINT es variable, ver abajo).
+   ============================================================================ */
+
+// ---- Scroll-scrub engine: cada .scrub-wrap controla su video por scroll, no reproducción normal ----
+function initScrubChapters() {
+  const chapters = Array.from(document.querySelectorAll('.scrub-wrap')).map((wrap) => {
+    const video = wrap.querySelector('video');
+    const content = wrap.querySelector('.chapter-content');
+    const fill = wrap.querySelector('.chapter-track .fill');
+    const cue = wrap.querySelector('.scroll-cue');
+    const state = { wrap, video, content, fill, cue, ready: false, duration: 0 };
+    if (video) {
+      video.addEventListener('loadedmetadata', () => { state.ready = true; state.duration = video.duration; });
+      // Safari muestra su botón de play nativo sobre cualquier <video> "pausado",
+      // sin importar cómo llegó a ese estado. La única forma de evitarlo es que
+      // el video esté genuinamente en reproducción (video.paused=false), así que
+      // se deja "play" para siempre pero con velocidad 0 — el scroll es lo único
+      // que mueve el frame, vía currentTime.
+      const primeVideo = () => {
+        const p = video.play();
+        const freeze = () => { video.playbackRate = 0; };
+        if (p && typeof p.then === 'function') {
+          p.then(freeze).catch(() => { try { video.currentTime = 0.01; } catch (e) {} });
+        } else {
+          freeze();
+        }
+      };
+      if (video.readyState >= 1) primeVideo();
+      else { video.load(); video.addEventListener('loadedmetadata', primeVideo, { once: true }); }
+      video.addEventListener('pause', primeVideo);
+    }
+    return state;
+  });
+
+  function updateChapter(ch) {
+    const rect = ch.wrap.getBoundingClientRect();
+    const total = ch.wrap.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+    const scrolled = Math.min(Math.max(-rect.top, 0), total);
+    const progress = scrolled / total;
+    const visible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (visible && ch.video && ch.ready && ch.duration) ch.video.currentTime = progress * ch.duration;
+    if (ch.fill) ch.fill.style.width = progress * 100 + '%';
+    if (ch.content) {
+      const fadeIn = Math.min(progress / 0.06, 1);
+      const fadeOut = progress > 0.88 ? Math.max(1 - (progress - 0.88) / 0.12, 0) : 1;
+      const op = Math.min(fadeIn, fadeOut);
+      ch.content.style.opacity = op;
+      ch.content.style.transform = 'translateY(' + (18 - op * 18) + 'px)';
+    }
+    if (ch.cue) ch.cue.style.opacity = progress < 0.04 ? 1 : 0;
+  }
+
+  if (!chapters.length) return;
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => { chapters.forEach(updateChapter); ticking = false; });
+      ticking = true;
+    }
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+}
+
+// ---- Barra de progreso horizontal + línea vertical de firma (spine) ----
+function initProgressIndicators() {
+  const bar = document.getElementById('page-progress');
+  const spine = document.getElementById('scroll-spine');
+  const spineFill = spine ? spine.querySelector('.fill') : null;
+  const spineDot = spine ? spine.querySelector('.dot') : null;
+  function update() {
+    const h = document.documentElement;
+    const ratio = Math.min(Math.max(h.scrollTop / (h.scrollHeight - h.clientHeight), 0), 1);
+    if (bar) bar.style.width = ratio * 100 + '%';
+    if (spineFill) spineFill.style.height = ratio * 100 + '%';
+    if (spineDot) spineDot.style.top = ratio * 100 + '%';
+  }
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+// ---- Reveal-on-scroll ----
+function initReveal() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => io.observe(el));
+}
+
+// ---- Mobile nav: cajón lateral desde la izquierda ----
+function mountMobileNav() {
+  const nav = document.querySelector('nav');
+  const links = document.querySelector('.navlinks');
+  if (!nav || !links) return;
+  const toggle = document.createElement('button');
+  toggle.className = 'nav-toggle';
+  toggle.setAttribute('aria-label', 'Ouvrir le menu');
+  toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  nav.appendChild(toggle);
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'nav-drawer-close';
+  closeBtn.setAttribute('aria-label', 'Fermer le menu');
+  closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  links.prepend(closeBtn);
+  const open = () => { links.classList.add('mobile-open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const close = () => { links.classList.remove('mobile-open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; };
+  toggle.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  links.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+}
+
+// VARIABLE: endpoint de envío del formulario (Formspree u otro servicio que indique el cliente)
+const FORM_ENDPOINT = '';
+
+function initContactForm() {
+  const form = document.getElementById('lead-form');
+  if (!form) return;
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!FORM_ENDPOINT) {
+      status.textContent = 'Formulaire pas encore connecté à un service d\'envoi.';
+      status.className = 'form-status err';
+      return;
+    }
+    status.textContent = 'Envoi...';
+    status.className = 'form-status';
+    try {
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (res.ok) { status.textContent = 'Merci ! Nous vous contacterons bientôt.'; status.className = 'form-status ok'; form.reset(); }
+      else { status.textContent = 'Échec de l\'envoi. Réessayez.'; status.className = 'form-status err'; }
+    } catch (err) {
+      status.textContent = 'Échec de l\'envoi. Réessayez.';
+      status.className = 'form-status err';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  mountMobileNav();
+  initScrubChapters();
+  initProgressIndicators();
+  initReveal();
+  initContactForm();
+});
+</script>
+</body>
+</html>
