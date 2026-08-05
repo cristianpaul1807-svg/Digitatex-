@@ -913,6 +913,29 @@
       </div>
 
       <div class="admin-card">
+        <h3 data-i18n="admin_video_h">Case videos</h3>
+        <div class="admin-grid2">
+          <div>
+            <p class="admin-note" style="margin-top:0;margin-bottom:12px;"><strong>Ta maison est ma maison</strong></p>
+            <div class="file-drop" data-slot="case-tamaison.mp4">
+              <span data-i18n="admin_video_pick">Click to select a video</span>
+              <input type="file" accept="video/mp4,video/quicktime,video/webm" style="display:none;">
+            </div>
+            <span class="form-status" data-status="case-tamaison.mp4" role="status" aria-live="polite"></span>
+          </div>
+          <div>
+            <p class="admin-note" style="margin-top:0;margin-bottom:12px;"><strong>Trimm</strong></p>
+            <div class="file-drop" data-slot="case-trimm.mp4">
+              <span data-i18n="admin_video_pick">Click to select a video</span>
+              <input type="file" accept="video/mp4,video/quicktime,video/webm" style="display:none;">
+            </div>
+            <span class="form-status" data-status="case-trimm.mp4" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="admin-note" data-i18n="admin_video_note">Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.</p>
+      </div>
+
+      <div class="admin-card">
         <h3 data-i18n="admin_list_h">Published testimonials</h3>
         <div class="admin-list" id="admin-testi-list"></div>
       </div>
@@ -982,7 +1005,7 @@
       admin_add_h:"Add an Instagram testimonial", admin_url:"Instagram reel / post link *", admin_author:"Client name",
       admin_handle:"Instagram handle", admin_order:"Order (lower shows first)", admin_quote:"Short quote (optional)",
       admin_cover:"Custom cover image (optional — leave empty to embed the reel directly)", admin_cover_hint:"Click to select a cover image",
-      admin_save:"Publish testimonial", admin_list_h:"Published testimonials", admin_leads_h:"Quote requests received",
+      admin_save:"Publish testimonial", admin_video_h:"Case videos", admin_video_pick:"Click to select a video", admin_video_up:"Uploading", admin_video_ok:"Uploaded - it is live on the site.", admin_video_note:"Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.", admin_list_h:"Published testimonials", admin_leads_h:"Quote requests received",
       admin_delete:"Delete", admin_hide:"Hide", admin_show:"Show", admin_none:"Nothing here yet.",
       admin_bad_url:"That doesn't look like an Instagram link.", admin_saved:"Published.", admin_deleted:"Deleted.",
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
@@ -1036,7 +1059,7 @@
       admin_add_h:"Agregar testimonio de Instagram", admin_url:"Link del reel / post de Instagram *", admin_author:"Nombre del cliente",
       admin_handle:"Usuario de Instagram", admin_order:"Orden (menor aparece primero)", admin_quote:"Frase corta (opcional)",
       admin_cover:"Portada personalizada (opcional — dejalo vacío para embeber el reel directo)", admin_cover_hint:"Hacé clic para elegir una imagen de portada",
-      admin_save:"Publicar testimonio", admin_list_h:"Testimonios publicados", admin_leads_h:"Solicitudes de cotización recibidas",
+      admin_save:"Publicar testimonio", admin_video_h:"Videos de los casos", admin_video_pick:"Hacé clic para elegir un video", admin_video_up:"Subiendo", admin_video_ok:"Subido - ya se ve en la web.", admin_video_note:"Lo que subas reemplaza al instante lo que muestra la web. Lo ideal es 16:9 horizontal; si no subís nada, la web usa el video que trae por defecto.", admin_list_h:"Testimonios publicados", admin_leads_h:"Solicitudes de cotización recibidas",
       admin_delete:"Borrar", admin_hide:"Ocultar", admin_show:"Mostrar", admin_none:"Todavía no hay nada acá.",
       admin_bad_url:"Ese link no parece de Instagram.", admin_saved:"Publicado.", admin_deleted:"Borrado.",
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
@@ -1090,7 +1113,7 @@
       admin_add_h:"Ajouter un témoignage Instagram", admin_url:"Lien du reel / post Instagram *", admin_author:"Nom du client",
       admin_handle:"Compte Instagram", admin_order:"Ordre (le plus petit en premier)", admin_quote:"Courte citation (facultatif)",
       admin_cover:"Image de couverture (facultatif — laissez vide pour intégrer le reel directement)", admin_cover_hint:"Cliquez pour choisir une image de couverture",
-      admin_save:"Publier le témoignage", admin_list_h:"Témoignages publiés", admin_leads_h:"Demandes de devis reçues",
+      admin_save:"Publier le témoignage", admin_video_h:"Vidéos des projets", admin_video_pick:"Cliquez pour choisir une vidéo", admin_video_up:"Envoi", admin_video_ok:"Envoyée - elle est en ligne.", admin_video_note:"Ce que vous envoyez remplace aussitôt ce qu affiche le site. Le 16:9 horizontal est idéal ; sans envoi, le site garde la vidéo fournie.", admin_list_h:"Témoignages publiés", admin_leads_h:"Demandes de devis reçues",
       admin_delete:"Supprimer", admin_hide:"Masquer", admin_show:"Afficher", admin_none:"Rien pour l'instant.",
       admin_bad_url:"Ce lien ne ressemble pas à un lien Instagram.", admin_saved:"Publié.", admin_deleted:"Supprimé.",
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
@@ -1144,7 +1167,7 @@
       admin_add_h:"Aggiungi una testimonianza Instagram", admin_url:"Link del reel / post Instagram *", admin_author:"Nome del cliente",
       admin_handle:"Account Instagram", admin_order:"Ordine (il più basso appare per primo)", admin_quote:"Frase breve (opzionale)",
       admin_cover:"Copertina personalizzata (opzionale — lascia vuoto per incorporare il reel)", admin_cover_hint:"Clicca per scegliere un'immagine di copertina",
-      admin_save:"Pubblica testimonianza", admin_list_h:"Testimonianze pubblicate", admin_leads_h:"Richieste di preventivo ricevute",
+      admin_save:"Pubblica testimonianza", admin_video_h:"Video dei progetti", admin_video_pick:"Clicca per scegliere un video", admin_video_up:"Caricamento", admin_video_ok:"Caricato - è online.", admin_video_note:"Ciò che carichi sostituisce subito quello che mostra il sito. Il 16:9 orizzontale è ideale; senza caricamento il sito usa il video incluso.", admin_list_h:"Testimonianze pubblicate", admin_leads_h:"Richieste di preventivo ricevute",
       admin_delete:"Elimina", admin_hide:"Nascondi", admin_show:"Mostra", admin_none:"Ancora niente qui.",
       admin_bad_url:"Questo link non sembra di Instagram.", admin_saved:"Pubblicato.", admin_deleted:"Eliminato.",
       admin_login_err:"Email o password errate.", admin_generic_err:"Qualcosa è andato storto. Riprova."
@@ -1526,33 +1549,96 @@
      Asi subir la grabacion no requiere tocar el HTML.
      ============================================================ */
   function initCaseDemo(){
-    mountDemo('case-demo', 'case-mock', 'assets/tamaison-demo.mp4');
-    mountDemo('own-demo',  'own-mock',  'assets/trimm-demo.mp4');
+    mountDemo('case-demo', 'case-mock', 'assets/tamaison-demo.mp4', mediaUrl('case-tamaison.mp4'));
+    mountDemo('own-demo',  'own-mock',  'assets/trimm-demo.mp4',    mediaUrl('case-trimm.mp4'));
   }
 
-  function mountDemo(videoId, mockId, src){
+  // Videos de los casos que el scroll controla (se llenan al cargar cada uno)
+  const scrubbables = [];
+
+  // Bucket donde el panel deja los videos de los casos. Nombres fijos: asi
+  // no hace falta ninguna tabla que apunte a cual es el vigente.
+  const MEDIA_BUCKET = 'site-media';
+  function mediaUrl(name){
+    return SUPABASE_URL + '/storage/v1/object/public/' + MEDIA_BUCKET + '/' + name;
+  }
+
+  function mountDemo(videoId, mockId, localSrc, overrideSrc){
     const video = document.getElementById(videoId);
     const mock = document.getElementById(mockId);
     if(!video || !mock) return;
 
+    const canScrub = () => window.matchMedia('(min-width: 901px)').matches;
+
     video.addEventListener('loadeddata', ()=>{
       mock.style.display = 'none';
       video.style.display = 'block';
+      // Safari pone su boton de play sobre cualquier video pausado, sin importar
+      // como llego ahi. Igual que en el hero: se deja reproduciendo a velocidad 0
+      // y el scroll mueve el frame por currentTime. Nunca .pause().
       const p = video.play();
-      if(p && typeof p.catch === 'function') p.catch(()=>{});
-    }, { once:true });
-    // si el archivo no esta todavia, se descarta en silencio
-    video.addEventListener('error', ()=>{ video.remove(); }, { once:true });
-
-    // solo se carga cuando el monitor se acerca a pantalla
-    const io = new IntersectionObserver((entries)=>{
-      if(entries.some(e=>e.isIntersecting)){
-        video.preload = 'auto';
-        video.src = src;
-        io.disconnect();
+      const settle = ()=>{ if(canScrub()) video.playbackRate = 0; };
+      if(p && typeof p.then === 'function') p.then(settle).catch(()=>{});
+      else settle();
+      if(canScrub() && !scrubbables.some(x => x.video === video)){
+        scrubbables.push({ video });
       }
+    });
+    video.addEventListener('pause', ()=>{
+      if(!canScrub()) return;
+      const p = video.play();
+      if(p && typeof p.then === 'function') p.then(()=>{ video.playbackRate = 0; }).catch(()=>{});
+    });
+    // sin video utilizable se queda la maqueta, que nunca deja el marco vacio
+    video.addEventListener('error', ()=>{ video.style.display = 'none'; mock.style.display = ''; });
+
+    // Se carga el archivo del repo en cuanto el marco se acerca a pantalla: es
+    // el camino rapido y siempre existe. En paralelo se pregunta si hay un video
+    // subido desde el panel, y solo entonces se cambia la fuente. Al reves —
+    // pedir Supabase primero — cada visitante pagaria una peticion fallida
+    // mientras no haya nada subido.
+    const io = new IntersectionObserver((entries)=>{
+      if(!entries.some(e=>e.isIntersecting)) return;
+      io.disconnect();
+      video.preload = 'auto';
+      video.src = localSrc;
+      if(!overrideSrc) return;
+      fetch(overrideSrc, { method:'HEAD' })
+        .then(res=>{
+          if(!res.ok) return;
+          const keep = video.currentTime;
+          video.src = overrideSrc;
+          video.load();
+          video.addEventListener('loadeddata', ()=>{
+            try { video.currentTime = keep; } catch(e){}
+          }, { once:true });
+        })
+        .catch(()=>{ /* sin conexion o sin bucket: se queda el del repo */ });
     }, { rootMargin:'300px' });
     io.observe(video.closest('.monitor') || video.closest('.own-card') || video);
+  }
+
+  /* El scroll recorre el video del caso igual que hace girar la D del hero:
+     mientras el panel cruza la pantalla de derecha a izquierda, el sitio de
+     dentro se desplaza. Scrollear mas rapido lo recorre mas rapido.
+     En movil no aplica: ahi no hay recorrido lateral y el scrub pelea con
+     el gesto tactil, asi que el video se reproduce en bucle normal. */
+  function updateCaseScrub(progress){
+    // Se usa el progreso del recorrido lateral, no el cruce del panel por la
+    // pantalla: los paneles no llegan a cruzarla entera, asi que atarlo al
+    // cruce dejaba la mitad del video sin verse nunca.
+    const p = Math.min(Math.max(progress, 0), 1);
+    for(let i = 0; i < scrubbables.length; i++){
+      const { video } = scrubbables[i];
+      if(!video.duration || !isFinite(video.duration)) continue;
+      // se queda justo antes del final: al tocar la duracion exacta el
+      // atributo loop lo devolveria a 0 y el video daria un salto
+      const target = Math.min(p * video.duration, video.duration - 0.06);
+      // solo se escribe si cambio de verdad: asignar currentTime es caro
+      if(Math.abs(video.currentTime - target) > 0.03){
+        try { video.currentTime = target; } catch(e){}
+      }
+    }
   }
 
   /* ============================================================
@@ -1593,6 +1679,7 @@
       if(total <= 0) return;
       const progress = Math.min(Math.max(-rect.top / total, 0), 1);
       track.style.transform = 'translate3d(' + (-progress * distance).toFixed(2) + 'px,0,0)';
+      updateCaseScrub(progress);
       if(fill) fill.style.width = (progress * 100) + '%';
       if(count){
         const idx = Math.min(Math.floor(progress * panels.length) + 1, panels.length);
@@ -1807,6 +1894,33 @@
       }catch(err){
         testiStatus.textContent = t('admin_generic_err'); testiStatus.className='form-status err';
       }
+    });
+
+    /* Subida de los videos de los casos. Nombre fijo por hueco y upsert:
+       el sitio siempre pide la misma URL, asi que no hace falta guardar en
+       ninguna tabla cual es el video vigente. */
+    document.querySelectorAll('.file-drop[data-slot]').forEach(drop=>{
+      const input = drop.querySelector('input[type=file]');
+      const slot = drop.dataset.slot;
+      const status = document.querySelector('[data-status="' + slot + '"]');
+      drop.addEventListener('click', ()=>input.click());
+      input.addEventListener('change', async (e)=>{
+        const file = e.target.files[0];
+        if(!file || !supabaseClient) return;
+        status.textContent = t('admin_video_up') + ' (' + Math.round(file.size/1048576) + ' MB)…';
+        status.className = 'form-status';
+        try{
+          const { error } = await supabaseClient.storage.from(MEDIA_BUCKET)
+            .upload(slot, file, { contentType: file.type || 'video/mp4', upsert: true, cacheControl: '300' });
+          if(error) throw error;
+          status.textContent = t('admin_video_ok');
+          status.className = 'form-status ok';
+        }catch(err){
+          status.textContent = (err && err.message) ? err.message : t('admin_generic_err');
+          status.className = 'form-status err';
+        }
+        input.value = '';
+      });
     });
 
     async function loadAdminTestimonials(){
