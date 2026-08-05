@@ -213,6 +213,29 @@
     .hero-ghost{top:30%;font-size:clamp(64px,22vw,150px);}
   }
 
+  /* ---- anillos de luz orbitando el logo ----
+     Van por encima del video (que es opaco), uno arriba y otro abajo del
+     logo en vez de cruzarlo: asi no hace falta fingir que pasan por detras.
+     El brillo es un conic-gradient enmascarado en forma de aro — al girar,
+     el barrido de luz es lo que hace legible la rotacion. */
+  .hero-orbit{position:absolute;z-index:3;left:78%;top:46%;width:min(38vw,460px);height:min(38vw,460px);
+    transform:translate(-50%,-50%);pointer-events:none;perspective:900px;}
+  .orbit-ring{position:absolute;left:50%;top:50%;border-radius:50%;
+    background:conic-gradient(from 0deg,
+      rgba(224,190,130,0) 0deg, rgba(224,190,130,0.55) 48deg,
+      rgba(255,244,222,0.95) 92deg, rgba(224,190,130,0.5) 140deg,
+      rgba(224,190,130,0.08) 210deg, rgba(224,190,130,0) 320deg);
+    -webkit-mask:radial-gradient(closest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+    mask:radial-gradient(closest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+    filter:drop-shadow(0 0 9px rgba(224,190,130,0.55));
+    will-change:transform;}
+  .ring-top{width:100%;height:100%;margin-left:-50%;margin-top:-50%;}
+  .ring-bottom{width:74%;height:74%;margin-left:-37%;margin-top:-37%;}
+  @media (max-width:900px){
+    .hero-orbit{left:50%;top:30%;width:min(76vw,340px);height:min(76vw,340px);}
+  }
+  @media (prefers-reduced-motion: reduce){ .orbit-ring{filter:none;} }
+
   .hero-inner{position:relative;z-index:4;width:100%;}
   #hero h1{font-size:clamp(38px,6.6vw,94px);line-height:0.99;max-width:15ch;margin-top:20px;}
   #hero h1 em{font-style:italic;color:var(--brass-2);}
@@ -527,6 +550,10 @@
         disablePictureInPicture disableRemotePlayback controlsList="nodownload noplaybackrate nofullscreen">
         <source src="assets/hero-logo-spin.mp4" type="video/mp4">
       </video>
+    </div>
+    <div class="hero-orbit" aria-hidden="true">
+      <span class="orbit-ring ring-top"></span>
+      <span class="orbit-ring ring-bottom"></span>
     </div>
     <span class="sec-counter">01 — <span data-i18n="sec_hero">Studio</span></span>
     <div class="wrap hero-inner chapter-content">
@@ -1225,7 +1252,9 @@
       const content = wrap.querySelector('.chapter-content');
       const cue = wrap.querySelector('.scroll-cue');
       const ghost = wrap.querySelector('.hero-ghost');
-      const state = { wrap, video, content, cue, ghost, ready:false, duration:0 };
+      const ringTop = wrap.querySelector('.ring-top');
+      const ringBottom = wrap.querySelector('.ring-bottom');
+      const state = { wrap, video, content, cue, ghost, ringTop, ringBottom, ready:false, duration:0 };
       if(video){
         const markReady = () => { state.ready = true; state.duration = video.duration; };
         video.addEventListener('loadedmetadata', markReady);
@@ -1273,17 +1302,21 @@
         ch.ghost.style.transform = 'translate(-50%,-50%) scale(' + (1 + progress * 0.16) + ')';
         ch.ghost.style.opacity = Math.max(1 - progress * 1.25, 0);
       }
+      ch.progress = progress;
+      ch.visible = visible;
       if(ch.cue) ch.cue.style.opacity = progress < 0.04 ? 1 : 0;
     }
 
     if(!chapters.length) return;
     let ticking = false;
+    let onChaptersUpdated = null;
     function onScrollScrub(){
       if(!ticking){
         requestAnimationFrame(() => {
           chapters.forEach(updateChapter);
           updateScrollWords();
           ticking = false;
+          if(typeof onChaptersUpdated === 'function') onChaptersUpdated();
         });
         ticking = true;
       }
@@ -1291,6 +1324,44 @@
     document.addEventListener('scroll', onScrollScrub, {passive:true});
     window.addEventListener('resize', onScrollScrub);
     onScrollScrub();
+
+    /* Anillos orbitando el logo. Giran con el scroll igual que la D, pero en
+       sentidos opuestos y con inclinaciones distintas: eso es lo que los
+       separa en profundidad en vez de leerse como dos circulos planos.
+       Llevan bucle propio porque tienen que seguir girando aunque el visitante
+       no scrollee; solo corre mientras el hero se ve y la pestaña esta activa. */
+    const ringed = chapters.filter(c => c.ringTop || c.ringBottom);
+    if(ringed.length){
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let spinning = false;
+      function spin(time){
+        if(!spinning) return;
+        const drift = reduce ? 0 : time * 0.004;
+        let anyVisible = false;
+        for(const ch of ringed){
+          if(!ch.visible) continue;
+          anyVisible = true;
+          const p = ch.progress || 0;
+          if(ch.ringTop){
+            ch.ringTop.style.transform =
+              'rotateX(74deg) rotateZ(' + (p * 520 + drift) + 'deg)';
+          }
+          if(ch.ringBottom){
+            ch.ringBottom.style.transform =
+              'translateY(' + (window.innerHeight * 0.11) + 'px) rotateX(68deg) rotateZ(' + (-p * 700 - drift * 1.4) + 'deg)';
+          }
+        }
+        if(!anyVisible){ spinning = false; return; }
+        requestAnimationFrame(spin);
+      }
+      function maybeSpin(){
+        const should = !document.hidden && ringed.some(c => c.visible);
+        if(should && !spinning){ spinning = true; requestAnimationFrame(spin); }
+      }
+      onChaptersUpdated = maybeSpin;
+      document.addEventListener('visibilitychange', maybeSpin);
+      onScrollScrub();
+    }
   }
 
   /* ============================================================
