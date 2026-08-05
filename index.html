@@ -258,10 +258,26 @@
   .btn-solid::before{background:var(--bone);}
   .btn-solid:hover span{color:var(--ink);}
 
-  .reveal{opacity:1;transform:translateY(0);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);}
-  .js-ready .reveal{opacity:0;transform:translateY(36px);}
-  .js-ready .reveal.in{opacity:1;transform:translateY(0);}
-  .d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;}
+  /* ---- entradas: los bloques ENTRAN a su sitio y se quedan ----
+     Nunca se anima la salida: una vez dentro, el elemento se deja de
+     observar. Si al volver a subir se fueran otra vez, la pagina se
+     sentiria inestable en vez de premium. */
+  .reveal{opacity:1;transform:none;
+    transition:opacity .95s cubic-bezier(.22,1,.36,1), transform .95s cubic-bezier(.22,1,.36,1);}
+  .js-ready .reveal{opacity:0;transform:translateY(38px);}
+  .js-ready .reveal.rv-down{transform:translateY(-52px);}   /* cae desde arriba */
+  .js-ready .reveal.rv-left{transform:translateX(-64px);}   /* entra por izquierda */
+  .js-ready .reveal.rv-right{transform:translateX(64px);}   /* entra por derecha */
+  .js-ready .reveal.in{opacity:1;transform:none;}
+  .d1{transition-delay:.09s;} .d2{transition-delay:.18s;} .d3{transition-delay:.27s;}
+  .d4{transition-delay:.36s;} .d5{transition-delay:.45s;}
+  @media (max-width:760px){
+    .js-ready .reveal.rv-left,
+    .js-ready .reveal.rv-right{transform:translateY(38px);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .js-ready .reveal{transform:none;transition-duration:.01ms;}
+  }
 
   /* ---- texto que se revela palabra por palabra con el scroll ---- */
   .sw-word{display:inline-block;opacity:0.13;transition:opacity .16s linear, color .3s;will-change:opacity;}
@@ -344,7 +360,18 @@
   .monitor-base{width:210px;height:9px;margin:0 auto;background:linear-gradient(180deg,#131315,#0b0b0c);border-radius:50%/60%;box-shadow:0 12px 28px -10px rgba(0,0,0,0.9);}
   .monitor-caption{margin-top:20px;text-align:center;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);}
 
-  /* placeholder animado dentro del monitor mientras no hay video de Trimm */
+  /* ---- producto propio: lenguaje visual distinto al de trabajo de cliente ----
+     Sin marco de monitor a proposito: el monitor dice "web que entregamos",
+     esta tarjeta dice "software que operamos nosotros". */
+  .own-card{position:relative;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;
+    background:rgba(14,16,20,0.62);box-shadow:0 30px 70px -34px rgba(0,0,0,0.85);}
+  .own-badge{position:absolute;top:14px;left:14px;z-index:3;font-size:9.5px;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--brass-2);border:1px solid rgba(224,190,130,0.42);
+    padding:5px 10px;border-radius:2px;background:rgba(12,12,13,0.72);}
+  .own-view{position:relative;aspect-ratio:16/9;overflow:hidden;
+    background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);}
+
+  /* placeholder animado dentro del monitor mientras no hay grabacion */
   .mock-trimm{position:absolute;inset:0;}
   .mock-trimm .panel{position:absolute;left:8%;right:8%;top:13%;bottom:13%;border:1px solid var(--line);border-radius:7px;background:rgba(239,233,221,0.03);}
   .mock-trimm .side{position:absolute;left:8%;top:13%;bottom:13%;width:19%;border-right:1px solid var(--line);background:rgba(239,233,221,0.025);border-radius:7px 0 0 7px;}
@@ -592,14 +619,21 @@
           <div class="monitor-screen">
             <div class="monitor-bar"><i></i><i></i><i></i><span class="monitor-url">ta-maison-est-ma-maison-inc.com</span></div>
             <div class="monitor-view">
-              <div class="mock-tamaison"><div class="grid"></div><div class="frame"></div><div class="beam"></div></div>
+              <!-- Para mostrar el sitio real del cliente: dejá la grabacion en
+                   assets/tamaison-demo.mp4 y listo. El JS la detecta sola y
+                   reemplaza la maqueta; si el archivo no esta, se queda la
+                   maqueta y no se rompe nada. -->
+              <video id="case-demo" muted loop playsinline preload="none"
+                     style="display:none;" aria-hidden="true" tabindex="-1"
+                     disablePictureInPicture controlsList="nodownload nofullscreen"></video>
+              <div class="mock-tamaison" id="case-mock"><div class="grid"></div><div class="frame"></div><div class="beam"></div></div>
               <div class="monitor-glare"></div>
             </div>
           </div>
           <div class="monitor-stand"></div><div class="monitor-base"></div>
         </div>
         <div class="case-body">
-          <p class="case-tag" data-i18n="case1_tag">Cinematic web · Construction &amp; renovation</p>
+          <p class="case-tag" data-i18n="case1_tag">Client work · Cinematic web · Construction &amp; renovation</p>
           <h3>Ta maison est ma maison</h3>
           <p class="case-copy" data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
           <div class="case-meta">
@@ -609,28 +643,20 @@
         </div>
       </article>
 
-      <article class="hpanel hpanel-case">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <div class="monitor-bar"><i></i><i></i><i></i><span class="monitor-url">trimm.online</span></div>
-            <div class="monitor-view">
-              <!-- Para mostrar el software real: dejá la grabacion en
-                   assets/trimm-demo.mp4 y listo. El JS la detecta sola y
-                   reemplaza la maqueta; si el archivo no esta, se queda
-                   la maqueta y no se rompe nada. -->
-              <video id="trimm-demo" muted loop playsinline preload="none"
-                     style="display:none;" aria-hidden="true" tabindex="-1"
-                     disablePictureInPicture controlsList="nodownload nofullscreen"></video>
-              <div class="mock-trimm" id="trimm-mock">
-                <div class="panel"></div><div class="side"></div>
-                <div class="bar s1"></div><div class="bar s2"></div><div class="bar s3"></div>
-                <div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div>
-                <div class="dot"></div>
-              </div>
-              <div class="monitor-glare"></div>
+      <!-- Trimm no es trabajo de cliente: es producto propio del estudio.
+           Por eso NO lleva el marco de monitor (ese lenguaje queda reservado
+           a las webs que entregamos a clientes) y se presenta como credencial. -->
+      <article class="hpanel hpanel-case hpanel-own">
+        <div class="own-card">
+          <span class="own-badge" data-i18n="case2_kind">Our own product</span>
+          <div class="own-view">
+            <div class="mock-trimm">
+              <div class="panel"></div><div class="side"></div>
+              <div class="bar s1"></div><div class="bar s2"></div><div class="bar s3"></div>
+              <div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div>
+              <div class="dot"></div>
             </div>
           </div>
-          <div class="monitor-stand"></div><div class="monitor-base"></div>
         </div>
         <div class="case-body">
           <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
@@ -665,17 +691,17 @@
       <h2 data-i18n="serv_h2">One studio, three disciplines.</h2>
     </div>
     <div class="serv-grid">
-      <div class="serv-card reveal">
+      <div class="serv-card reveal rv-down">
         <span class="serv-num">01</span>
         <h3 data-i18n="serv1_h">Cinematic web design</h3>
         <p data-i18n="serv1_p">Scroll-driven, story-led sites for brands that need to feel premium from the first second — built for conversion, not just looks.</p>
       </div>
-      <div class="serv-card reveal d1">
+      <div class="serv-card reveal rv-down d1">
         <span class="serv-num">02</span>
         <h3 data-i18n="serv2_h">Business software</h3>
         <p data-i18n="serv2_p">Booking systems, client management and internal tools built around how your business actually runs day to day.</p>
       </div>
-      <div class="serv-card reveal d2">
+      <div class="serv-card reveal rv-down d2">
         <span class="serv-num">03</span>
         <h3 data-i18n="serv3_h">Brand &amp; digital identity</h3>
         <p data-i18n="serv3_p">Naming, visual system and tone of voice that hold together across your site, product and social presence.</p>
@@ -688,7 +714,7 @@
 <section id="testimonials">
   <span class="sec-counter">04 — <span data-i18n="sec_testi">Proof</span></span>
   <div class="wrap">
-    <div class="testi-head reveal">
+    <div class="testi-head reveal rv-left">
       <div>
         <p class="eyebrow" data-i18n="testi_eyebrow">Client proof</p>
         <h2 data-i18n="testi_h2">Real clients.<br>Real reels.</h2>
@@ -703,14 +729,14 @@
 <section id="about">
   <span class="sec-counter">05 — <span data-i18n="sec_about">Studio</span></span>
   <div class="wrap about-grid">
-    <div class="reveal">
+    <div class="reveal rv-left">
       <p class="eyebrow" data-i18n="about_eyebrow">Studio</p>
       <div class="about-stat">
         <div><div class="stat-num">2</div><div class="stat-label" data-i18n="about_stat1">disciplines under one roof: web and software</div></div>
         <div><div class="stat-num">100%</div><div class="stat-label" data-i18n="about_stat2">of projects led end-to-end by the same person</div></div>
       </div>
     </div>
-    <div class="reveal d1">
+    <div class="reveal rv-right d1">
       <p class="about-lead" data-i18n="about_lead">We don't separate the website from the tool that runs the business behind it. <em>Both are built by the same hand,</em> so they actually work together.</p>
       <p class="about-body scroll-words" data-i18n="about_body">Digitatex is a small studio focused on two things: websites that feel like an experience, and the internal software that keeps a service business running — bookings, payments, clients, reminders. We take on a limited number of projects at a time, so every build gets full attention from first sketch to launch.</p>
     </div>
@@ -744,7 +770,7 @@
     </div>
 
     <div class="quote-grid">
-      <form id="quote-form" class="quote-form reveal d1" novalidate>
+      <form id="quote-form" class="quote-form reveal rv-left d1" novalidate>
         <div class="field">
           <label data-i18n="q_type_label">Project type *</label>
           <div class="radio-group">
@@ -795,7 +821,7 @@
         </div>
       </form>
 
-      <aside class="estimate-box reveal d2">
+      <aside class="estimate-box reveal rv-right d2">
         <h4 data-i18n="q_estimate_label">Your estimate</h4>
         <div class="estimate-range" id="estimate-range" data-i18n="q_estimate_placeholder">Select a project type to see your estimate.</div>
         <div class="estimate-maint" id="estimate-maint"></div>
@@ -911,7 +937,7 @@
       hero_btn:"See our work", hero_btn2:"Get a free quote", hero_cue:"Scroll to explore",
       hscroll_hint:"Keep scrolling", work_eyebrow:"Selected work", work_h2:"Two problems.<br>Two different builds.",
       work_p:"Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?",
-      case1_tag:"Cinematic web · Construction & renovation",
+      case2_kind:"Our own product", case1_tag:"Client work · Cinematic web · Construction & renovation",
       case1_p:"A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.",
       case1_m1s:"Scroll-scrub", case1_m1:"Video tied to scroll position, not autoplay",
       case1_m2s:"4 → 1", case1_m2:"Services consolidated into one clear path",
@@ -965,7 +991,7 @@
       hero_btn:"Ver nuestro trabajo", hero_btn2:"Cotización gratis", hero_cue:"Desliza para explorar",
       hscroll_hint:"Seguí bajando", work_eyebrow:"Proyectos destacados", work_h2:"Dos problemas.<br>Dos soluciones distintas.",
       work_p:"Cada proyecto parte de la misma pregunta: ¿qué necesita este negocio para avanzar más rápido — una historia que se recorre con scroll, o un sistema con el que gestiona su día a día?",
-      case1_tag:"Web cinematográfica · Construcción y renovación",
+      case2_kind:"Producto propio", case1_tag:"Proyecto de cliente · Web cinematográfica · Construcción",
       case1_p:"Un video controlado por scroll corre detrás de toda la página: mientras el visitante hace scroll, una obra en construcción se transforma fotograma a fotograma en un interior de lujo terminado — la propia transformación del sitio es el argumento de venta.",
       case1_m1s:"Scroll-scrub", case1_m1:"Video sincronizado con el scroll, no en reproducción automática",
       case1_m2s:"4 → 1", case1_m2:"Servicios consolidados en un solo camino claro",
@@ -1019,7 +1045,7 @@
       hero_btn:"Voir nos projets", hero_btn2:"Devis gratuit", hero_cue:"Défilez pour découvrir",
       hscroll_hint:"Continuez à défiler", work_eyebrow:"Projets sélectionnés", work_h2:"Deux problèmes.<br>Deux réponses différentes.",
       work_p:"Chaque projet part de la même question : de quoi cette entreprise a-t-elle vraiment besoin pour avancer plus vite — une histoire à parcourir au scroll, ou un système pour gérer son quotidien ?",
-      case1_tag:"Site cinématographique · Construction & rénovation",
+      case2_kind:"Notre propre produit", case1_tag:"Projet client · Site cinématographique · Construction",
       case1_p:"Un film piloté par le scroll défile en fond sur toute la page : à mesure que le visiteur avance, un chantier brut se transforme image par image en un intérieur de luxe terminé — la transformation du site devient l'argument de vente.",
       case1_m1s:"Scroll-scrub", case1_m1:"Vidéo synchronisée à la position du scroll, pas en lecture automatique",
       case1_m2s:"4 → 1", case1_m2:"Services regroupés en un parcours clair",
@@ -1073,7 +1099,7 @@
       hero_btn:"Guarda i lavori", hero_btn2:"Preventivo gratuito", hero_cue:"Scorri per esplorare",
       hscroll_hint:"Continua a scorrere", work_eyebrow:"Progetti selezionati", work_h2:"Due problemi.<br>Due soluzioni diverse.",
       work_p:"Ogni progetto parte dalla stessa domanda: di cosa ha davvero bisogno questa attività per andare più veloce — una storia da scorrere, o un sistema con cui gestire la giornata?",
-      case1_tag:"Sito cinematografico · Edilizia & ristrutturazione",
+      case2_kind:"Prodotto nostro", case1_tag:"Progetto cliente · Sito cinematografico · Edilizia",
       case1_p:"Un video guidato dallo scroll scorre dietro l'intera homepage: mentre il visitatore scorre, un cantiere grezzo si trasforma fotogramma dopo fotogramma in un interno di lusso finito — la trasformazione del sito diventa l'argomento di vendita.",
       case1_m1s:"Scroll-scrub", case1_m1:"Video sincronizzato con la posizione dello scroll, non in autoplay",
       case1_m2s:"4 → 1", case1_m2:"Servizi riuniti in un unico percorso chiaro",
@@ -1490,14 +1516,14 @@
   }
 
   /* ============================================================
-     Demo de Trimm dentro del monitor.
-     Si existe assets/trimm-demo.mp4 se muestra en lugar de la
+     Grabacion del sitio del cliente dentro del monitor.
+     Si existe assets/tamaison-demo.mp4 se muestra en lugar de la
      maqueta; si no existe, la maqueta se queda y no pasa nada.
      Asi subir la grabacion no requiere tocar el HTML.
      ============================================================ */
-  function initTrimmDemo(){
-    const video = document.getElementById('trimm-demo');
-    const mock = document.getElementById('trimm-mock');
+  function initCaseDemo(){
+    const video = document.getElementById('case-demo');
+    const mock = document.getElementById('case-mock');
     if(!video || !mock) return;
 
     video.addEventListener('loadeddata', ()=>{
@@ -1513,7 +1539,7 @@
     const io = new IntersectionObserver((entries)=>{
       if(entries.some(e=>e.isIntersecting)){
         video.preload = 'auto';
-        video.src = 'assets/trimm-demo.mp4';
+        video.src = 'assets/tamaison-demo.mp4';
         io.disconnect();
       }
     }, { rootMargin:'300px' });
@@ -1622,10 +1648,11 @@
     const rail = document.getElementById('testi-rail');
     if(!rail) return;
     if(!testimonialsCache.length){
-      rail.innerHTML = '<div class="testi-empty">' + escapeHtml(t('testi_empty')) + '</div>';
+      rail.innerHTML = '<div class="testi-empty reveal rv-down">' + escapeHtml(t('testi_empty')) + '</div>';
+      observeReveals();
       return;
     }
-    rail.innerHTML = testimonialsCache.map(item=>{
+    rail.innerHTML = testimonialsCache.map((item, idx)=>{
       const code = item.shortcode || igShortcode(item.instagram_url);
       const url = escapeHtml(item.instagram_url);
       const author = escapeHtml(item.author_name || '');
@@ -1643,7 +1670,7 @@
             ? '<iframe src="https://www.instagram.com/reel/' + encodeURIComponent(code) + '/embed/" loading="lazy" allowtransparency="true" allowfullscreen title="' + (author || 'Instagram testimonial') + '" scrolling="no"></iframe>'
             : '<a class="testi-cover-link" href="' + url + '" target="_blank" rel="noopener"><span class="testi-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></a>');
 
-      return '<article class="testi-card" role="listitem">' +
+      return '<article class="testi-card reveal rv-down ' + ('d' + Math.min(idx + 1, 5)) + '" role="listitem">' +
         '<div class="testi-media">' + media + '</div>' +
         '<div class="testi-body">' +
           (quote ? '<p class="testi-quote">“' + quote + '”</p>' : '') +
@@ -1659,6 +1686,7 @@
         '</div>' +
       '</article>';
     }).join('');
+    observeReveals();
   }
 
   /* ============================================================
@@ -2071,7 +2099,7 @@
   initScrubChapters();
   initHorizontalScroll();
   initDepthField();
-  initTrimmDemo();
+  initCaseDemo();
   loadTestimonials();
   document.addEventListener('scroll', updateScrollWords, {passive:true});
   window.addEventListener('resize', updateScrollWords);
