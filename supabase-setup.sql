@@ -160,3 +160,45 @@ create index if not exists cases_order_idx on public.cases (published, sort_orde
 drop policy if exists "authenticated can delete leads" on public.leads;
 create policy "authenticated can delete leads"
   on public.leads for delete to authenticated using (true);
+
+
+-- ----------------------------------------------------------------------------
+-- 6. SYSTEMS — sistemas propios del estudio o hechos en colaboracion
+-- Trimm vive aca. Se separan de public.cases porque no son trabajo entregado a
+-- un cliente: en la web se presentan sin el marco de monitor y con su etiqueta.
+-- ----------------------------------------------------------------------------
+create table if not exists public.systems (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  name text not null,
+  site_url text,
+  video_path text not null,
+  kind text not null default 'own' check (kind in ('own','collab')),
+  note text,
+  sort_order integer not null default 0,
+  published boolean not null default true
+);
+
+alter table public.systems enable row level security;
+
+drop policy if exists "public can read published systems" on public.systems;
+create policy "public can read published systems"
+  on public.systems for select to anon using (published = true);
+
+drop policy if exists "admins can read all systems" on public.systems;
+create policy "admins can read all systems"
+  on public.systems for select to authenticated using (is_site_admin());
+
+drop policy if exists "admins can insert systems" on public.systems;
+create policy "admins can insert systems"
+  on public.systems for insert to authenticated with check (is_site_admin());
+
+drop policy if exists "admins can update systems" on public.systems;
+create policy "admins can update systems"
+  on public.systems for update to authenticated using (is_site_admin()) with check (is_site_admin());
+
+drop policy if exists "admins can delete systems" on public.systems;
+create policy "admins can delete systems"
+  on public.systems for delete to authenticated using (is_site_admin());
+
+create index if not exists systems_order_idx on public.systems (published, sort_order, created_at desc);
