@@ -257,7 +257,13 @@
   .scrub-bg{position:absolute;inset:0;z-index:2;pointer-events:none;}
   .scrub-bg canvas{width:100%;height:100%;display:block;}
   @media (max-width:900px){
-    .scrub-sticky{justify-content:flex-end;padding-bottom:10vh;}
+    /* En vertical la letra y el texto se reparten la misma pantalla. Cada pixel
+       que el bloque de texto no gasta es un pixel que la D puede ocupar, y en
+       italiano o frances el titular ocupa tres lineas en vez de dos: sin
+       apretar aca, en esos idiomas no quedaba sitio para la letra. */
+    .scrub-sticky{justify-content:flex-end;padding-bottom:7.5vh;}
+    #hero h1{margin-top:12px;}
+    .hero-sub{margin-top:20px;gap:18px;padding:18px 22px 20px;}
     .hero-ghost{top:27%;font-size:clamp(64px,22vw,150px);}
   }
 
@@ -1214,7 +1220,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v7</span>
+  <span class="build-tag">v8</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -1575,15 +1581,21 @@
     b.addEventListener('click', ()=> applyLang(b.dataset.lang));
   });
 
-  /* ---- idioma inicial: ?lang= > guardado > idioma del navegador ---- */
-  (function initLang(){
+  /* ---- idioma inicial: ?lang= > guardado > idioma del navegador ----
+     Se resuelve aca pero NO se aplica hasta el final del script. applyLang()
+     llama a renderEstimate(), que necesita la tabla de precios traducida, y esa
+     tabla es una const declarada mucho mas abajo: aplicarlo aca reventaba con
+     "Cannot access 'quoteI18n' before initialization" y ese error se llevaba
+     por delante todo lo que quedaba por ejecutar — el panel de gestion, el
+     formulario y el hero entero. Solo pasaba fuera del ingles, que es
+     justamente el caso de casi todos los visitantes reales. */
+  function pickInitialLang(){
     const urlLang = new URLSearchParams(location.search).get('lang');
     let saved = null;
     try{ saved = localStorage.getItem('digitatex_lang'); }catch(e){}
     const nav = (navigator.language || 'en').slice(0,2).toLowerCase();
-    const pick = [urlLang, saved, nav].find(l => l && i18n[l]) || 'en';
-    if(pick !== 'en') applyLang(pick);
-  })();
+    return [urlLang, saved, nav].find(l => l && i18n[l]) || 'en';
+  }
 
   /* ============================================================
      Nav: menu movil, estado al hacer scroll, link activo
@@ -1775,7 +1787,9 @@
         const bottom = copyTop - 18;
         // la perspectiva estira el dibujo hasta ~1.45 veces la escala
         const cabe = (bottom - top) / (2 * 1.45 * 0.33);
-        if(cabe < 168){
+        // Por debajo de esto la letra sale tan chica que no se lee como logo;
+        // ahi compensa mas que pase a ser fondo.
+        if(cabe < 120){
           /* Pantalla corta (un movil chico, o cualquier telefono en
              horizontal): el texto ocupa todo y no queda hueco. En vez de
              encajar una letra diminuta que igual pisa el titular, la D pasa a
@@ -3001,14 +3015,25 @@
     });
   }
 
-  /* ---- arranque ---- */
-  splitScrollWords();
-  dropButtons();
-  initScrubChapters();
-  initWorkScene();
-  initDepthField();
-  initCaseDemo();
-  loadTestimonials();
+  /* ---- arranque ----
+     Cada pieza va en su propio try. Son independientes entre si: que falle el
+     fondo no tiene por que dejar sin panel de gestion al sitio, y eso es
+     exactamente lo que pasaba — un error en una linea temprana cancelaba todo
+     lo que venia detras, sin dejar rastro salvo en la consola. */
+  function arrancar(nombre, fn){
+    try{ fn(); }
+    catch(e){ console.error('[digitatex] fallo al iniciar "' + nombre + '":', e); }
+  }
+
+  // El idioma se aplica el primero, pero ya con todo el script cargado.
+  arrancar('idioma', ()=>{ const l = pickInitialLang(); if(l !== 'en') applyLang(l); });
+  arrancar('palabras', splitScrollWords);
+  arrancar('botones', dropButtons);
+  arrancar('hero', initScrubChapters);
+  arrancar('escena de trabajos', initWorkScene);
+  arrancar('fondo', initDepthField);
+  arrancar('demos de casos', initCaseDemo);
+  arrancar('testimonios', loadTestimonials);
   document.addEventListener('scroll', updateScrollWords, {passive:true});
   window.addEventListener('resize', updateScrollWords);
 </script>
