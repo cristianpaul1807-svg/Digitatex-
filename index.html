@@ -1532,7 +1532,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v14</span>
+  <span class="build-tag">v15</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -3159,6 +3159,40 @@
       if(location.hash === '#admin') history.replaceState(null,'',location.pathname + location.search);
     }
     document.getElementById('admin-link').addEventListener('click', (e)=>{ e.preventDefault(); openPanel(); });
+
+    /* Entrada rapida al panel: mantener pulsado el logotipo un segundo largo.
+       El enlace del pie sigue estando, pero queda al final de trece pantallas y
+       desde el telefono es un viaje. Un pulsado largo no se dispara por
+       accidente — un toque normal sigue llevando al inicio, como siempre — y no
+       anuncia nada al visitante, que es justo lo que se buscaba. */
+    (function atajoLogo(){
+      const marca = document.querySelector('.brand-mark');
+      if(!marca) return;
+      let temporizador = null, disparado = false, x0 = 0, y0 = 0;
+
+      const cancelar = ()=>{ clearTimeout(temporizador); temporizador = null; marca.style.opacity = ''; };
+
+      marca.addEventListener('pointerdown', (e)=>{
+        disparado = false; x0 = e.clientX; y0 = e.clientY;
+        marca.style.opacity = '0.55';          // unica pista de que algo pasa
+        temporizador = setTimeout(()=>{
+          disparado = true;
+          marca.style.opacity = '';
+          if(navigator.vibrate) { try{ navigator.vibrate(18); }catch(err){} }
+          openPanel();
+        }, 1100);
+      });
+      // si el dedo se mueve es un scroll, no un pulsado
+      marca.addEventListener('pointermove', (e)=>{
+        if(temporizador && Math.hypot(e.clientX - x0, e.clientY - y0) > 12) cancelar();
+      });
+      ['pointerup','pointercancel','pointerleave'].forEach(ev=>
+        marca.addEventListener(ev, cancelar));
+      // tras abrir el panel, el clic que viene detras no debe navegar al inicio
+      marca.addEventListener('click', (e)=>{
+        if(disparado){ e.preventDefault(); disparado = false; }
+      });
+    })();
     document.getElementById('admin-close').addEventListener('click', closePanel);
     document.addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.classList.contains('open')) closePanel(); });
     if(location.hash === '#admin') openPanel();
