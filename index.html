@@ -1526,7 +1526,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v22</span>
+  <span class="build-tag">v23</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -2749,14 +2749,17 @@
      navegador lo recibia como "video/quicktime" y ni lo intentaba. Estas dos
      funciones evitan que vuelva a pasar. */
 
-  // Un .mov de telefono es un MP4 con otro nombre: se guarda como MP4 para que
-  // el navegador lo acepte. El resto conserva su extension.
+  /* El tipo se decide aca y no se hereda del archivo. Confiar en file.type
+     dejo un video guardado como "video/quicktime" con nombre .mp4: Safari lo
+     toleraba, Chrome y Android no, y el marco salia vacio en medio navegador.
+     Solo hay dos destinos posibles, y por defecto MP4. */
   function nombreVideo(file, prefijo){
-    const esMov = /quicktime/i.test(file.type || '') || /\.mov$/i.test(file.name || '');
-    const ext = esMov ? 'mp4' : ((file.name.split('.').pop() || 'mp4').toLowerCase());
+    const esWebm = /webm/i.test(file.type || '') || /\.webm$/i.test(file.name || '');
+    const ext  = esWebm ? 'webm' : 'mp4';
+    const tipo = esWebm ? 'video/webm' : 'video/mp4';
     return {
       ruta: prefijo + '-' + Date.now() + '-' + Math.random().toString(36).slice(2,8) + '.' + ext,
-      tipo: esMov ? 'video/mp4' : (file.type || 'video/mp4')
+      tipo: tipo
     };
   }
 
