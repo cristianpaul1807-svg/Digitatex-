@@ -1526,7 +1526,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v23</span>
+  <span class="build-tag">v24</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -2989,19 +2989,12 @@
     if(!video || !mock) return;
 
 
-    /* Safari en iPhone rara vez llega a disparar 'loadeddata' por su cuenta:
-       aunque se le pida preload="auto", en movil suele quedarse en la metadata
-       y no baja ni un fotograma hasta que algo se lo pide. Este sitio esperaba
-       solo ese evento, asi que en el telefono el video no aparecia nunca y se
-       quedaba la maqueta de relleno — que es exactamente lo que se veia.
-
-       Ahora en cuanto se conoce la duracion se registra el video y se le pide un
-       fotograma moviendo currentTime, que es lo que obliga a Safari a decodificar.
-       El cambio de maqueta a video se hace con el primero de los eventos que
-       confirme que hay imagen, venga por donde venga. */
-    if(posterSrc) video.poster = posterSrc;
-
+    /* El poster es una imagen normal: se puede ensenar de inmediato, sin
+       esperar a que llegue un solo byte de video. Eso es lo que hace que el
+       marco muestre la web del cliente desde el primer momento, en cualquier
+       telefono y con cualquier conexion. */
     let montado = false;
+    let reproduciendo = false;
     function mostrarVideo(){
       if(montado) return;
       montado = true;
@@ -3009,7 +3002,16 @@
       video.style.display = 'block';
       document.dispatchEvent(new CustomEvent('digitatex:media-ready'));
     }
-    function registrar(){
+
+    /* No se llama a play() hasta que haya fotogramas de verdad, y ese detalle
+       era todo el problema: el navegador solo pinta el poster mientras el video
+       no ha empezado. Al hacer play() en cuanto se conocia la duracion — sin un
+       solo fotograma descargado — el poster se descartaba y quedaba un
+       rectangulo negro. Se veia igual en wifi que en datos, porque no era la
+       red: era esta linea. */
+    function empezar(){
+      if(reproduciendo) return;
+      reproduciendo = true;
       if(!scrubbables.some(x => x.video === video)) scrubbables.push({ video });
       // Safari pone su boton de play sobre cualquier video pausado, sin importar
       // como llego ahi. Igual que en el hero: se deja reproduciendo a velocidad 0
@@ -3019,26 +3021,37 @@
       if(p && typeof p.then === 'function') p.then(settle).catch(()=>{});
       else settle();
     }
+
+    /* Ahora si: con las variables ya declaradas. Llamar a mostrarVideo() antes
+       de esta linea reventaba con "Cannot access 'montado' before
+       initialization" y se llevaba por delante el resto del montaje. */
+    if(posterSrc){
+      video.poster = posterSrc;
+      mostrarVideo();
+    }
+
+    // Con la duracion ya se puede recorrer, aunque todavia no se reproduzca.
     video.addEventListener('loadedmetadata', ()=>{
-      registrar();
-      // un salto minimo fuerza la decodificacion del primer fotograma
-      try{ if(video.currentTime < 0.01) video.currentTime = 0.04; }catch(e){}
-      /* Antes esto mostraba el video a los cinco segundos pasara lo que pasara.
-         En un iPhone con datos moviles no llega ni un fotograma — Safari no
-         descarga video por red celular por mucho que se le pida — asi que lo
-         unico que conseguia era cambiar el relleno por un rectangulo negro.
-         Ahora solo se adelanta si hay poster, que es una imagen normal y si se
-         baja: se ve el sitio del cliente aunque el video nunca llegue. */
-      if(video.poster) setTimeout(mostrarVideo, 1200);
+      if(!scrubbables.some(x => x.video === video)) scrubbables.push({ video });
+      if(!posterSrc) mostrarVideo();
     });
-    ['loadeddata','canplay','seeked'].forEach(ev=>
-      video.addEventListener(ev, ()=>{ registrar(); mostrarVideo(); }));
+    // Con fotogramas ya disponibles, el video toma el relevo del poster.
+    ['loadeddata','canplay'].forEach(ev=>
+      video.addEventListener(ev, ()=>{ empezar(); mostrarVideo(); }));
     video.addEventListener('pause', ()=>{
+      if(!reproduciendo) return;
       const p = video.play();
       if(p && typeof p.then === 'function') p.then(()=>{ video.playbackRate = 0; }).catch(()=>{});
     });
     // sin video utilizable se queda la maqueta, que nunca deja el marco vacio
-    video.addEventListener('error', ()=>{ video.style.display = 'none'; mock.style.display = ''; });
+    // Si el video falla pero hay poster, el poster se queda: sigue siendo la
+    // web real del cliente. Sin poster se vuelve a la maqueta de relleno.
+    video.addEventListener('error', ()=>{
+      if(posterSrc) return;
+      montado = false;
+      video.style.display = 'none';
+      mock.style.display = '';
+    });
 
     // Se carga el archivo del repo en cuanto el marco se acerca a pantalla: es
     // el camino rapido y siempre existe. En paralelo se pregunta si hay un video
