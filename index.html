@@ -155,24 +155,39 @@
     .wa-bubble{width:52px;height:52px;}
   }
 
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 48px;background:linear-gradient(to bottom, rgba(12,12,13,0.9), transparent);transition:background .4s, padding .4s;}
-  nav.scrolled{background:rgba(12,12,13,0.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:16px 48px;}
-  .brand-mark{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-size:16px;letter-spacing:0.03em;font-weight:500;}
-  .logo-badge{display:flex;align-items:center;flex-shrink:0;background:#ffffff;border-radius:12px;padding:6px 9px;box-shadow:0 2px 12px rgba(0,0,0,0.28);}
-  .brand-logo{height:26px;width:auto;display:block;}
-  @media (max-width:760px){ .logo-badge{padding:5px 7px;border-radius:10px;} .brand-logo{height:20px;} }
-  .navlinks{display:flex;align-items:center;gap:30px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;}
+  /* La barra superior de lado a lado se cambio por piezas flotantes: la barra
+     cortaba la pagina en dos con una linea recta y peleaba con el fondo. Cada
+     grupo va sobre su propio cristal oscuro — flotar sin superficie no se lee
+     como profundidad, se lee como algo sin terminar. */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;
+    justify-content:space-between;padding:20px clamp(18px,3vw,40px);background:none;pointer-events:none;
+    transition:padding .4s;}
+  nav.scrolled{padding:14px clamp(18px,3vw,40px);}
+  nav > *{pointer-events:auto;}
+  .brand-mark{display:flex;align-items:center;font-family:'Fraunces',serif;font-size:15px;
+    letter-spacing:0.14em;font-weight:500;padding:11px 20px;border-radius:999px;
+    background:rgba(16,16,18,0.58);border:1px solid rgba(239,233,221,0.13);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:0 10px 30px -16px rgba(0,0,0,0.8);transition:background .4s, border-color .4s;}
+  .brand-mark:hover{border-color:rgba(224,190,130,0.4);}
+  .navlinks{display:flex;align-items:center;gap:22px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    padding:9px 20px;border-radius:999px;background:rgba(16,16,18,0.58);border:1px solid rgba(239,233,221,0.13);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 30px -16px rgba(0,0,0,0.8);}
   .navlinks > a{opacity:0.6;transition:opacity .3s, color .3s;position:relative;padding:6px 0;-webkit-tap-highlight-color:transparent;}
   .navlinks > a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass-2);transition:width .35s cubic-bezier(.22,1,.36,1);}
   .navlinks > a:hover{opacity:1;}
   .navlinks > a:hover::after,.navlinks > a.current::after{width:100%;}
   .navlinks > a.current{opacity:1;color:var(--brass-2);}
-  .langsw{display:flex;gap:2px;border:1px solid var(--line-strong);border-radius:999px;padding:4px;}
+  .langsw{display:flex;gap:2px;border:1px solid rgba(239,233,221,0.13);border-radius:999px;padding:4px;
+    background:rgba(16,16,18,0.58);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:0 10px 30px -16px rgba(0,0,0,0.8);margin-left:14px;}
   .langsw button{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--bone);font-family:'Inter';font-size:10px;letter-spacing:0.06em;padding:6px 12px;border-radius:999px;cursor:pointer;opacity:0.6;transition:all .3s;}
   .langsw button.active{background:var(--brass);color:var(--ink);opacity:1;}
   .langsw button:hover{opacity:1;}
   .langsw .flag{font-size:12px;line-height:1;}
-  .nav-toggle{display:none;background:none;border:none;color:var(--bone);cursor:pointer;padding:6px;}
+  .nav-toggle{display:none;color:var(--bone);cursor:pointer;padding:12px;border-radius:999px;
+    background:rgba(16,16,18,0.58);border:1px solid rgba(239,233,221,0.13);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 30px -16px rgba(0,0,0,0.8);}
   .nav-toggle svg{width:22px;height:22px;}
   .nav-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:48;opacity:0;pointer-events:none;transition:opacity .35s;}
   .nav-backdrop.open{opacity:1;pointer-events:auto;}
@@ -272,8 +287,8 @@
   .hero-inner{position:relative;z-index:4;width:100%;}
   #hero h1{font-size:clamp(38px,6.6vw,94px);line-height:0.99;max-width:15ch;margin-top:20px;}
   #hero h1 em{font-style:italic;color:var(--brass-2);}
-  .hero-sub{display:flex;flex-direction:column;align-items:flex-start;gap:24px;max-width:430px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);}
-  .hero-sub p{max-width:38ch;font-size:15px;line-height:1.75;color:var(--bone-dim);}
+  .hero-sub{display:flex;flex-direction:column;align-items:flex-start;gap:22px;max-width:520px;margin-top:28px;}
+  .hero-sub p{max-width:40ch;font-size:15px;line-height:1.75;color:var(--bone-dim);}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
   .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone-dim);transition:opacity .4s;}
   .scroll-cue .line{width:1px;height:38px;background:linear-gradient(to bottom, var(--brass), transparent);animation:pulseline 2.2s ease-in-out infinite;}
@@ -319,6 +334,24 @@
      Nunca se anima la salida: una vez dentro, el elemento se deja de
      observar. Si al volver a subir se fueran otra vez, la pagina se
      sentiria inestable en vez de premium. */
+  /* Superficie comun de todo lo que flota. El desenfoque de fondo es lo que
+     hace que se lea como un cristal delante del fondo y no como un rectangulo
+     gris pegado encima. */
+  .glass{background:rgba(18,18,21,0.5);border:1px solid rgba(239,233,221,0.12);
+    border-radius:20px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 26px 60px -34px rgba(0,0,0,0.9);transition:border-color .45s, background .45s, transform .45s cubic-bezier(.22,1,.36,1);}
+  .glass:hover{border-color:rgba(224,190,130,0.3);}
+  .on-light .glass{background:rgba(255,255,255,0.6);border-color:rgba(20,17,15,0.1);
+    box-shadow:0 26px 60px -34px rgba(20,17,15,0.28);}
+
+  .hero-sub{padding:22px 24px 24px;}
+  .case-body{padding:26px 26px 28px;}
+  .about-copy{padding:28px 28px 30px;}
+  .work-head{padding:26px 28px 28px;}
+  @media (max-width:760px){
+    .hero-sub,.case-body,.about-copy,.work-head{padding:20px 20px 22px;}
+  }
+
   .reveal{opacity:1;transform:none;
     transition:opacity .95s cubic-bezier(.22,1,.36,1), transform .95s cubic-bezier(.22,1,.36,1);}
   .js-ready .reveal{opacity:0;transform:translateY(38px);}
@@ -358,7 +391,7 @@
 
   .case-row{display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(32px,5vw,64px);
     align-items:center;padding:9vh 0;}
-  .case-row + .case-row{border-top:1px solid var(--line);}
+
   .case-row.flip .case-visual{order:2;}
   @media (max-width:960px){
     .case-row,.case-row.flip{grid-template-columns:1fr;gap:30px;}
@@ -432,12 +465,15 @@
   /* ============================================================
      SERVICES
      ============================================================ */
-  #services{padding-top:15vh;padding-bottom:16vh;background:rgba(18,18,20,0.42);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  #services{padding-top:15vh;padding-bottom:16vh;background:none;}
   .serv-head{margin-bottom:56px;max-width:54ch;}
   .serv-head h2{font-size:clamp(28px,3.8vw,48px);margin-top:18px;}
   .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;background:none;}
-  .serv-card{background:rgba(18,18,20,0.5);padding:44px 34px;border-radius:18px;transition:background .4s, border-color .4s;border:1px solid var(--line);}
-  .serv-card:hover{background:rgba(239,233,221,0.05);border-color:rgba(224,190,130,0.22);}
+  .serv-card{background:rgba(18,18,21,0.5);padding:44px 34px;border-radius:20px;
+    border:1px solid rgba(239,233,221,0.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 26px 60px -34px rgba(0,0,0,0.9);transition:background .4s, border-color .4s, transform .45s cubic-bezier(.22,1,.36,1);}
+  .serv-card:hover{transform:translateY(-4px);}
+  .serv-card:hover{background:rgba(28,28,32,0.58);border-color:rgba(224,190,130,0.3);}
   .serv-num{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--brass-2);}
   .serv-card h3{font-size:21px;margin-top:20px;font-weight:400;}
   .serv-card p{margin-top:14px;font-size:13.5px;color:var(--bone-dim);line-height:1.85;}
@@ -502,7 +538,11 @@
   .on-light .monitor-stand{background:linear-gradient(180deg,#ded8ce,#cdc6ba);}
   .on-light .monitor-base{background:linear-gradient(180deg,#d6cfc4,#c2bab0);}
   /* la nav tambien, o el logo blanco desaparece sobre el fondo claro */
-  body.light-nav nav.scrolled{background:rgba(247,245,241,0.9);border-bottom-color:rgba(20,17,15,0.1);}
+  body.light-nav .brand-mark,
+  body.light-nav .navlinks,
+  body.light-nav .langsw,
+  body.light-nav .nav-toggle{background:rgba(250,248,244,0.72);border-color:rgba(20,17,15,0.12);
+    box-shadow:0 10px 30px -16px rgba(20,17,15,0.35);}
   body.light-nav .navlinks > a,
   body.light-nav .brand-mark{color:#14110f;}
   body.light-nav .nav-toggle{color:#14110f;}
@@ -518,15 +558,15 @@
      respiro de contraste. Cada muestra es una maqueta en CSS, sin
      imagenes externas, para que no pese ni dependa de nada.
      ============================================================ */
-  #styles{padding-top:15vh;padding-bottom:16vh;border-top:1px solid var(--line);}
+  #styles{padding-top:15vh;padding-bottom:16vh;}
   .st-head{max-width:56ch;margin-bottom:52px;}
   .st-head h2{font-size:clamp(28px,3.8vw,50px);margin-top:18px;line-height:1.06;}
   .st-head p{margin-top:18px;font-size:15.5px;color:var(--bone-dim);line-height:1.8;}
   .st-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
   @media (max-width:860px){ .st-grid{grid-template-columns:1fr;gap:20px;} }
 
-  .st-card{border-radius:16px;overflow:hidden;border:1px solid var(--line-strong);
-    background:var(--ink-2);transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s, border-color .45s;}
+  .st-card{border-radius:20px;overflow:hidden;border:1px solid rgba(239,233,221,0.12);
+    background:rgba(18,18,21,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s, border-color .45s;}
   .st-card:hover{transform:translateY(-5px);border-color:rgba(224,190,130,0.4);
     box-shadow:0 26px 60px -30px rgba(0,0,0,0.9), 0 0 40px -24px rgba(224,190,130,0.5);}
   .st-shot{position:relative;aspect-ratio:16/10;overflow:hidden;}
@@ -626,7 +666,7 @@
   /* ============================================================
      TESTIMONIOS — reels de Instagram cargados desde el panel
      ============================================================ */
-  #testimonials{padding-top:15vh;padding-bottom:16vh;background:rgba(18,18,20,0.38);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  #testimonials{padding-top:15vh;padding-bottom:16vh;background:none;}
   .testi-head{display:flex;justify-content:space-between;align-items:flex-end;gap:26px;margin-bottom:52px;flex-wrap:wrap;}
   .testi-head h2{font-size:clamp(28px,3.8vw,50px);max-width:17ch;margin-top:18px;line-height:1.06;}
   .testi-head > div:last-child{font-size:13px;color:var(--bone-dim);max-width:34ch;line-height:1.8;}
@@ -636,7 +676,7 @@
   .testi-rail::-webkit-scrollbar-thumb{background:var(--brass);}
   @media (max-width:640px){ .testi-rail{grid-auto-columns:minmax(240px,84vw);} }
 
-  .testi-card{scroll-snap-align:start;background:rgba(10,10,12,0.72);border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .4s, transform .4s cubic-bezier(.22,1,.36,1);}
+  .testi-card{scroll-snap-align:start;background:rgba(18,18,21,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(239,233,221,0.12);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .4s, transform .4s cubic-bezier(.22,1,.36,1);}
   .testi-card:hover{border-color:var(--brass);transform:translateY(-4px);}
   .testi-media{position:relative;aspect-ratio:9/16;background:#0a0a0b;overflow:hidden;}
   .testi-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#0a0a0b;}
@@ -684,7 +724,9 @@
   .file-drop:hover,.file-drop:active{border-color:var(--brass-2);background:rgba(224,190,130,0.045);}
   .photo-previews{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
   .photo-previews img{width:64px;height:64px;object-fit:cover;border-radius:2px;border:1px solid var(--line-strong);}
-  .estimate-box{position:sticky;top:110px;border:1px solid var(--line-strong);border-radius:18px;padding:34px 30px;background:rgba(18,18,20,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .estimate-box{position:sticky;top:110px;border:1px solid rgba(239,233,221,0.12);border-radius:20px;
+    padding:34px 30px;background:rgba(18,18,21,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 26px 60px -34px rgba(0,0,0,0.9);}
   .estimate-box h4{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:18px;}
   .estimate-range{font-family:'Fraunces',serif;font-size:clamp(24px,2.4vw,32px);line-height:1.3;color:var(--bone);}
   .estimate-range strong{color:var(--brass-2);font-weight:400;}
@@ -755,9 +797,7 @@
 <div class="nav-backdrop" id="nav-backdrop"></div>
 
 <nav id="site-nav">
-  <a href="#hero" class="brand-mark" aria-label="Digitatex home">
-    <span class="logo-badge"><img src="assets/logo.png" alt="Digitatex logo" class="brand-logo" width="26" height="26"></span>DIGITATEX
-  </a>
+  <a href="#hero" class="brand-mark" aria-label="Digitatex home">DIGITATEX</a>
   <div class="navlinks" id="navlinks">
     <a href="#work" data-i18n="nav_work">Work</a>
     <a href="#services" data-i18n="nav_services">Services</a>
@@ -798,7 +838,7 @@
     <div class="wrap hero-inner chapter-content">
       <p class="eyebrow" data-i18n="hero_eyebrow">Web &amp; product studio</p>
       <h1 data-i18n="hero_h1">Sites that move<br>like <em>film</em>.</h1>
-      <div class="hero-sub">
+      <div class="hero-sub glass">
         <p class="scroll-words" data-i18n="hero_sub">We design cinematic, scroll-driven websites and the software behind real businesses — from construction firms to salon management platforms.</p>
         <div class="hero-actions">
           <a href="#quote" class="btn btn-solid"><span data-i18n="hero_btn2">Get a free quote</span>
@@ -817,7 +857,7 @@
 <section id="work">
   <span class="sec-counter">02 — <span data-i18n="sec_work">Work</span></span>
   <div class="wrap">
-    <div class="work-head reveal">
+    <div class="work-head glass reveal">
       <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
       <h2 data-i18n="work_h2">Two problems.<br>Two different builds.</h2>
       <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
@@ -841,7 +881,7 @@
           <div class="monitor-stand"></div><div class="monitor-base"></div>
         </div>
       </div>
-      <div class="case-body reveal rv-right d1">
+      <div class="case-body glass reveal rv-right d1">
         <p class="case-tag" data-i18n="case1_tag">Client work · Cinematic web · Construction &amp; renovation</p>
         <h3>Ta maison est ma maison</h3>
         <p class="case-copy" data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
@@ -871,7 +911,7 @@
           </div>
         </div>
       </div>
-      <div class="case-body reveal rv-left d1">
+      <div class="case-body glass reveal rv-left d1">
         <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
         <h3>Trimm</h3>
         <p class="case-copy" data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
@@ -1047,7 +1087,7 @@
         <div><div class="stat-num">100%</div><div class="stat-label" data-i18n="about_stat2">of projects led end-to-end by the same person</div></div>
       </div>
     </div>
-    <div class="reveal rv-right d1">
+    <div class="about-copy glass reveal rv-right d1">
       <p class="about-lead" data-i18n="about_lead">We don't separate the website from the tool that runs the business behind it. <em>Both are built by the same hand,</em> so they actually work together.</p>
       <p class="about-body scroll-words" data-i18n="about_body">Digitatex is a small studio focused on two things: websites that feel like an experience, and the internal software that keeps a service business running — bookings, payments, clients, reminders. We take on a limited number of projects at a time, so every build gets full attention from first sketch to launch.</p>
     </div>
