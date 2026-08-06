@@ -39,6 +39,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/space-bg.webp" type="image/webp">
 <link rel="preload" as="video" href="assets/hero-logo-spin.mp4">
 <!-- La hoja de fuentes bloquea el primer pintado: si Google tarda o no
      responde, el visitante ve una pagina en blanco. Se carga de forma asincrona
@@ -119,10 +120,21 @@
      real. Cada capa envuelve sobre si misma, asi nunca se termina.
      Esta presente en toda la pagina, debajo de todo el contenido.
      ============================================================ */
-  #depth-field{position:fixed;inset:0;z-index:0;pointer-events:none;background:#08080a;}
-  #depth-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  #depth-field{position:fixed;inset:0;z-index:0;pointer-events:none;background:#050506;}
+  /* Textura real de fondo. Es lo que da la profundidad que ningun degradado
+     alcanzaba: polvo, grano y densidad irregular. Se monta mas alta que la
+     pantalla para poder desplazarla con el scroll sin descubrir los bordes. */
+  #depth-photo{position:absolute;left:-4%;right:-4%;top:-12%;height:124%;
+    background-image:image-set(url('assets/space-bg.webp') type('image/webp'), url('assets/space-bg.jpg') type('image/jpeg'));
+    background-image:-webkit-image-set(url('assets/space-bg.webp') type('image/webp'), url('assets/space-bg.jpg') type('image/jpeg'));
+    background-size:cover;background-position:center;opacity:0.9;will-change:transform;}
+  /* respaldo para navegadores sin image-set */
+  @supports not (background-image: image-set(url('x.webp') type('image/webp'))){
+    #depth-photo{background-image:url('assets/space-bg.jpg');}
+  }
+  #depth-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0.55;}
   /* grano fino: corta el bandeado de los degradados y da textura filmica */
-  #depth-grain{position:absolute;inset:0;opacity:0.14;mix-blend-mode:overlay;
+  #depth-grain{position:absolute;inset:0;opacity:0.07;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");}
   /* viñeta: cierra los bordes y empuja la mirada al centro */
   #depth-vignette{position:absolute;inset:0;
@@ -779,6 +791,7 @@
 <body>
 
 <div id="depth-field" aria-hidden="true">
+  <div id="depth-photo"></div>
   <canvas id="depth-canvas"></canvas>
   <div id="depth-grain"></div>
   <div id="depth-vignette"></div>
@@ -1905,8 +1918,20 @@
       planes = PLANES.map(buildPlane);
     }
 
+    const photo = document.getElementById('depth-photo');
+    // La foto sobresale un 12% por arriba y otro 12% por abajo. Ese sobrante es
+    // todo el recorrido disponible: si se desplaza mas, aparece el borde. En vez
+    // de cortar el movimiento de golpe se usa una curva que se acerca al limite
+    // sin alcanzarlo nunca, asi la pagina puede ser tan larga como haga falta.
+    const PHOTO_EASE = 3000;
     function draw(time){
-      const scrollY = (window.scrollY || window.pageYOffset) * SCALE;
+      const rawY = window.scrollY || window.pageYOffset;
+      // la foto es el plano mas lejano: se mueve menos que cualquier otro
+      if(photo){
+        const shift = (vh * 0.12) * (rawY / (rawY + PHOTO_EASE));
+        photo.style.transform = 'translate3d(0,' + (-shift).toFixed(1) + 'px,0)';
+      }
+      const scrollY = rawY * SCALE;
       ctx.clearRect(0, 0, rw, rh);
       ctx.globalCompositeOperation = 'lighter';
       for(let i = 0; i < planes.length; i++){
