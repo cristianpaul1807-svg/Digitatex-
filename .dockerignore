@@ -1,0 +1,9 @@
+.git
+.github
+.claude
+node_modules
+package.json
+package-lock.json
+supabase-setup.sql
+Dockerfile
+.dockerignore
