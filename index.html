@@ -301,7 +301,7 @@
      ancho real del track, asi 1px de scroll vertical = 1px lateral
      y la transicion se siente natural, no acelerada.
      ============================================================ */
-  .hscroll-wrap{position:relative;}
+  .hscroll-wrap{position:relative;padding-left:0;padding-right:0;}
   /* El area util deja aire arriba (nav + contador) y abajo (barra de
      progreso), asi cada panel entra completo en la pantalla. */
   .hscroll-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;
@@ -341,25 +341,33 @@
   .hscroll-hint svg{width:15px;height:15px;stroke:var(--brass-2);animation:nudge 2.4s ease-in-out infinite;}
   @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
 
-  /* En movil no se ancla la seccion (pelearia con el gesto tactil), pero el
-     recorrido lateral se mantiene: se convierte en un carrusel que se desliza
-     con el dedo, con enganche por panel. Apilarlo en vertical dejaba la pagina
-     sin ningun movimiento lateral, que es justo su firma. */
+  /* El recorrido lateral tambien se ancla en movil. Es scroll normal: el
+     visitante sigue bajando y la seccion se desplaza de lado sola. No se usa
+     un carrusel deslizable porque eso obliga a un gesto distinto y rompe la
+     continuidad — la idea es bajar, ir a la derecha, y seguir bajando. */
   @media (max-width:900px){
-    .hscroll-wrap{height:auto !important;padding:12vh 0 10vh;}
-    .hscroll-sticky{position:static;height:auto;overflow:visible;padding:0;}
-    .hscroll-track{transform:none !important;overflow-x:auto;overflow-y:hidden;
-      scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-      padding:0 24px;gap:20px;align-items:flex-start;
-      scrollbar-width:none;}
-    .hscroll-track::-webkit-scrollbar{display:none;}
-    .hpanel{scroll-snap-align:center;}
-    .hpanel-intro{width:82vw;max-width:420px;}
-    .hpanel-case{width:82vw;max-width:420px;}
-    .hscroll-progress{position:static;margin:22px 24px 0;}
-    .hscroll-progress .track{display:none;}
-    #hscroll-count{display:none;}
+    .hscroll-sticky{padding-top:13vh;padding-bottom:13vh;}
+    .hscroll-track{padding:0 7vw;gap:7vw;}
+    .hpanel-intro{width:84vw;}
+    .hpanel-case{width:84vw;max-width:none;}
+    .hpanel-case .case-copy{font-size:13px;max-width:100%;}
+    .hpanel-case h3{font-size:clamp(20px,5.6vw,26px);}
+    .case-tag{font-size:9.5px;letter-spacing:0.12em;}
+    .case-meta{gap:18px;margin-top:14px;}
+    .hscroll-progress{left:7vw;right:7vw;bottom:5vh;font-size:9px;letter-spacing:0.14em;}
+    .hscroll-progress .hscroll-hint span{display:none;}
   }
+  /* Pantallas muy bajas: el detalle se saca antes que romper el encuadre */
+  @media (max-width:900px) and (max-height:720px){
+    .case-meta{display:none;}
+  }
+
+  /* ---- entradas de los paneles del recorrido ----
+     Cada panel llega atenuado y desplazado, y se asienta al acercarse al
+     centro. Sin esto los bloques ya estaban puestos antes de verse y la
+     seccion se sentia estatica pese al movimiento lateral. */
+  .hpanel{will-change:opacity, transform;}
+  .js-ready .hpanel{opacity:0.12;}
 
   /* ---- mockup de monitor (como en la referencia) ---- */
   .monitor{position:relative;width:100%;perspective:1400px;}
@@ -1592,7 +1600,6 @@
     const mock = document.getElementById(mockId);
     if(!video || !mock) return;
 
-    const canScrub = () => window.matchMedia('(min-width: 901px)').matches;
 
     video.addEventListener('loadeddata', ()=>{
       mock.style.display = 'none';
@@ -1601,15 +1608,14 @@
       // como llego ahi. Igual que en el hero: se deja reproduciendo a velocidad 0
       // y el scroll mueve el frame por currentTime. Nunca .pause().
       const p = video.play();
-      const settle = ()=>{ if(canScrub()) video.playbackRate = 0; };
+      const settle = ()=>{ video.playbackRate = 0; };
       if(p && typeof p.then === 'function') p.then(settle).catch(()=>{});
       else settle();
-      if(canScrub() && !scrubbables.some(x => x.video === video)){
+      if(!scrubbables.some(x => x.video === video)){
         scrubbables.push({ video });
       }
     });
     video.addEventListener('pause', ()=>{
-      if(!canScrub()) return;
       const p = video.play();
       if(p && typeof p.then === 'function') p.then(()=>{ video.playbackRate = 0; }).catch(()=>{});
     });
@@ -1680,24 +1686,23 @@
     const count = document.getElementById('hscroll-count');
     if(!wrap || !track) return;
 
-    const desktop = window.matchMedia('(min-width: 901px)');
     const panels = track.querySelectorAll('.hpanel');
     let distance = 0;
 
     function measure(){
-      if(!desktop.matches){
-        wrap.style.height = '';
-        track.style.transform = '';
-        distance = 0;
-        return;
-      }
-      // margen extra para que el ultimo panel no quede pegado al borde
-      distance = Math.max(track.scrollWidth - window.innerWidth + 40, 0);
+      // La distancia se mide desde el borde derecho del ULTIMO panel, no desde
+      // track.scrollWidth: en un contenedor flex el relleno derecho no siempre
+      // entra en scrollWidth, y por eso el ultimo panel quedaba cortado.
+      const last = panels[panels.length - 1];
+      if(!last){ distance = 0; return; }
+      const pad = window.innerWidth < 901 ? window.innerWidth * 0.07 : 40;
+      const end = last.offsetLeft + last.offsetWidth + pad;
+      distance = Math.max(end - window.innerWidth, 0);
       wrap.style.height = (window.innerHeight + distance) + 'px';
     }
 
     function update(){
-      if(!desktop.matches || distance <= 0) return;
+      if(distance <= 0) return;
       const rect = wrap.getBoundingClientRect();
       const total = wrap.offsetHeight - window.innerHeight;
       if(total <= 0) return;
@@ -1709,11 +1714,32 @@
         const idx = Math.min(Math.floor(progress * panels.length) + 1, panels.length);
         count.textContent = String(idx).padStart(2,'0') + ' / ' + String(panels.length).padStart(2,'0');
       }
+      updatePanelEntrances();
     }
 
-    measure(); update();
+    /* Cada panel entra atenuado y desplazado desde la derecha y se asienta al
+       acercarse al centro de la pantalla. El progreso se mide por la posicion
+       real del panel, no por el avance global, para que cada uno tenga su
+       propia entrada aunque haya varios a la vista. */
+    function updatePanelEntrances(){
+      const vw = window.innerWidth;
+      for(let i = 0; i < panels.length; i++){
+        const p = panels[i];
+        const r = p.getBoundingClientRect();
+        // 0 cuando el panel aun asoma por el borde derecho, 1 cuando ya entro
+        const k = Math.min(Math.max((vw - r.left) / (vw * 0.55), 0), 1);
+        // al salir por la izquierda se atenua de vuelta, sin llegar a apagarse
+        const out = Math.min(Math.max((r.right + vw * 0.12) / (vw * 0.42), 0), 1);
+        const e = Math.min(k, out);
+        const eased = e * e * (3 - 2 * e);
+        p.style.opacity = (0.12 + 0.88 * eased).toFixed(3);
+        p.style.transform = 'translate3d(0,' + ((1 - eased) * 34).toFixed(1) + 'px,0)';
+      }
+    }
+
+    measure(); update(); updatePanelEntrances();
     window.addEventListener('resize', ()=>{ measure(); update(); });
-    if(desktop.addEventListener) desktop.addEventListener('change', ()=>{ measure(); update(); });
+    window.addEventListener('orientationchange', ()=>{ setTimeout(()=>{ measure(); update(); }, 250); });
     document.addEventListener('scroll', update, {passive:true});
     // el ancho del track cambia cuando cargan las fuentes o cambia el idioma
     if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measure(); update(); });
