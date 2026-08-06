@@ -456,6 +456,63 @@
   .about-body{margin-top:26px;font-size:16px;line-height:1.9;color:var(--bone-dim);max-width:56ch;}
 
 
+
+  /* ============================================================
+     CAMBIO DE FONDO POR SCROLL
+     Durante el recorrido lateral el negro se levanta y descubre un
+     fondo claro por debajo, mientras el monitor sigue anclado. Es
+     un recorte animado, no un cambio de color: asi el borde entre
+     los dos fondos se ve moverse en vez de aparecer de golpe.
+     ============================================================ */
+  #lightsheet{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(178deg,#f4f1ec 0%,#e9e4db 58%,#ded7cb 100%);
+    clip-path:inset(100% 0 0 0);will-change:clip-path;}
+  /* la linea de luz que marca el borde mientras sube */
+  #lightsheet::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(185,146,79,0.85),transparent);
+    box-shadow:0 0 22px 3px rgba(224,190,130,0.5);}
+
+  /* Con el fondo claro detras, el contenido del recorrido invierte sus
+     colores. Se hace por clase y no interpolando: el salto es imperceptible
+     con la transicion y evita textos ilegibles a medio camino. */
+  .on-light .work-head h2,
+  .on-light .hpanel-case h3{color:#14110f;}
+  .on-light .work-head p,
+  .on-light .hpanel-case .case-copy{color:#4a453d;}
+  .on-light .sw-word{color:#4a453d;}
+  .on-light .sw-word.lit{color:#14110f;}
+  .on-light .case-tag{color:#9a6f2c;}
+  .on-light .case-meta strong{color:#14110f;}
+  .on-light .case-meta div{color:#6b6459;}
+  .on-light .case-link{color:#9a6f2c;border-bottom-color:#9a6f2c;}
+  .on-light .eyebrow{color:#9a6f2c;}
+  .on-light .eyebrow::before{background:#9a6f2c;}
+  .on-light .sec-counter{color:#8a8276;}
+  .on-light .hscroll-progress{color:#6b6459;}
+  .on-light .hscroll-progress .track{background:rgba(20,17,15,0.18);}
+  .on-light .hscroll-hint svg{stroke:#9a6f2c;}
+  .on-light .own-card{background:rgba(255,255,255,0.72);border-color:rgba(20,17,15,0.14);
+    box-shadow:0 30px 70px -34px rgba(20,17,15,0.3);}
+  .on-light .own-badge{background:rgba(255,255,255,0.9);color:#9a6f2c;border-color:rgba(154,111,44,0.4);}
+  /* el marco del monitor se aclara para no quedar como un agujero negro */
+  .on-light .monitor-screen{box-shadow:0 40px 90px -30px rgba(20,17,15,0.35),
+    0 0 0 8px #f7f5f1, 0 0 0 9px rgba(20,17,15,0.12), 0 0 80px -22px rgba(185,146,79,0.35);}
+  .on-light .monitor-bar{background:#e7e3dc;border-bottom-color:rgba(20,17,15,0.1);}
+  .on-light .monitor-bar i{background:#c9c3b8;}
+  .on-light .monitor-bar i:first-child{background:#c9a05c;}
+  .on-light .monitor-url{background:rgba(20,17,15,0.06);color:#6b6459;}
+  .on-light .monitor-stand{background:linear-gradient(180deg,#ded8ce,#cdc6ba);}
+  .on-light .monitor-base{background:linear-gradient(180deg,#d6cfc4,#c2bab0);}
+  /* la nav tambien, o el logo blanco desaparece sobre el fondo claro */
+  body.light-nav nav.scrolled{background:rgba(247,245,241,0.9);border-bottom-color:rgba(20,17,15,0.1);}
+  body.light-nav .navlinks > a,
+  body.light-nav .brand-mark{color:#14110f;}
+  body.light-nav .nav-toggle{color:#14110f;}
+  body.light-nav .langsw{border-color:rgba(20,17,15,0.2);}
+  body.light-nav .langsw button{color:#14110f;}
+  @media (max-width:900px){ body.light-nav .navlinks{background:var(--ink-2);} body.light-nav .navlinks > a{color:var(--bone);} }
+  @media (prefers-reduced-motion: reduce){ #lightsheet{transition:none;} }
+
   /* ============================================================
      MUESTRAS DE ESTILO
      La unica seccion clara del sitio, a proposito: demuestra que el
@@ -686,6 +743,7 @@
   <div id="depth-grain"></div>
   <div id="depth-vignette"></div>
 </div>
+<div id="lightsheet" aria-hidden="true"></div>
 
 <div id="seam"></div>
 
@@ -1937,13 +1995,14 @@
     }
 
     function update(){
-      if(distance <= 0){ resetPanels(); return; }
+      if(distance <= 0){ resetPanels(); updateLightSheet(0); return; }
       const rect = wrap.getBoundingClientRect();
       const total = wrap.offsetHeight - window.innerHeight;
       if(total <= 0) return;
       const progress = Math.min(Math.max(-rect.top / total, 0), 1);
       track.style.transform = 'translate3d(' + (-progress * distance).toFixed(2) + 'px,0,0)';
       updateCaseScrub(progress);
+      updateLightSheet(progress);
       if(fill) fill.style.width = (progress * 100) + '%';
       if(count){
         const idx = Math.min(Math.floor(progress * panels.length) + 1, panels.length);
@@ -1956,6 +2015,30 @@
        acercarse al centro de la pantalla. El progreso se mide por la posicion
        real del panel, no por el avance global, para que cada uno tenga su
        propia entrada aunque haya varios a la vista. */
+    /* El negro se levanta y descubre el fondo claro. Arranca cuando el
+       recorrido ya empezo (no de entrada) y termina antes del final, para que
+       el visitante vea el borde subir en vez de encontrarselo hecho. */
+    const sheet = document.getElementById('lightsheet');
+    let lit = null;
+    function updateLightSheet(progress){
+      if(!sheet) return;
+      // Sube entre 0.18 y 0.55, se mantiene, y vuelve a bajar entre 0.82 y 1.
+      // Sin ese retroceso el fondo claro se quedaba puesto y las secciones
+      // siguientes, pensadas en oscuro, aparecian sobre blanco.
+      const rise = Math.min(Math.max((progress - 0.18) / 0.37, 0), 1);
+      const fall = Math.min(Math.max((progress - 0.82) / 0.18, 0), 1);
+      const p = Math.max(rise - fall, 0);
+      const eased = p * p * (3 - 2 * p);
+      sheet.style.clipPath = 'inset(' + ((1 - eased) * 100).toFixed(2) + '% 0 0 0)';
+      // el texto invierte a mitad de camino, cuando ya hay fondo claro detras
+      const on = eased > 0.5;
+      if(on !== lit){
+        lit = on;
+        wrap.classList.toggle('on-light', on);
+        document.body.classList.toggle('light-nav', on);
+      }
+    }
+
     // Sin recorrido que animar, los paneles se dejan plenamente visibles.
     function resetPanels(){
       for(let i = 0; i < panels.length; i++){
@@ -1975,8 +2058,23 @@
         const out = Math.min(Math.max((r.right + vw * 0.12) / (vw * 0.42), 0), 1);
         const e = Math.min(k, out);
         const eased = e * e * (3 - 2 * e);
+        const away = 1 - eased;
+        // Cada panel entra desde un angulo distinto — uno sube, otro gira desde
+        // la derecha, otro se acerca — para que la seccion no se sienta como
+        // una fila de cosas haciendo lo mismo.
+        const mode = i % 3;
+        let tf;
+        if(mode === 0){
+          tf = 'translate3d(0,' + (away * 38).toFixed(1) + 'px,0) scale(' + (1 - away * 0.05).toFixed(3) + ')';
+        } else if(mode === 1){
+          tf = 'perspective(1100px) translate3d(' + (away * 26).toFixed(1) + 'px,' + (away * 16).toFixed(1) +
+               'px,0) rotateY(' + (away * -9).toFixed(2) + 'deg)';
+        } else {
+          tf = 'perspective(1100px) translate3d(0,' + (away * 30).toFixed(1) + 'px,' + (away * -90).toFixed(0) +
+               'px) rotateX(' + (away * 7).toFixed(2) + 'deg)';
+        }
         p.style.opacity = (0.12 + 0.88 * eased).toFixed(3);
-        p.style.transform = 'translate3d(0,' + ((1 - eased) * 34).toFixed(1) + 'px,0)';
+        p.style.transform = tf;
       }
     }
 
