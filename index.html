@@ -455,6 +455,119 @@
   .about-lead em{font-style:italic;color:var(--brass-2);}
   .about-body{margin-top:26px;font-size:16px;line-height:1.9;color:var(--bone-dim);max-width:56ch;}
 
+
+  /* ============================================================
+     MUESTRAS DE ESTILO
+     La unica seccion clara del sitio, a proposito: demuestra que el
+     estudio no hace "solo webs oscuras", y le da al recorrido un
+     respiro de contraste. Cada muestra es una maqueta en CSS, sin
+     imagenes externas, para que no pese ni dependa de nada.
+     ============================================================ */
+  #styles{padding-top:15vh;padding-bottom:16vh;border-top:1px solid var(--line);}
+  .st-head{max-width:56ch;margin-bottom:52px;}
+  .st-head h2{font-size:clamp(28px,3.8vw,50px);margin-top:18px;line-height:1.06;}
+  .st-head p{margin-top:18px;font-size:15.5px;color:var(--bone-dim);line-height:1.8;}
+  .st-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
+  @media (max-width:860px){ .st-grid{grid-template-columns:1fr;gap:20px;} }
+
+  .st-card{border-radius:16px;overflow:hidden;border:1px solid var(--line-strong);
+    background:var(--ink-2);transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s, border-color .45s;}
+  .st-card:hover{transform:translateY(-5px);border-color:rgba(224,190,130,0.4);
+    box-shadow:0 26px 60px -30px rgba(0,0,0,0.9), 0 0 40px -24px rgba(224,190,130,0.5);}
+  .st-shot{position:relative;aspect-ratio:16/10;overflow:hidden;}
+  .st-foot{padding:20px 22px 22px;}
+  .st-foot h3{font-size:18px;font-weight:400;}
+  .st-foot p{margin-top:7px;font-size:13px;line-height:1.7;color:var(--bone-dim);}
+  .st-tag{display:inline-block;margin-top:12px;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--brass-2);border:1px solid rgba(224,190,130,0.34);border-radius:20px;padding:5px 11px;}
+
+  .st-shot .bar{position:absolute;top:0;left:0;right:0;height:15%;display:flex;align-items:center;gap:5px;padding:0 5%;}
+  .st-shot .logo{width:10%;height:32%;border-radius:3px;flex-shrink:0;}
+  .st-shot .nav{display:flex;gap:8px;flex:1;margin-left:7%;align-items:center;}
+  .st-shot .nav i{display:block;width:14px;height:2.4px;border-radius:2px;opacity:0.5;}
+  .st-shot .pill{margin-left:auto;padding:3.5px 9px;border-radius:20px;font-size:4.6px;font-weight:600;white-space:nowrap;}
+  .st-shot .h{position:absolute;font-weight:700;line-height:1.06;letter-spacing:-0.02em;}
+  .st-shot .sub{position:absolute;font-size:4.4px;line-height:1.5;opacity:0.68;}
+  .st-shot .cta{position:absolute;padding:5px 13px;border-radius:20px;font-size:4.8px;font-weight:600;}
+  .st-shot .card{position:absolute;border-radius:7px;padding:7px 8px;box-shadow:0 8px 22px -10px rgba(0,0,0,0.34);}
+  .st-shot .card b{display:block;font-size:7px;line-height:1;}
+  .st-shot .card span{display:block;font-size:3.9px;opacity:0.62;margin-top:3px;line-height:1.35;}
+
+  .sh-boutique{background:#efeceb;color:#14110f;}
+  .sh-boutique .bar{background:#fff;border-radius:0 0 10px 10px;}
+  .sh-boutique .logo{background:#14110f;border-radius:50%;}
+  .sh-boutique .nav i{background:#14110f;}
+  .sh-boutique .pill{background:#14110f;color:#fff;}
+  .sh-boutique .photo{position:absolute;left:0;right:0;top:15%;bottom:0;
+    background:linear-gradient(150deg,#8f7f74 0%,#c8b3a2 38%,#6d6a72 100%);}
+  .sh-boutique .h{left:8%;bottom:24%;font-size:15px;color:#fff;font-family:'Fraunces',serif;font-weight:500;}
+  .sh-boutique .cta{left:8%;bottom:11%;background:#fff;color:#14110f;}
+  .sh-boutique .card{background:rgba(255,255,255,0.94);color:#14110f;right:6%;top:34%;width:32%;}
+
+  .sh-saas{background:#fff;color:#0e1330;}
+  .sh-saas .bar{background:#fff;border-bottom:1px solid #eceef6;}
+  .sh-saas .logo{background:#2f45e0;border-radius:5px;}
+  .sh-saas .nav i{background:#0e1330;}
+  .sh-saas .pill{background:#2f45e0;color:#fff;}
+  .sh-saas .h{left:7%;top:26%;font-size:13px;color:#0e1330;max-width:52%;}
+  .sh-saas .sub{left:7%;top:54%;width:42%;color:#0e1330;}
+  .sh-saas .cta{left:7%;bottom:13%;background:#2f45e0;color:#fff;}
+  .sh-saas .photo{position:absolute;right:6%;top:24%;width:33%;bottom:13%;border-radius:9px;
+    background:linear-gradient(155deg,#dfe4fb 0%,#b9c2f4 55%,#8f9def 100%);}
+  .sh-saas .card{background:#fff;color:#0e1330;right:9%;bottom:19%;width:25%;border:1px solid #eceef6;}
+
+  .sh-estate{background:#faf6f0;color:#1b1714;}
+  .sh-estate .bar{background:#faf6f0;border-bottom:1px solid #ece2d5;}
+  .sh-estate .logo{background:#1b1714;border-radius:50%;}
+  .sh-estate .nav i{background:#1b1714;}
+  .sh-estate .pill{background:transparent;color:#1b1714;border:1px solid #1b1714;}
+  .sh-estate .h{left:7%;top:26%;font-size:13px;font-family:'Fraunces',serif;font-weight:400;color:#1b1714;}
+  .sh-estate .h em{font-style:italic;display:block;}
+  .sh-estate .cta{left:7%;top:58%;background:#d8622e;color:#fff;}
+  .sh-estate .photo{position:absolute;left:36%;top:22%;width:30%;bottom:10%;border-radius:999px;
+    background:linear-gradient(165deg,#b9cbdc 0%,#d8c3a4 52%,#7d6f5f 100%);}
+  .sh-estate .card{background:transparent;box-shadow:none;right:5%;top:26%;width:25%;color:#1b1714;}
+
+  .sh-immersive{background:#0f1512;color:#fff;}
+  .sh-immersive .photo{position:absolute;inset:0;
+    background:linear-gradient(175deg,rgba(10,16,13,0.12),rgba(8,12,10,0.85)),
+      linear-gradient(140deg,#4a6350 0%,#2b3a30 45%,#101613 100%);}
+  .sh-immersive .bar{background:transparent;}
+  .sh-immersive .logo{background:#e2513c;border-radius:4px;}
+  .sh-immersive .nav i{background:#fff;}
+  .sh-immersive .pill{background:#e2513c;color:#fff;}
+  .sh-immersive .h{left:7%;top:31%;font-size:13px;color:#fff;max-width:50%;}
+  .sh-immersive .sub{left:7%;top:58%;width:40%;color:#fff;}
+  .sh-immersive .cta{left:7%;bottom:13%;background:#fff;color:#0f1512;}
+  .sh-immersive .card{right:6%;top:28%;width:31%;background:rgba(255,255,255,0.13);
+    border:1px solid rgba(255,255,255,0.24);color:#fff;}
+
+  .sh-bold{background:#5233d6;color:#fff;}
+  .sh-bold .bar{background:transparent;}
+  .sh-bold .logo{background:#fff;border-radius:4px;}
+  .sh-bold .nav i{background:#fff;}
+  .sh-bold .pill{background:#fff;color:#5233d6;}
+  .sh-bold .h{left:50%;transform:translateX(-50%);top:25%;font-size:12px;text-align:center;width:76%;color:#fff;}
+  .sh-bold .sub{left:50%;transform:translateX(-50%);top:52%;width:56%;text-align:center;color:#fff;}
+  .sh-bold .photo{position:absolute;left:38%;bottom:0;width:24%;height:42%;border-radius:60px 60px 0 0;
+    background:linear-gradient(170deg,#ff9d4d 0%,#e2703a 100%);}
+  .sh-bold .card{background:#fff;color:#221a4a;left:5%;bottom:13%;width:25%;}
+  .sh-bold .card.r{left:auto;right:5%;}
+
+  .sh-cine{background:#0c0c0d;color:var(--bone);}
+  .sh-cine .photo{position:absolute;inset:0;
+    background:radial-gradient(ellipse 46% 52% at 74% 46%, rgba(224,190,130,0.3), transparent 62%),
+      linear-gradient(160deg,#1d1a15 0%,#0a0a0b 66%);}
+  .sh-cine .bar{background:transparent;}
+  .sh-cine .logo{background:var(--bone);border-radius:4px;}
+  .sh-cine .nav i{background:var(--bone);}
+  .sh-cine .pill{background:var(--brass);color:#14110f;}
+  .sh-cine .h{left:7%;bottom:30%;font-size:14px;font-family:'Fraunces',serif;font-weight:400;color:var(--bone);}
+  .sh-cine .h em{font-style:italic;color:var(--brass-2);}
+  .sh-cine .cta{left:7%;bottom:12%;background:var(--brass);color:#14110f;}
+  .sh-cine .ring{position:absolute;right:15%;top:36%;width:24%;aspect-ratio:1;border-radius:50%;
+    border:1px solid rgba(224,190,130,0.6);transform:rotateX(72deg);}
+
   /* ============================================================
      TESTIMONIOS — reels de Instagram cargados desde el panel
      ============================================================ */
@@ -592,6 +705,7 @@
   <div class="navlinks" id="navlinks">
     <a href="#work" data-i18n="nav_work">Work</a>
     <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#styles" data-i18n="nav_styles">Styles</a>
     <a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a>
     <a href="#about" data-i18n="nav_about">About</a>
     <a href="#quote" data-i18n="nav_quote">Quote</a>
@@ -754,9 +868,117 @@
   </div>
 </section>
 
+
+<!-- ==================== MUESTRAS DE ESTILO ==================== -->
+<section id="styles">
+  <span class="sec-counter">04 — <span data-i18n="sec_styles">Styles</span></span>
+  <div class="wrap">
+    <div class="st-head reveal">
+      <p class="eyebrow" data-i18n="st_eyebrow">What we can build for you</p>
+      <h2 data-i18n="st_h2">Six directions.<br>One studio.</h2>
+      <p class="scroll-words" data-i18n="st_p">Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.</p>
+    </div>
+
+    <div class="st-grid">
+      <article class="st-card reveal rv-down">
+        <div class="st-shot sh-boutique">
+          <div class="photo"></div>
+          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_shop">Shop</span></div>
+          <div class="h" data-i18n="st1_h">Glow<br>begins here</div>
+          <div class="cta" data-i18n="st_cta_shop2">Shop now</div>
+          <div class="card"><b>4.9</b><span data-i18n="st1_card">Rated by 2,400 customers</span></div>
+        </div>
+        <div class="st-foot">
+          <h3 data-i18n="st1_t">Boutique &amp; e-commerce</h3>
+          <p data-i18n="st1_d">Editorial photography, generous space and a single clear action. For brands sold on how they look.</p>
+          <span class="st-tag" data-i18n="st1_g">Beauty · Fashion · Retail</span>
+        </div>
+      </article>
+
+      <article class="st-card reveal rv-down d1">
+        <div class="st-shot sh-saas">
+          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_contact">Contact us</span></div>
+          <div class="h" data-i18n="st2_h">Trusted by teams that ship</div>
+          <div class="sub" data-i18n="st2_s">Everything your team needs, in one place, without the busywork.</div>
+          <div class="cta" data-i18n="st_cta_demo">Book a demo</div>
+          <div class="photo"></div>
+          <div class="card"><b>200K+</b><span data-i18n="st2_card">Active users</span></div>
+        </div>
+        <div class="st-foot">
+          <h3 data-i18n="st2_t">Corporate &amp; SaaS</h3>
+          <p data-i18n="st2_d">Clean, bright and built around trust signals: numbers, logos and a demo one tap away.</p>
+          <span class="st-tag" data-i18n="st2_g">Software · B2B · Consulting</span>
+        </div>
+      </article>
+
+      <article class="st-card reveal rv-down d2">
+        <div class="st-shot sh-estate">
+          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_contact">Contact us</span></div>
+          <div class="h">Housing<em data-i18n="st3_h2">Experience</em></div>
+          <div class="cta" data-i18n="st3_cta">Find a home</div>
+          <div class="photo"></div>
+          <div class="card"><b>200K+</b><span data-i18n="st3_card">Happy clients · 5K partners</span></div>
+        </div>
+        <div class="st-foot">
+          <h3 data-i18n="st3_t">Editorial &amp; property</h3>
+          <p data-i18n="st3_d">Warm paper tones and serif italics. The look that makes a listing feel like a magazine spread.</p>
+          <span class="st-tag" data-i18n="st3_g">Real estate · Architecture · Hotels</span>
+        </div>
+      </article>
+
+      <article class="st-card reveal rv-down d3">
+        <div class="st-shot sh-immersive">
+          <div class="photo"></div>
+          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_start">Get started</span></div>
+          <div class="h" data-i18n="st4_h">Explore new horizons</div>
+          <div class="sub" data-i18n="st4_s">Unique places, real guides, moments you keep.</div>
+          <div class="cta" data-i18n="st_cta_start">Get started</div>
+          <div class="card"><b>10K+</b><span data-i18n="st4_card">Travellers hosted</span></div>
+        </div>
+        <div class="st-foot">
+          <h3 data-i18n="st4_t">Immersive &amp; photographic</h3>
+          <p data-i18n="st4_d">A full-bleed image carries the page, with glass cards floating over it. Sells a feeling, not a spec sheet.</p>
+          <span class="st-tag" data-i18n="st4_g">Travel · Restaurants · Events</span>
+        </div>
+      </article>
+
+      <article class="st-card reveal rv-down d4">
+        <div class="st-shot sh-bold">
+          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_join">Register</span></div>
+          <div class="h" data-i18n="st5_h">Choose the right course for your goal</div>
+          <div class="sub" data-i18n="st5_s">Learn at your own pace, with people who have done it.</div>
+          <div class="photo"></div>
+          <div class="card"><b>4.5</b><span data-i18n="st5_card">Trusted worldwide</span></div>
+          <div class="card r"><b>2K+</b><span data-i18n="st5_card2">Expert mentors</span></div>
+        </div>
+        <div class="st-foot">
+          <h3 data-i18n="st5_t">Bold colour block</h3>
+          <p data-i18n="st5_d">One saturated colour doing the heavy lifting. Reads instantly on a phone, impossible to confuse with a competitor.</p>
+          <span class="st-tag" data-i18n="st5_g">Education · Apps · Startups</span>
+        </div>
+      </article>
+
+      <article class="st-card reveal rv-down d5">
+        <div class="st-shot sh-cine">
+          <div class="photo"></div>
+          <div class="ring"></div>
+          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_quote">Free quote</span></div>
+          <div class="h">Sites that move<br>like <em>film</em>.</div>
+          <div class="cta" data-i18n="st_cta_quote">Free quote</div>
+        </div>
+        <div class="st-foot">
+          <h3 data-i18n="st6_t">Cinematic &amp; scroll-driven</h3>
+          <p data-i18n="st6_d">Video tied to scroll position, like the site you're on. The most demanding to build — and the hardest to forget.</p>
+          <span class="st-tag" data-i18n="st6_g">Construction · Studios · Premium brands</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ==================== TESTIMONIALS ==================== -->
 <section id="testimonials">
-  <span class="sec-counter">04 — <span data-i18n="sec_testi">Proof</span></span>
+  <span class="sec-counter">05 — <span data-i18n="sec_testi">Proof</span></span>
   <div class="wrap">
     <div class="testi-head reveal rv-left">
       <div>
@@ -771,7 +993,7 @@
 
 <!-- ==================== ABOUT ==================== -->
 <section id="about">
-  <span class="sec-counter">05 — <span data-i18n="sec_about">Studio</span></span>
+  <span class="sec-counter">06 — <span data-i18n="sec_about">Studio</span></span>
   <div class="wrap about-grid">
     <div class="reveal rv-left">
       <p class="eyebrow" data-i18n="about_eyebrow">Studio</p>
@@ -789,7 +1011,7 @@
 
 <!-- ==================== CONTACT ==================== -->
 <section id="contact">
-  <span class="sec-counter">06 — <span data-i18n="sec_contact">Contact</span></span>
+  <span class="sec-counter">07 — <span data-i18n="sec_contact">Contact</span></span>
   <div class="wrap">
     <p class="eyebrow reveal" style="justify-content:center;" data-i18n="contact_eyebrow">Start a project</p>
     <h2 class="reveal d1" data-i18n="contact_h2">Let's build <em>yours</em> next.</h2>
@@ -997,7 +1219,7 @@
      ============================================================ */
   const i18n = {
     en: {
-      nav_work:"Work", nav_services:"Services", nav_testimonials:"Testimonials", nav_about:"About", nav_quote:"Quote",
+      nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"What we can build for you", st_h2:"Six directions.<br>One studio.", st_p:"Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.", st_cta_shop:"Shop", st_cta_shop2:"Shop now", st_cta_contact:"Contact us", st_cta_demo:"Book a demo", st_cta_start:"Get started", st_cta_join:"Register", st_cta_quote:"Free quote", st1_h:"Glow<br>begins here", st1_card:"Rated by 2,400 customers", st1_t:"Boutique & e-commerce", st1_d:"Editorial photography, generous space and a single clear action. For brands sold on how they look.", st1_g:"Beauty · Fashion · Retail", st2_h:"Trusted by teams that ship", st2_s:"Everything your team needs, in one place, without the busywork.", st2_card:"Active users", st2_t:"Corporate & SaaS", st2_d:"Clean, bright and built around trust signals: numbers, logos and a demo one tap away.", st2_g:"Software · B2B · Consulting", st3_h2:"Experience", st3_cta:"Find a home", st3_card:"Happy clients · 5K partners", st3_t:"Editorial & property", st3_d:"Warm paper tones and serif italics. The look that makes a listing feel like a magazine spread.", st3_g:"Real estate · Architecture · Hotels", st4_h:"Explore new horizons", st4_s:"Unique places, real guides, moments you keep.", st4_card:"Travellers hosted", st4_t:"Immersive & photographic", st4_d:"A full-bleed image carries the page, with glass cards floating over it. Sells a feeling, not a spec sheet.", st4_g:"Travel · Restaurants · Events", st5_h:"Choose the right course for your goal", st5_s:"Learn at your own pace, with people who have done it.", st5_card:"Trusted worldwide", st5_card2:"Expert mentors", st5_t:"Bold colour block", st5_d:"One saturated colour doing the heavy lifting. Reads instantly on a phone, impossible to confuse with a competitor.", st5_g:"Education · Apps · Startups", st6_t:"Cinematic & scroll-driven", st6_d:"Video tied to scroll position, like the site you're on. The most demanding to build — and the hardest to forget.", st6_g:"Construction · Studios · Premium brands", nav_work:"Work", nav_services:"Services", nav_testimonials:"Testimonials", nav_about:"About", nav_quote:"Quote",
       sec_hero:"Studio", sec_work:"Work", sec_services:"Services", sec_testi:"Proof", sec_about:"Studio", sec_contact:"Contact",
       hero_eyebrow:"Web & product studio", hero_h1:"Sites that move<br>like <em>film</em>.",
       hero_sub:"We design cinematic, scroll-driven websites and the software behind real businesses — from construction firms to salon management platforms.",
@@ -1051,7 +1273,7 @@
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
     },
     es: {
-      nav_work:"Proyectos", nav_services:"Servicios", nav_testimonials:"Testimonios", nav_about:"Nosotros", nav_quote:"Cotización",
+      nav_styles:"Estilos", sec_styles:"Estilos", st_eyebrow:"Lo que podemos montarte", st_h2:"Seis direcciones.<br>Un estudio.", st_p:"No todos los negocios necesitan la misma web. Estas son las direcciones en las que trabajamos — elegí la que encaje con la tuya, o contanos qué tenés en mente y lo tomamos desde ahí.", st_cta_shop:"Tienda", st_cta_shop2:"Comprar", st_cta_contact:"Contacto", st_cta_demo:"Pedir demo", st_cta_start:"Empezar", st_cta_join:"Inscribirme", st_cta_quote:"Cotización", st1_h:"El brillo<br>empieza acá", st1_card:"Valorado por 2.400 clientes", st1_t:"Boutique y e-commerce", st1_d:"Fotografía editorial, mucho aire y una sola acción clara. Para marcas que se venden por cómo se ven.", st1_g:"Belleza · Moda · Retail", st2_h:"La eligen los equipos que entregan", st2_s:"Todo lo que tu equipo necesita, en un solo lugar.", st2_card:"Usuarios activos", st2_t:"Corporativa y SaaS", st2_d:"Limpia, luminosa y construida sobre señales de confianza: números, logos y una demo a un toque.", st2_g:"Software · B2B · Consultoría", st3_h2:"Experiencia", st3_cta:"Buscar casa", st3_card:"Clientes felices · 5K socios", st3_t:"Editorial e inmobiliaria", st3_d:"Tonos cálidos de papel y serif en itálica. El look que hace que una propiedad parezca una revista.", st3_g:"Inmobiliaria · Arquitectura · Hoteles", st4_h:"Explorá nuevos horizontes", st4_s:"Lugares únicos, guías reales, momentos que te quedan.", st4_card:"Viajeros alojados", st4_t:"Inmersiva y fotográfica", st4_d:"Una imagen a sangre sostiene la página, con tarjetas de vidrio flotando encima. Vende una sensación, no una ficha técnica.", st4_g:"Viajes · Restaurantes · Eventos", st5_h:"Elegí el curso para tu objetivo", st5_s:"Aprendé a tu ritmo, con gente que ya lo hizo.", st5_card:"Confían en todo el mundo", st5_card2:"Mentores expertos", st5_t:"Bloque de color", st5_d:"Un color saturado haciendo todo el trabajo. Se lee al instante en un teléfono e imposible de confundir con la competencia.", st5_g:"Formación · Apps · Startups", st6_t:"Cinematográfica con scroll", st6_d:"Video atado a la posición del scroll, como la web en la que estás. La más exigente de construir — y la más difícil de olvidar.", st6_g:"Construcción · Estudios · Marcas premium", nav_work:"Proyectos", nav_services:"Servicios", nav_testimonials:"Testimonios", nav_about:"Nosotros", nav_quote:"Cotización",
       sec_hero:"Estudio", sec_work:"Proyectos", sec_services:"Servicios", sec_testi:"Testimonios", sec_about:"Estudio", sec_contact:"Contacto",
       hero_eyebrow:"Estudio de web y software", hero_h1:"Webs que se mueven<br>como <em>cine</em>.",
       hero_sub:"Diseñamos sitios web cinematográficos controlados por scroll y el software detrás de negocios reales — desde empresas de construcción hasta plataformas de gestión para salones.",
@@ -1105,7 +1327,7 @@
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
     },
     fr: {
-      nav_work:"Projets", nav_services:"Services", nav_testimonials:"Témoignages", nav_about:"À propos", nav_quote:"Devis",
+      nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"Ce que nous pouvons construire", st_h2:"Six directions.<br>Un studio.", st_p:"Toutes les entreprises n'ont pas besoin du même site. Voici les directions dans lesquelles nous travaillons — choisissez celle qui vous ressemble, ou dites-nous ce que vous avez en tête.", st_cta_shop:"Boutique", st_cta_shop2:"Acheter", st_cta_contact:"Contact", st_cta_demo:"Demander une démo", st_cta_start:"Commencer", st_cta_join:"S'inscrire", st_cta_quote:"Devis gratuit", st1_h:"L'éclat<br>commence ici", st1_card:"Noté par 2 400 clients", st1_t:"Boutique & e-commerce", st1_d:"Photographie éditoriale, beaucoup d'espace et une seule action claire. Pour les marques qui se vendent par leur allure.", st1_g:"Beauté · Mode · Retail", st2_h:"Choisi par les équipes qui livrent", st2_s:"Tout ce dont votre équipe a besoin, au même endroit.", st2_card:"Utilisateurs actifs", st2_t:"Corporate & SaaS", st2_d:"Clair, lumineux et bâti sur des signaux de confiance : chiffres, logos et une démo à portée de clic.", st2_g:"Logiciel · B2B · Conseil", st3_h2:"Expérience", st3_cta:"Trouver un bien", st3_card:"Clients satisfaits · 5K partenaires", st3_t:"Éditorial & immobilier", st3_d:"Tons chauds de papier et italiques serif. Le look qui transforme une annonce en pages de magazine.", st3_g:"Immobilier · Architecture · Hôtels", st4_h:"Explorez de nouveaux horizons", st4_s:"Des lieux uniques, de vrais guides, des moments qui restent.", st4_card:"Voyageurs accueillis", st4_t:"Immersif & photographique", st4_d:"Une image plein cadre porte la page, avec des cartes de verre par-dessus. Vend une sensation, pas une fiche technique.", st4_g:"Voyage · Restaurants · Événements", st5_h:"Choisissez le cours qui vous mène au but", st5_s:"Apprenez à votre rythme, avec ceux qui l'ont fait.", st5_card:"Reconnu partout", st5_card2:"Mentors experts", st5_t:"Bloc de couleur", st5_d:"Une couleur saturée qui fait tout le travail. Se lit instantanément sur un téléphone, impossible à confondre.", st5_g:"Formation · Apps · Startups", st6_t:"Cinématographique au scroll", st6_d:"Vidéo liée à la position du scroll, comme le site où vous êtes. Le plus exigeant à construire — et le plus difficile à oublier.", st6_g:"Construction · Studios · Marques premium", nav_work:"Projets", nav_services:"Services", nav_testimonials:"Témoignages", nav_about:"À propos", nav_quote:"Devis",
       sec_hero:"Studio", sec_work:"Projets", sec_services:"Services", sec_testi:"Témoignages", sec_about:"Studio", sec_contact:"Contact",
       hero_eyebrow:"Studio web & logiciel", hero_h1:"Des sites qui bougent<br>comme un <em>film</em>.",
       hero_sub:"Nous concevons des sites cinématographiques pilotés par le scroll ainsi que les logiciels qui font tourner de vraies entreprises — des entreprises de construction aux plateformes de gestion de salons.",
@@ -1159,7 +1381,7 @@
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
     },
     it: {
-      nav_work:"Progetti", nav_services:"Servizi", nav_testimonials:"Testimonianze", nav_about:"Chi siamo", nav_quote:"Preventivo",
+      nav_styles:"Stili", sec_styles:"Stili", st_eyebrow:"Cosa possiamo costruirti", st_h2:"Sei direzioni.<br>Uno studio.", st_p:"Non tutte le attività hanno bisogno dello stesso sito. Queste sono le direzioni in cui lavoriamo — scegli quella che ti somiglia, o raccontaci cosa hai in mente.", st_cta_shop:"Negozio", st_cta_shop2:"Acquista", st_cta_contact:"Contatti", st_cta_demo:"Richiedi demo", st_cta_start:"Inizia", st_cta_join:"Iscriviti", st_cta_quote:"Preventivo", st1_h:"La luce<br>inizia qui", st1_card:"Valutato da 2.400 clienti", st1_t:"Boutique & e-commerce", st1_d:"Fotografia editoriale, molto respiro e una sola azione chiara. Per marchi che si vendono per come appaiono.", st1_g:"Beauty · Moda · Retail", st2_h:"Scelto dai team che consegnano", st2_s:"Tutto ciò che serve al tuo team, in un unico posto.", st2_card:"Utenti attivi", st2_t:"Corporate & SaaS", st2_d:"Pulito, luminoso e costruito su segnali di fiducia: numeri, loghi e una demo a un tocco.", st2_g:"Software · B2B · Consulenza", st3_h2:"Esperienza", st3_cta:"Trova casa", st3_card:"Clienti soddisfatti · 5K partner", st3_t:"Editoriale & immobiliare", st3_d:"Toni caldi di carta e corsivi serif. Il look che fa sembrare un annuncio una rivista.", st3_g:"Immobiliare · Architettura · Hotel", st4_h:"Esplora nuovi orizzonti", st4_s:"Luoghi unici, guide vere, momenti che restano.", st4_card:"Viaggiatori ospitati", st4_t:"Immersivo & fotografico", st4_d:"Un'immagine a tutto campo regge la pagina, con schede di vetro sopra. Vende una sensazione, non una scheda tecnica.", st4_g:"Viaggi · Ristoranti · Eventi", st5_h:"Scegli il corso giusto per il tuo obiettivo", st5_s:"Impara al tuo ritmo, con chi lo ha già fatto.", st5_card:"Scelto in tutto il mondo", st5_card2:"Mentori esperti", st5_t:"Blocco di colore", st5_d:"Un colore saturo che fa tutto il lavoro. Si legge subito su un telefono, impossibile confonderlo.", st5_g:"Formazione · App · Startup", st6_t:"Cinematografico con lo scroll", st6_d:"Video legato alla posizione dello scroll, come il sito in cui sei. Il più impegnativo da costruire — e il più difficile da dimenticare.", st6_g:"Edilizia · Studi · Marchi premium", nav_work:"Progetti", nav_services:"Servizi", nav_testimonials:"Testimonianze", nav_about:"Chi siamo", nav_quote:"Preventivo",
       sec_hero:"Studio", sec_work:"Progetti", sec_services:"Servizi", sec_testi:"Testimonianze", sec_about:"Studio", sec_contact:"Contatti",
       hero_eyebrow:"Studio web & software", hero_h1:"Siti che si muovono<br>come un <em>film</em>.",
       hero_sub:"Progettiamo siti cinematografici guidati dallo scroll e il software dietro aziende reali — da imprese edili a piattaforme di gestione per saloni.",
@@ -1272,7 +1494,7 @@
     backdrop.addEventListener('click', close);
     links.querySelectorAll('a').forEach(a=>a.addEventListener('click', close));
 
-    const sections = ['work','services','testimonials','about','quote'];
+    const sections = ['work','services','styles','testimonials','about','quote'];
     function onScroll(){
       nav.classList.toggle('scrolled', window.scrollY > 60);
       let active = '';
