@@ -40,7 +40,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/space-bg.webp" type="image/webp">
-<link rel="preload" as="video" href="assets/hero-logo-spin.mp4">
 <!-- La hoja de fuentes bloquea el primer pintado: si Google tarda o no
      responde, el visitante ve una pagina en blanco. Se carga de forma asincrona
      (media=print hasta que llega) y el texto sale antes con la tipografia del
@@ -239,27 +238,20 @@
   .hero-ghost.in{opacity:1;}
   @supports not ((-webkit-text-stroke: 1px red)){ .hero-ghost{color:rgba(239,233,221,0.07);} }
 
-  .scrub-bg{position:absolute;inset:0;z-index:2;}
-  .scrub-bg::after{content:'';position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(ellipse 46% 46% at 72% 46%, transparent 32%, rgba(12,12,13,0.55) 72%, rgba(12,12,13,0.94) 100%);}
-  .scrub-bg video{width:100%;height:100%;object-fit:cover;object-position:78% center;display:block;}
+  /* La D se dibuja en un canvas transparente, no es un video: asi el fondo de
+     espacio se ve por detras y a traves del hueco de la letra. Antes era un
+     video opaco a pantalla completa — tapaba el fondo entero y encima dependia
+     de que el navegador supiera decodificar H.264. */
+  .scrub-bg{position:absolute;inset:0;z-index:2;pointer-events:none;}
+  .scrub-bg canvas{width:100%;height:100%;display:block;}
   @media (max-width:900px){
     .scrub-sticky{justify-content:flex-end;padding-bottom:10vh;}
-    /* El logo vive al 82% del ancho del video: la caja se corre a la izquierda
-       para que ese punto caiga en el centro del telefono. Se sube por encima
-       del titular para que no lo pise. */
-    .scrub-bg{inset:auto;left:-58vw;top:27%;transform:translateY(-50%);width:132vw;height:74vw;max-width:none;max-height:none;
-      /* la caja es mas angosta que la pantalla: se difumina en los bordes para
-         que no se vea el rectangulo recortado sobre el fondo */
-      -webkit-mask-image:radial-gradient(ellipse 54% 58% at 82% 50%, #000 38%, rgba(0,0,0,0.55) 66%, transparent 86%);
-      mask-image:radial-gradient(ellipse 54% 58% at 82% 50%, #000 38%, rgba(0,0,0,0.55) 66%, transparent 86%);}
-    .scrub-bg::after{background:none;}
     .hero-ghost{top:27%;font-size:clamp(64px,22vw,150px);}
   }
 
   /* ---- anillos de luz orbitando el logo ----
-     Van por encima del video (que es opaco), uno arriba y otro abajo del
-     logo en vez de cruzarlo: asi no hace falta fingir que pasan por detras.
+     Uno arriba y otro abajo de la letra en vez de cruzarla: asi no hace falta
+     fingir que pasan por detras.
      El brillo es un conic-gradient enmascarado en forma de aro — al girar,
      el barrido de luz es lo que hace legible la rotacion. */
   .hero-orbit{position:absolute;z-index:3;left:78%;top:46%;width:min(38vw,460px);height:min(38vw,460px);
@@ -836,11 +828,7 @@
   <section class="scrub-sticky">
     <div class="hero-ghost" aria-hidden="true">DIGITATEX</div>
     <div class="scrub-bg">
-      <video id="hero-logo-film" muted playsinline webkit-playsinline="true" autoplay preload="auto"
-        aria-hidden="true" tabindex="-1"
-        disablePictureInPicture disableRemotePlayback controlsList="nodownload noplaybackrate nofullscreen">
-        <source src="assets/hero-logo-spin.mp4" type="video/mp4">
-      </video>
+      <canvas id="hero-d" aria-hidden="true"></canvas>
     </div>
     <div class="hero-orbit" aria-hidden="true">
       <span class="orbit-ring ring-top"></span>
@@ -1657,44 +1645,250 @@
   }
 
   /* ============================================================
-     Hero scroll-scrub — el scroll controla video.currentTime,
-     no la reproduccion normal: scrollear rapido gira el logo rapido.
+     La D en tres dimensiones de verdad.
+
+     No es un video ni una secuencia de imagenes: se define el
+     contorno de la letra, se extruye en profundidad y se proyecta
+     en perspectiva en cada cuadro. Eso importa por dos razones.
+     La primera es que el angulo sale del scroll y solo del scroll:
+     la letra no gira por su cuenta, gira exactamente lo que gira
+     la rueda y se detiene cuando el visitante se detiene. La
+     segunda es que el canvas es transparente, asi que el fondo de
+     espacio se ve por detras de la letra y a traves de su hueco —
+     con el video opaco de antes eso era imposible.
+     ============================================================ */
+  function initHeroLogo(){
+    const canvas = document.getElementById('hero-d');
+    if(!canvas) return null;
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return null;
+
+    const TAU   = Math.PI * 2;
+    const DEPTH = 0.26;   // media profundidad de la extrusion
+    const FOCAL = 3.4;    // distancia de camara: mas chico = mas perspectiva
+    const TILT  = 0.15;   // inclinacion fija en X, para que nunca se lea plana
+    const TURNS = 1.15;   // vueltas completas a lo largo del hero
+    const START = -0.42;  // arranca ya girada: de frente parecería un dibujo
+
+    // luz alta, a la izquierda y adelante
+    const LX = -0.44, LY = -0.60, LZ = -0.67;
+    const DARK = [86, 60, 22], LIGHT = [248, 228, 178];
+
+    /* --- contorno de la letra ---
+       Unidades normalizadas: la altura va de -1 a 1. El asta es recta y la
+       panza es media elipse, que es como se construye una D geometrica. */
+    function halfEllipse(ox, rx, ry, seg){
+      const pts = [];
+      for(let i = 0; i <= seg; i++){
+        const a = -Math.PI / 2 + Math.PI * (i / seg);
+        pts.push([ox + rx * Math.cos(a), ry * Math.sin(a)]);
+      }
+      return pts;
+    }
+    const SEG = window.matchMedia('(max-width: 900px)').matches ? 26 : 40;
+    const CONTOURS = [
+      // exterior
+      [[-0.60, -1]].concat(halfEllipse(-0.06, 0.86, 1, SEG), [[-0.60, 1]]),
+      // contrapunzon: el hueco interior, que se calara de verdad
+      [[-0.26, -0.75]].concat(halfEllipse(-0.06, 0.56, 0.75, SEG), [[-0.26, 0.75]])
+    ];
+
+    /* Normal por vertice, promediando las dos aristas que lo tocan. Con una
+       normal por cara cada cuadrilatero queda de un color plano y la panza se
+       lee como una escalera de bandas horizontales en vez de como una curva. */
+    const NORMALS = CONTOURS.map((pts) => {
+      const n = pts.length, edge = new Array(n), out = new Array(n);
+      for(let i = 0; i < n; i++){
+        const j = (i + 1) % n;
+        const dx = pts[j][0] - pts[i][0], dy = pts[j][1] - pts[i][1];
+        const len = Math.hypot(dx, dy) || 1;
+        edge[i] = [dy / len, -dx / len];
+      }
+      for(let i = 0; i < n; i++){
+        const k = (i - 1 + n) % n;
+        const nx = edge[i][0] + edge[k][0], ny = edge[i][1] + edge[k][1];
+        const len = Math.hypot(nx, ny) || 1;
+        out[i] = [nx / len, ny / len];
+      }
+      return out;
+    });
+
+    let W = 0, H = 0, ox = 0, oy = 0, scale = 0, lastAngle = null;
+
+    function layout(){
+      const r = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(r.width, 1);
+      H = Math.max(r.height, 1);
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // El centro tiene que coincidir con el de los anillos y las piedras
+      // (.hero-orbit / .hero-rocks en el CSS). Si no, la orbita giraria
+      // alrededor de un punto vacio al lado de la letra.
+      const mobile = window.matchMedia('(max-width: 900px)').matches;
+      ox = mobile ? W * 0.50 : W * 0.78;
+      oy = mobile ? H * 0.27 : H * 0.46;
+      const ring = mobile ? Math.min(W * 0.84, 360) : Math.min(W * 0.38, 460);
+      scale = ring * 0.33;
+      lastAngle = null;
+    }
+
+    function shadeToColor(s, alpha){
+      const r = Math.round(DARK[0] + (LIGHT[0] - DARK[0]) * s);
+      const g = Math.round(DARK[1] + (LIGHT[1] - DARK[1]) * s);
+      const b = Math.round(DARK[2] + (LIGHT[2] - DARK[2]) * s);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    }
+
+    function render(progress){
+      const angle = START + progress * TAU * TURNS;
+      // repintar 90 caras cuando nada se movio no cambia un pixel
+      if(lastAngle !== null && Math.abs(angle - lastAngle) < 0.0015) return;
+      lastAngle = angle;
+
+      const ca = Math.cos(angle), sa = Math.sin(angle);
+      const ct = Math.cos(TILT),  st = Math.sin(TILT);
+
+      // giro sobre el eje vertical, despues inclinacion sobre el horizontal
+      function project(x, y, z){
+        const rx = x * ca + z * sa;
+        let   rz = -x * sa + z * ca;
+        const ry = y * ct - rz * st;
+        rz = y * st + rz * ct;
+        const k = FOCAL / (FOCAL + rz);
+        return [ox + rx * scale * k, oy + ry * scale * k, rz];
+      }
+      // las normales solo se giran: no se trasladan ni se proyectan
+      function rotateNormal(nx, ny){
+        const rx = nx * ca;
+        let   rz = -nx * sa;
+        const ry = ny * ct - rz * st;
+        rz = ny * st + rz * ct;
+        return rx * LX + ry * LY + rz * LZ;
+      }
+
+      const caps = [], walls = [];
+      let frontZ = 0, backZ = 0;
+      for(let c = 0; c < CONTOURS.length; c++){
+        const pts = CONTOURS[c], n = pts.length;
+        const F = new Array(n), B = new Array(n);
+        for(let i = 0; i < n; i++){
+          F[i] = project(pts[i][0], pts[i][1], -DEPTH);
+          B[i] = project(pts[i][0], pts[i][1],  DEPTH);
+          frontZ += F[i][2]; backZ += B[i][2];
+        }
+        caps.push([F, B]);
+        const vn = NORMALS[c], shade = new Array(n);
+        for(let i = 0; i < n; i++) shade[i] = 0.20 + 0.80 * Math.abs(rotateNormal(vn[i][0], vn[i][1]));
+        // paredes laterales: un cuadrilatero por cada tramo del contorno
+        for(let i = 0; i < n; i++){
+          const j = (i + 1) % n;
+          walls.push({
+            p: [F[i], F[j], B[j], B[i]],
+            z: (F[i][2] + F[j][2] + B[i][2] + B[j][2]) * 0.25,
+            s0: shade[i], s1: shade[j]
+          });
+        }
+      }
+      // el canto trasero queda oculto: dibujar lo lejano primero y lo cercano
+      // encima es lo que resuelve que se tapen entre si sin buffer de profundidad
+      walls.sort((a, b) => b.z - a.z);
+      const frontIsNear = frontZ < backZ;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // halo: la letra emite algo de luz sobre el fondo, como antes
+      const glow = ctx.createRadialGradient(ox, oy, 0, ox, oy, scale * 2.6);
+      glow.addColorStop(0,    'rgba(224,190,130,0.20)');
+      glow.addColorStop(0.45, 'rgba(200,160,100,0.07)');
+      glow.addColorStop(1,    'rgba(224,190,130,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, W, H);
+
+      function drawCap(index, bright){
+        ctx.beginPath();
+        for(let c = 0; c < caps.length; c++){
+          const P = caps[c][index];
+          ctx.moveTo(P[0][0], P[0][1]);
+          for(let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]);
+          ctx.closePath();
+        }
+        const g = ctx.createLinearGradient(ox - scale, oy - scale, ox + scale * 0.7, oy + scale);
+        if(bright){
+          g.addColorStop(0,    '#fdf1d4');
+          g.addColorStop(0.34, '#e8c98c');
+          g.addColorStop(0.68, '#bd8f45');
+          g.addColorStop(1,    '#8a6528');
+        } else {
+          g.addColorStop(0, '#6b4d21');
+          g.addColorStop(1, '#3f2d13');
+        }
+        ctx.fillStyle = g;
+        // el hueco de la D se cala de verdad: "evenodd" descuenta el contorno
+        // interior del exterior, asi se ve el espacio a traves de la letra
+        ctx.fill('evenodd');
+      }
+
+      // 1. la cara de atras
+      drawCap(frontIsNear ? 1 : 0, false);
+      // 2. el canto, de lejos a cerca
+      for(let i = 0; i < walls.length; i++){
+        const w = walls[i], p = w.p;
+        ctx.beginPath();
+        ctx.moveTo(p[0][0], p[0][1]);
+        ctx.lineTo(p[1][0], p[1][1]);
+        ctx.lineTo(p[2][0], p[2][1]);
+        ctx.lineTo(p[3][0], p[3][1]);
+        ctx.closePath();
+        // el color va de la luz de un vertice a la del siguiente: eso es lo que
+        // convierte la sucesion de caras planas en una superficie continua
+        const dx = p[1][0] - p[0][0], dy = p[1][1] - p[0][1];
+        let paint;
+        if(Math.abs(w.s0 - w.s1) < 0.008 || (dx * dx + dy * dy) < 0.5){
+          paint = shadeToColor((w.s0 + w.s1) * 0.5, 1);
+        } else {
+          paint = ctx.createLinearGradient(p[0][0], p[0][1], p[1][0], p[1][1]);
+          paint.addColorStop(0, shadeToColor(w.s0, 1));
+          paint.addColorStop(1, shadeToColor(w.s1, 1));
+        }
+        ctx.fillStyle = paint;
+        ctx.fill();
+        // sin este hilo del mismo color se ven costuras entre cuadrilateros
+        ctx.strokeStyle = paint;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      // 3. la cara de adelante, con su sombra proyectada
+      ctx.save();
+      ctx.shadowColor = 'rgba(6,5,4,0.55)';
+      ctx.shadowBlur = scale * 0.42;
+      ctx.shadowOffsetX = scale * 0.06;
+      ctx.shadowOffsetY = scale * 0.10;
+      drawCap(frontIsNear ? 0 : 1, true);
+      ctx.restore();
+    }
+
+    layout();
+    window.addEventListener('resize', layout);
+    return { render, layout };
+  }
+
+  /* ============================================================
+     Hero scroll-scrub — el scroll controla el angulo de la D,
+     no un reloj propio: scrollear rapido la gira rapido.
      ============================================================ */
   function initScrubChapters(){
-    const chapters = Array.from(document.querySelectorAll('.scrub-wrap')).map((wrap) => {
-      const video = wrap.querySelector('video');
-      const content = wrap.querySelector('.chapter-content');
-      const cue = wrap.querySelector('.scroll-cue');
-      const ghost = wrap.querySelector('.hero-ghost');
-      const ringTop = wrap.querySelector('.ring-top');
-      const ringBottom = wrap.querySelector('.ring-bottom');
-      const state = { wrap, video, content, cue, ghost, ringTop, ringBottom, ready:false, duration:0 };
-      if(video){
-        const markReady = () => { state.ready = true; state.duration = video.duration; };
-        video.addEventListener('loadedmetadata', markReady);
-        // autoplay+preload puede cargar la metadata antes de que corra este script
-        // (video local/cacheado), lo que dispararia loadedmetadata antes de que
-        // estemos escuchando — asi que tambien lo chequeamos de inmediato.
-        if(video.readyState >= 1) markReady();
-        // iOS Safari muestra su boton de play nativo sobre cualquier video "pausado",
-        // sin importar como llego a ese estado. La unica forma de evitarlo es dejarlo
-        // genuinamente reproduciendo a velocidad 0 y mover el frame solo con currentTime.
-        // Nunca llamar .pause().
-        const primeVideo = () => {
-          const p = video.play();
-          const freeze = () => { video.playbackRate = 0; };
-          if(p && typeof p.then === 'function'){
-            p.then(freeze).catch(() => { try { video.currentTime = 0.01; } catch(e){} });
-          } else {
-            freeze();
-          }
-        };
-        if(video.readyState >= 1) primeVideo();
-        else { video.load(); video.addEventListener('loadedmetadata', primeVideo, {once:true}); }
-        video.addEventListener('pause', primeVideo);
-      }
-      return state;
-    });
+    const heroLogo = initHeroLogo();
+    const chapters = Array.from(document.querySelectorAll('.scrub-wrap')).map((wrap) => ({
+      wrap,
+      content:    wrap.querySelector('.chapter-content'),
+      cue:        wrap.querySelector('.scroll-cue'),
+      ghost:      wrap.querySelector('.hero-ghost'),
+      ringTop:    wrap.querySelector('.ring-top'),
+      ringBottom: wrap.querySelector('.ring-bottom'),
+      logo:       wrap.querySelector('#hero-d') ? heroLogo : null
+    }));
 
     function updateChapter(ch){
       const rect = ch.wrap.getBoundingClientRect();
@@ -1703,7 +1897,7 @@
       const scrolled = Math.min(Math.max(-rect.top, 0), total);
       const progress = scrolled / total;
       const visible = rect.top < window.innerHeight && rect.bottom > 0;
-      if(visible && ch.video && ch.ready && ch.duration) ch.video.currentTime = progress * ch.duration;
+      if(visible && ch.logo) ch.logo.render(progress);
       if(ch.content){
         // A diferencia de un capitulo intermedio, el texto del hero tiene que
         // verse apenas carga la pagina (progress 0) — solo se desvanece al final.
