@@ -787,6 +787,8 @@
   .admin-btn{background:none;border:1px solid var(--line-strong);color:var(--bone-dim);cursor:pointer;padding:7px 12px;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;font-family:'Inter',sans-serif;transition:all .3s;white-space:nowrap;}
   .admin-btn:hover{border-color:var(--brass);color:var(--brass-2);}
   .admin-btn.danger:hover{border-color:#e08a82;color:#e08a82;}
+  .build-tag{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.08em;
+    color:var(--stone);opacity:0.7;border:1px solid var(--line);border-radius:999px;padding:2px 9px;}
   .admin-note{font-size:12.5px;color:var(--stone);line-height:1.8;margin-top:14px;}
   .admin-leads{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
   .admin-lead{border:1px solid var(--line);padding:14px 16px;background:var(--ink);font-size:12.5px;line-height:1.7;color:var(--bone-dim);}
@@ -1203,6 +1205,10 @@
 <footer>
   <span>© 2026 Digitatex</span>
   <span data-i18n="footer_tag">Web &amp; product studio</span>
+  <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
+       herramientas, si lo que se esta viendo es la ultima subida o una copia
+       guardada por el navegador. Se cambia en cada despliegue. -->
+  <span class="build-tag">v6</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
