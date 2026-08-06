@@ -202,3 +202,12 @@ create policy "admins can delete systems"
   on public.systems for delete to authenticated using (is_site_admin());
 
 create index if not exists systems_order_idx on public.systems (published, sort_order, created_at desc);
+
+
+-- ----------------------------------------------------------------------------
+-- 7. POSTER de los videos
+-- Safari en iPhone, sobre datos moviles, no descarga un solo fotograma de video
+-- aunque se le pida preload="auto". Sin poster el marco se queda negro.
+-- ----------------------------------------------------------------------------
+alter table public.cases   add column if not exists poster_path text;
+alter table public.systems add column if not exists poster_path text;
