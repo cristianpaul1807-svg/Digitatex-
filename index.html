@@ -598,99 +598,282 @@
     background:rgba(18,18,21,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s, border-color .45s;}
   .st-card:hover{transform:translateY(-5px);border-color:rgba(224,190,130,0.4);
     box-shadow:0 26px 60px -30px rgba(0,0,0,0.9), 0 0 40px -24px rgba(224,190,130,0.5);}
-  .st-shot{position:relative;aspect-ratio:16/10;overflow:hidden;}
+  /* ============================================================
+     MAQUETAS DE ESTILOS
+
+     Cada tarjeta es una web de mentira dibujada solo con CSS. Todo se mide en
+     em sobre un tamano base ligado al ancho de la propia tarjeta (cqw), asi la
+     maqueta entera se escala igual en un telefono que en un monitor, en vez de
+     descuadrarse con medidas fijas.
+     ============================================================ */
+  /* El contenedor de consulta tiene que ser el PADRE: un elemento no puede
+     preguntar por su propio tamano, y si no hay ningun contenedor arriba las
+     unidades cqw se resuelven contra la pantalla — que fue justo lo que paso. */
+  .st-card{container-type:inline-size;}
+  .st-shot{position:relative;aspect-ratio:16/10;overflow:hidden;
+    font-size:4px;            /* respaldo si el navegador no entiende cqw */
+    font-size:1.15cqw;
+    font-family:'Inter',system-ui,sans-serif;letter-spacing:0;}
   .st-foot{padding:20px 22px 22px;}
   .st-foot h3{font-size:18px;font-weight:400;}
   .st-foot p{margin-top:7px;font-size:13px;line-height:1.7;color:var(--bone-dim);}
   .st-tag{display:inline-block;margin-top:12px;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
     color:var(--brass-2);border:1px solid rgba(224,190,130,0.34);border-radius:20px;padding:5px 11px;}
 
-  .st-shot .bar{position:absolute;top:0;left:0;right:0;height:15%;display:flex;align-items:center;gap:5px;padding:0 5%;}
-  .st-shot .logo{width:10%;height:32%;border-radius:3px;flex-shrink:0;}
-  .st-shot .nav{display:flex;gap:8px;flex:1;margin-left:7%;align-items:center;}
-  .st-shot .nav i{display:block;width:14px;height:2.4px;border-radius:2px;opacity:0.5;}
-  .st-shot .pill{margin-left:auto;padding:3.5px 9px;border-radius:20px;font-size:4.6px;font-weight:600;white-space:nowrap;}
-  .st-shot .h{position:absolute;font-weight:700;line-height:1.06;letter-spacing:-0.02em;}
-  .st-shot .sub{position:absolute;font-size:4.4px;line-height:1.5;opacity:0.68;}
-  .st-shot .cta{position:absolute;padding:5px 13px;border-radius:20px;font-size:4.8px;font-weight:600;}
-  .st-shot .card{position:absolute;border-radius:7px;padding:7px 8px;box-shadow:0 8px 22px -10px rgba(0,0,0,0.34);}
-  .st-shot .card b{display:block;font-size:7px;line-height:1;}
-  .st-shot .card span{display:block;font-size:3.9px;opacity:0.62;margin-top:3px;line-height:1.35;}
+  /* ---- piezas comunes a todas las maquetas ---- */
+  .st-shot .bar{position:absolute;top:0;left:0;right:0;height:14.5%;display:flex;align-items:center;
+    gap:1.4em;padding:0 4.5%;z-index:5;}
+  .st-shot .logo{width:2.6em;height:2.6em;border-radius:0.6em;flex-shrink:0;}
+  .st-shot .brand{font-size:1.5em;font-weight:600;margin-left:-0.7em;white-space:nowrap;}
+  .st-shot .nav{display:flex;gap:1.5em;align-items:center;font-size:1.15em;opacity:0.78;white-space:nowrap;}
+  .st-shot .nav i{font-style:normal;}
+  .st-shot .pill{margin-left:auto;padding:0.75em 1.5em;border-radius:99em;font-size:1.15em;
+    font-weight:600;white-space:nowrap;flex-shrink:0;}
+  .st-shot .h{position:absolute;font-weight:700;line-height:1.06;letter-spacing:-0.02em;z-index:4;}
+  .st-shot .sub{position:absolute;font-size:1.12em;line-height:1.55;opacity:0.7;z-index:4;}
+  .st-shot .cta{position:absolute;display:inline-flex;align-items:center;gap:0.9em;
+    padding:0.95em 1.7em;border-radius:99em;font-size:1.2em;font-weight:600;white-space:nowrap;z-index:4;}
+  /* la flechita dentro del boton, que llevan casi todas las referencias */
+  .st-shot .cta s{width:1.9em;height:1.9em;border-radius:50%;display:inline-block;position:relative;
+    text-decoration:none;flex-shrink:0;}
+  .st-shot .cta s::before{content:'';position:absolute;inset:0;border-radius:50%;
+    background:currentColor;opacity:0.2;}
+  .st-shot .cta s::after{content:'';position:absolute;left:50%;top:50%;width:0.6em;height:0.6em;
+    border-top:0.14em solid currentColor;border-right:0.14em solid currentColor;
+    transform:translate(-58%,-42%) rotate(45deg);}
 
-  .sh-boutique{background:#efeceb;color:#14110f;}
-  .sh-boutique .bar{background:#fff;border-radius:0 0 10px 10px;}
+  /* tarjetitas de dato flotando sobre la imagen */
+  .st-shot .stat{position:absolute;border-radius:1.6em;padding:1.1em 1.3em;z-index:6;
+    box-shadow:0 1.6em 3em -1.4em rgba(0,0,0,0.42);}
+  .st-shot .stat b{display:block;font-size:2.6em;line-height:1;font-weight:700;letter-spacing:-0.02em;}
+  .st-shot .stat span{display:block;font-size:1em;opacity:0.62;margin-top:0.5em;line-height:1.35;}
+
+  /* fila de etiquetas redondas */
+  .st-shot .chips{position:absolute;display:flex;flex-wrap:wrap;gap:0.7em;z-index:6;}
+  .st-shot .chips i{font-style:normal;font-size:1.05em;padding:0.7em 1.2em;border-radius:99em;white-space:nowrap;}
+
+  /* etiqueta suelta tipo "Smart marketing" */
+  .st-shot .tag{position:absolute;font-size:1.05em;padding:0.65em 1.4em;border-radius:99em;z-index:6;white-space:nowrap;}
+
+  /* buscador e iconos de la barra */
+  .st-shot .search{margin-left:auto;display:flex;align-items:center;gap:0.6em;
+    height:2.6em;padding:0 1.2em;border-radius:99em;font-size:1.05em;opacity:0.75;min-width:9em;}
+  .st-shot .search s{width:1em;height:1em;border-radius:50%;border:1px solid currentColor;
+    text-decoration:none;flex-shrink:0;}
+  .st-shot .icons{display:flex;gap:0.7em;align-items:center;flex-shrink:0;}
+  .st-shot .icons u{width:2.6em;height:2.6em;border-radius:50%;text-decoration:none;display:block;}
+
+  /* sello circular giratorio con texto en el borde */
+  .st-shot .badge{position:absolute;z-index:7;aspect-ratio:1;}
+  .st-shot .badge svg{position:absolute;inset:0;width:100%;height:100%;animation:st-spin 14s linear infinite;}
+  .st-shot .badge svg text{font-size:9px;letter-spacing:1.6px;font-weight:600;}
+  .st-shot .badge i{position:absolute;left:22%;top:22%;width:56%;height:56%;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-style:normal;font-size:0.95em;
+    font-weight:600;text-align:center;line-height:1.15;}
+  @keyframes st-spin{ to{ transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .st-shot .badge svg{animation:none;} }
+
+  /* miniatura flotante con contador tipo 01/10 */
+  .st-shot .preview{position:absolute;border-radius:1.4em;padding:0.8em;z-index:6;
+    box-shadow:0 1.6em 3em -1.4em rgba(0,0,0,0.5);}
+  .st-shot .preview .ph{border-radius:0.9em;aspect-ratio:16/10;}
+  .st-shot .preview em{display:block;font-style:normal;font-size:1em;opacity:0.8;margin:0.7em 0 0.45em;}
+  .st-shot .preview .prog{display:block;height:0.4em;border-radius:99em;position:relative;overflow:hidden;}
+  .st-shot .preview .prog::before{content:'';position:absolute;inset:0;background:currentColor;opacity:0.25;}
+  .st-shot .preview .prog i{position:relative;display:block;width:34%;height:100%;
+    border-radius:99em;background:currentColor;}
+
+  /* fila de caras + recuento */
+  .st-shot .faces{position:absolute;display:flex;align-items:center;gap:0.9em;z-index:6;font-size:1.05em;}
+  .st-shot .faces span{display:flex;}
+  .st-shot .faces i{width:2.4em;height:2.4em;border-radius:50%;margin-left:-0.7em;
+    border:0.25em solid currentColor;font-style:normal;}
+  .st-shot .faces i:first-child{margin-left:0;}
+
+  /* iconos sociales */
+  .st-shot .socials{position:absolute;display:flex;gap:0.7em;z-index:6;}
+  .st-shot .socials u{width:2.6em;height:2.6em;border-radius:50%;text-decoration:none;display:block;
+    border:1px solid currentColor;opacity:0.55;}
+
+  /* puntos de carrusel */
+  .st-shot .dots{position:absolute;display:flex;gap:0.5em;align-items:center;z-index:6;}
+  .st-shot .dots i{width:2.6em;height:0.4em;border-radius:99em;background:currentColor;opacity:0.25;}
+  .st-shot .dots i.on{opacity:1;width:4em;}
+
+  /* palabra gigante translucida detras de todo */
+  .st-shot .ghost{position:absolute;left:0;right:0;text-align:center;z-index:2;
+    font-weight:800;letter-spacing:-0.02em;line-height:1;white-space:nowrap;}
+
+
+  /* ============================================================
+     01 — BOUTIQUE / E-COMMERCE
+     Barra completa con buscador y accesos, imagen grande de producto,
+     sello giratorio de rebajas, ficha de producto y puntos de carrusel.
+     ============================================================ */
+  .sh-boutique{background:#eceae9;color:#14110f;}
+  .sh-boutique .bar{background:#fff;}
   .sh-boutique .logo{background:#14110f;border-radius:50%;}
-  .sh-boutique .nav i{background:#14110f;}
-  .sh-boutique .pill{background:#14110f;color:#fff;}
-  .sh-boutique .photo{position:absolute;left:0;right:0;top:15%;bottom:0;
-    background:linear-gradient(150deg,#8f7f74 0%,#c8b3a2 38%,#6d6a72 100%);}
-  .sh-boutique .h{left:8%;bottom:24%;font-size:15px;color:#fff;font-family:'Fraunces',serif;font-weight:500;}
-  .sh-boutique .cta{left:8%;bottom:11%;background:#fff;color:#14110f;}
-  .sh-boutique .card{background:rgba(255,255,255,0.94);color:#14110f;right:6%;top:34%;width:32%;}
+  .sh-boutique .brand{color:#14110f;}
+  .sh-boutique .nav{color:#14110f;}
+  .sh-boutique .search{background:#f2f1f0;border:1px solid #e2e0de;color:#7d7873;}
+  .sh-boutique .icons u{background:#f2f1f0;}
+  .sh-boutique .icons u.av{background:linear-gradient(150deg,#b9a48a,#8a7a6c);}
+  .sh-boutique .h{left:6%;top:22%;font-size:3.7em;color:#14110f;max-width:36%;}
+  .sh-boutique .sub{left:6%;top:40%;width:30%;color:#14110f;}
+  .sh-boutique .cta{left:6%;top:48%;background:#211d1a;color:#fff;}
+  /* la imagen con la muesca a la izquierda, como en la referencia */
+  /* La muesca en el lado izquierdo, como el bocadillo de la referencia. Se
+     recorta hacia adentro porque clip-path no puede dibujar fuera de la caja:
+     la caja se ensancha un 3% y esa franja es la que ocupa la punta. */
+  .sh-boutique .hero-img{position:absolute;right:4%;top:20%;width:47%;bottom:12%;
+    background:linear-gradient(150deg,#a8896a 0%,#7d6047 45%,#4d3b2c 100%);z-index:3;
+    clip-path:polygon(6% 0, 100% 0, 100% 100%, 6% 100%, 6% 66%, 0 58%, 6% 50%);
+    border-radius:2.4em;}
+  .sh-boutique .thumb{position:absolute;left:6%;top:62%;width:24%;z-index:6;}
+  .sh-boutique .thumb .ph{aspect-ratio:16/10;border-radius:1.2em;
+    background:linear-gradient(160deg,#3d4450 0%,#20242c 60%,#12151a 100%);}
+  .sh-boutique .thumb b{display:block;font-size:1.25em;font-weight:600;margin-top:0.9em;}
+  .sh-boutique .thumb span{display:block;font-size:1em;opacity:0.55;margin-top:0.3em;}
+  .sh-boutique .badge{left:34%;top:58%;width:14%;color:#14110f;}
+  .sh-boutique .badge svg text{fill:#14110f;}
+  .sh-boutique .badge i{background:#14110f;color:#fff;}
+  .sh-boutique .dots{right:9%;bottom:6%;color:#14110f;}
+  .sh-boutique .dots i.on{background:#d4574a;}
 
-  .sh-saas{background:#fff;color:#0e1330;}
-  .sh-saas .bar{background:#fff;border-bottom:1px solid #eceef6;}
-  .sh-saas .logo{background:#2f45e0;border-radius:5px;}
-  .sh-saas .nav i{background:#0e1330;}
-  .sh-saas .pill{background:#2f45e0;color:#fff;}
-  .sh-saas .h{left:7%;top:26%;font-size:13px;color:#0e1330;max-width:52%;}
-  .sh-saas .sub{left:7%;top:54%;width:42%;color:#0e1330;}
-  .sh-saas .cta{left:7%;bottom:13%;background:#2f45e0;color:#fff;}
-  .sh-saas .photo{position:absolute;right:6%;top:24%;width:33%;bottom:13%;border-radius:9px;
-    background:linear-gradient(155deg,#dfe4fb 0%,#b9c2f4 55%,#8f9def 100%);}
-  .sh-saas .card{background:#fff;color:#0e1330;right:9%;bottom:19%;width:25%;border:1px solid #eceef6;}
 
-  .sh-estate{background:#faf6f0;color:#1b1714;}
-  .sh-estate .bar{background:#faf6f0;border-bottom:1px solid #ece2d5;}
+  /* ============================================================
+     02 — CORPORATE / SAAS
+     Todo centrado, pastilla activa en el menu, foto con tres datos
+     flotando encima y una fila de servicios en etiquetas.
+     ============================================================ */
+  .sh-saas{background:#fff;color:#111a4d;}
+  .sh-saas .bar{background:#fff;border-bottom:1px solid #eef0f7;}
+  .sh-saas .logo{background:#3b4de8;}
+  .sh-saas .brand{color:#111a4d;}
+  .sh-saas .nav{color:#4a5270;}
+  .sh-saas .nav i.on{background:#3b4de8;color:#fff;padding:0.6em 1.2em;border-radius:99em;opacity:1;}
+  .sh-saas .pill{background:#3b4de8;color:#fff;}
+  .sh-saas .tag{left:50%;transform:translateX(-50%);top:19%;background:#fff;border:1px solid #e4e7f2;color:#4a5270;}
+  .sh-saas .h{left:0;right:0;top:26%;text-align:center;font-size:4em;color:#1a1470;}
+  .sh-saas .sub{left:26%;right:26%;top:38%;text-align:center;color:#4a5270;}
+  .sh-saas .photo{position:absolute;left:26%;right:26%;top:47%;bottom:16%;border-radius:1.6em;
+    background:linear-gradient(155deg,#c9d0e8 0%,#9aa3c6 50%,#5d6488 100%);}
+  .sh-saas .stat.a{left:16%;top:50%;width:20%;background:#14161f;color:#fff;}
+  .sh-saas .stat.b{left:12%;top:70%;width:20%;background:#fff;color:#111a4d;}
+  .sh-saas .stat.c{right:13%;top:53%;width:21%;background:#fff;color:#111a4d;}
+  .sh-saas .chips{right:7%;bottom:21%;width:32%;justify-content:flex-end;}
+  .sh-saas .chips i{background:#fff;color:#111a4d;box-shadow:0 0.8em 2em -1em rgba(17,26,77,0.25);}
+  .sh-saas .cta{left:50%;transform:translateX(-50%);bottom:5%;background:#3b4de8;color:#fff;}
+
+
+  /* ============================================================
+     03 — EDITORIAL / INMOBILIARIA
+     Titular a la izquierda, texto a la derecha, foto grande y la ficha
+     del autor montada sobre la esquina, como en la referencia.
+     ============================================================ */
+  .sh-estate{background:#fbf8f4;color:#1b1714;}
+  .sh-estate .bar{background:#fbf8f4;border-bottom:1px solid #ece4d8;}
   .sh-estate .logo{background:#1b1714;border-radius:50%;}
-  .sh-estate .nav i{background:#1b1714;}
-  .sh-estate .pill{background:transparent;color:#1b1714;border:1px solid #1b1714;}
-  .sh-estate .h{left:7%;top:26%;font-size:13px;font-family:'Fraunces',serif;font-weight:400;color:#1b1714;}
-  .sh-estate .h em{font-style:italic;display:block;}
-  .sh-estate .cta{left:7%;top:58%;background:#d8622e;color:#fff;}
-  .sh-estate .photo{position:absolute;left:36%;top:22%;width:30%;bottom:10%;border-radius:999px;
-    background:linear-gradient(165deg,#b9cbdc 0%,#d8c3a4 52%,#7d6f5f 100%);}
-  .sh-estate .card{background:transparent;box-shadow:none;right:5%;top:26%;width:25%;color:#1b1714;}
+  .sh-estate .brand{color:#1b1714;}
+  .sh-estate .nav{color:#5d554b;}
+  .sh-estate .pill{background:#1b1714;color:#fbf8f4;}
+  .sh-estate .tag{left:6%;top:19%;background:#fff;border:1px solid #e6dcce;color:#5d554b;}
+  .sh-estate .h{left:6%;top:27%;font-size:3.7em;font-family:'Fraunces',serif;font-weight:400;
+    color:#1b2a63;max-width:44%;letter-spacing:-0.01em;}
+  .sh-estate .h em{font-style:italic;}
+  .sh-estate .sub{right:6%;top:28%;width:32%;text-align:right;color:#5d554b;}
+  .sh-estate .photo{position:absolute;left:6%;right:6%;top:52%;bottom:6%;border-radius:1.6em;
+    background:linear-gradient(150deg,#c8b49a 0%,#8d7256 48%,#4a3a2b 100%);}
+  .sh-estate .author{position:absolute;left:6%;top:47%;display:flex;align-items:center;gap:0.9em;
+    background:#fff;border-radius:99em;padding:0.7em 1.4em 0.7em 0.7em;z-index:6;
+    box-shadow:0 1.2em 2.6em -1.2em rgba(27,23,20,0.32);}
+  .sh-estate .author .av{width:2.8em;height:2.8em;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(150deg,#c9a87f,#7d6247);}
+  .sh-estate .author b{display:block;font-size:1.15em;font-weight:600;white-space:nowrap;}
+  .sh-estate .author em{display:block;font-style:normal;font-size:0.95em;opacity:0.55;white-space:nowrap;}
+  .sh-estate .meta{position:absolute;right:6%;top:47%;display:flex;gap:0.7em;z-index:6;}
+  .sh-estate .meta i{font-style:normal;font-size:1em;background:#fff;border-radius:99em;padding:0.7em 1.3em;
+    box-shadow:0 1.2em 2.6em -1.2em rgba(27,23,20,0.32);white-space:nowrap;}
 
+
+  /* ============================================================
+     04 — INMERSIVA / FOTOGRAFICA
+     Foto a sangre, menu transparente, sello giratorio, miniatura con
+     contador, fila de caras y accesos a redes.
+     ============================================================ */
   .sh-immersive{background:#0f1512;color:#fff;}
   .sh-immersive .photo{position:absolute;inset:0;
-    background:linear-gradient(175deg,rgba(10,16,13,0.12),rgba(8,12,10,0.85)),
-      linear-gradient(140deg,#4a6350 0%,#2b3a30 45%,#101613 100%);}
-  .sh-immersive .bar{background:transparent;}
-  .sh-immersive .logo{background:#e2513c;border-radius:4px;}
-  .sh-immersive .nav i{background:#fff;}
+    background:linear-gradient(175deg,rgba(10,16,13,0.15),rgba(6,10,8,0.9)),
+      linear-gradient(140deg,#4a6350 0%,#2b3a30 45%,#0d120f 100%);}
+  .sh-immersive .bar{background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);}
+  .sh-immersive .logo{background:#e2513c;}
+  .sh-immersive .brand{color:#fff;}
+  .sh-immersive .nav{color:#fff;}
   .sh-immersive .pill{background:#e2513c;color:#fff;}
-  .sh-immersive .h{left:7%;top:31%;font-size:13px;color:#fff;max-width:50%;}
-  .sh-immersive .sub{left:7%;top:58%;width:40%;color:#fff;}
-  .sh-immersive .cta{left:7%;bottom:13%;background:#fff;color:#0f1512;}
-  .sh-immersive .card{right:6%;top:28%;width:31%;background:rgba(255,255,255,0.13);
-    border:1px solid rgba(255,255,255,0.24);color:#fff;}
+  .sh-immersive .h{left:6%;top:31%;font-size:3.5em;color:#fff;max-width:42%;}
+  .sh-immersive .sub{left:6%;top:59%;width:38%;color:#fff;}
+  .sh-immersive .cta{left:6%;bottom:23%;background:#1a211d;color:#fff;}
+  .sh-immersive .preview{right:5%;top:26%;width:26%;background:rgba(255,255,255,0.12);color:#fff;
+    border:1px solid rgba(255,255,255,0.2);}
+  .sh-immersive .preview .ph{background:linear-gradient(150deg,#e0a86a 0%,#8a6f52 55%,#3d3328 100%);}
+  .sh-immersive .badge{left:46%;bottom:12%;width:14%;color:#fff;}
+  .sh-immersive .badge svg text{fill:#fff;}
+  .sh-immersive .badge i{background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.3);color:#fff;}
+  .sh-immersive .faces{left:6%;bottom:8%;color:#fff;}
+  .sh-immersive .faces i{background:linear-gradient(150deg,#c7a888,#6b5a49);border-color:#121814;}
+  .sh-immersive .socials{right:6%;bottom:9%;color:#fff;}
 
-  .sh-bold{background:#5233d6;color:#fff;}
+
+  /* ============================================================
+     05 — BLOQUE DE COLOR
+     Un solo color saturado, palabra gigante detras, menu en pastilla y
+     los numeros grandes en fila, que es lo que ancla este estilo.
+     ============================================================ */
+  .sh-bold{background:#4b2fd4;color:#fff;}
   .sh-bold .bar{background:transparent;}
-  .sh-bold .logo{background:#fff;border-radius:4px;}
-  .sh-bold .nav i{background:#fff;}
-  .sh-bold .pill{background:#fff;color:#5233d6;}
-  .sh-bold .h{left:50%;transform:translateX(-50%);top:25%;font-size:12px;text-align:center;width:76%;color:#fff;}
-  .sh-bold .sub{left:50%;transform:translateX(-50%);top:52%;width:56%;text-align:center;color:#fff;}
-  .sh-bold .photo{position:absolute;left:38%;bottom:0;width:24%;height:42%;border-radius:60px 60px 0 0;
-    background:linear-gradient(170deg,#ff9d4d 0%,#e2703a 100%);}
-  .sh-bold .card{background:#fff;color:#221a4a;left:5%;bottom:13%;width:25%;}
-  .sh-bold .card.r{left:auto;right:5%;}
+  .sh-bold .logo{background:#fff;}
+  .sh-bold .brand{color:#fff;}
+  .sh-bold .nav{background:rgba(255,255,255,0.14);border-radius:99em;padding:0.7em 1.6em;color:#fff;}
+  .sh-bold .pill{background:#fff;color:#4b2fd4;}
+  .sh-bold .ghost{top:22%;font-size:8em;color:rgba(255,255,255,0.11);}
+  .sh-bold .h{left:6%;top:42%;font-size:3.2em;color:#fff;max-width:38%;}
+  .sh-bold .stats{position:absolute;left:6%;bottom:27%;display:flex;gap:3.2em;z-index:6;}
+  .sh-bold .stats div b{display:block;font-size:3em;font-weight:700;line-height:1;letter-spacing:-0.02em;}
+  .sh-bold .stats div span{display:block;font-size:1em;opacity:0.7;margin-top:0.5em;}
+  .sh-bold .cta{left:6%;bottom:9%;background:#fff;color:#4b2fd4;}
+  .sh-bold .preview{right:5%;bottom:12%;width:25%;background:rgba(255,255,255,0.15);color:#fff;
+    border:1px solid rgba(255,255,255,0.24);}
+  .sh-bold .preview .ph{background:linear-gradient(150deg,#f0d9a8 0%,#b48fd8 55%,#6541c9 100%);}
 
+
+  /* ============================================================
+     06 — CINEMATOGRAFICA
+     La suya: fondo oscuro, la palabra en hueco detras, el aro de luz y
+     el aviso de scroll abajo.
+     ============================================================ */
   .sh-cine{background:#0c0c0d;color:var(--bone);}
   .sh-cine .photo{position:absolute;inset:0;
-    background:radial-gradient(ellipse 46% 52% at 74% 46%, rgba(224,190,130,0.3), transparent 62%),
-      linear-gradient(160deg,#1d1a15 0%,#0a0a0b 66%);}
+    background:radial-gradient(ellipse 55% 48% at 68% 42%, rgba(224,190,130,0.22), transparent 66%),
+      linear-gradient(160deg,#14120f 0%,#0b0b0c 60%,#08080a 100%);}
   .sh-cine .bar{background:transparent;}
-  .sh-cine .logo{background:var(--bone);border-radius:4px;}
-  .sh-cine .nav i{background:var(--bone);}
-  .sh-cine .pill{background:var(--brass);color:#14110f;}
-  .sh-cine .h{left:7%;bottom:30%;font-size:14px;font-family:'Fraunces',serif;font-weight:400;color:var(--bone);}
+  .sh-cine .logo{display:none;}
+  .sh-cine .brand{background:rgba(255,255,255,0.06);border:1px solid rgba(239,233,221,0.16);
+    border-radius:99em;padding:0.6em 1.4em;margin-left:0;color:var(--bone);
+    font-family:'Fraunces',serif;font-weight:400;letter-spacing:0.16em;font-size:1.2em;}
+  .sh-cine .nav{background:rgba(255,255,255,0.06);border:1px solid rgba(239,233,221,0.14);
+    border-radius:99em;padding:0.7em 1.6em;margin-left:auto;color:var(--bone);}
+  .sh-cine .pill{margin-left:0.9em;background:var(--brass);color:#14110f;}
+  .sh-cine .ghost{top:31%;font-size:7.4em;color:transparent;
+    -webkit-text-stroke:0.5px rgba(239,233,221,0.22);font-family:'Fraunces',serif;font-weight:500;}
+  .sh-cine .h{left:6%;bottom:28%;font-size:4em;font-family:'Fraunces',serif;font-weight:400;color:var(--bone);}
   .sh-cine .h em{font-style:italic;color:var(--brass-2);}
-  .sh-cine .cta{left:7%;bottom:12%;background:var(--brass);color:#14110f;}
-  .sh-cine .ring{position:absolute;right:15%;top:36%;width:24%;aspect-ratio:1;border-radius:50%;
-    border:1px solid rgba(224,190,130,0.6);transform:rotateX(72deg);}
+  .sh-cine .cta{left:6%;bottom:12%;background:var(--brass);color:#14110f;}
+  .sh-cine .ring{position:absolute;right:16%;top:34%;width:26%;aspect-ratio:1;border-radius:50%;
+    border:1px solid rgba(224,190,130,0.6);transform:rotateX(72deg);z-index:3;}
+  .sh-cine .ring.b{width:18%;right:20%;top:44%;border-color:rgba(224,190,130,0.35);transform:rotateX(66deg);}
+  .sh-cine .cue{position:absolute;right:6%;bottom:11%;display:flex;flex-direction:column;
+    align-items:center;gap:0.7em;font-size:0.95em;opacity:0.6;z-index:6;}
+  .sh-cine .cue i{width:1px;height:3.4em;background:var(--brass-2);}
 
   /* ============================================================
      TESTIMONIOS — reels de Instagram cargados desde el panel
@@ -1003,13 +1186,33 @@
     </div>
 
     <div class="st-grid">
+
+      <!-- 01 — boutique / e-commerce -->
       <article class="st-card reveal rv-down">
-        <div class="st-shot sh-boutique">
-          <div class="photo"></div>
-          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_shop">Shop</span></div>
-          <div class="h" data-i18n="st1_h">Glow<br>begins here</div>
-          <div class="cta" data-i18n="st_cta_shop2">Shop now</div>
-          <div class="card"><b>4.9</b><span data-i18n="st1_card">Rated by 2,400 customers</span></div>
+        <div class="st-shot sh-boutique" aria-hidden="true">
+          <div class="bar">
+            <span class="logo"></span><span class="brand">Veluno</span>
+            <span class="nav"><i>Home</i><i>About</i><i>Shop</i><i>New</i></span>
+            <span class="search"><s></s>Search</span>
+            <span class="icons"><u></u><u></u><u class="av"></u></span>
+          </div>
+          <div class="h" data-i18n="st1_h">Timeless craft<br>meets luxury</div>
+          <div class="sub" data-i18n="st1_s">Premium pieces, refined details, made to last.</div>
+          <div class="cta"><span data-i18n="st_cta_shop2">Shop now</span><s></s></div>
+          <div class="hero-img"></div>
+          <div class="badge">
+            <svg viewBox="0 0 100 100">
+              <path id="stp1" fill="none" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"></path>
+              <text><textPath href="#stp1" startOffset="0">SUMMER SALE · SUMMER SALE ·</textPath></text>
+            </svg>
+            <i>Shop</i>
+          </div>
+          <div class="thumb">
+            <div class="ph"></div>
+            <b>Apex Chronograph</b>
+            <span data-i18n="st1_card">Precision. Timeless design.</span>
+          </div>
+          <div class="dots"><i class="on"></i><i></i><i></i></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st1_t">Boutique &amp; e-commerce</h3>
@@ -1018,14 +1221,23 @@
         </div>
       </article>
 
+      <!-- 02 — corporativa / SaaS -->
       <article class="st-card reveal rv-down d1">
-        <div class="st-shot sh-saas">
-          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_contact">Contact us</span></div>
-          <div class="h" data-i18n="st2_h">Trusted by teams that ship</div>
-          <div class="sub" data-i18n="st2_s">Everything your team needs, in one place, without the busywork.</div>
-          <div class="cta" data-i18n="st_cta_demo">Book a demo</div>
+        <div class="st-shot sh-saas" aria-hidden="true">
+          <div class="bar">
+            <span class="logo"></span><span class="brand">Triloe</span>
+            <span class="nav"><i>Home</i><i>About</i><i class="on">Service</i><i>Pricing</i></span>
+            <span class="pill" data-i18n="st_cta_contact">Contact us</span>
+          </div>
+          <div class="tag" data-i18n="st2_tag">Smart marketing</div>
+          <div class="h" data-i18n="st2_h">Our tailored services</div>
+          <div class="sub" data-i18n="st2_s">From brand building to data-led campaigns, we shape a unique identity.</div>
           <div class="photo"></div>
-          <div class="card"><b>200K+</b><span data-i18n="st2_card">Active users</span></div>
+          <div class="stat a"><b>99%</b><span data-i18n="st2_st1">Actionable insight</span></div>
+          <div class="stat b"><b>2.5M</b><span data-i18n="st2_card">Users impacted</span></div>
+          <div class="stat c"><b>4.8</b><span data-i18n="st2_st3">Average rating</span></div>
+          <div class="chips"><i>Designing</i><i>Branding</i><i>Consulting</i><i>Marketing</i><i>Web design</i></div>
+          <div class="cta"><span data-i18n="st_cta_demo">Book a demo</span><s></s></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st2_t">Corporate &amp; SaaS</h3>
@@ -1034,13 +1246,23 @@
         </div>
       </article>
 
+      <!-- 03 — editorial / inmobiliaria -->
       <article class="st-card reveal rv-down d2">
-        <div class="st-shot sh-estate">
-          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_contact">Contact us</span></div>
-          <div class="h">Housing<em data-i18n="st3_h2">Experience</em></div>
-          <div class="cta" data-i18n="st3_cta">Find a home</div>
+        <div class="st-shot sh-estate" aria-hidden="true">
+          <div class="bar">
+            <span class="logo"></span><span class="brand">Maison</span>
+            <span class="nav"><i>Home</i><i>Listings</i><i>Journal</i><i>About</i></span>
+            <span class="pill" data-i18n="st_cta_contact">Contact us</span>
+          </div>
+          <div class="tag" data-i18n="st3_tag">Our clients</div>
+          <div class="h" data-i18n="st3_h">Trusted feedback<br><em>that moves us</em></div>
+          <div class="sub" data-i18n="st3_s">We value every voice. Feedback pushes us to refine and grow.</div>
+          <div class="author">
+            <span class="av"></span>
+            <span><b>Kalsey Hand</b><em data-i18n="st3_role">Marketing manager</em></span>
+          </div>
+          <div class="meta"><i>Business</i><i>06 / 04</i></div>
           <div class="photo"></div>
-          <div class="card"><b>200K+</b><span data-i18n="st3_card">Happy clients · 5K partners</span></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st3_t">Editorial &amp; property</h3>
@@ -1049,14 +1271,35 @@
         </div>
       </article>
 
+      <!-- 04 — inmersiva / fotografica -->
       <article class="st-card reveal rv-down d3">
-        <div class="st-shot sh-immersive">
+        <div class="st-shot sh-immersive" aria-hidden="true">
           <div class="photo"></div>
-          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_start">Get started</span></div>
-          <div class="h" data-i18n="st4_h">Explore new horizons</div>
-          <div class="sub" data-i18n="st4_s">Unique places, real guides, moments you keep.</div>
-          <div class="cta" data-i18n="st_cta_start">Get started</div>
-          <div class="card"><b>10K+</b><span data-i18n="st4_card">Travellers hosted</span></div>
+          <div class="bar">
+            <span class="logo"></span><span class="brand">Winzy</span>
+            <span class="nav"><i>Stays</i><i>Experiences</i><i>Blog</i><i>About</i></span>
+            <span class="pill" data-i18n="st_cta_start">Get started</span>
+          </div>
+          <div class="h" data-i18n="st4_h">Explore new horizons<br>with every journey</div>
+          <div class="sub" data-i18n="st4_s">Unique cultures, stunning landscapes, moments you keep.</div>
+          <div class="cta"><span data-i18n="st_cta_start">Get started</span><s></s></div>
+          <div class="preview">
+            <div class="ph"></div>
+            <em>01 / 10</em>
+            <span class="prog"><i></i></span>
+          </div>
+          <div class="badge">
+            <svg viewBox="0 0 100 100">
+              <path id="stp2" fill="none" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"></path>
+              <text><textPath href="#stp2" startOffset="0">EXPLORE MORE · EXPLORE MORE ·</textPath></text>
+            </svg>
+            <i>↗</i>
+          </div>
+          <div class="faces">
+            <span><i></i><i></i><i></i><i></i></span>
+            <b data-i18n="st4_card">10K+ travellers</b>
+          </div>
+          <div class="socials"><u></u><u></u><u></u></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st4_t">Immersive &amp; photographic</h3>
@@ -1065,14 +1308,27 @@
         </div>
       </article>
 
+      <!-- 05 — bloque de color -->
       <article class="st-card reveal rv-down d4">
-        <div class="st-shot sh-bold">
-          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_join">Register</span></div>
+        <div class="st-shot sh-bold" aria-hidden="true">
+          <div class="bar">
+            <span class="logo"></span><span class="brand">Lumen</span>
+            <span class="nav"><i>Courses</i><i>Mentors</i><i>Pricing</i><i>Blog</i></span>
+            <span class="pill" data-i18n="st_cta_join">Register</span>
+          </div>
+          <div class="ghost">LEARN</div>
           <div class="h" data-i18n="st5_h">Choose the right course for your goal</div>
-          <div class="sub" data-i18n="st5_s">Learn at your own pace, with people who have done it.</div>
-          <div class="photo"></div>
-          <div class="card"><b>4.5</b><span data-i18n="st5_card">Trusted worldwide</span></div>
-          <div class="card r"><b>2K+</b><span data-i18n="st5_card2">Expert mentors</span></div>
+          <div class="stats">
+            <div><b>20K+</b><span data-i18n="st5_st1">Students</span></div>
+            <div><b>2K+</b><span data-i18n="st5_card2">Mentors</span></div>
+            <div><b>4.5</b><span data-i18n="st5_card">Rated</span></div>
+          </div>
+          <div class="cta"><span data-i18n="st_cta_join">Register</span><s></s></div>
+          <div class="preview">
+            <div class="ph"></div>
+            <em>01 / 10</em>
+            <span class="prog"><i></i></span>
+          </div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st5_t">Bold colour block</h3>
@@ -1081,13 +1337,21 @@
         </div>
       </article>
 
+      <!-- 06 — cinematografica (la suya) -->
       <article class="st-card reveal rv-down d5">
-        <div class="st-shot sh-cine">
+        <div class="st-shot sh-cine" aria-hidden="true">
           <div class="photo"></div>
+          <div class="ghost">DIGITATEX</div>
           <div class="ring"></div>
-          <div class="bar"><span class="logo"></span><span class="nav"><i></i><i></i><i></i><i></i></span><span class="pill" data-i18n="st_cta_quote">Free quote</span></div>
+          <div class="ring b"></div>
+          <div class="bar">
+            <span class="brand">DIGITATEX</span>
+            <span class="nav"><i>Work</i><i>Services</i><i>Styles</i><i>About</i></span>
+            <span class="pill" data-i18n="st_cta_quote">Free quote</span>
+          </div>
           <div class="h">Sites that move<br>like <em>film</em>.</div>
-          <div class="cta" data-i18n="st_cta_quote">Free quote</div>
+          <div class="cta"><span data-i18n="st_cta_quote">Free quote</span><s></s></div>
+          <div class="cue"><span data-i18n="st6_cue">Scroll</span><i></i></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st6_t">Cinematic &amp; scroll-driven</h3>
@@ -1095,6 +1359,7 @@
           <span class="st-tag" data-i18n="st6_g">Construction · Studios · Premium brands</span>
         </div>
       </article>
+
     </div>
   </div>
 </section>
@@ -1228,7 +1493,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v10</span>
+  <span class="build-tag">v11</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -1347,6 +1612,7 @@
      ============================================================ */
   const i18n = {
     en: {
+      nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"What we can build for you", st_h2:"Six directions.<br>One studio.", st_p:"Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.", st_cta_shop:"Shop", st_cta_shop2:"Shop now", st_cta_contact:"Contact us", st_cta_demo:"Book a demo", st_cta_start:"Get started", st_cta_join:"Register", st_cta_quote:"Free quote", st1_h:"Glow<br>begins here", st1_card:"Rated by 2,400 customers", st1_s:"Premium pieces, refined details, made to last.", st2_tag:"Smart marketing", st2_st1:"Actionable insight", st2_st3:"Average rating", st3_tag:"Our clients", st3_h:"Trusted feedback<br><em>that moves us</em>", st3_s:"We value every voice. Feedback pushes us to refine and grow.", st3_role:"Marketing manager", st5_st1:"Students", st6_cue:"Scroll",
       nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"What we can build for you", st_h2:"Six directions.<br>One studio.", st_p:"Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.", st_cta_shop:"Shop", st_cta_shop2:"Shop now", st_cta_contact:"Contact us", st_cta_demo:"Book a demo", st_cta_start:"Get started", st_cta_join:"Register", st_cta_quote:"Free quote", st1_h:"Glow<br>begins here", st1_card:"Rated by 2,400 customers", st1_t:"Boutique & e-commerce", st1_d:"Editorial photography, generous space and a single clear action. For brands sold on how they look.", st1_g:"Beauty · Fashion · Retail", st2_h:"Trusted by teams that ship", st2_s:"Everything your team needs, in one place, without the busywork.", st2_card:"Active users", st2_t:"Corporate & SaaS", st2_d:"Clean, bright and built around trust signals: numbers, logos and a demo one tap away.", st2_g:"Software · B2B · Consulting", st3_h2:"Experience", st3_cta:"Find a home", st3_card:"Happy clients · 5K partners", st3_t:"Editorial & property", st3_d:"Warm paper tones and serif italics. The look that makes a listing feel like a magazine spread.", st3_g:"Real estate · Architecture · Hotels", st4_h:"Explore new horizons", st4_s:"Unique places, real guides, moments you keep.", st4_card:"Travellers hosted", st4_t:"Immersive & photographic", st4_d:"A full-bleed image carries the page, with glass cards floating over it. Sells a feeling, not a spec sheet.", st4_g:"Travel · Restaurants · Events", st5_h:"Choose the right course for your goal", st5_s:"Learn at your own pace, with people who have done it.", st5_card:"Trusted worldwide", st5_card2:"Expert mentors", st5_t:"Bold colour block", st5_d:"One saturated colour doing the heavy lifting. Reads instantly on a phone, impossible to confuse with a competitor.", st5_g:"Education · Apps · Startups", st6_t:"Cinematic & scroll-driven", st6_d:"Video tied to scroll position, like the site you're on. The most demanding to build — and the hardest to forget.", st6_g:"Construction · Studios · Premium brands", nav_work:"Work", nav_services:"Services", nav_testimonials:"Testimonials", nav_about:"About", nav_quote:"Quote",
       sec_hero:"Studio", sec_work:"Work", sec_services:"Services", sec_testi:"Proof", sec_about:"Studio", sec_contact:"Contact",
       hero_eyebrow:"Web & product studio", hero_h1:"Sites that move<br>like <em>film</em>.",
@@ -1401,6 +1667,7 @@
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
     },
     es: {
+      nav_styles:"Estilos", sec_styles:"Estilos", st_eyebrow:"Lo que podemos montarte", st_h2:"Seis direcciones.<br>Un estudio.", st_p:"No todos los negocios necesitan la misma web. Estas son las direcciones en las que trabajamos — elegí la que encaje con la tuya, o contanos qué tenés en mente y lo tomamos desde ahí.", st_cta_shop:"Tienda", st_cta_shop2:"Comprar", st_cta_contact:"Contacto", st_cta_demo:"Pedir demo", st_cta_start:"Empezar", st_cta_join:"Inscribirme", st_cta_quote:"Cotización", st1_h:"El brillo<br>empieza acá", st1_card:"Valorado por 2.400 clientes", st1_s:"Piezas premium, detalles cuidados, hechas para durar.", st2_tag:"Marketing inteligente", st2_st1:"Decisiones accionables", st2_st3:"Valoración media", st3_tag:"Nuestros clientes", st3_h:"Opiniones que<br><em>nos mueven</em>", st3_s:"Valoramos cada voz. Lo que nos dicen es lo que nos hace mejorar.", st3_role:"Directora de marketing", st5_st1:"Alumnos", st6_cue:"Baja",
       nav_styles:"Estilos", sec_styles:"Estilos", st_eyebrow:"Lo que podemos montarte", st_h2:"Seis direcciones.<br>Un estudio.", st_p:"No todos los negocios necesitan la misma web. Estas son las direcciones en las que trabajamos — elegí la que encaje con la tuya, o contanos qué tenés en mente y lo tomamos desde ahí.", st_cta_shop:"Tienda", st_cta_shop2:"Comprar", st_cta_contact:"Contacto", st_cta_demo:"Pedir demo", st_cta_start:"Empezar", st_cta_join:"Inscribirme", st_cta_quote:"Cotización", st1_h:"El brillo<br>empieza acá", st1_card:"Valorado por 2.400 clientes", st1_t:"Boutique y e-commerce", st1_d:"Fotografía editorial, mucho aire y una sola acción clara. Para marcas que se venden por cómo se ven.", st1_g:"Belleza · Moda · Retail", st2_h:"La eligen los equipos que entregan", st2_s:"Todo lo que tu equipo necesita, en un solo lugar.", st2_card:"Usuarios activos", st2_t:"Corporativa y SaaS", st2_d:"Limpia, luminosa y construida sobre señales de confianza: números, logos y una demo a un toque.", st2_g:"Software · B2B · Consultoría", st3_h2:"Experiencia", st3_cta:"Buscar casa", st3_card:"Clientes felices · 5K socios", st3_t:"Editorial e inmobiliaria", st3_d:"Tonos cálidos de papel y serif en itálica. El look que hace que una propiedad parezca una revista.", st3_g:"Inmobiliaria · Arquitectura · Hoteles", st4_h:"Explorá nuevos horizontes", st4_s:"Lugares únicos, guías reales, momentos que te quedan.", st4_card:"Viajeros alojados", st4_t:"Inmersiva y fotográfica", st4_d:"Una imagen a sangre sostiene la página, con tarjetas de vidrio flotando encima. Vende una sensación, no una ficha técnica.", st4_g:"Viajes · Restaurantes · Eventos", st5_h:"Elegí el curso para tu objetivo", st5_s:"Aprendé a tu ritmo, con gente que ya lo hizo.", st5_card:"Confían en todo el mundo", st5_card2:"Mentores expertos", st5_t:"Bloque de color", st5_d:"Un color saturado haciendo todo el trabajo. Se lee al instante en un teléfono e imposible de confundir con la competencia.", st5_g:"Formación · Apps · Startups", st6_t:"Cinematográfica con scroll", st6_d:"Video atado a la posición del scroll, como la web en la que estás. La más exigente de construir — y la más difícil de olvidar.", st6_g:"Construcción · Estudios · Marcas premium", nav_work:"Proyectos", nav_services:"Servicios", nav_testimonials:"Testimonios", nav_about:"Nosotros", nav_quote:"Cotización",
       sec_hero:"Estudio", sec_work:"Proyectos", sec_services:"Servicios", sec_testi:"Testimonios", sec_about:"Estudio", sec_contact:"Contacto",
       hero_eyebrow:"Estudio de web y software", hero_h1:"Webs que se mueven<br>como <em>cine</em>.",
@@ -1455,6 +1722,7 @@
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
     },
     fr: {
+      nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"Ce que nous pouvons construire", st_h2:"Six directions.<br>Un studio.", st_p:"Toutes les entreprises n'ont pas besoin du même site. Voici les directions dans lesquelles nous travaillons — choisissez celle qui vous ressemble, ou dites-nous ce que vous avez en tête.", st_cta_shop:"Boutique", st_cta_shop2:"Acheter", st_cta_contact:"Contact", st_cta_demo:"Demander une démo", st_cta_start:"Commencer", st_cta_join:"S'inscrire", st_cta_quote:"Devis gratuit", st1_h:"L'éclat<br>commence ici", st1_card:"Noté par 2 400 clients", st1_s:"Des pièces premium, des détails soignés, faites pour durer.", st2_tag:"Marketing intelligent", st2_st1:"Décisions concrètes", st2_st3:"Note moyenne", st3_tag:"Nos clients", st3_h:"Des retours qui<br><em>nous font avancer</em>", st3_s:"Chaque voix compte. Vos retours nous poussent à progresser.", st3_role:"Directrice marketing", st5_st1:"Élèves", st6_cue:"Défiler",
       nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"Ce que nous pouvons construire", st_h2:"Six directions.<br>Un studio.", st_p:"Toutes les entreprises n'ont pas besoin du même site. Voici les directions dans lesquelles nous travaillons — choisissez celle qui vous ressemble, ou dites-nous ce que vous avez en tête.", st_cta_shop:"Boutique", st_cta_shop2:"Acheter", st_cta_contact:"Contact", st_cta_demo:"Demander une démo", st_cta_start:"Commencer", st_cta_join:"S'inscrire", st_cta_quote:"Devis gratuit", st1_h:"L'éclat<br>commence ici", st1_card:"Noté par 2 400 clients", st1_t:"Boutique & e-commerce", st1_d:"Photographie éditoriale, beaucoup d'espace et une seule action claire. Pour les marques qui se vendent par leur allure.", st1_g:"Beauté · Mode · Retail", st2_h:"Choisi par les équipes qui livrent", st2_s:"Tout ce dont votre équipe a besoin, au même endroit.", st2_card:"Utilisateurs actifs", st2_t:"Corporate & SaaS", st2_d:"Clair, lumineux et bâti sur des signaux de confiance : chiffres, logos et une démo à portée de clic.", st2_g:"Logiciel · B2B · Conseil", st3_h2:"Expérience", st3_cta:"Trouver un bien", st3_card:"Clients satisfaits · 5K partenaires", st3_t:"Éditorial & immobilier", st3_d:"Tons chauds de papier et italiques serif. Le look qui transforme une annonce en pages de magazine.", st3_g:"Immobilier · Architecture · Hôtels", st4_h:"Explorez de nouveaux horizons", st4_s:"Des lieux uniques, de vrais guides, des moments qui restent.", st4_card:"Voyageurs accueillis", st4_t:"Immersif & photographique", st4_d:"Une image plein cadre porte la page, avec des cartes de verre par-dessus. Vend une sensation, pas une fiche technique.", st4_g:"Voyage · Restaurants · Événements", st5_h:"Choisissez le cours qui vous mène au but", st5_s:"Apprenez à votre rythme, avec ceux qui l'ont fait.", st5_card:"Reconnu partout", st5_card2:"Mentors experts", st5_t:"Bloc de couleur", st5_d:"Une couleur saturée qui fait tout le travail. Se lit instantanément sur un téléphone, impossible à confondre.", st5_g:"Formation · Apps · Startups", st6_t:"Cinématographique au scroll", st6_d:"Vidéo liée à la position du scroll, comme le site où vous êtes. Le plus exigeant à construire — et le plus difficile à oublier.", st6_g:"Construction · Studios · Marques premium", nav_work:"Projets", nav_services:"Services", nav_testimonials:"Témoignages", nav_about:"À propos", nav_quote:"Devis",
       sec_hero:"Studio", sec_work:"Projets", sec_services:"Services", sec_testi:"Témoignages", sec_about:"Studio", sec_contact:"Contact",
       hero_eyebrow:"Studio web & logiciel", hero_h1:"Des sites qui bougent<br>comme un <em>film</em>.",
@@ -1509,6 +1777,7 @@
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
     },
     it: {
+      nav_styles:"Stili", sec_styles:"Stili", st_eyebrow:"Cosa possiamo costruirti", st_h2:"Sei direzioni.<br>Uno studio.", st_p:"Non tutte le attività hanno bisogno dello stesso sito. Queste sono le direzioni in cui lavoriamo — scegli quella che ti somiglia, o raccontaci cosa hai in mente.", st_cta_shop:"Negozio", st_cta_shop2:"Acquista", st_cta_contact:"Contatti", st_cta_demo:"Richiedi demo", st_cta_start:"Inizia", st_cta_join:"Iscriviti", st_cta_quote:"Preventivo", st1_h:"La luce<br>inizia qui", st1_card:"Valutato da 2.400 clienti", st1_s:"Pezzi premium, dettagli curati, fatti per durare.", st2_tag:"Marketing intelligente", st2_st1:"Decisioni concrete", st2_st3:"Voto medio", st3_tag:"I nostri clienti", st3_h:"Opinioni che<br><em>ci fanno crescere</em>", st3_s:"Ogni voce conta. I vostri riscontri ci spingono a migliorare.", st3_role:"Direttrice marketing", st5_st1:"Studenti", st6_cue:"Scorri",
       nav_styles:"Stili", sec_styles:"Stili", st_eyebrow:"Cosa possiamo costruirti", st_h2:"Sei direzioni.<br>Uno studio.", st_p:"Non tutte le attività hanno bisogno dello stesso sito. Queste sono le direzioni in cui lavoriamo — scegli quella che ti somiglia, o raccontaci cosa hai in mente.", st_cta_shop:"Negozio", st_cta_shop2:"Acquista", st_cta_contact:"Contatti", st_cta_demo:"Richiedi demo", st_cta_start:"Inizia", st_cta_join:"Iscriviti", st_cta_quote:"Preventivo", st1_h:"La luce<br>inizia qui", st1_card:"Valutato da 2.400 clienti", st1_t:"Boutique & e-commerce", st1_d:"Fotografia editoriale, molto respiro e una sola azione chiara. Per marchi che si vendono per come appaiono.", st1_g:"Beauty · Moda · Retail", st2_h:"Scelto dai team che consegnano", st2_s:"Tutto ciò che serve al tuo team, in un unico posto.", st2_card:"Utenti attivi", st2_t:"Corporate & SaaS", st2_d:"Pulito, luminoso e costruito su segnali di fiducia: numeri, loghi e una demo a un tocco.", st2_g:"Software · B2B · Consulenza", st3_h2:"Esperienza", st3_cta:"Trova casa", st3_card:"Clienti soddisfatti · 5K partner", st3_t:"Editoriale & immobiliare", st3_d:"Toni caldi di carta e corsivi serif. Il look che fa sembrare un annuncio una rivista.", st3_g:"Immobiliare · Architettura · Hotel", st4_h:"Esplora nuovi orizzonti", st4_s:"Luoghi unici, guide vere, momenti che restano.", st4_card:"Viaggiatori ospitati", st4_t:"Immersivo & fotografico", st4_d:"Un'immagine a tutto campo regge la pagina, con schede di vetro sopra. Vende una sensazione, non una scheda tecnica.", st4_g:"Viaggi · Ristoranti · Eventi", st5_h:"Scegli il corso giusto per il tuo obiettivo", st5_s:"Impara al tuo ritmo, con chi lo ha già fatto.", st5_card:"Scelto in tutto il mondo", st5_card2:"Mentori esperti", st5_t:"Blocco di colore", st5_d:"Un colore saturo che fa tutto il lavoro. Si legge subito su un telefono, impossibile confonderlo.", st5_g:"Formazione · App · Startup", st6_t:"Cinematografico con lo scroll", st6_d:"Video legato alla posizione dello scroll, come il sito in cui sei. Il più impegnativo da costruire — e il più difficile da dimenticare.", st6_g:"Edilizia · Studi · Marchi premium", nav_work:"Progetti", nav_services:"Servizi", nav_testimonials:"Testimonianze", nav_about:"Chi siamo", nav_quote:"Preventivo",
       sec_hero:"Studio", sec_work:"Progetti", sec_services:"Servizi", sec_testi:"Testimonianze", sec_about:"Studio", sec_contact:"Contatti",
       hero_eyebrow:"Studio web & software", hero_h1:"Siti che si muovono<br>come un <em>film</em>.",
