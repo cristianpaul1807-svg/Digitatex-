@@ -1039,6 +1039,17 @@
   .lead-fotos{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
   .lead-fotos a{border:none;}
   .lead-fotos img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--line);display:block;}
+  /* Edicion en linea de la ficha: sin esto, corregir una palabra del nombre o
+     anadir la web obligaba a borrar el caso y volver a subir el video entero. */
+  .row-edit{display:grid;gap:8px;margin-top:10px;}
+  .row-edit input, .row-edit select{width:100%;background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--bone);
+    font-family:'Inter',sans-serif;font-size:12.5px;}
+  .row-edit input:focus, .row-edit select:focus{outline:none;border-color:var(--brass);}
+  .row-edit .save{justify-self:start;background:var(--brass);color:#14110f;border:none;
+    border-radius:99em;padding:8px 18px;font-size:11.5px;font-weight:600;letter-spacing:0.08em;
+    text-transform:uppercase;cursor:pointer;opacity:0.45;pointer-events:none;transition:opacity .2s;}
+  .row-edit .save.on{opacity:1;pointer-events:auto;}
 </style>
 </head>
 <body>
@@ -1515,7 +1526,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v19</span>
+  <span class="build-tag">v20</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -1598,7 +1609,7 @@
             </div>
             <div class="field">
               <label for="c-url" data-i18n="admin_case_url">Website (optional)</label>
-              <input type="url" id="c-url" placeholder="https://">
+              <input type="text" id="c-url" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="ta-maison-est-ma-maison-inc.com">
             </div>
           </div>
           <div class="file-drop" id="case-drop" style="margin-top:16px;">
@@ -1624,7 +1635,7 @@
             </div>
             <div class="field">
               <label for="s-url" data-i18n="admin_case_url">Website (optional)</label>
-              <input type="url" id="s-url" placeholder="https://">
+              <input type="text" id="s-url" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="trimm.online">
             </div>
           </div>
           <div class="field" style="margin-top:8px;">
@@ -1670,6 +1681,7 @@
      ============================================================ */
   const i18n = {
     en: {
+      admin_save:"Save",
       case_preview:"Live preview of", case_visit:"Visit", case_tag_generic:"Client work · Custom website", case_generic:"Designed, built and launched by Digitatex. What you see above is the real site running — the recording moves with your scroll, exactly as the site behaves live.", case_g_m1s:"Scroll-scrub", case_g_m1:"Video tied to scroll position, not autoplay", case_g_m2s:"End to end", case_g_m2:"Design, build and launch handled in-house", sys_tag_generic:"Digitatex product · Business software", sys_generic:"Built end to end by Digitatex — product design, development and the system running behind it. The recording above is the real product in use.", sys_g_m1s:"Built in-house", sys_g_m1:"Product, interface and backend by Digitatex", sys_g_m2s:"In production", sys_g_m2:"Running with real businesses, not a prototype", sys_kind_own:"Our own product", sys_kind_collab:"In collaboration", admin_cases_h:"Client cases on the site", admin_case_name:"Client name *", admin_case_url:"Website (optional)", admin_case_add:"Add case", admin_case_novideo:"Pick a video first.", admin_case_max:"Three is the limit. Delete one to add another.", admin_confirm_case:"Delete this and its video? This cannot be undone.", admin_uploading:"Uploading…", admin_error:"Something went wrong.", admin_cases_note:"Up to three client cases appear on the site, in the order you add them. Landscape 16:9 recordings work best.", admin_sys_h:"Our own systems & collaborations", admin_sys_name:"System name *", admin_sys_kind:"Type", admin_sys_add:"Add system", admin_sys_note:"Trimm goes here. Up to three systems appear on the site, without the monitor frame — that frame is reserved for sites we deliver to a client.", admin_trimm_h:"Trimm video", admin_video_toobig:"That video is {mb} MB. The limit is 25 MB — compress it and try again.", admin_video_heavy:"Heads up: {mb} MB is heavy. Uploading anyway…", admin_video_unplayable:"The browser can't open that video. Export it as MP4 (H.264) and try again.", admin_video_long:"Heads up: {s} seconds is long — the scroll jumps a lot. Under 20 works best. ",
       nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"What we can build for you", st_h2:"Six directions.<br>One studio.", st_p:"Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.", st_cta_shop:"Shop", st_cta_shop2:"Shop now", st_cta_contact:"Contact us", st_cta_demo:"Book a demo", st_cta_start:"Get started", st_cta_join:"Register", st_cta_quote:"Free quote", st1_h:"Glow<br>begins here", st1_card:"Rated by 2,400 customers", st1_s:"Premium pieces, refined details, made to last.", st2_tag:"Smart marketing", st2_st1:"Actionable insight", st2_st3:"Average rating", st3_tag:"Our clients", st3_h:"Trusted feedback<br><em>that moves us</em>", st3_s:"We value every voice. Feedback pushes us to refine and grow.", st3_role:"Marketing manager", st5_st1:"Students", st6_cue:"Scroll",
       st1_t:"Boutique & e-commerce", st1_d:"Editorial photography, generous space and a single clear action. For brands sold on how they look.", st1_g:"Beauty · Fashion · Retail", st2_h:"Trusted by teams that ship", st2_s:"Everything your team needs, in one place, without the busywork.", st2_card:"Active users", st2_t:"Corporate & SaaS", st2_d:"Clean, bright and built around trust signals: numbers, logos and a demo one tap away.", st2_g:"Software · B2B · Consulting", st3_h2:"Experience", st3_cta:"Find a home", st3_card:"Happy clients · 5K partners", st3_t:"Editorial & property", st3_d:"Warm paper tones and serif italics. The look that makes a listing feel like a magazine spread.", st3_g:"Real estate · Architecture · Hotels", st4_h:"Explore new horizons", st4_s:"Unique places, real guides, moments you keep.", st4_card:"Travellers hosted", st4_t:"Immersive & photographic", st4_d:"A full-bleed image carries the page, with glass cards floating over it. Sells a feeling, not a spec sheet.", st4_g:"Travel · Restaurants · Events", st5_h:"Choose the right course for your goal", st5_s:"Learn at your own pace, with people who have done it.", st5_card:"Trusted worldwide", st5_card2:"Expert mentors", st5_t:"Bold colour block", st5_d:"One saturated colour doing the heavy lifting. Reads instantly on a phone, impossible to confuse with a competitor.", st5_g:"Education · Apps · Startups", st6_t:"Cinematic & scroll-driven", st6_d:"Video tied to scroll position, like the site you're on. The most demanding to build — and the hardest to forget.", st6_g:"Construction · Studios · Premium brands", nav_work:"Work", nav_services:"Services", nav_testimonials:"Testimonials", nav_about:"About", nav_quote:"Quote",
@@ -1720,12 +1732,13 @@
       admin_add_h:"Add an Instagram testimonial", admin_url:"Instagram reel / post link *", admin_author:"Client name",
       admin_handle:"Instagram handle", admin_order:"Order (lower shows first)", admin_quote:"Short quote (optional)",
       admin_cover:"Custom cover image (optional — leave empty to embed the reel directly)", admin_cover_hint:"Click to select a cover image",
-      admin_save:"Publish testimonial", admin_video_h:"Case videos", admin_video_pick:"Click to select a video", admin_video_up:"Uploading", admin_video_ok:"Uploaded - it is live on the site.", admin_video_note:"Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.", admin_list_h:"Published testimonials", admin_leads_h:"Quote requests received",
+      admin_video_h:"Case videos", admin_video_pick:"Click to select a video", admin_video_up:"Uploading", admin_video_ok:"Uploaded - it is live on the site.", admin_video_note:"Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.", admin_list_h:"Published testimonials", admin_leads_h:"Quote requests received",
       admin_delete:"Delete", admin_confirm:"Delete this lead? This cannot be undone.", admin_hide:"Hide", admin_show:"Show", admin_none:"Nothing here yet.",
       admin_bad_url:"That doesn't look like an Instagram link.", admin_saved:"Published.", admin_deleted:"Deleted.",
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
     },
     es: {
+      admin_save:"Guardar",
       case_preview:"Vista previa de", case_visit:"Visitar", case_tag_generic:"Trabajo de cliente · Web a medida", case_generic:"Diseñada, desarrollada y puesta en marcha por Digitatex. Lo que se ve arriba es el sitio real funcionando — la grabación avanza con tu scroll, igual que se comporta en vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"El vídeo va atado al scroll, no se reproduce solo", case_g_m2s:"De principio a fin", case_g_m2:"Diseño, desarrollo y lanzamiento hechos en casa", sys_tag_generic:"Producto Digitatex · Software de gestión", sys_generic:"Hecho de principio a fin por Digitatex — diseño de producto, desarrollo y el sistema que corre por detrás. La grabación de arriba es el producto real en uso.", sys_g_m1s:"Hecho en casa", sys_g_m1:"Producto, interfaz y backend por Digitatex", sys_g_m2s:"En producción", sys_g_m2:"Funcionando con negocios reales, no un prototipo", sys_kind_own:"Producto propio", sys_kind_collab:"En colaboración", admin_cases_h:"Casos de clientes en la web", admin_case_name:"Nombre del cliente *", admin_case_url:"Web (opcional)", admin_case_add:"Añadir caso", admin_case_novideo:"Elegí primero un vídeo.", admin_case_max:"El tope son tres. Borrá uno para añadir otro.", admin_confirm_case:"¿Borrar esto y su vídeo? No se puede deshacer.", admin_uploading:"Subiendo…", admin_error:"Algo salió mal.", admin_cases_note:"En la web salen hasta tres casos de clientes, en el orden en que los añadís. Lo ideal es grabar en horizontal 16:9.", admin_sys_h:"Sistemas propios y colaboraciones", admin_sys_name:"Nombre del sistema *", admin_sys_kind:"Tipo", admin_sys_add:"Añadir sistema", admin_sys_note:"Acá va Trimm. En la web salen hasta tres sistemas, sin el marco de monitor — ese marco queda para las webs que entregamos a un cliente.", admin_trimm_h:"Vídeo de Trimm", admin_video_toobig:"Ese vídeo pesa {mb} MB. El tope son 25 MB — comprimilo y volvé a intentar.", admin_video_heavy:"Ojo: {mb} MB es pesado. Se sube igual…", admin_video_unplayable:"El navegador no puede abrir ese vídeo. Expórtalo como MP4 (H.264) y volvé a intentar.", admin_video_long:"Ojo: {s} segundos es largo — el scroll pega saltos. Lo ideal es menos de 20. ",
       nav_styles:"Estilos", sec_styles:"Estilos", st_eyebrow:"Lo que podemos montarte", st_h2:"Seis direcciones.<br>Un estudio.", st_p:"No todos los negocios necesitan la misma web. Estas son las direcciones en las que trabajamos — elegí la que encaje con la tuya, o contanos qué tenés en mente y lo tomamos desde ahí.", st_cta_shop:"Tienda", st_cta_shop2:"Comprar", st_cta_contact:"Contacto", st_cta_demo:"Pedir demo", st_cta_start:"Empezar", st_cta_join:"Inscribirme", st_cta_quote:"Cotización", st1_h:"El brillo<br>empieza acá", st1_card:"Valorado por 2.400 clientes", st1_s:"Piezas premium, detalles cuidados, hechas para durar.", st2_tag:"Marketing inteligente", st2_st1:"Decisiones accionables", st2_st3:"Valoración media", st3_tag:"Nuestros clientes", st3_h:"Opiniones que<br><em>nos mueven</em>", st3_s:"Valoramos cada voz. Lo que nos dicen es lo que nos hace mejorar.", st3_role:"Directora de marketing", st5_st1:"Alumnos", st6_cue:"Baja",
       st1_t:"Boutique y e-commerce", st1_d:"Fotografía editorial, mucho aire y una sola acción clara. Para marcas que se venden por cómo se ven.", st1_g:"Belleza · Moda · Retail", st2_h:"La eligen los equipos que entregan", st2_s:"Todo lo que tu equipo necesita, en un solo lugar.", st2_card:"Usuarios activos", st2_t:"Corporativa y SaaS", st2_d:"Limpia, luminosa y construida sobre señales de confianza: números, logos y una demo a un toque.", st2_g:"Software · B2B · Consultoría", st3_h2:"Experiencia", st3_cta:"Buscar casa", st3_card:"Clientes felices · 5K socios", st3_t:"Editorial e inmobiliaria", st3_d:"Tonos cálidos de papel y serif en itálica. El look que hace que una propiedad parezca una revista.", st3_g:"Inmobiliaria · Arquitectura · Hoteles", st4_h:"Explorá nuevos horizontes", st4_s:"Lugares únicos, guías reales, momentos que te quedan.", st4_card:"Viajeros alojados", st4_t:"Inmersiva y fotográfica", st4_d:"Una imagen a sangre sostiene la página, con tarjetas de vidrio flotando encima. Vende una sensación, no una ficha técnica.", st4_g:"Viajes · Restaurantes · Eventos", st5_h:"Elegí el curso para tu objetivo", st5_s:"Aprendé a tu ritmo, con gente que ya lo hizo.", st5_card:"Confían en todo el mundo", st5_card2:"Mentores expertos", st5_t:"Bloque de color", st5_d:"Un color saturado haciendo todo el trabajo. Se lee al instante en un teléfono e imposible de confundir con la competencia.", st5_g:"Formación · Apps · Startups", st6_t:"Cinematográfica con scroll", st6_d:"Video atado a la posición del scroll, como la web en la que estás. La más exigente de construir — y la más difícil de olvidar.", st6_g:"Construcción · Estudios · Marcas premium", nav_work:"Proyectos", nav_services:"Servicios", nav_testimonials:"Testimonios", nav_about:"Nosotros", nav_quote:"Cotización",
@@ -1776,12 +1789,13 @@
       admin_add_h:"Agregar testimonio de Instagram", admin_url:"Link del reel / post de Instagram *", admin_author:"Nombre del cliente",
       admin_handle:"Usuario de Instagram", admin_order:"Orden (menor aparece primero)", admin_quote:"Frase corta (opcional)",
       admin_cover:"Portada personalizada (opcional — dejalo vacío para embeber el reel directo)", admin_cover_hint:"Hacé clic para elegir una imagen de portada",
-      admin_save:"Publicar testimonio", admin_video_h:"Videos de los casos", admin_video_pick:"Hacé clic para elegir un video", admin_video_up:"Subiendo", admin_video_ok:"Subido - ya se ve en la web.", admin_video_note:"Lo que subas reemplaza al instante lo que muestra la web. Lo ideal es 16:9 horizontal; si no subís nada, la web usa el video que trae por defecto.", admin_list_h:"Testimonios publicados", admin_leads_h:"Solicitudes de cotización recibidas",
+      admin_video_h:"Videos de los casos", admin_video_pick:"Hacé clic para elegir un video", admin_video_up:"Subiendo", admin_video_ok:"Subido - ya se ve en la web.", admin_video_note:"Lo que subas reemplaza al instante lo que muestra la web. Lo ideal es 16:9 horizontal; si no subís nada, la web usa el video que trae por defecto.", admin_list_h:"Testimonios publicados", admin_leads_h:"Solicitudes de cotización recibidas",
       admin_delete:"Borrar", admin_confirm:"¿Borrar este cliente? No se puede deshacer.", admin_hide:"Ocultar", admin_show:"Mostrar", admin_none:"Todavía no hay nada acá.",
       admin_bad_url:"Ese link no parece de Instagram.", admin_saved:"Publicado.", admin_deleted:"Borrado.",
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
     },
     fr: {
+      admin_save:"Enregistrer",
       case_preview:"Aperçu en direct de", case_visit:"Visiter", case_tag_generic:"Projet client · Site sur mesure", case_generic:"Conçu, développé et mis en ligne par Digitatex. Ce que vous voyez ci-dessus est le site réel en fonctionnement — la vidéo avance au rythme de votre défilement, exactement comme en vrai.", case_g_m1s:"Scroll-scrub", case_g_m1:"La vidéo suit le défilement, pas de lecture automatique", case_g_m2s:"De bout en bout", case_g_m2:"Conception, développement et lancement en interne", sys_tag_generic:"Produit Digitatex · Logiciel de gestion", sys_generic:"Réalisé de bout en bout par Digitatex — conception produit, développement et le système qui tourne derrière. La vidéo ci-dessus montre le produit réel en usage.", sys_g_m1s:"Fait en interne", sys_g_m1:"Produit, interface et backend par Digitatex", sys_g_m2s:"En production", sys_g_m2:"Utilisé par de vraies entreprises, pas un prototype", sys_kind_own:"Notre produit", sys_kind_collab:"En collaboration", admin_cases_h:"Projets clients sur le site", admin_case_name:"Nom du client *", admin_case_url:"Site web (facultatif)", admin_case_add:"Ajouter le projet", admin_case_novideo:"Choisissez d'abord une vidéo.", admin_case_max:"Trois maximum. Supprimez-en un pour en ajouter un autre.", admin_confirm_case:"Supprimer ceci et sa vidéo ? Action irréversible.", admin_uploading:"Envoi en cours…", admin_error:"Une erreur est survenue.", admin_cases_note:"Le site affiche jusqu'à trois projets clients, dans l'ordre où vous les ajoutez. Filmez de préférence en 16:9 horizontal.", admin_sys_h:"Nos systèmes et collaborations", admin_sys_name:"Nom du système *", admin_sys_kind:"Type", admin_sys_add:"Ajouter le système", admin_sys_note:"Trimm va ici. Le site affiche jusqu'à trois systèmes, sans le cadre d'écran — ce cadre est réservé aux sites livrés à un client.", admin_trimm_h:"Vidéo de Trimm", admin_video_toobig:"Cette vidéo fait {mb} Mo. La limite est de 25 Mo — compressez-la et réessayez.", admin_video_heavy:"Attention : {mb} Mo, c'est lourd. Envoi en cours quand même…", admin_video_unplayable:"Le navigateur ne peut pas ouvrir cette vidéo. Exportez-la en MP4 (H.264) et réessayez.", admin_video_long:"Attention : {s} secondes, c'est long — le défilement saute beaucoup. Moins de 20 est idéal. ",
       nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"Ce que nous pouvons construire", st_h2:"Six directions.<br>Un studio.", st_p:"Toutes les entreprises n'ont pas besoin du même site. Voici les directions dans lesquelles nous travaillons — choisissez celle qui vous ressemble, ou dites-nous ce que vous avez en tête.", st_cta_shop:"Boutique", st_cta_shop2:"Acheter", st_cta_contact:"Contact", st_cta_demo:"Demander une démo", st_cta_start:"Commencer", st_cta_join:"S'inscrire", st_cta_quote:"Devis gratuit", st1_h:"L'éclat<br>commence ici", st1_card:"Noté par 2 400 clients", st1_s:"Des pièces premium, des détails soignés, faites pour durer.", st2_tag:"Marketing intelligent", st2_st1:"Décisions concrètes", st2_st3:"Note moyenne", st3_tag:"Nos clients", st3_h:"Des retours qui<br><em>nous font avancer</em>", st3_s:"Chaque voix compte. Vos retours nous poussent à progresser.", st3_role:"Directrice marketing", st5_st1:"Élèves", st6_cue:"Défiler",
       st1_t:"Boutique & e-commerce", st1_d:"Photographie éditoriale, beaucoup d'espace et une seule action claire. Pour les marques qui se vendent par leur allure.", st1_g:"Beauté · Mode · Retail", st2_h:"Choisi par les équipes qui livrent", st2_s:"Tout ce dont votre équipe a besoin, au même endroit.", st2_card:"Utilisateurs actifs", st2_t:"Corporate & SaaS", st2_d:"Clair, lumineux et bâti sur des signaux de confiance : chiffres, logos et une démo à portée de clic.", st2_g:"Logiciel · B2B · Conseil", st3_h2:"Expérience", st3_cta:"Trouver un bien", st3_card:"Clients satisfaits · 5K partenaires", st3_t:"Éditorial & immobilier", st3_d:"Tons chauds de papier et italiques serif. Le look qui transforme une annonce en pages de magazine.", st3_g:"Immobilier · Architecture · Hôtels", st4_h:"Explorez de nouveaux horizons", st4_s:"Des lieux uniques, de vrais guides, des moments qui restent.", st4_card:"Voyageurs accueillis", st4_t:"Immersif & photographique", st4_d:"Une image plein cadre porte la page, avec des cartes de verre par-dessus. Vend une sensation, pas une fiche technique.", st4_g:"Voyage · Restaurants · Événements", st5_h:"Choisissez le cours qui vous mène au but", st5_s:"Apprenez à votre rythme, avec ceux qui l'ont fait.", st5_card:"Reconnu partout", st5_card2:"Mentors experts", st5_t:"Bloc de couleur", st5_d:"Une couleur saturée qui fait tout le travail. Se lit instantanément sur un téléphone, impossible à confondre.", st5_g:"Formation · Apps · Startups", st6_t:"Cinématographique au scroll", st6_d:"Vidéo liée à la position du scroll, comme le site où vous êtes. Le plus exigeant à construire — et le plus difficile à oublier.", st6_g:"Construction · Studios · Marques premium", nav_work:"Projets", nav_services:"Services", nav_testimonials:"Témoignages", nav_about:"À propos", nav_quote:"Devis",
@@ -1832,12 +1846,13 @@
       admin_add_h:"Ajouter un témoignage Instagram", admin_url:"Lien du reel / post Instagram *", admin_author:"Nom du client",
       admin_handle:"Compte Instagram", admin_order:"Ordre (le plus petit en premier)", admin_quote:"Courte citation (facultatif)",
       admin_cover:"Image de couverture (facultatif — laissez vide pour intégrer le reel directement)", admin_cover_hint:"Cliquez pour choisir une image de couverture",
-      admin_save:"Publier le témoignage", admin_video_h:"Vidéos des projets", admin_video_pick:"Cliquez pour choisir une vidéo", admin_video_up:"Envoi", admin_video_ok:"Envoyée - elle est en ligne.", admin_video_note:"Ce que vous envoyez remplace aussitôt ce qu affiche le site. Le 16:9 horizontal est idéal ; sans envoi, le site garde la vidéo fournie.", admin_list_h:"Témoignages publiés", admin_leads_h:"Demandes de devis reçues",
+      admin_video_h:"Vidéos des projets", admin_video_pick:"Cliquez pour choisir une vidéo", admin_video_up:"Envoi", admin_video_ok:"Envoyée - elle est en ligne.", admin_video_note:"Ce que vous envoyez remplace aussitôt ce qu affiche le site. Le 16:9 horizontal est idéal ; sans envoi, le site garde la vidéo fournie.", admin_list_h:"Témoignages publiés", admin_leads_h:"Demandes de devis reçues",
       admin_delete:"Supprimer", admin_confirm:"Supprimer ce contact ? Action irréversible.", admin_hide:"Masquer", admin_show:"Afficher", admin_none:"Rien pour l'instant.",
       admin_bad_url:"Ce lien ne ressemble pas à un lien Instagram.", admin_saved:"Publié.", admin_deleted:"Supprimé.",
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
     },
     it: {
+      admin_save:"Salva",
       case_preview:"Anteprima dal vivo di", case_visit:"Visita", case_tag_generic:"Lavoro per cliente · Sito su misura", case_generic:"Progettato, sviluppato e messo online da Digitatex. Quello che vedi sopra è il sito vero in funzione — il video avanza con il tuo scroll, esattamente come si comporta dal vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"Il video è legato allo scroll, non parte da solo", case_g_m2s:"Dall'inizio alla fine", case_g_m2:"Design, sviluppo e lancio fatti in casa", sys_tag_generic:"Prodotto Digitatex · Software gestionale", sys_generic:"Realizzato dall'inizio alla fine da Digitatex — design di prodotto, sviluppo e il sistema che gira dietro. Il video sopra è il prodotto vero in uso.", sys_g_m1s:"Fatto in casa", sys_g_m1:"Prodotto, interfaccia e backend di Digitatex", sys_g_m2s:"In produzione", sys_g_m2:"In uso da aziende vere, non un prototipo", sys_kind_own:"Prodotto nostro", sys_kind_collab:"In collaborazione", admin_cases_h:"Lavori per clienti sul sito", admin_case_name:"Nome del cliente *", admin_case_url:"Sito web (facoltativo)", admin_case_add:"Aggiungi lavoro", admin_case_novideo:"Scegli prima un video.", admin_case_max:"Il limite è tre. Eliminane uno per aggiungerne un altro.", admin_confirm_case:"Eliminare questo e il suo video? Non si può annullare.", admin_uploading:"Caricamento…", admin_error:"Qualcosa è andato storto.", admin_cases_note:"Sul sito compaiono fino a tre lavori per clienti, nell'ordine in cui li aggiungi. Meglio registrare in orizzontale 16:9.", admin_sys_h:"Sistemi nostri e collaborazioni", admin_sys_name:"Nome del sistema *", admin_sys_kind:"Tipo", admin_sys_add:"Aggiungi sistema", admin_sys_note:"Qui va Trimm. Sul sito compaiono fino a tre sistemi, senza la cornice del monitor — quella cornice resta per i siti che consegniamo a un cliente.", admin_trimm_h:"Video di Trimm", admin_video_toobig:"Questo video pesa {mb} MB. Il limite è 25 MB — comprimilo e riprova.", admin_video_heavy:"Attenzione: {mb} MB è pesante. Si carica lo stesso…", admin_video_unplayable:"Il browser non riesce ad aprire questo video. Esportalo in MP4 (H.264) e riprova.", admin_video_long:"Attenzione: {s} secondi è lungo — lo scroll fa salti. Meglio meno di 20. ",
       nav_styles:"Stili", sec_styles:"Stili", st_eyebrow:"Cosa possiamo costruirti", st_h2:"Sei direzioni.<br>Uno studio.", st_p:"Non tutte le attività hanno bisogno dello stesso sito. Queste sono le direzioni in cui lavoriamo — scegli quella che ti somiglia, o raccontaci cosa hai in mente.", st_cta_shop:"Negozio", st_cta_shop2:"Acquista", st_cta_contact:"Contatti", st_cta_demo:"Richiedi demo", st_cta_start:"Inizia", st_cta_join:"Iscriviti", st_cta_quote:"Preventivo", st1_h:"La luce<br>inizia qui", st1_card:"Valutato da 2.400 clienti", st1_s:"Pezzi premium, dettagli curati, fatti per durare.", st2_tag:"Marketing intelligente", st2_st1:"Decisioni concrete", st2_st3:"Voto medio", st3_tag:"I nostri clienti", st3_h:"Opinioni che<br><em>ci fanno crescere</em>", st3_s:"Ogni voce conta. I vostri riscontri ci spingono a migliorare.", st3_role:"Direttrice marketing", st5_st1:"Studenti", st6_cue:"Scorri",
       st1_t:"Boutique & e-commerce", st1_d:"Fotografia editoriale, molto respiro e una sola azione chiara. Per marchi che si vendono per come appaiono.", st1_g:"Beauty · Moda · Retail", st2_h:"Scelto dai team che consegnano", st2_s:"Tutto ciò che serve al tuo team, in un unico posto.", st2_card:"Utenti attivi", st2_t:"Corporate & SaaS", st2_d:"Pulito, luminoso e costruito su segnali di fiducia: numeri, loghi e una demo a un tocco.", st2_g:"Software · B2B · Consulenza", st3_h2:"Esperienza", st3_cta:"Trova casa", st3_card:"Clienti soddisfatti · 5K partner", st3_t:"Editoriale & immobiliare", st3_d:"Toni caldi di carta e corsivi serif. Il look che fa sembrare un annuncio una rivista.", st3_g:"Immobiliare · Architettura · Hotel", st4_h:"Esplora nuovi orizzonti", st4_s:"Luoghi unici, guide vere, momenti che restano.", st4_card:"Viaggiatori ospitati", st4_t:"Immersivo & fotografico", st4_d:"Un'immagine a tutto campo regge la pagina, con schede di vetro sopra. Vende una sensazione, non una scheda tecnica.", st4_g:"Viaggi · Ristoranti · Eventi", st5_h:"Scegli il corso giusto per il tuo obiettivo", st5_s:"Impara al tuo ritmo, con chi lo ha già fatto.", st5_card:"Scelto in tutto il mondo", st5_card2:"Mentori esperti", st5_t:"Blocco di colore", st5_d:"Un colore saturo che fa tutto il lavoro. Si legge subito su un telefono, impossibile confonderlo.", st5_g:"Formazione · App · Startup", st6_t:"Cinematografico con lo scroll", st6_d:"Video legato alla posizione dello scroll, come il sito in cui sei. Il più impegnativo da costruire — e il più difficile da dimenticare.", st6_g:"Edilizia · Studi · Marchi premium", nav_work:"Progetti", nav_services:"Servizi", nav_testimonials:"Testimonianze", nav_about:"Chi siamo", nav_quote:"Preventivo",
@@ -1888,7 +1903,7 @@
       admin_add_h:"Aggiungi una testimonianza Instagram", admin_url:"Link del reel / post Instagram *", admin_author:"Nome del cliente",
       admin_handle:"Account Instagram", admin_order:"Ordine (il più basso appare per primo)", admin_quote:"Frase breve (opzionale)",
       admin_cover:"Copertina personalizzata (opzionale — lascia vuoto per incorporare il reel)", admin_cover_hint:"Clicca per scegliere un'immagine di copertina",
-      admin_save:"Pubblica testimonianza", admin_video_h:"Video dei progetti", admin_video_pick:"Clicca per scegliere un video", admin_video_up:"Caricamento", admin_video_ok:"Caricato - è online.", admin_video_note:"Ciò che carichi sostituisce subito quello che mostra il sito. Il 16:9 orizzontale è ideale; senza caricamento il sito usa il video incluso.", admin_list_h:"Testimonianze pubblicate", admin_leads_h:"Richieste di preventivo ricevute",
+      admin_video_h:"Video dei progetti", admin_video_pick:"Clicca per scegliere un video", admin_video_up:"Caricamento", admin_video_ok:"Caricato - è online.", admin_video_note:"Ciò che carichi sostituisce subito quello che mostra il sito. Il 16:9 orizzontale è ideale; senza caricamento il sito usa il video incluso.", admin_list_h:"Testimonianze pubblicate", admin_leads_h:"Richieste di preventivo ricevute",
       admin_delete:"Elimina", admin_confirm:"Eliminare questo contatto? Non si può annullare.", admin_hide:"Nascondi", admin_show:"Mostra", admin_none:"Ancora niente qui.",
       admin_bad_url:"Questo link non sembra di Instagram.", admin_saved:"Pubblicato.", admin_deleted:"Eliminato.",
       admin_login_err:"Email o password errate.", admin_generic_err:"Qualcosa è andato storto. Riprova."
@@ -2677,6 +2692,16 @@
      vuelve a bajar el video entero en cada visita, aunque ya lo tuviera. */
   const VIDEO_CACHE = '604800';
 
+  /* Se acepta escribir solo el dominio. Pedir "https://" a mano en un telefono
+     es una via rapida a dejarlo vacio, que es justo lo que paso la primera vez. */
+  function normalizarUrl(v){
+    const t = String(v || '').trim();
+    if(!t) return null;
+    if(/^https?:\/\//i.test(t)) return t;
+    if(/^[a-z0-9.-]+\.[a-z]{2,}(\/|$)/i.test(t)) return 'https://' + t;
+    return t;
+  }
+
   function revisarVideo(file){
     if(!file) return { ok:false, msg:t('admin_case_novideo') };
     const mb = file.size / 1048576;
@@ -3420,7 +3445,7 @@
         await supabaseReady;
         if(!supabaseClient) return;
         const nombre = document.getElementById('c-name').value.trim();
-        const url = document.getElementById('c-url').value.trim();
+        const url = normalizarUrl(document.getElementById('c-url').value);
         if(!nombre){ return; }
         const revision = revisarVideo(casePicked);
         if(!revision.ok){
@@ -3455,7 +3480,7 @@
 
           const { error } = await supabaseClient.from('cases').insert({
             client_name: nombre,
-            site_url: url || null,
+            site_url: url,
             video_path: ruta,
             sort_order: (yaHay ? yaHay.length : 0)
           });
@@ -3491,10 +3516,19 @@
             '<button class="lead-del" data-case="' + escapeHtml(c.id) +
               '" data-path="' + escapeHtml(c.video_path) + '" title="' + escapeHtml(t('admin_delete')) + '">\u2715</button>' +
           '</div>' +
-          (c.site_url ? '<a href="' + escapeHtml(c.site_url) + '" target="_blank" rel="noopener">' + escapeHtml(caseHost(c.site_url)) + '</a><br>' : '') +
+          '<div class="row-edit" data-id="' + escapeHtml(c.id) + '">' +
+            '<input class="e-name" value="' + escapeHtml(c.client_name || '') + '" maxlength="60" placeholder="' + escapeHtml(t('admin_case_name')) + '">' +
+            '<input class="e-url" value="' + escapeHtml(c.site_url || '') + '" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' + escapeHtml(t('admin_case_url')) + '">' +
+            '<button class="save" type="button">' + escapeHtml(t('admin_save')) + '</button>' +
+          '</div>' +
           '<video src="' + escapeHtml(mediaUrl(c.video_path)) + '" muted playsinline preload="metadata" ' +
             'style="width:100%;max-width:220px;border-radius:8px;margin-top:10px;display:block;" controls></video>' +
         '</div>').join('');
+
+      enlazarEdicion(casesList, 'cases', (fila)=>({
+        client_name: fila.querySelector('.e-name').value.trim(),
+        site_url: normalizarUrl(fila.querySelector('.e-url').value)
+      }), ()=>{ loadAdminCases(); loadCases(); });
 
       casesList.querySelectorAll('.lead-del').forEach(btn=>{
         btn.addEventListener('click', async ()=>{
@@ -3506,6 +3540,29 @@
           try{ await supabaseClient.storage.from(MEDIA_BUCKET).remove([btn.dataset.path]); }catch(e){}
           loadAdminCases();
           loadCases();
+        });
+      });
+    }
+
+    /* El boton de guardar solo se enciende si algo cambio de verdad: asi no
+       invita a pulsarlo sin motivo ni manda escrituras vacias a la base. */
+    function enlazarEdicion(lista, tabla, leerCampos, alGuardar){
+      lista.querySelectorAll('.row-edit').forEach(fila=>{
+        const boton = fila.querySelector('.save');
+        const inicial = JSON.stringify(leerCampos(fila));
+        const revisar = ()=> boton.classList.toggle('on', JSON.stringify(leerCampos(fila)) !== inicial);
+        fila.querySelectorAll('input, select').forEach(c=>{
+          c.addEventListener('input', revisar);
+          c.addEventListener('change', revisar);
+        });
+        boton.addEventListener('click', async ()=>{
+          const campos = leerCampos(fila);
+          const nombre = campos.client_name !== undefined ? campos.client_name : campos.name;
+          if(!nombre) return;
+          boton.textContent = t('admin_uploading');
+          const { error } = await supabaseClient.from(tabla).update(campos).eq('id', fila.dataset.id);
+          boton.textContent = error ? t('admin_error') : t('admin_saved');
+          if(!error) alGuardar();
         });
       });
     }
@@ -3535,7 +3592,7 @@
         await supabaseReady;
         if(!supabaseClient) return;
         const nombre = document.getElementById('s-name').value.trim();
-        const url = document.getElementById('s-url').value.trim();
+        const url = normalizarUrl(document.getElementById('s-url').value);
         const tipo = document.getElementById('s-kind').value;
         if(!nombre) return;
 
@@ -3568,7 +3625,7 @@
             .upload(ruta, sysPicked, { contentType: destino.tipo, upsert:false, cacheControl: VIDEO_CACHE });
           if(upErr) throw upErr;
           const { error } = await supabaseClient.from('systems').insert({
-            name: nombre, site_url: url || null, video_path: ruta,
+            name: nombre, site_url: url, video_path: ruta,
             kind: tipo, sort_order: (yaHay ? yaHay.length : 0)
           });
           if(error) throw error;
@@ -3603,10 +3660,24 @@
               '" data-path="' + escapeHtml(c.video_path) + '" title="' + escapeHtml(t('admin_delete')) + '">\u2715</button>' +
           '</div>' +
           escapeHtml(c.kind === 'collab' ? t('sys_kind_collab') : t('sys_kind_own')) + '<br>' +
-          (c.site_url ? '<a href="' + escapeHtml(c.site_url) + '" target="_blank" rel="noopener">' + escapeHtml(caseHost(c.site_url)) + '</a><br>' : '') +
+          '<div class="row-edit" data-id="' + escapeHtml(c.id) + '">' +
+            '<input class="e-name" value="' + escapeHtml(c.name || '') + '" maxlength="60" placeholder="' + escapeHtml(t('admin_sys_name')) + '">' +
+            '<input class="e-url" value="' + escapeHtml(c.site_url || '') + '" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' + escapeHtml(t('admin_case_url')) + '">' +
+            '<select class="e-kind">' +
+              '<option value="own"' + (c.kind !== 'collab' ? ' selected' : '') + '>' + escapeHtml(t('sys_kind_own')) + '</option>' +
+              '<option value="collab"' + (c.kind === 'collab' ? ' selected' : '') + '>' + escapeHtml(t('sys_kind_collab')) + '</option>' +
+            '</select>' +
+            '<button class="save" type="button">' + escapeHtml(t('admin_save')) + '</button>' +
+          '</div>' +
           '<video src="' + escapeHtml(mediaUrl(c.video_path)) + '" muted playsinline preload="metadata" ' +
             'style="width:100%;max-width:220px;border-radius:8px;margin-top:10px;display:block;" controls></video>' +
         '</div>').join('');
+
+      enlazarEdicion(sysList, 'systems', (fila)=>({
+        name: fila.querySelector('.e-name').value.trim(),
+        site_url: normalizarUrl(fila.querySelector('.e-url').value),
+        kind: fila.querySelector('.e-kind').value
+      }), ()=>{ loadAdminSystems(); loadSystems(); });
 
       sysList.querySelectorAll('.lead-del').forEach(btn=>{
         btn.addEventListener('click', async ()=>{
