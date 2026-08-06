@@ -167,8 +167,8 @@
   .navlinks > a:hover{opacity:1;}
   .navlinks > a:hover::after,.navlinks > a.current::after{width:100%;}
   .navlinks > a.current{opacity:1;color:var(--brass-2);}
-  .langsw{display:flex;gap:2px;border:1px solid var(--line-strong);border-radius:20px;padding:4px;}
-  .langsw button{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--bone);font-family:'Inter';font-size:10px;letter-spacing:0.06em;padding:6px 11px;border-radius:16px;cursor:pointer;opacity:0.6;transition:all .3s;}
+  .langsw{display:flex;gap:2px;border:1px solid var(--line-strong);border-radius:999px;padding:4px;}
+  .langsw button{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--bone);font-family:'Inter';font-size:10px;letter-spacing:0.06em;padding:6px 12px;border-radius:999px;cursor:pointer;opacity:0.6;transition:all .3s;}
   .langsw button.active{background:var(--brass);color:var(--ink);opacity:1;}
   .langsw button:hover{opacity:1;}
   .langsw .flag{font-size:12px;line-height:1;}
@@ -193,17 +193,16 @@
   .wrap{max-width:1180px;margin:0 auto;}
 
   .sec-counter{position:absolute;top:104px;right:48px;z-index:6;font-family:'Fraunces',serif;font-style:italic;font-size:12px;letter-spacing:0.08em;color:var(--stone);pointer-events:none;}
-  .hscroll-sticky > .sec-counter{top:clamp(84px,10vh,110px);right:clamp(24px,7vw,110px);}
   @media (max-width:900px){ .sec-counter{display:none;} }
 
   /* ============================================================
      HERO — logo D 3D girando con el scroll, texto fantasma detras
      ============================================================ */
-  .scrub-wrap{position:relative;height:360vh;}
+  .scrub-wrap{position:relative;height:230vh;}
   /* En movil 360vh son casi cuatro pantallas de scroll sin que aparezca nada
      nuevo: se siente como si la pagina se hubiera colgado. El giro del logo
      sigue completo, solo que repartido en mucho menos recorrido. */
-  @media (max-width:900px){ .scrub-wrap{height:170vh;} }
+  @media (max-width:900px){ .scrub-wrap{height:155vh;} }
   .scrub-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:11vh;
     background:radial-gradient(ellipse 52% 44% at 66% 42%, rgba(224,190,130,0.13), transparent 66%);}
 
@@ -254,6 +253,22 @@
   }
   @media (prefers-reduced-motion: reduce){ .orbit-ring{filter:none;} }
 
+  /* ---- piedras orbitando el logo ----
+     Cada una vive en un contenedor que gira: el giro del contenedor la lleva
+     por la orbita, y un contragiro sobre la piedra evita que ademas de
+     trasladarse quede rodando sobre si misma de forma antinatural.
+     Las que pasan por detras del logo se atenuan, que es lo que da la
+     sensacion de que la orbita tiene profundidad y no es un anillo plano. */
+  .hero-rocks{position:absolute;z-index:3;left:78%;top:46%;width:min(38vw,460px);height:min(38vw,460px);
+    transform:translate(-50%,-50%);pointer-events:none;}
+  .rock-orbit{position:absolute;inset:0;will-change:transform;}
+  .rock{position:absolute;left:50%;top:50%;background:linear-gradient(150deg,#8d8577 0%,#4a463f 55%,#26241f 100%);
+    box-shadow:inset -1px -1px 3px rgba(0,0,0,0.6), 0 0 10px rgba(0,0,0,0.5);will-change:transform,opacity;}
+  @media (max-width:900px){
+    .hero-rocks{left:50%;top:27%;width:min(96vw,410px);height:min(96vw,410px);}
+  }
+  @media (prefers-reduced-motion: reduce){ .hero-rocks{display:none;} }
+
   .hero-inner{position:relative;z-index:4;width:100%;}
   #hero h1{font-size:clamp(38px,6.6vw,94px);line-height:0.99;max-width:15ch;margin-top:20px;}
   #hero h1 em{font-style:italic;color:var(--brass-2);}
@@ -266,7 +281,7 @@
   @media (max-width:760px){ .scroll-cue{display:none;} }
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;
-    border:1px solid var(--line-strong);border-radius:3px;
+    border:1px solid var(--line-strong);border-radius:999px;
     font-size:12px;letter-spacing:0.09em;text-transform:uppercase;font-weight:500;white-space:nowrap;
     transition:border-color .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, transform .25s cubic-bezier(.22,1,.36,1);
     position:relative;overflow:hidden;background:none;cursor:pointer;color:var(--bone);font-family:'Inter',sans-serif;
@@ -281,6 +296,18 @@
   .btn svg{width:14px;height:14px;position:relative;z-index:1;transition:transform .35s cubic-bezier(.22,1,.36,1);}
   .btn:hover svg{transform:translateX(3px);}
   .btn:focus-visible{outline:2px solid var(--brass-2);outline-offset:3px;}
+
+  /* Los botones caen desde arriba hasta su sitio al cargar la pagina y cada
+     vez que se cambia de idioma: es el momento en que el texto se reescribe,
+     y el movimiento vuelve a llevar la mirada a la accion principal. */
+  @keyframes btn-drop{
+    0%{opacity:0;transform:translateY(-34px) scale(0.94);}
+    60%{opacity:1;transform:translateY(4px) scale(1.01);}
+    100%{opacity:1;transform:translateY(0) scale(1);}
+  }
+  .btn.drop-in{animation:btn-drop .72s cubic-bezier(.34,1.32,.5,1) both;}
+  .btn.drop-in:nth-of-type(2){animation-delay:.1s;}
+  @media (prefers-reduced-motion: reduce){ .btn.drop-in{animation:none;} }
   .btn-solid{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:600;
     box-shadow:0 12px 32px -16px rgba(185,146,79,0.75);}
   .btn-solid::before{background:var(--brass-2);}
@@ -298,6 +325,9 @@
   .js-ready .reveal.rv-down{transform:translateY(-52px);}   /* cae desde arriba */
   .js-ready .reveal.rv-left{transform:translateX(-64px);}   /* entra por izquierda */
   .js-ready .reveal.rv-right{transform:translateX(64px);}   /* entra por derecha */
+  /* llega girada en el espacio, no solo desplazada */
+  .js-ready .reveal.rv-tilt{transform:perspective(1200px) rotateY(-11deg) translate3d(-40px,26px,-80px);}
+  .js-ready .reveal.rv-depth{transform:perspective(1200px) rotateX(9deg) translate3d(0,40px,-120px);}
   .js-ready .reveal.in{opacity:1;transform:none;}
   .d1{transition-delay:.09s;} .d2{transition-delay:.18s;} .d3{transition-delay:.27s;}
   .d4{transition-delay:.36s;} .d5{transition-delay:.45s;}
@@ -315,113 +345,75 @@
   .js-ready .scroll-words{opacity:1;transform:none;}
 
   /* ============================================================
-     WORK — scroll horizontal: al seguir bajando, los paneles se
-     deslizan de lado. El alto del contenedor se calcula desde el
-     ancho real del track, asi 1px de scroll vertical = 1px lateral
-     y la transicion se siente natural, no acelerada.
+     WORK — recorrido vertical.
+     Antes esta seccion se anclaba y se desplazaba de lado. Se quito:
+     obligaba a la pagina a detenerse en un punto fijo y rompia la
+     sensacion de recorrido continuo. Ahora baja como el resto y la
+     puesta en escena la dan las entradas en angulo.
      ============================================================ */
-  .hscroll-wrap{position:relative;padding-left:0;padding-right:0;}
-  /* El area util deja aire arriba (nav + contador) y abajo (barra de
-     progreso), asi cada panel entra completo en la pantalla. */
-  .hscroll-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;
-    padding-top:15vh;padding-bottom:14vh;}
-  .hscroll-track{display:flex;align-items:center;gap:clamp(40px,5vw,80px);padding:0 clamp(24px,7vw,110px);will-change:transform;}
-  .hpanel{flex:0 0 auto;}
-  .hpanel-intro{width:min(78vw,500px);}
-  /* El ancho se deriva del alto disponible: el monitor es 16/10, asi que
-     atarlo a vh es lo que garantiza que monitor + texto entren en pantalla. */
-  .hpanel-case{width:clamp(300px,64vh,600px);display:flex;flex-direction:column;}
+  #work{padding-top:15vh;padding-bottom:14vh;}
+  .work-head{max-width:58ch;margin-bottom:12vh;}
+  .work-head h2{font-size:clamp(30px,4.2vw,56px);margin-top:18px;line-height:1.06;}
+  .work-head p{margin-top:20px;font-size:16px;color:var(--bone-dim);line-height:1.8;}
 
-  .work-head{max-width:58ch;}
-  .work-head h2{font-size:clamp(28px,3.8vw,52px);margin-top:16px;line-height:1.06;}
-  .work-head p{margin-top:18px;font-size:15px;color:var(--bone-dim);line-height:1.75;}
+  .case-row{display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(32px,5vw,64px);
+    align-items:center;padding:9vh 0;}
+  .case-row + .case-row{border-top:1px solid var(--line);}
+  .case-row.flip .case-visual{order:2;}
+  @media (max-width:960px){
+    .case-row,.case-row.flip{grid-template-columns:1fr;gap:30px;}
+    .case-row.flip .case-visual{order:0;}
+  }
 
-  .case-tag{font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:10px;}
-  .hpanel-case h3{font-size:clamp(21px,2.4vw,32px);line-height:1.1;}
-  .hpanel-case .case-copy{margin-top:11px;font-size:13.5px;line-height:1.7;color:var(--bone-dim);max-width:52ch;}
-  .case-meta{display:flex;gap:26px;margin-top:16px;flex-wrap:wrap;}
-  .case-meta div{font-size:11px;color:var(--stone);letter-spacing:0.04em;max-width:21ch;line-height:1.5;}
-  .case-meta strong{display:block;color:var(--bone);font-family:'Fraunces',serif;font-size:14.5px;font-weight:400;margin-bottom:3px;}
-  .case-link{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--brass-2);border-bottom:1px solid var(--brass);padding-bottom:3px;transition:gap .3s;align-self:flex-start;}
+  .case-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:12px;}
+  .case-row h3{font-size:clamp(24px,3.2vw,40px);line-height:1.08;}
+  .case-copy{margin-top:16px;font-size:15px;line-height:1.85;color:var(--bone-dim);max-width:48ch;}
+  .case-meta{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap;}
+  .case-meta div{font-size:11.5px;color:var(--stone);letter-spacing:0.04em;max-width:22ch;line-height:1.55;}
+  .case-meta strong{display:block;color:var(--bone);font-family:'Fraunces',serif;font-size:16px;font-weight:400;margin-bottom:5px;}
+  .case-link{margin-top:26px;display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--brass-2);border-bottom:1px solid var(--brass);padding-bottom:3px;transition:gap .3s;}
   .case-link:hover{gap:14px;}
-  .case-body{margin-top:20px;}
-  /* En pantallas bajas el detalle se saca antes que romper el encuadre */
-  @media (min-width:901px) and (max-height:760px){
-    .case-meta{display:none;}
-    .hpanel-case .case-copy{-webkit-line-clamp:3;}
-  }
+  .case-body{margin-top:0;}
 
-  /* barra de progreso del recorrido lateral */
-  .hscroll-progress{position:absolute;left:clamp(24px,7vw,110px);right:clamp(24px,7vw,110px);bottom:7vh;z-index:5;
-    display:flex;align-items:center;gap:16px;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--stone);}
-  .hscroll-progress .track{flex:1;height:1px;background:var(--line-strong);position:relative;}
-  .hscroll-progress .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--brass-2);box-shadow:0 0 10px 1px rgba(224,190,130,0.5);}
-  .hscroll-hint{display:inline-flex;align-items:center;gap:7px;}
-  .hscroll-hint svg{width:15px;height:15px;stroke:var(--brass-2);animation:nudge 2.4s ease-in-out infinite;}
-  @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
 
-  /* El recorrido lateral tambien se ancla en movil. Es scroll normal: el
-     visitante sigue bajando y la seccion se desplaza de lado sola. No se usa
-     un carrusel deslizable porque eso obliga a un gesto distinto y rompe la
-     continuidad — la idea es bajar, ir a la derecha, y seguir bajando. */
-  @media (max-width:900px){
-    .hscroll-sticky{padding-top:13vh;padding-bottom:13vh;}
-    .hscroll-track{padding:0 7vw;gap:7vw;}
-    .hpanel-intro{width:84vw;}
-    .hpanel-case{width:84vw;max-width:none;}
-    .hpanel-case .case-copy{font-size:13px;max-width:100%;}
-    .hpanel-case h3{font-size:clamp(20px,5.6vw,26px);}
-    .case-tag{font-size:9.5px;letter-spacing:0.12em;}
-    .case-meta{gap:18px;margin-top:14px;}
-    .hscroll-progress{left:7vw;right:7vw;bottom:5vh;font-size:9px;letter-spacing:0.14em;}
-    .hscroll-progress .hscroll-hint span{display:none;}
-  }
-  /* Pantallas muy bajas: el detalle se saca antes que romper el encuadre */
-  @media (max-width:900px) and (max-height:720px){
-    .case-meta{display:none;}
-  }
-
-  /* ---- entradas de los paneles del recorrido ----
-     Cada panel llega atenuado y desplazado, y se asienta al acercarse al
-     centro. Sin esto los bloques ya estaban puestos antes de verse y la
-     seccion se sentia estatica pese al movimiento lateral. */
-  .hpanel{will-change:opacity, transform;transition:opacity .5s ease;}
-
-  /* ---- mockup de monitor (como en la referencia) ---- */
+  /* ---- mockup de monitor: el lenguaje visual de "web de cliente" ---- */
   .monitor{position:relative;width:100%;perspective:1400px;}
-  .monitor-screen{position:relative;border-radius:12px 12px 4px 4px;background:#0a0a0b;border:1px solid rgba(239,233,221,0.18);
+  .monitor-screen{position:relative;border-radius:16px 16px 6px 6px;background:#0a0a0b;
+    border:1px solid rgba(239,233,221,0.18);
     box-shadow:0 40px 90px -30px rgba(0,0,0,0.9), 0 0 0 8px #101011, 0 0 0 9px rgba(239,233,221,0.09), 0 0 90px -20px rgba(224,190,130,0.22);
-    overflow:hidden;}
-  .monitor-bar{display:flex;align-items:center;gap:7px;padding:9px 13px;background:#141416;border-bottom:1px solid rgba(239,233,221,0.09);}
-  .monitor-bar i{width:8px;height:8px;border-radius:50%;background:#2f2f33;display:block;flex-shrink:0;}
+    overflow:hidden;transition:box-shadow .5s;}
+  .monitor-bar{display:flex;align-items:center;gap:7px;padding:9px 13px;background:#141416;
+    border-bottom:1px solid rgba(239,233,221,0.09);transition:background .5s, border-color .5s;}
+  .monitor-bar i{width:8px;height:8px;border-radius:50%;background:#2f2f33;display:block;flex-shrink:0;transition:background .5s;}
   .monitor-bar i:first-child{background:#5b4b3a;}
-  .monitor-url{flex:1;margin-left:8px;height:17px;border-radius:9px;background:rgba(239,233,221,0.07);display:flex;align-items:center;padding:0 10px;
-    font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.05em;color:var(--stone);overflow:hidden;white-space:nowrap;}
-  /* 16/9: es la relacion nativa de una grabacion de pantalla, asi el video
-     del producto entra a sangre sin franjas negras a los costados. */
+  .monitor-url{flex:1;margin-left:8px;height:17px;border-radius:9px;background:rgba(239,233,221,0.07);
+    display:flex;align-items:center;padding:0 10px;font-family:'Inter',sans-serif;font-size:9px;
+    letter-spacing:0.05em;color:var(--stone);overflow:hidden;white-space:nowrap;transition:background .5s, color .5s;}
+  /* 16/9: relacion nativa de una grabacion de pantalla, entra sin franjas */
   .monitor-view{position:relative;aspect-ratio:16/9;background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);overflow:hidden;}
   .monitor-view video,.monitor-view img{width:100%;height:100%;object-fit:cover;display:block;}
-  .monitor-glare{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg, rgba(239,233,221,0.09) 0%, transparent 34%, transparent 66%, rgba(239,233,221,0.04) 100%);}
-  .monitor-stand{width:132px;height:12px;margin:0 auto;background:linear-gradient(180deg,#161618,#0e0e0f);border-radius:0 0 4px 4px;}
-  .monitor-base{width:210px;height:9px;margin:0 auto;background:linear-gradient(180deg,#131315,#0b0b0c);border-radius:50%/60%;box-shadow:0 12px 28px -10px rgba(0,0,0,0.9);}
-  .monitor-caption{margin-top:20px;text-align:center;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);}
+  .monitor-glare{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(115deg, rgba(239,233,221,0.09) 0%, transparent 34%, transparent 66%, rgba(239,233,221,0.04) 100%);}
+  .monitor-stand{width:132px;height:12px;margin:0 auto;background:linear-gradient(180deg,#161618,#0e0e0f);border-radius:0 0 5px 5px;transition:background .5s;}
+  .monitor-base{width:210px;height:9px;margin:0 auto;background:linear-gradient(180deg,#131315,#0b0b0c);
+    border-radius:50%/60%;box-shadow:0 12px 28px -10px rgba(0,0,0,0.9);transition:background .5s;}
 
-  /* ---- producto propio: lenguaje visual distinto al de trabajo de cliente ----
-     Sin marco de monitor a proposito: el monitor dice "web que entregamos",
-     esta tarjeta dice "software que operamos nosotros". */
-  .own-card{position:relative;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;
-    background:rgba(14,16,20,0.62);box-shadow:0 30px 70px -34px rgba(0,0,0,0.85);}
+  /* ---- producto propio: sin marco de monitor, a proposito ----
+     El monitor dice "web que entregamos"; esta tarjeta dice "software que
+     operamos nosotros". Son cosas distintas y no comparten lenguaje. */
+  .own-card{position:relative;border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;
+    background:rgba(14,16,20,0.62);box-shadow:0 30px 70px -34px rgba(0,0,0,0.85);transition:background .5s, border-color .5s, box-shadow .5s;}
   .own-badge{position:absolute;top:14px;left:14px;z-index:3;font-size:9.5px;letter-spacing:0.16em;
     text-transform:uppercase;color:var(--brass-2);border:1px solid rgba(224,190,130,0.42);
-    padding:5px 10px;border-radius:2px;background:rgba(12,12,13,0.72);}
-  .own-view{position:relative;aspect-ratio:16/9;overflow:hidden;
-    background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);}
+    padding:6px 13px;border-radius:999px;background:rgba(12,12,13,0.72);transition:background .5s, color .5s, border-color .5s;}
+  .own-view{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);}
   .own-view video{width:100%;height:100%;object-fit:cover;display:block;}
 
-  /* placeholder animado dentro del monitor mientras no hay grabacion */
+  /* ---- maquetas mientras no hay grabacion subida ---- */
   .mock-trimm{position:absolute;inset:0;}
-  .mock-trimm .panel{position:absolute;left:8%;right:8%;top:13%;bottom:13%;border:1px solid var(--line);border-radius:7px;background:rgba(239,233,221,0.03);}
-  .mock-trimm .side{position:absolute;left:8%;top:13%;bottom:13%;width:19%;border-right:1px solid var(--line);background:rgba(239,233,221,0.025);border-radius:7px 0 0 7px;}
+  .mock-trimm .panel{position:absolute;left:8%;right:8%;top:13%;bottom:13%;border:1px solid var(--line);border-radius:9px;background:rgba(239,233,221,0.03);}
+  .mock-trimm .side{position:absolute;left:8%;top:13%;bottom:13%;width:19%;border-right:1px solid var(--line);background:rgba(239,233,221,0.025);border-radius:9px 0 0 9px;}
   .mock-trimm .bar{position:absolute;height:9px;border-radius:5px;background:rgba(224,190,130,0.3);}
   .mock-trimm .bar.b1{left:31%;top:28%;width:44%;}
   .mock-trimm .bar.b2{left:31%;top:44%;width:30%;background:rgba(224,190,130,0.18);}
@@ -429,8 +421,10 @@
   .mock-trimm .bar.s1{left:11%;top:26%;width:12%;background:rgba(239,233,221,0.14);}
   .mock-trimm .bar.s2{left:11%;top:38%;width:12%;background:rgba(239,233,221,0.1);}
   .mock-trimm .bar.s3{left:11%;top:50%;width:12%;background:rgba(239,233,221,0.1);}
-  .mock-trimm .dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--brass-2);left:31%;top:28%;transform:translate(-16px,-1px);box-shadow:0 0 12px 2px rgba(224,190,130,0.5);}
-  .mock-tamaison{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 70% 20%, rgba(224,190,130,0.2), transparent 60%), linear-gradient(160deg,#1c1a16 0%,#0c0c0d 60%);}
+  .mock-trimm .dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--brass-2);left:31%;top:28%;
+    transform:translate(-16px,-1px);box-shadow:0 0 12px 2px rgba(224,190,130,0.5);}
+  .mock-tamaison{position:absolute;inset:0;
+    background:radial-gradient(ellipse 70% 60% at 70% 20%, rgba(224,190,130,0.2), transparent 60%), linear-gradient(160deg,#1c1a16 0%,#0c0c0d 60%);}
   .mock-tamaison .grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);background-size:36px 36px;opacity:0.5;}
   .mock-tamaison .frame{position:absolute;left:14%;top:20%;width:44%;height:50%;border:1px solid rgba(224,190,130,0.5);}
   .mock-tamaison .beam{position:absolute;left:14%;top:70%;width:60%;height:1px;background:rgba(224,190,130,0.5);}
@@ -441,8 +435,8 @@
   #services{padding-top:15vh;padding-bottom:16vh;background:rgba(18,18,20,0.42);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .serv-head{margin-bottom:56px;max-width:54ch;}
   .serv-head h2{font-size:clamp(28px,3.8vw,48px);margin-top:18px;}
-  .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
-  .serv-card{background:rgba(18,18,20,0.5);padding:44px 34px;transition:background .4s, border-color .4s;border:1px solid transparent;}
+  .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;background:none;}
+  .serv-card{background:rgba(18,18,20,0.5);padding:44px 34px;border-radius:18px;transition:background .4s, border-color .4s;border:1px solid var(--line);}
   .serv-card:hover{background:rgba(239,233,221,0.05);border-color:rgba(224,190,130,0.22);}
   .serv-num{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--brass-2);}
   .serv-card h3{font-size:21px;margin-top:20px;font-weight:400;}
@@ -483,9 +477,9 @@
      colores. Se hace por clase y no interpolando: el salto es imperceptible
      con la transicion y evita textos ilegibles a medio camino. */
   .on-light .work-head h2,
-  .on-light .hpanel-case h3{color:#14110f;}
+  .on-light .case-row h3{color:#14110f;}
   .on-light .work-head p,
-  .on-light .hpanel-case .case-copy{color:#4a453d;}
+  .on-light .case-copy{color:#4a453d;}
   .on-light .sw-word{color:#4a453d;}
   .on-light .sw-word.lit{color:#14110f;}
   .on-light .case-tag{color:#9a6f2c;}
@@ -495,9 +489,6 @@
   .on-light .eyebrow{color:#9a6f2c;}
   .on-light .eyebrow::before{background:#9a6f2c;}
   .on-light .sec-counter{color:#8a8276;}
-  .on-light .hscroll-progress{color:#6b6459;}
-  .on-light .hscroll-progress .track{background:rgba(20,17,15,0.18);}
-  .on-light .hscroll-hint svg{stroke:#9a6f2c;}
   .on-light .own-card{background:rgba(255,255,255,0.72);border-color:rgba(20,17,15,0.14);
     box-shadow:0 30px 70px -34px rgba(20,17,15,0.3);}
   .on-light .own-badge{background:rgba(255,255,255,0.9);color:#9a6f2c;border-color:rgba(154,111,44,0.4);}
@@ -645,7 +636,7 @@
   .testi-rail::-webkit-scrollbar-thumb{background:var(--brass);}
   @media (max-width:640px){ .testi-rail{grid-auto-columns:minmax(240px,84vw);} }
 
-  .testi-card{scroll-snap-align:start;background:rgba(10,10,12,0.72);border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .4s, transform .4s cubic-bezier(.22,1,.36,1);}
+  .testi-card{scroll-snap-align:start;background:rgba(10,10,12,0.72);border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .4s, transform .4s cubic-bezier(.22,1,.36,1);}
   .testi-card:hover{border-color:var(--brass);transform:translateY(-4px);}
   .testi-media{position:relative;aspect-ratio:9/16;background:#0a0a0b;overflow:hidden;}
   .testi-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#0a0a0b;}
@@ -664,7 +655,7 @@
   .testi-handle{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:11px;letter-spacing:0.06em;color:var(--stone);margin-top:3px;}
   .testi-ig{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--brass-2);white-space:nowrap;}
   .testi-ig svg{width:14px;height:14px;fill:currentColor;}
-  .testi-empty{border:1px dashed var(--line-strong);padding:44px 30px;text-align:center;font-size:13.5px;color:var(--stone);line-height:1.8;}
+  .testi-empty{border:1px dashed var(--line-strong);border-radius:16px;padding:44px 30px;text-align:center;font-size:13.5px;color:var(--stone);line-height:1.8;}
 
   /* ============================================================
      CONTACT + QUOTE
@@ -689,11 +680,11 @@
   .radio-opt input,.check-opt input{accent-color:var(--brass);width:18px;height:18px;cursor:pointer;flex-shrink:0;}
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
   @media (max-width:600px){ .two-col{grid-template-columns:1fr;} }
-  .file-drop{border:1px dashed var(--line-strong);border-radius:3px;padding:22px;text-align:center;font-size:12.5px;color:var(--bone-dim);cursor:pointer;transition:border-color .3s, background .3s;-webkit-tap-highlight-color:transparent;}
+  .file-drop{border:1px dashed var(--line-strong);border-radius:14px;padding:22px;text-align:center;font-size:12.5px;color:var(--bone-dim);cursor:pointer;transition:border-color .3s, background .3s;-webkit-tap-highlight-color:transparent;}
   .file-drop:hover,.file-drop:active{border-color:var(--brass-2);background:rgba(224,190,130,0.045);}
   .photo-previews{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
   .photo-previews img{width:64px;height:64px;object-fit:cover;border-radius:2px;border:1px solid var(--line-strong);}
-  .estimate-box{position:sticky;top:110px;border:1px solid var(--line-strong);border-radius:4px;padding:34px 30px;background:rgba(18,18,20,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .estimate-box{position:sticky;top:110px;border:1px solid var(--line-strong);border-radius:18px;padding:34px 30px;background:rgba(18,18,20,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
   .estimate-box h4{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:18px;}
   .estimate-range{font-family:'Fraunces',serif;font-size:clamp(24px,2.4vw,32px);line-height:1.3;color:var(--bone);}
   .estimate-range strong{color:var(--brass-2);font-weight:400;}
@@ -802,6 +793,7 @@
       <span class="orbit-ring ring-top"></span>
       <span class="orbit-ring ring-bottom"></span>
     </div>
+    <div class="hero-rocks" id="hero-rocks" aria-hidden="true"></div>
     <span class="sec-counter">01 — <span data-i18n="sec_hero">Studio</span></span>
     <div class="wrap hero-inner chapter-content">
       <p class="eyebrow" data-i18n="hero_eyebrow">Web &amp; product studio</p>
@@ -821,28 +813,24 @@
 </div>
 
 <!-- ==================== WORK — recorrido lateral ==================== -->
-<section class="hscroll-wrap" id="work">
-  <div class="hscroll-sticky">
-    <span class="sec-counter">02 — <span data-i18n="sec_work">Work</span></span>
+<!-- ==================== WORK ==================== -->
+<section id="work">
+  <span class="sec-counter">02 — <span data-i18n="sec_work">Work</span></span>
+  <div class="wrap">
+    <div class="work-head reveal">
+      <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
+      <h2 data-i18n="work_h2">Two problems.<br>Two different builds.</h2>
+      <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
+    </div>
 
-    <div class="hscroll-track" id="hscroll-track">
-      <div class="hpanel hpanel-intro">
-        <div class="work-head">
-          <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
-          <h2 data-i18n="work_h2">Two problems.<br>Two different builds.</h2>
-          <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
-        </div>
-      </div>
-
-      <article class="hpanel hpanel-case">
+    <article class="case-row">
+      <div class="case-visual reveal rv-tilt">
         <div class="monitor">
           <div class="monitor-screen">
             <div class="monitor-bar"><i></i><i></i><i></i><span class="monitor-url">ta-maison-est-ma-maison-inc.com</span></div>
             <div class="monitor-view">
               <!-- Para mostrar el sitio real del cliente: dejá la grabacion en
-                   assets/tamaison-demo.mp4 y listo. El JS la detecta sola y
-                   reemplaza la maqueta; si el archivo no esta, se queda la
-                   maqueta y no se rompe nada. -->
+                   assets/tamaison-demo.mp4 y listo. El JS la detecta sola. -->
               <video id="case-demo" muted loop playsinline preload="none"
                      style="display:none;" aria-hidden="true" tabindex="-1"
                      disablePictureInPicture controlsList="nodownload nofullscreen"></video>
@@ -852,21 +840,22 @@
           </div>
           <div class="monitor-stand"></div><div class="monitor-base"></div>
         </div>
-        <div class="case-body">
-          <p class="case-tag" data-i18n="case1_tag">Client work · Cinematic web · Construction &amp; renovation</p>
-          <h3>Ta maison est ma maison</h3>
-          <p class="case-copy" data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
-          <div class="case-meta">
-            <div><strong data-i18n="case1_m1s">Scroll-scrub</strong><span data-i18n="case1_m1">Video tied to scroll position, not autoplay</span></div>
-            <div><strong data-i18n="case1_m2s">4 → 1</strong><span data-i18n="case1_m2">Services consolidated into one clear path</span></div>
-          </div>
+      </div>
+      <div class="case-body reveal rv-right d1">
+        <p class="case-tag" data-i18n="case1_tag">Client work · Cinematic web · Construction &amp; renovation</p>
+        <h3>Ta maison est ma maison</h3>
+        <p class="case-copy" data-i18n="case1_p">A scroll-scrubbed film runs behind the entire homepage: as the visitor scrolls, a raw construction site transforms frame by frame into a finished luxury interior — the site's own transformation becomes the pitch.</p>
+        <div class="case-meta">
+          <div><strong data-i18n="case1_m1s">Scroll-scrub</strong><span data-i18n="case1_m1">Video tied to scroll position, not autoplay</span></div>
+          <div><strong data-i18n="case1_m2s">4 → 1</strong><span data-i18n="case1_m2">Services consolidated into one clear path</span></div>
         </div>
-      </article>
+      </div>
+    </article>
 
-      <!-- Trimm no es trabajo de cliente: es producto propio del estudio.
-           Por eso NO lleva el marco de monitor (ese lenguaje queda reservado
-           a las webs que entregamos a clientes) y se presenta como credencial. -->
-      <article class="hpanel hpanel-case hpanel-own">
+    <!-- Trimm no es trabajo de cliente: es producto propio del estudio, por eso
+         no lleva el marco de monitor, reservado a las webs que entregamos. -->
+    <article class="case-row flip">
+      <div class="case-visual reveal rv-depth">
         <div class="own-card">
           <span class="own-badge" data-i18n="case2_kind">Our own product</span>
           <div class="own-view">
@@ -881,27 +870,18 @@
             </div>
           </div>
         </div>
-        <div class="case-body">
-          <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
-          <h3>Trimm</h3>
-          <p class="case-copy" data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
-          <div class="case-meta">
-            <div><strong data-i18n="case2_m1s">All-in-one</strong><span data-i18n="case2_m1">Bookings, payments and clients in one system</span></div>
-            <div><strong data-i18n="case2_m2s">Automated</strong><span data-i18n="case2_m2">Reminders sent without manual follow-up</span></div>
-          </div>
-          <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visit trimm.online</span> →</a>
+      </div>
+      <div class="case-body reveal rv-left d1">
+        <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
+        <h3>Trimm</h3>
+        <p class="case-copy" data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
+        <div class="case-meta">
+          <div><strong data-i18n="case2_m1s">All-in-one</strong><span data-i18n="case2_m1">Bookings, payments and clients in one system</span></div>
+          <div><strong data-i18n="case2_m2s">Automated</strong><span data-i18n="case2_m2">Reminders sent without manual follow-up</span></div>
         </div>
-      </article>
-    </div>
-
-    <div class="hscroll-progress">
-      <span class="hscroll-hint">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <span data-i18n="hscroll_hint">Keep scrolling</span>
-      </span>
-      <span class="track"><span class="fill" id="hscroll-fill"></span></span>
-      <span id="hscroll-count">01 / 03</span>
-    </div>
+        <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visit trimm.online</span> →</a>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -1519,9 +1499,8 @@
     currentLang = lang;
     try{ localStorage.setItem('digitatex_lang', lang); }catch(e){}
     splitScrollWords();
-    applyHintVariant();
     if(typeof renderEstimate === 'function') renderEstimate();
-    if(typeof window.hscrollRemeasure === 'function') window.hscrollRemeasure();
+    dropButtons();
     renderTestimonials();
   }
   document.querySelectorAll('.langsw button').forEach(b=>{
@@ -1710,6 +1689,61 @@
     window.addEventListener('resize', onScrollScrub);
     onScrollScrub();
 
+    /* Piedras en orbita alrededor del logo. Se generan una vez y luego solo
+       se reposicionan: crear elementos en cada frame seria carisimo. Cada una
+       tiene su propio radio, inclinacion y velocidad, asi la orbita se lee
+       como un volumen y no como un aro de puntos equidistantes. */
+    const rocksHost = document.getElementById('hero-rocks');
+    const rocks = [];
+    if(rocksHost){
+      let seed = 7;
+      const rnd = ()=>{ seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+      const COUNT = window.matchMedia('(max-width: 900px)').matches ? 9 : 14;
+      for(let i = 0; i < COUNT; i++){
+        const orbit = document.createElement('div');
+        orbit.className = 'rock-orbit';
+        const rock = document.createElement('span');
+        rock.className = 'rock';
+        const size = 3 + rnd() * 9;
+        // formas irregulares: una piedra no es un circulo
+        const r1 = 30 + rnd() * 40, r2 = 30 + rnd() * 40, r3 = 30 + rnd() * 40, r4 = 30 + rnd() * 40;
+        rock.style.width = size + 'px';
+        rock.style.height = (size * (0.6 + rnd() * 0.6)) + 'px';
+        rock.style.borderRadius = r1 + '% ' + r2 + '% ' + r3 + '% ' + r4 + '% / ' +
+                                  r3 + '% ' + r4 + '% ' + r1 + '% ' + r2 + '%';
+        orbit.appendChild(rock);
+        rocksHost.appendChild(orbit);
+        rocks.push({
+          orbit, rock,
+          radius: 0.30 + rnd() * 0.30,   // proporcion del contenedor
+          tilt: 62 + rnd() * 22,          // inclinacion del plano de la orbita
+          speed: 0.6 + rnd() * 1.5,       // vueltas por recorrido de scroll
+          phase: rnd() * 360,
+          drift: 0.25 + rnd() * 0.5
+        });
+      }
+    }
+
+    function updateRocks(progress, time){
+      if(!rocks.length) return;
+      const box = rocksHost.offsetWidth;
+      for(let i = 0; i < rocks.length; i++){
+        const r = rocks[i];
+        const ang = r.phase + progress * 360 * r.speed + time * 0.004 * r.drift;
+        const rad = ang * Math.PI / 180;
+        const px = Math.cos(rad) * r.radius * box;
+        // la inclinacion aplasta el eje vertical: eso convierte el circulo
+        // en una elipse vista en perspectiva
+        const py = Math.sin(rad) * r.radius * box * Math.cos(r.tilt * Math.PI / 180);
+        // detras del logo cuando va por la mitad lejana de la orbita
+        const behind = Math.sin(rad) < 0;
+        const depth = 0.55 + 0.45 * (behind ? 0 : 1);
+        r.orbit.style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)';
+        r.rock.style.opacity = (behind ? 0.28 : 0.9).toFixed(2);
+        r.rock.style.transform = 'translate(-50%,-50%) scale(' + depth.toFixed(2) + ')';
+      }
+    }
+
     /* Anillos orbitando el logo. Giran con el scroll igual que la D, pero en
        sentidos opuestos y con inclinaciones distintas: eso es lo que los
        separa en profundidad en vez de leerse como dos circulos planos.
@@ -1737,6 +1771,7 @@
           }
         }
         if(!anyVisible){ spinning = false; return; }
+        updateRocks(ringed[0] ? (ringed[0].progress || 0) : 0, time);
         requestAnimationFrame(spin);
       }
       function maybeSpin(){
@@ -1973,130 +2008,68 @@
   }
 
   /* ============================================================
-     Recorrido lateral de la seccion Work.
-     El alto del contenedor se deriva del ancho real del track,
-     asi cada pixel de scroll vertical mueve un pixel lateral y la
-     transicion se siente como una continuacion del scroll, no como
-     un salto. Debajo de 901px se apila en vertical (el pin lateral
-     en movil se siente pesado y pelea con el scroll tactil).
+     Puesta en escena de la seccion Work — ahora vertical.
+     Ya no hay anclaje ni desplazamiento lateral: la pagina baja sin
+     detenerse. Lo que queda atado al scroll es el recorrido de los
+     videos y el cambio de fondo, que es lo que aporta el efecto.
      ============================================================ */
-  function initHorizontalScroll(){
-    const wrap = document.getElementById('work');
-    const track = document.getElementById('hscroll-track');
-    const fill = document.getElementById('hscroll-fill');
-    const count = document.getElementById('hscroll-count');
-    if(!wrap || !track) return;
+  function initWorkScene(){
+    const work = document.getElementById('work');
+    const sheet = document.getElementById('lightsheet');
+    if(!work) return;
+    let lit = null;
 
-    const panels = track.querySelectorAll('.hpanel');
-    let distance = 0;
-
-    function measure(){
-      // La distancia se mide desde el borde derecho del ULTIMO panel, no desde
-      // track.scrollWidth: en un contenedor flex el relleno derecho no siempre
-      // entra en scrollWidth, y por eso el ultimo panel quedaba cortado.
-      const last = panels[panels.length - 1];
-      if(!last){ distance = 0; return; }
-      const pad = window.innerWidth < 901 ? window.innerWidth * 0.07 : 40;
-      const end = last.offsetLeft + last.offsetWidth + pad;
-      distance = Math.max(end - window.innerWidth, 0);
-      wrap.style.height = (window.innerHeight + distance) + 'px';
+    function progressOf(el){
+      const r = el.getBoundingClientRect();
+      const span = window.innerHeight + r.height;
+      if(span <= 0) return 0;
+      return Math.min(Math.max((window.innerHeight - r.top) / span, 0), 1);
     }
 
     function update(){
-      if(distance <= 0){ resetPanels(); updateLightSheet(0); return; }
-      const rect = wrap.getBoundingClientRect();
-      const total = wrap.offsetHeight - window.innerHeight;
-      if(total <= 0) return;
-      const progress = Math.min(Math.max(-rect.top / total, 0), 1);
-      track.style.transform = 'translate3d(' + (-progress * distance).toFixed(2) + 'px,0,0)';
-      updateCaseScrub(progress);
-      updateLightSheet(progress);
-      if(fill) fill.style.width = (progress * 100) + '%';
-      if(count){
-        const idx = Math.min(Math.floor(progress * panels.length) + 1, panels.length);
-        count.textContent = String(idx).padStart(2,'0') + ' / ' + String(panels.length).padStart(2,'0');
-      }
-      updatePanelEntrances();
-    }
+      const p = progressOf(work);
 
-    /* Cada panel entra atenuado y desplazado desde la derecha y se asienta al
-       acercarse al centro de la pantalla. El progreso se mide por la posicion
-       real del panel, no por el avance global, para que cada uno tenga su
-       propia entrada aunque haya varios a la vista. */
-    /* El negro se levanta y descubre el fondo claro. Arranca cuando el
-       recorrido ya empezo (no de entrada) y termina antes del final, para que
-       el visitante vea el borde subir en vez de encontrarselo hecho. */
-    const sheet = document.getElementById('lightsheet');
-    let lit = null;
-    function updateLightSheet(progress){
-      if(!sheet) return;
-      // Sube entre 0.18 y 0.55, se mantiene, y vuelve a bajar entre 0.82 y 1.
-      // Sin ese retroceso el fondo claro se quedaba puesto y las secciones
-      // siguientes, pensadas en oscuro, aparecian sobre blanco.
-      const rise = Math.min(Math.max((progress - 0.18) / 0.37, 0), 1);
-      const fall = Math.min(Math.max((progress - 0.82) / 0.18, 0), 1);
-      const p = Math.max(rise - fall, 0);
-      const eased = p * p * (3 - 2 * p);
-      sheet.style.clipPath = 'inset(' + ((1 - eased) * 100).toFixed(2) + '% 0 0 0)';
-      // el texto invierte a mitad de camino, cuando ya hay fondo claro detras
-      const on = eased > 0.5;
-      if(on !== lit){
-        lit = on;
-        wrap.classList.toggle('on-light', on);
-        document.body.classList.toggle('light-nav', on);
-      }
-    }
-
-    // Sin recorrido que animar, los paneles se dejan plenamente visibles.
-    function resetPanels(){
-      for(let i = 0; i < panels.length; i++){
-        panels[i].style.opacity = '';
-        panels[i].style.transform = '';
-      }
-    }
-
-    function updatePanelEntrances(){
-      const vw = window.innerWidth;
-      for(let i = 0; i < panels.length; i++){
-        const p = panels[i];
-        const r = p.getBoundingClientRect();
-        // 0 cuando el panel aun asoma por el borde derecho, 1 cuando ya entro
-        const k = Math.min(Math.max((vw - r.left) / (vw * 0.55), 0), 1);
-        // al salir por la izquierda se atenua de vuelta, sin llegar a apagarse
-        const out = Math.min(Math.max((r.right + vw * 0.12) / (vw * 0.42), 0), 1);
-        const e = Math.min(k, out);
-        const eased = e * e * (3 - 2 * e);
-        const away = 1 - eased;
-        // Cada panel entra desde un angulo distinto — uno sube, otro gira desde
-        // la derecha, otro se acerca — para que la seccion no se sienta como
-        // una fila de cosas haciendo lo mismo.
-        const mode = i % 3;
-        let tf;
-        if(mode === 0){
-          tf = 'translate3d(0,' + (away * 38).toFixed(1) + 'px,0) scale(' + (1 - away * 0.05).toFixed(3) + ')';
-        } else if(mode === 1){
-          tf = 'perspective(1100px) translate3d(' + (away * 26).toFixed(1) + 'px,' + (away * 16).toFixed(1) +
-               'px,0) rotateY(' + (away * -9).toFixed(2) + 'deg)';
-        } else {
-          tf = 'perspective(1100px) translate3d(0,' + (away * 30).toFixed(1) + 'px,' + (away * -90).toFixed(0) +
-               'px) rotateX(' + (away * 7).toFixed(2) + 'deg)';
+      // cada video se recorre segun cuanto ha avanzado su propia fila
+      for(let i = 0; i < scrubbables.length; i++){
+        const { video } = scrubbables[i];
+        if(!video.duration || !isFinite(video.duration)) continue;
+        const row = video.closest('.case-row') || work;
+        const rp = progressOf(row);
+        // se queda justo antes del final: tocar la duracion exacta hace que
+        // el atributo loop lo devuelva a 0 y el video pegue un salto
+        const target = Math.min(rp * video.duration, video.duration - 0.06);
+        if(Math.abs(video.currentTime - target) > 0.03){
+          try { video.currentTime = target; } catch(e){}
         }
-        p.style.opacity = (0.12 + 0.88 * eased).toFixed(3);
-        p.style.transform = tf;
+      }
+
+      // el negro se levanta y descubre el fondo claro, y vuelve a bajar
+      // antes de salir: si no, las secciones siguientes (oscuras) aparecerian
+      // sobre blanco
+      if(sheet){
+        const rise = Math.min(Math.max((p - 0.22) / 0.26, 0), 1);
+        const fall = Math.min(Math.max((p - 0.72) / 0.22, 0), 1);
+        const v = Math.max(rise - fall, 0);
+        const eased = v * v * (3 - 2 * v);
+        sheet.style.clipPath = 'inset(' + ((1 - eased) * 100).toFixed(2) + '% 0 0 0)';
+        const on = eased > 0.5;
+        if(on !== lit){
+          lit = on;
+          work.classList.toggle('on-light', on);
+          document.body.classList.toggle('light-nav', on);
+        }
       }
     }
 
-    measure(); update(); updatePanelEntrances();
-    window.addEventListener('resize', ()=>{ measure(); update(); });
-    window.addEventListener('orientationchange', ()=>{ setTimeout(()=>{ measure(); update(); }, 250); });
-    // Los videos entran despues y cambian el ancho del recorrido: si no se
-    // vuelve a medir, la distancia queda corta y el ultimo panel no entra.
-    window.addEventListener('load', ()=>{ measure(); update(); });
-    document.addEventListener('digitatex:media-ready', ()=>{ measure(); update(); });
-    document.addEventListener('scroll', update, {passive:true});
-    // el ancho del track cambia cuando cargan las fuentes o cambia el idioma
-    if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measure(); update(); });
-    window.hscrollRemeasure = ()=>{ measure(); update(); };
+    let ticking = false;
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(()=>{ update(); ticking = false; });
+    }
+    document.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    update();
   }
 
   /* ============================================================
@@ -2647,20 +2620,24 @@
     });
   }
 
-  // En movil la seccion se desliza con el dedo, no bajando: la pista lo dice.
-  function applyHintVariant(){
-    const el = document.querySelector('[data-i18n="hscroll_hint"]');
-    if(!el) return;
-    const mobile = window.matchMedia('(max-width: 900px)').matches;
-    el.textContent = mobile ? t('hscroll_hint_m') : t('hscroll_hint');
+
+  /* Los botones caen a su sitio al cargar y en cada cambio de idioma. Se
+     quita y se vuelve a poner la clase forzando un reflujo: sin ese paso el
+     navegador no reinicia la animacion y solo se veria la primera vez. */
+  function dropButtons(){
+    const targets = document.querySelectorAll('.hero-actions .btn, .cta-actions .btn, #quote-form button.btn');
+    targets.forEach(b=>{
+      b.classList.remove('drop-in');
+      void b.offsetWidth;
+      b.classList.add('drop-in');
+    });
   }
-  window.addEventListener('resize', applyHintVariant);
 
   /* ---- arranque ---- */
   splitScrollWords();
-  applyHintVariant();
+  dropButtons();
   initScrubChapters();
-  initHorizontalScroll();
+  initWorkScene();
   initDepthField();
   initCaseDemo();
   loadTestimonials();
