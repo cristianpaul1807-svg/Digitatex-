@@ -1532,7 +1532,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v16</span>
+  <span class="build-tag">v17</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -2916,9 +2916,26 @@
     if(!video || !mock) return;
 
 
-    video.addEventListener('loadeddata', ()=>{
+    /* Safari en iPhone rara vez llega a disparar 'loadeddata' por su cuenta:
+       aunque se le pida preload="auto", en movil suele quedarse en la metadata
+       y no baja ni un fotograma hasta que algo se lo pide. Este sitio esperaba
+       solo ese evento, asi que en el telefono el video no aparecia nunca y se
+       quedaba la maqueta de relleno — que es exactamente lo que se veia.
+
+       Ahora en cuanto se conoce la duracion se registra el video y se le pide un
+       fotograma moviendo currentTime, que es lo que obliga a Safari a decodificar.
+       El cambio de maqueta a video se hace con el primero de los eventos que
+       confirme que hay imagen, venga por donde venga. */
+    let montado = false;
+    function mostrarVideo(){
+      if(montado) return;
+      montado = true;
       mock.style.display = 'none';
       video.style.display = 'block';
+      document.dispatchEvent(new CustomEvent('digitatex:media-ready'));
+    }
+    function registrar(){
+      if(!scrubbables.some(x => x.video === video)) scrubbables.push({ video });
       // Safari pone su boton de play sobre cualquier video pausado, sin importar
       // como llego ahi. Igual que en el hero: se deja reproduciendo a velocidad 0
       // y el scroll mueve el frame por currentTime. Nunca .pause().
@@ -2926,11 +2943,17 @@
       const settle = ()=>{ video.playbackRate = 0; };
       if(p && typeof p.then === 'function') p.then(settle).catch(()=>{});
       else settle();
-      if(!scrubbables.some(x => x.video === video)){
-        scrubbables.push({ video });
-      }
-      document.dispatchEvent(new CustomEvent('digitatex:media-ready'));
+    }
+    video.addEventListener('loadedmetadata', ()=>{
+      registrar();
+      // un salto minimo fuerza la decodificacion del primer fotograma
+      try{ if(video.currentTime < 0.01) video.currentTime = 0.04; }catch(e){}
+      // si en cinco segundos no llego imagen se muestra igual: con la duracion
+      // ya conocida el scroll puede recorrerlo, y el marco vacio se veria peor
+      setTimeout(mostrarVideo, 5000);
     });
+    ['loadeddata','canplay','seeked'].forEach(ev=>
+      video.addEventListener(ev, ()=>{ registrar(); mostrarVideo(); }));
     video.addEventListener('pause', ()=>{
       const p = video.play();
       if(p && typeof p.then === 'function') p.then(()=>{ video.playbackRate = 0; }).catch(()=>{});
