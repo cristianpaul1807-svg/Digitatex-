@@ -111,3 +111,52 @@ drop policy if exists "authenticated can delete covers" on storage.objects;
 create policy "authenticated can delete covers"
   on storage.objects for delete to authenticated
   using (bucket_id = 'testimonial-covers');
+
+
+-- ----------------------------------------------------------------------------
+-- 4. CASES — casos de clientes que se ven en la seccion de trabajos
+-- Cada uno es un video subido desde el panel. La web pinta hasta tres.
+-- Trimm no vive aca: es producto propio del estudio y sigue fijo en el HTML.
+-- ----------------------------------------------------------------------------
+create table if not exists public.cases (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  client_name text not null,
+  site_url text,
+  video_path text not null,          -- nombre del archivo dentro de site-media
+  note text,                         -- vacio = la web usa la descripcion generica
+  sort_order integer not null default 0,
+  published boolean not null default true
+);
+
+alter table public.cases enable row level security;
+
+drop policy if exists "public can read published cases" on public.cases;
+create policy "public can read published cases"
+  on public.cases for select to anon using (published = true);
+
+drop policy if exists "admins can read all cases" on public.cases;
+create policy "admins can read all cases"
+  on public.cases for select to authenticated using (is_site_admin());
+
+drop policy if exists "admins can insert cases" on public.cases;
+create policy "admins can insert cases"
+  on public.cases for insert to authenticated with check (is_site_admin());
+
+drop policy if exists "admins can update cases" on public.cases;
+create policy "admins can update cases"
+  on public.cases for update to authenticated using (is_site_admin()) with check (is_site_admin());
+
+drop policy if exists "admins can delete cases" on public.cases;
+create policy "admins can delete cases"
+  on public.cases for delete to authenticated using (is_site_admin());
+
+create index if not exists cases_order_idx on public.cases (published, sort_order, created_at desc);
+
+
+-- ----------------------------------------------------------------------------
+-- 5. LEADS — borrado desde el panel (para quitar pruebas o spam)
+-- ----------------------------------------------------------------------------
+drop policy if exists "authenticated can delete leads" on public.leads;
+create policy "authenticated can delete leads"
+  on public.leads for delete to authenticated using (true);

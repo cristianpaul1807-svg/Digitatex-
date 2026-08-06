@@ -1115,7 +1115,11 @@
       <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
     </div>
 
-    <article class="case-row">
+    <!-- Aca se pintan los casos de clientes que subis desde el panel. Mientras
+         no haya ninguno se ve el de abajo, que viaja con el sitio. -->
+    <div id="case-list"></div>
+
+    <article class="case-row" id="case-builtin">
       <div class="case-visual reveal rv-tilt">
         <div class="monitor">
           <div class="monitor-screen">
@@ -1524,7 +1528,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v12</span>
+  <span class="build-tag">v13</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -1598,25 +1602,38 @@
       </div>
 
       <div class="admin-card">
-        <h3 data-i18n="admin_video_h">Case videos</h3>
-        <div class="admin-grid2">
-          <div>
-            <p class="admin-note" style="margin-top:0;margin-bottom:12px;"><strong>Ta maison est ma maison</strong></p>
-            <div class="file-drop" data-slot="case-tamaison.mp4">
-              <span data-i18n="admin_video_pick">Click to select a video</span>
-              <input type="file" accept="video/mp4,video/quicktime,video/webm" style="display:none;">
+        <h3 data-i18n="admin_cases_h">Client cases on the site</h3>
+        <form id="case-form">
+          <div class="admin-grid2">
+            <div class="field">
+              <label for="c-name" data-i18n="admin_case_name">Client name *</label>
+              <input type="text" id="c-name" maxlength="60" required>
             </div>
-            <span class="form-status" data-status="case-tamaison.mp4" role="status" aria-live="polite"></span>
-          </div>
-          <div>
-            <p class="admin-note" style="margin-top:0;margin-bottom:12px;"><strong>Trimm</strong></p>
-            <div class="file-drop" data-slot="case-trimm.mp4">
-              <span data-i18n="admin_video_pick">Click to select a video</span>
-              <input type="file" accept="video/mp4,video/quicktime,video/webm" style="display:none;">
+            <div class="field">
+              <label for="c-url" data-i18n="admin_case_url">Website (optional)</label>
+              <input type="url" id="c-url" placeholder="https://">
             </div>
-            <span class="form-status" data-status="case-trimm.mp4" role="status" aria-live="polite"></span>
           </div>
+          <div class="file-drop" id="case-drop" style="margin-top:16px;">
+            <span data-i18n="admin_video_pick">Click to select a video</span>
+            <input type="file" id="case-file" accept="video/mp4,video/quicktime,video/webm" style="display:none;">
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px;">
+            <button type="submit" class="btn btn-solid"><span data-i18n="admin_case_add">Add case</span></button>
+            <span id="case-status" class="form-status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+        <p class="admin-note" data-i18n="admin_cases_note">Up to three client cases appear on the site, in the order you add them. Landscape 16:9 recordings work best. Trimm is our own product and stays fixed — its video is replaced below.</p>
+        <div class="admin-list" id="admin-cases-list" style="margin-top:20px;"></div>
+      </div>
+
+      <div class="admin-card">
+        <h3 data-i18n="admin_trimm_h">Trimm video</h3>
+        <div class="file-drop" data-slot="case-trimm.mp4">
+          <span data-i18n="admin_video_pick">Click to select a video</span>
+          <input type="file" accept="video/mp4,video/quicktime,video/webm" style="display:none;">
         </div>
+        <span class="form-status" data-status="case-trimm.mp4" role="status" aria-live="polite"></span>
         <p class="admin-note" data-i18n="admin_video_note">Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.</p>
       </div>
 
@@ -1694,6 +1711,7 @@
       admin_cover:"Custom cover image (optional — leave empty to embed the reel directly)", admin_cover_hint:"Click to select a cover image",
       admin_save:"Publish testimonial", admin_video_h:"Case videos", admin_video_pick:"Click to select a video", admin_video_up:"Uploading", admin_video_ok:"Uploaded - it is live on the site.", admin_video_note:"Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.", admin_list_h:"Published testimonials", admin_leads_h:"Quote requests received",
       admin_delete:"Delete", admin_confirm:"Delete this lead? This cannot be undone.", admin_hide:"Hide", admin_show:"Show", admin_none:"Nothing here yet.",
+      case_tag_generic:"Client work · Custom website", case_generic:"Designed, built and launched by Digitatex. What you see above is the real site running — the recording moves with your scroll, exactly as the site behaves live.", case_g_m1s:"Scroll-scrub", case_g_m1:"Video tied to scroll position, not autoplay", case_g_m2s:"End to end", case_g_m2:"Design, build and launch handled in-house", case_visit:"Visit", admin_trimm_h:"Trimm video", admin_cases_h:"Client cases on the site", admin_case_name:"Client name *", admin_case_url:"Website (optional)", admin_case_add:"Add case", admin_case_novideo:"Pick a video first.", admin_case_max:"Three cases is the limit. Delete one to add another.", admin_confirm_case:"Delete this case and its video? This cannot be undone.", admin_uploading:"Uploading…", admin_error:"Something went wrong.", admin_cases_note:"Up to three client cases appear on the site, in the order you add them. Landscape 16:9 recordings work best. Trimm is our own product and stays fixed — its video is replaced below.",
       admin_bad_url:"That doesn't look like an Instagram link.", admin_saved:"Published.", admin_deleted:"Deleted.",
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
     },
@@ -1749,6 +1767,7 @@
       admin_cover:"Portada personalizada (opcional — dejalo vacío para embeber el reel directo)", admin_cover_hint:"Hacé clic para elegir una imagen de portada",
       admin_save:"Publicar testimonio", admin_video_h:"Videos de los casos", admin_video_pick:"Hacé clic para elegir un video", admin_video_up:"Subiendo", admin_video_ok:"Subido - ya se ve en la web.", admin_video_note:"Lo que subas reemplaza al instante lo que muestra la web. Lo ideal es 16:9 horizontal; si no subís nada, la web usa el video que trae por defecto.", admin_list_h:"Testimonios publicados", admin_leads_h:"Solicitudes de cotización recibidas",
       admin_delete:"Borrar", admin_confirm:"¿Borrar este cliente? No se puede deshacer.", admin_hide:"Ocultar", admin_show:"Mostrar", admin_none:"Todavía no hay nada acá.",
+      case_tag_generic:"Trabajo de cliente · Web a medida", case_generic:"Diseñada, desarrollada y puesta en marcha por Digitatex. Lo que se ve arriba es el sitio real funcionando — la grabación avanza con tu scroll, igual que se comporta en vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"El vídeo va atado al scroll, no se reproduce solo", case_g_m2s:"De principio a fin", case_g_m2:"Diseño, desarrollo y lanzamiento hechos en casa", case_visit:"Visitar", admin_trimm_h:"Vídeo de Trimm", admin_cases_h:"Casos de clientes en la web", admin_case_name:"Nombre del cliente *", admin_case_url:"Web (opcional)", admin_case_add:"Añadir caso", admin_case_novideo:"Elegí primero un vídeo.", admin_case_max:"El tope son tres casos. Borrá uno para añadir otro.", admin_confirm_case:"¿Borrar este caso y su vídeo? No se puede deshacer.", admin_uploading:"Subiendo…", admin_error:"Algo salió mal.", admin_cases_note:"En la web salen hasta tres casos de clientes, en el orden en que los añadís. Lo ideal es grabar en horizontal 16:9. Trimm es producto propio y se queda fijo — su vídeo se cambia abajo.",
       admin_bad_url:"Ese link no parece de Instagram.", admin_saved:"Publicado.", admin_deleted:"Borrado.",
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
     },
@@ -1804,6 +1823,7 @@
       admin_cover:"Image de couverture (facultatif — laissez vide pour intégrer le reel directement)", admin_cover_hint:"Cliquez pour choisir une image de couverture",
       admin_save:"Publier le témoignage", admin_video_h:"Vidéos des projets", admin_video_pick:"Cliquez pour choisir une vidéo", admin_video_up:"Envoi", admin_video_ok:"Envoyée - elle est en ligne.", admin_video_note:"Ce que vous envoyez remplace aussitôt ce qu affiche le site. Le 16:9 horizontal est idéal ; sans envoi, le site garde la vidéo fournie.", admin_list_h:"Témoignages publiés", admin_leads_h:"Demandes de devis reçues",
       admin_delete:"Supprimer", admin_confirm:"Supprimer ce contact ? Action irréversible.", admin_hide:"Masquer", admin_show:"Afficher", admin_none:"Rien pour l'instant.",
+      case_tag_generic:"Projet client · Site sur mesure", case_generic:"Conçu, développé et mis en ligne par Digitatex. Ce que vous voyez ci-dessus est le site réel en fonctionnement — la vidéo avance au rythme de votre défilement, exactement comme en vrai.", case_g_m1s:"Scroll-scrub", case_g_m1:"La vidéo suit le défilement, pas de lecture automatique", case_g_m2s:"De bout en bout", case_g_m2:"Conception, développement et lancement en interne", case_visit:"Visiter", admin_trimm_h:"Vidéo de Trimm", admin_cases_h:"Projets clients sur le site", admin_case_name:"Nom du client *", admin_case_url:"Site web (facultatif)", admin_case_add:"Ajouter le projet", admin_case_novideo:"Choisissez d'abord une vidéo.", admin_case_max:"Trois projets maximum. Supprimez-en un pour en ajouter un autre.", admin_confirm_case:"Supprimer ce projet et sa vidéo ? Action irréversible.", admin_uploading:"Envoi en cours…", admin_error:"Une erreur est survenue.", admin_cases_note:"Le site affiche jusqu'à trois projets clients, dans l'ordre où vous les ajoutez. Filmez de préférence en 16:9 horizontal. Trimm est notre propre produit et reste fixe — sa vidéo se remplace ci-dessous.",
       admin_bad_url:"Ce lien ne ressemble pas à un lien Instagram.", admin_saved:"Publié.", admin_deleted:"Supprimé.",
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
     },
@@ -1859,6 +1879,7 @@
       admin_cover:"Copertina personalizzata (opzionale — lascia vuoto per incorporare il reel)", admin_cover_hint:"Clicca per scegliere un'immagine di copertina",
       admin_save:"Pubblica testimonianza", admin_video_h:"Video dei progetti", admin_video_pick:"Clicca per scegliere un video", admin_video_up:"Caricamento", admin_video_ok:"Caricato - è online.", admin_video_note:"Ciò che carichi sostituisce subito quello che mostra il sito. Il 16:9 orizzontale è ideale; senza caricamento il sito usa il video incluso.", admin_list_h:"Testimonianze pubblicate", admin_leads_h:"Richieste di preventivo ricevute",
       admin_delete:"Elimina", admin_confirm:"Eliminare questo contatto? Non si può annullare.", admin_hide:"Nascondi", admin_show:"Mostra", admin_none:"Ancora niente qui.",
+      case_tag_generic:"Lavoro per cliente · Sito su misura", case_generic:"Progettato, sviluppato e messo online da Digitatex. Quello che vedi sopra è il sito vero in funzione — il video avanza con il tuo scroll, esattamente come si comporta dal vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"Il video è legato allo scroll, non parte da solo", case_g_m2s:"Dall'inizio alla fine", case_g_m2:"Design, sviluppo e lancio fatti in casa", case_visit:"Visita", admin_trimm_h:"Video di Trimm", admin_cases_h:"Lavori per clienti sul sito", admin_case_name:"Nome del cliente *", admin_case_url:"Sito web (facoltativo)", admin_case_add:"Aggiungi lavoro", admin_case_novideo:"Scegli prima un video.", admin_case_max:"Il limite è tre lavori. Eliminane uno per aggiungerne un altro.", admin_confirm_case:"Eliminare questo lavoro e il suo video? Non si può annullare.", admin_uploading:"Caricamento…", admin_error:"Qualcosa è andato storto.", admin_cases_note:"Sul sito compaiono fino a tre lavori per clienti, nell'ordine in cui li aggiungi. Meglio registrare in orizzontale 16:9. Trimm è prodotto nostro e resta fisso — il suo video si sostituisce qui sotto.",
       admin_bad_url:"Questo link non sembra di Instagram.", admin_saved:"Pubblicato.", admin_deleted:"Eliminato.",
       admin_login_err:"Email o password errate.", admin_generic_err:"Qualcosa è andato storto. Riprova."
     }
@@ -2619,6 +2640,95 @@
     mountDemo('own-demo',  'own-mock',  'assets/trimm-demo.mp4',    mediaUrl('case-trimm.mp4'));
   }
 
+  /* ============================================================
+     Casos de clientes cargados desde la base.
+
+     Cada uno es un video subido desde el panel. La web pinta hasta tres, con el
+     mismo marco de monitor que el caso que viaja con el sitio, y la descripcion
+     sale de una plantilla traducida: asi subir un caso nuevo es subir un video y
+     escribir un nombre, sin tener que redactar nada.
+
+     Trimm no pasa por aca. Es producto propio del estudio, no trabajo entregado
+     a un cliente, y por eso sigue fijo en el HTML con su propia tarjeta.
+     ============================================================ */
+  const CASES_MAX = 3;
+  let casesCache = [];
+
+  function caseHost(url){
+    if(!url) return '';
+    try{ return new URL(url).host.replace(/^www\./,''); }
+    catch(e){ return String(url).replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0]; }
+  }
+
+  function renderCases(){
+    const host = document.getElementById('case-list');
+    const builtin = document.getElementById('case-builtin');
+    if(!host) return;
+    const items = casesCache.slice(0, CASES_MAX);
+
+    // Sin nada cargado se queda el caso que viaja con el sitio: la seccion
+    // nunca aparece vacia mientras no haya subido el primer video.
+    if(builtin) builtin.hidden = items.length > 0;
+    if(!items.length){ host.innerHTML = ''; return; }
+
+    host.innerHTML = items.map((item, i)=>{
+      const flip = i % 2 === 1 ? ' flip' : '';
+      const side = i % 2 === 1 ? 'rv-left' : 'rv-right';
+      const dominio = caseHost(item.site_url);
+      const nombre = escapeHtml(item.client_name || '');
+      const texto = item.note ? escapeHtml(item.note) : escapeHtml(t('case_generic'));
+      return '<article class="case-row' + flip + '">' +
+        '<div class="case-visual reveal rv-tilt">' +
+          '<div class="monitor"><div class="monitor-screen">' +
+            '<div class="monitor-bar"><i></i><i></i><i></i>' +
+              '<span class="monitor-url">' + escapeHtml(dominio || nombre.toLowerCase()) + '</span></div>' +
+            '<div class="monitor-view">' +
+              '<video id="cdemo-' + i + '" muted loop playsinline preload="none" style="display:none;" ' +
+                'aria-hidden="true" tabindex="-1" disablePictureInPicture ' +
+                'controlsList="nodownload nofullscreen"></video>' +
+              '<div class="mock-tamaison" id="cmock-' + i + '">' +
+                '<div class="grid"></div><div class="frame"></div><div class="beam"></div></div>' +
+              '<div class="monitor-glare"></div>' +
+            '</div>' +
+          '</div><div class="monitor-stand"></div><div class="monitor-base"></div></div>' +
+        '</div>' +
+        '<div class="case-body glass reveal ' + side + ' d1">' +
+          '<p class="case-tag">' + escapeHtml(t('case_tag_generic')) + '</p>' +
+          '<h3>' + nombre + '</h3>' +
+          '<p class="case-copy">' + texto + '</p>' +
+          '<div class="case-meta">' +
+            '<div><strong>' + escapeHtml(t('case_g_m1s')) + '</strong><span>' + escapeHtml(t('case_g_m1')) + '</span></div>' +
+            '<div><strong>' + escapeHtml(t('case_g_m2s')) + '</strong><span>' + escapeHtml(t('case_g_m2')) + '</span></div>' +
+          '</div>' +
+          (item.site_url
+            ? '<a href="' + escapeHtml(item.site_url) + '" target="_blank" rel="noopener" class="case-link">' +
+                escapeHtml(t('case_visit')) + ' ' + escapeHtml(dominio) + ' \u2192</a>'
+            : '') +
+        '</div>' +
+      '</article>';
+    }).join('');
+
+    // Cada video nuevo se engancha al mismo mecanismo que los fijos: se carga
+    // cuando el marco se acerca y despues lo recorre el scroll.
+    items.forEach((item, i)=>{
+      mountDemo('cdemo-' + i, 'cmock-' + i, mediaUrl(item.video_path), null);
+    });
+    observeReveals();
+  }
+
+  async function loadCases(){
+    await supabaseReady;
+    if(!supabaseClient){ renderCases(); return; }
+    try{
+      const { data, error } = await supabaseClient
+        .from('cases').select('*').eq('published', true)
+        .order('sort_order', {ascending:true})
+        .order('created_at', {ascending:true});
+      if(!error && Array.isArray(data)) casesCache = data;
+    }catch(e){ /* sin conexion se queda el caso que viaja con el sitio */ }
+    renderCases();
+  }
+
   // Videos de los casos que el scroll controla (se llenan al cargar cada uno)
   const scrubbables = [];
 
@@ -2938,7 +3048,7 @@
       loginCard.style.display = signedIn ? 'none' : 'block';
       panel.style.display = signedIn ? 'block' : 'none';
       logoutBtn.style.display = signedIn ? 'inline-block' : 'none';
-      if(signedIn){ loadAdminTestimonials(); loadAdminLeads(); }
+      if(signedIn){ loadAdminTestimonials(); loadAdminCases(); loadAdminLeads(); }
     }
 
     loginForm.addEventListener('submit', async (e)=>{
@@ -3077,6 +3187,113 @@
         row.querySelector('[data-act="delete"]').addEventListener('click', async ()=>{
           await supabaseClient.from('testimonials').delete().eq('id', id);
           loadAdminTestimonials(); loadTestimonials();
+        });
+      });
+    }
+
+    /* ---- casos de clientes: subir video y crear la ficha ---- */
+    const caseForm = document.getElementById('case-form');
+    const caseDrop = document.getElementById('case-drop');
+    const caseFile = document.getElementById('case-file');
+    const caseStatus = document.getElementById('case-status');
+    const casesList = document.getElementById('admin-cases-list');
+    let casePicked = null;
+
+    if(caseDrop && caseFile){
+      caseDrop.addEventListener('click', ()=> caseFile.click());
+      caseFile.addEventListener('change', ()=>{
+        casePicked = caseFile.files && caseFile.files[0] ? caseFile.files[0] : null;
+        const etiqueta = caseDrop.querySelector('span');
+        if(etiqueta) etiqueta.textContent = casePicked
+          ? casePicked.name + ' (' + Math.round(casePicked.size / 1048576) + ' MB)'
+          : t('admin_video_pick');
+      });
+    }
+
+    if(caseForm){
+      caseForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        await supabaseReady;
+        if(!supabaseClient) return;
+        const nombre = document.getElementById('c-name').value.trim();
+        const url = document.getElementById('c-url').value.trim();
+        if(!nombre){ return; }
+        if(!casePicked){
+          caseStatus.textContent = t('admin_case_novideo');
+          caseStatus.className = 'form-status err';
+          return;
+        }
+        // El tope se comprueba aca y no solo al pintar: subir un video de
+        // decenas de megas para que despues no se vea seria tirar el tiempo.
+        const { data: yaHay } = await supabaseClient.from('cases').select('id');
+        if(yaHay && yaHay.length >= 3){
+          caseStatus.textContent = t('admin_case_max');
+          caseStatus.className = 'form-status err';
+          return;
+        }
+
+        caseStatus.textContent = t('admin_uploading');
+        caseStatus.className = 'form-status';
+        try{
+          const ext = (casePicked.name.split('.').pop() || 'mp4').toLowerCase();
+          const ruta = 'case-' + Date.now() + '-' + Math.random().toString(36).slice(2,8) + '.' + ext;
+          const { error: upErr } = await supabaseClient.storage.from(MEDIA_BUCKET)
+            .upload(ruta, casePicked, { contentType: casePicked.type || 'video/mp4', upsert:false });
+          if(upErr) throw upErr;
+
+          const { error } = await supabaseClient.from('cases').insert({
+            client_name: nombre,
+            site_url: url || null,
+            video_path: ruta,
+            sort_order: (yaHay ? yaHay.length : 0)
+          });
+          if(error) throw error;
+
+          caseStatus.textContent = t('admin_saved');
+          caseStatus.className = 'form-status ok';
+          caseForm.reset();
+          casePicked = null;
+          const etiqueta = caseDrop && caseDrop.querySelector('span');
+          if(etiqueta) etiqueta.textContent = t('admin_video_pick');
+          loadAdminCases();
+          loadCases();
+        }catch(err){
+          caseStatus.textContent = (err && err.message) ? err.message : t('admin_error');
+          caseStatus.className = 'form-status err';
+        }
+      });
+    }
+
+    async function loadAdminCases(){
+      await supabaseReady;
+      if(!supabaseClient || !casesList) return;
+      const { data, error } = await supabaseClient.from('cases').select('*')
+        .order('sort_order',{ascending:true}).order('created_at',{ascending:true});
+      if(error || !data || !data.length){
+        casesList.innerHTML = '<p class="admin-note">' + escapeHtml(t('admin_none')) + '</p>';
+        return;
+      }
+      casesList.innerHTML = data.map(c=>
+        '<div class="admin-lead">' +
+          '<div class="lead-head"><b>' + escapeHtml(c.client_name) + '</b>' +
+            '<button class="lead-del" data-case="' + escapeHtml(c.id) +
+              '" data-path="' + escapeHtml(c.video_path) + '" title="' + escapeHtml(t('admin_delete')) + '">\u2715</button>' +
+          '</div>' +
+          (c.site_url ? '<a href="' + escapeHtml(c.site_url) + '" target="_blank" rel="noopener">' + escapeHtml(caseHost(c.site_url)) + '</a><br>' : '') +
+          '<video src="' + escapeHtml(mediaUrl(c.video_path)) + '" muted playsinline preload="metadata" ' +
+            'style="width:100%;max-width:220px;border-radius:8px;margin-top:10px;display:block;" controls></video>' +
+        '</div>').join('');
+
+      casesList.querySelectorAll('.lead-del').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          if(!confirm(t('admin_confirm_case'))) return;
+          // primero la ficha y despues el archivo: si falla el borrado del
+          // video queda un archivo huerfano, que es mucho menos grave que una
+          // ficha apuntando a un video que ya no existe
+          await supabaseClient.from('cases').delete().eq('id', btn.dataset.case);
+          try{ await supabaseClient.storage.from(MEDIA_BUCKET).remove([btn.dataset.path]); }catch(e){}
+          loadAdminCases();
+          loadCases();
         });
       });
     }
@@ -3419,6 +3636,7 @@
   arrancar('escena de trabajos', initWorkScene);
   arrancar('fondo', initDepthField);
   arrancar('demos de casos', initCaseDemo);
+  arrancar('casos de clientes', loadCases);
   arrancar('testimonios', loadTestimonials);
   document.addEventListener('scroll', updateScrollWords, {passive:true});
   window.addEventListener('resize', updateScrollWords);
