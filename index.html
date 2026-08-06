@@ -805,6 +805,14 @@
   .admin-leads{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
   .admin-lead{border:1px solid var(--line);padding:14px 16px;background:var(--ink);font-size:12.5px;line-height:1.7;color:var(--bone-dim);}
   .admin-lead b{color:var(--bone);font-family:'Fraunces',serif;font-weight:400;font-size:14px;}
+  .admin-lead a{color:var(--brass-2);text-decoration:none;border-bottom:1px solid rgba(224,190,130,0.35);}
+  .lead-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .lead-del{background:none;border:1px solid var(--line);color:var(--stone);width:26px;height:26px;
+    border-radius:50%;cursor:pointer;font-size:12px;line-height:1;flex-shrink:0;transition:all .2s ease;}
+  .lead-del:hover{border-color:#c0564a;color:#e0796c;}
+  .lead-fotos{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .lead-fotos a{border:none;}
+  .lead-fotos img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--line);display:block;}
 </style>
 </head>
 <body>
@@ -1220,7 +1228,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v8</span>
+  <span class="build-tag">v9</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -1388,7 +1396,7 @@
       admin_handle:"Instagram handle", admin_order:"Order (lower shows first)", admin_quote:"Short quote (optional)",
       admin_cover:"Custom cover image (optional — leave empty to embed the reel directly)", admin_cover_hint:"Click to select a cover image",
       admin_save:"Publish testimonial", admin_video_h:"Case videos", admin_video_pick:"Click to select a video", admin_video_up:"Uploading", admin_video_ok:"Uploaded - it is live on the site.", admin_video_note:"Uploads replace what the site shows straight away. Landscape 16:9 works best; if nothing is uploaded the site falls back to the video shipped with it.", admin_list_h:"Published testimonials", admin_leads_h:"Quote requests received",
-      admin_delete:"Delete", admin_hide:"Hide", admin_show:"Show", admin_none:"Nothing here yet.",
+      admin_delete:"Delete", admin_confirm:"Delete this lead? This cannot be undone.", admin_hide:"Hide", admin_show:"Show", admin_none:"Nothing here yet.",
       admin_bad_url:"That doesn't look like an Instagram link.", admin_saved:"Published.", admin_deleted:"Deleted.",
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
     },
@@ -1442,7 +1450,7 @@
       admin_handle:"Usuario de Instagram", admin_order:"Orden (menor aparece primero)", admin_quote:"Frase corta (opcional)",
       admin_cover:"Portada personalizada (opcional — dejalo vacío para embeber el reel directo)", admin_cover_hint:"Hacé clic para elegir una imagen de portada",
       admin_save:"Publicar testimonio", admin_video_h:"Videos de los casos", admin_video_pick:"Hacé clic para elegir un video", admin_video_up:"Subiendo", admin_video_ok:"Subido - ya se ve en la web.", admin_video_note:"Lo que subas reemplaza al instante lo que muestra la web. Lo ideal es 16:9 horizontal; si no subís nada, la web usa el video que trae por defecto.", admin_list_h:"Testimonios publicados", admin_leads_h:"Solicitudes de cotización recibidas",
-      admin_delete:"Borrar", admin_hide:"Ocultar", admin_show:"Mostrar", admin_none:"Todavía no hay nada acá.",
+      admin_delete:"Borrar", admin_confirm:"¿Borrar este cliente? No se puede deshacer.", admin_hide:"Ocultar", admin_show:"Mostrar", admin_none:"Todavía no hay nada acá.",
       admin_bad_url:"Ese link no parece de Instagram.", admin_saved:"Publicado.", admin_deleted:"Borrado.",
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
     },
@@ -1496,7 +1504,7 @@
       admin_handle:"Compte Instagram", admin_order:"Ordre (le plus petit en premier)", admin_quote:"Courte citation (facultatif)",
       admin_cover:"Image de couverture (facultatif — laissez vide pour intégrer le reel directement)", admin_cover_hint:"Cliquez pour choisir une image de couverture",
       admin_save:"Publier le témoignage", admin_video_h:"Vidéos des projets", admin_video_pick:"Cliquez pour choisir une vidéo", admin_video_up:"Envoi", admin_video_ok:"Envoyée - elle est en ligne.", admin_video_note:"Ce que vous envoyez remplace aussitôt ce qu affiche le site. Le 16:9 horizontal est idéal ; sans envoi, le site garde la vidéo fournie.", admin_list_h:"Témoignages publiés", admin_leads_h:"Demandes de devis reçues",
-      admin_delete:"Supprimer", admin_hide:"Masquer", admin_show:"Afficher", admin_none:"Rien pour l'instant.",
+      admin_delete:"Supprimer", admin_confirm:"Supprimer ce contact ? Action irréversible.", admin_hide:"Masquer", admin_show:"Afficher", admin_none:"Rien pour l'instant.",
       admin_bad_url:"Ce lien ne ressemble pas à un lien Instagram.", admin_saved:"Publié.", admin_deleted:"Supprimé.",
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
     },
@@ -1550,7 +1558,7 @@
       admin_handle:"Account Instagram", admin_order:"Ordine (il più basso appare per primo)", admin_quote:"Frase breve (opzionale)",
       admin_cover:"Copertina personalizzata (opzionale — lascia vuoto per incorporare il reel)", admin_cover_hint:"Clicca per scegliere un'immagine di copertina",
       admin_save:"Pubblica testimonianza", admin_video_h:"Video dei progetti", admin_video_pick:"Clicca per scegliere un video", admin_video_up:"Caricamento", admin_video_ok:"Caricato - è online.", admin_video_note:"Ciò che carichi sostituisce subito quello che mostra il sito. Il 16:9 orizzontale è ideale; senza caricamento il sito usa il video incluso.", admin_list_h:"Testimonianze pubblicate", admin_leads_h:"Richieste di preventivo ricevute",
-      admin_delete:"Elimina", admin_hide:"Nascondi", admin_show:"Mostra", admin_none:"Ancora niente qui.",
+      admin_delete:"Elimina", admin_confirm:"Eliminare questo contatto? Non si può annullare.", admin_hide:"Nascondi", admin_show:"Mostra", admin_none:"Ancora niente qui.",
       admin_bad_url:"Questo link non sembra di Instagram.", admin_saved:"Pubblicato.", admin_deleted:"Eliminato.",
       admin_login_err:"Email o password errate.", admin_generic_err:"Qualcosa è andato storto. Riprova."
     }
@@ -2748,15 +2756,47 @@
       if(error || !data || !data.length){ leadsList.innerHTML = '<p class="admin-note">' + escapeHtml(t('admin_none')) + '</p>'; return; }
       leadsList.innerHTML = data.map(l=>{
         const when = new Date(l.created_at).toLocaleString();
-        const photos = (l.product_photo_urls || []).length;
+        const fotos = l.product_photo_urls || [];
+
+        /* Antes esto solo decia "3 📷" y no habia forma de ver las fotos desde
+           aca: habia que ir al correo o al panel de Supabase. Se pintan como
+           miniaturas que abren la imagen completa. */
+        const tiras = fotos.length
+          ? '<div class="lead-fotos">' + fotos.map((u,i)=>
+              '<a href="' + escapeHtml(u) + '" target="_blank" rel="noopener" title="Foto ' + (i+1) + '">' +
+                '<img src="' + escapeHtml(u) + '" alt="Foto ' + (i+1) + ' del cliente" loading="lazy">' +
+              '</a>').join('') + '</div>'
+          : '';
+
+        // el telefono y el correo, pulsables: es una base de clientes, se usa
+        // para contestarles
+        const contacto = [
+          l.email ? '<a href="mailto:' + encodeURI(l.email) + '">' + escapeHtml(l.email) + '</a>' : '',
+          l.phone ? '<a href="https://wa.me/' + encodeURIComponent(String(l.phone).replace(/[^0-9]/g,'')) + '" target="_blank" rel="noopener">' + escapeHtml(l.phone) + '</a>' : ''
+        ].filter(Boolean).join(' · ');
+
+        const extras = (l.integrations || []).length ? ' · ' + escapeHtml((l.integrations||[]).join(', ')) : '';
+
         return '<div class="admin-lead">' +
-          '<b>' + escapeHtml(l.name || '—') + '</b> · ' + escapeHtml(when) + '<br>' +
-          escapeHtml([l.email, l.phone].filter(Boolean).join(' · ')) + '<br>' +
-          escapeHtml(l.project_type || '') + ' · €' + (l.estimated_price_min||0) + '–' + (l.estimated_price_max||0) +
-          (photos ? ' · ' + photos + ' 📷' : '') +
+          '<div class="lead-head"><b>' + escapeHtml(l.name || '—') + '</b>' +
+            '<button class="lead-del" data-lead="' + escapeHtml(l.id) + '" title="' + escapeHtml(t('admin_delete')) + '">✕</button></div>' +
+          escapeHtml(when) + '<br>' +
+          (contacto || '—') + '<br>' +
+          escapeHtml(l.project_type || '') + extras +
+          '<br><b style="font-size:12.5px;">€' + (l.estimated_price_min||0) + '–' + (l.estimated_price_max||0) + '</b>' +
+          ' · ' + (l.estimated_maintenance_min||0) + '–' + (l.estimated_maintenance_max||0) + ' €/mes' +
           (l.message ? '<br>' + escapeHtml(l.message) : '') +
+          tiras +
         '</div>';
       }).join('');
+
+      leadsList.querySelectorAll('.lead-del').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          if(!confirm(t('admin_confirm'))) return;
+          const { error } = await supabaseClient.from('leads').delete().eq('id', btn.dataset.lead);
+          if(!error) loadAdminLeads();
+        });
+      });
     }
 
     supabaseReady.then(c=>{ if(c) c.auth.onAuthStateChange(()=>refreshSession()); });
@@ -2941,7 +2981,10 @@
         let photoUrls = [];
         if(compressedPhotos.length && supabaseClient){
           for(let i=0;i<compressedPhotos.length;i++){
-            const path = `${Date.now()}-${i}.jpg`;
+            // El nombre llevaba solo la hora en milisegundos. Dos clientes
+            // enviando a la vez chocaban y la segunda foto se perdia sin que
+            // nadie se enterara: el sufijo al azar lo hace imposible.
+            const path = Date.now() + '-' + i + '-' + Math.random().toString(36).slice(2,8) + '.jpg';
             const { error: upErr } = await supabaseClient.storage.from('product-photos').upload(path, compressedPhotos[i], { contentType:'image/jpeg' });
             if(!upErr){
               const { data } = supabaseClient.storage.from('product-photos').getPublicUrl(path);
@@ -2973,6 +3016,15 @@
           Object.entries(leadPayload).forEach(([k,v])=>{
             fd.append(k, Array.isArray(v) ? v.join(', ') : (v === null ? '' : v));
           });
+          // Si el cliente adjunto fotos y ninguna llego a subirse (Supabase
+          // caido, o una extension del navegador bloqueandolo), el correo
+          // salia sin fotos y sin decir nada: parecia que no habia mandado
+          // ninguna. Mejor que lo diga, asi se le pueden pedir.
+          if(compressedPhotos.length && !photoUrls.length){
+            fd.set('product_photo_urls',
+              'ATENCION: el cliente adjunto ' + compressedPhotos.length +
+              ' foto(s) pero no se pudieron subir. Pideselas por email.');
+          }
           tasks.push(fetch(FORMSPREE_ENDPOINT, { method:'POST', body: fd, headers:{ Accept:'application/json' } }));
         }
 
