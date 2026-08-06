@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# El SQL y las herramientas internas no tienen por que aparecer en Google.
+Disallow: /supabase-setup.sql
+
+Sitemap: https://digitatex.com/sitemap.xml
