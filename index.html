@@ -40,7 +40,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="video" href="assets/hero-logo-spin.mp4">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- La hoja de fuentes bloquea el primer pintado: si Google tarda o no
+     responde, el visitante ve una pagina en blanco. Se carga de forma asincrona
+     (media=print hasta que llega) y el texto sale antes con la tipografia del
+     sistema, cambiando a Fraunces/Inter cuando estan listas. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap"></noscript>
 
 <script type="application/ld+json">
 {
@@ -102,7 +109,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{background:transparent;color:var(--bone);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  body{background:transparent;color:var(--bone);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
   /* ============================================================
      FONDO INFINITO CON PROFUNDIDAD
@@ -123,7 +130,7 @@
 
   nav,main,footer{position:relative;z-index:1;}
   ::selection{background:var(--brass);color:var(--ink);}
-  h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.01em;}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:400;letter-spacing:-0.01em;}
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
   .eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-2);font-weight:500;display:flex;align-items:center;gap:10px;}
@@ -1268,7 +1275,8 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- defer: este script no pinta nada, no tiene por que retrasar la pagina -->
+<script defer id="sb-script" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   document.documentElement.classList.add('js-ready');
 
@@ -2096,9 +2104,25 @@
      ============================================================ */
   const SUPABASE_URL = 'https://dnwnciubalqyptlmycer.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRud25jaXViYWxxeXB0bG15Y2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5NTExNjksImV4cCI6MjEwMTUyNzE2OX0.fwVcheMqARaVFt1FdKu0KmN1T36bK5GtxVGx_6-WzBY';
-  const supabaseClient = (typeof window.supabase !== 'undefined')
-    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    : null;
+  /* La libreria ahora llega con defer, asi que no existe cuando corre este
+     script. Se expone una promesa: quien la necesite la espera, y si nunca
+     carga se resuelve a null y cada parte degrada por su cuenta. */
+  let supabaseClient = null;
+  const supabaseReady = new Promise((resolve)=>{
+    const build = ()=>{
+      try {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      } catch(e){ supabaseClient = null; }
+      resolve(supabaseClient);
+    };
+    if(typeof window.supabase !== 'undefined') return build();
+    const tag = document.getElementById('sb-script');
+    if(!tag) return resolve(null);
+    tag.addEventListener('load', build, { once:true });
+    tag.addEventListener('error', ()=>resolve(null), { once:true });
+    // si la CDN se queda colgada, no se espera indefinidamente
+    setTimeout(()=>resolve(supabaseClient), 8000);
+  });
 
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xyegywvk';
 
@@ -2122,6 +2146,7 @@
   async function loadTestimonials(){
     // Se renderiza siempre, incluso si Supabase no cargo: asi la seccion
     // muestra su estado vacio en vez de quedar en blanco.
+    await supabaseReady;
     if(!supabaseClient){ renderTestimonials(); return; }
     try{
       const { data, error } = await supabaseClient
@@ -2210,6 +2235,7 @@
     if(location.hash === '#admin') openPanel();
 
     async function refreshSession(){
+      await supabaseReady;
       if(!supabaseClient) return;
       const { data } = await supabaseClient.auth.getSession();
       const signedIn = !!(data && data.session);
@@ -2221,6 +2247,7 @@
 
     loginForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
+      await supabaseReady;
       if(!supabaseClient) return;
       loginStatus.textContent = '…'; loginStatus.className = 'form-status';
       const { error } = await supabaseClient.auth.signInWithPassword({
@@ -2233,6 +2260,7 @@
     });
 
     logoutBtn.addEventListener('click', async ()=>{
+      await supabaseReady;
       if(supabaseClient) await supabaseClient.auth.signOut();
       refreshSession();
     });
@@ -2255,6 +2283,7 @@
 
     testiForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
+      await supabaseReady;
       if(!supabaseClient) return;
       const url = document.getElementById('t-url').value.trim();
       const code = igShortcode(url);
@@ -2301,7 +2330,9 @@
       drop.addEventListener('click', ()=>input.click());
       input.addEventListener('change', async (e)=>{
         const file = e.target.files[0];
-        if(!file || !supabaseClient) return;
+        if(!file) return;
+        await supabaseReady;
+        if(!supabaseClient) return;
         status.textContent = t('admin_video_up') + ' (' + Math.round(file.size/1048576) + ' MB)…';
         status.className = 'form-status';
         try{
@@ -2319,6 +2350,7 @@
     });
 
     async function loadAdminTestimonials(){
+      await supabaseReady;
       if(!supabaseClient) return;
       const { data, error } = await supabaseClient.from('testimonials').select('*')
         .order('sort_order',{ascending:true}).order('created_at',{ascending:false});
@@ -2354,6 +2386,7 @@
     }
 
     async function loadAdminLeads(){
+      await supabaseReady;
       if(!supabaseClient) return;
       const { data, error } = await supabaseClient.from('leads').select('*')
         .order('created_at',{ascending:false}).limit(50);
@@ -2371,7 +2404,7 @@
       }).join('');
     }
 
-    if(supabaseClient) supabaseClient.auth.onAuthStateChange(()=>refreshSession());
+    supabaseReady.then(c=>{ if(c) c.auth.onAuthStateChange(()=>refreshSession()); });
   })();
 
   /* ============================================================
@@ -2546,6 +2579,8 @@
 
       status.textContent = tt.sending;
       status.className = 'form-status';
+
+      await supabaseReady;
 
       try{
         let photoUrls = [];
