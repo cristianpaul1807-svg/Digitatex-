@@ -103,7 +103,10 @@
 <style>
   :root{
     --ink:#0c0c0d; --ink-2:#151513;
-    --bone:#efe9dd; --bone-dim:#c9c2b2; --stone:#8f8a7d;
+    /* --stone se usa en textos chicos (metadatos, etiquetas del formulario,
+       pie). A #8f8a7d se quedaba en 3.85 y 3.93 de contraste, por debajo del
+       4.5 que pide AA para texto normal. */
+    --bone:#efe9dd; --bone-dim:#c9c2b2; --stone:#a8a294;
     --brass:#b9924f; --brass-2:#e0be82;
     --line:rgba(239,233,221,0.14); --line-strong:rgba(239,233,221,0.28);
   }
@@ -215,6 +218,9 @@
   }
 
   section{position:relative;padding:0 48px;}
+  /* Cualquier regla de display con mas peso le gana al [hidden] del navegador.
+     Esto asegura que ocultar una seccion la oculte de verdad. */
+  [hidden]{display:none !important;}
   @media (max-width:760px){ section{padding:0 24px;} }
   .wrap{max-width:1180px;margin:0 auto;}
 
@@ -280,6 +286,10 @@
      sensacion de que la orbita tiene profundidad y no es un anillo plano. */
   .hero-rocks{position:absolute;z-index:3;left:78%;top:46%;width:min(38vw,460px);height:min(38vw,460px);
     transform:translate(-50%,-50%);pointer-events:none;}
+  /* Cuando la letra pasa a ser fondo (pantallas cortas), su orbita tiene que
+     bajar tambien: si no, las piedras cruzan el titular a plena luz. */
+  .d-watermark .hero-orbit{opacity:0.45;}
+  .d-watermark .hero-rocks{opacity:0.4;}
   .rock-orbit{position:absolute;inset:0;will-change:transform;}
   .rock{position:absolute;left:50%;top:50%;background:linear-gradient(150deg,#8d8577 0%,#4a463f 55%,#26241f 100%);
     box-shadow:inset -1px -1px 3px rgba(0,0,0,0.6), 0 0 10px rgba(0,0,0,0.5);will-change:transform,opacity;}
@@ -377,7 +387,10 @@
   }
 
   /* ---- texto que se revela palabra por palabra con el scroll ---- */
-  .sw-word{display:inline-block;opacity:0.13;transition:opacity .16s linear, color .3s;will-change:opacity;}
+  /* La palabra apagada tiene que seguir leyendose: a 0.13 daba 1.32 de
+     contraste, o sea invisible en un telefono a plena luz. A 0.45 pasa de
+     4.5 y el efecto de encendido se sigue notando igual. */
+  .sw-word{display:inline-block;opacity:0.45;transition:opacity .16s linear, color .3s;will-change:opacity;}
   .sw-word.lit{opacity:1;}
   .js-ready .scroll-words{opacity:1;transform:none;}
 
@@ -807,7 +820,9 @@
     <a href="#work" data-i18n="nav_work">Work</a>
     <a href="#services" data-i18n="nav_services">Services</a>
     <a href="#styles" data-i18n="nav_styles">Styles</a>
-    <a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a>
+    <!-- Ocultos de entrada y los enciende renderTestimonials() si hay algo que
+         ensenar: asi la seccion no aparece y desaparece mientras carga. -->
+    <a href="#testimonials" data-i18n="nav_testimonials" hidden>Testimonials</a>
     <a href="#about" data-i18n="nav_about">About</a>
     <a href="#quote" data-i18n="nav_quote">Quote</a>
     <div class="langsw" role="group" aria-label="Language">
@@ -1063,7 +1078,7 @@
 </section>
 
 <!-- ==================== TESTIMONIALS ==================== -->
-<section id="testimonials">
+<section id="testimonials" hidden>
   <span class="sec-counter">05 — <span data-i18n="sec_testi">Proof</span></span>
   <div class="wrap">
     <div class="testi-head reveal rv-left">
@@ -1631,16 +1646,22 @@
     });
     updateScrollWords();
   }
+  function litWords(el, progress){
+    const words = el.querySelectorAll('.sw-word');
+    if(!words.length) return;
+    const lit = Math.round(Math.min(Math.max(progress, 0), 1) * words.length);
+    words.forEach((w,i)=> w.classList.toggle('lit', i < lit));
+  }
   function updateScrollWords(){
     document.querySelectorAll('.scroll-words').forEach(el=>{
-      const words = el.querySelectorAll('.sw-word');
-      if(!words.length) return;
+      // El parrafo del hero vive dentro de un sticky: su posicion en pantalla
+      // no cambia mientras dura el capitulo, asi que medirla dejaba la mitad
+      // de las palabras apagadas para siempre. Ese lo enciende su capitulo.
+      if(el.closest('.scrub-wrap')) return;
       const rect = el.getBoundingClientRect();
       const start = window.innerHeight * 0.88;
       const end = window.innerHeight * 0.34;
-      const progress = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
-      const lit = Math.round(progress * words.length);
-      words.forEach((w,i)=> w.classList.toggle('lit', i < lit));
+      litWords(el, (start - rect.top) / (start - end));
     });
   }
 
@@ -1723,14 +1744,56 @@
       canvas.width  = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // El centro tiene que coincidir con el de los anillos y las piedras
-      // (.hero-orbit / .hero-rocks en el CSS). Si no, la orbita giraria
-      // alrededor de un punto vacio al lado de la letra.
       const mobile = window.matchMedia('(max-width: 900px)').matches;
       ox = mobile ? W * 0.50 : W * 0.78;
-      oy = mobile ? H * 0.27 : H * 0.46;
-      const ring = mobile ? Math.min(W * 0.84, 360) : Math.min(W * 0.38, 460);
+      oy = mobile ? H * 0.46 : H * 0.46;
+      let ring = mobile ? Math.min(W * 0.84, 360) : Math.min(W * 0.38, 460);
+      let watermark = false;
+
+      if(mobile){
+        /* En vertical la letra y el texto comparten la misma columna, asi que
+           la letra tiene que caber en el hueco que queda entre el nav y el
+           bloque de texto. Ese hueco cambia con cada telefono, y se encoge mas
+           todavia cuando Safari muestra su barra de direcciones. Medirlo es la
+           unica forma de que la D no termine encima del titular. */
+        const inner = document.querySelector('#hero .hero-inner');
+        const stickyTop = canvas.getBoundingClientRect().top;
+        const copyTop = inner ? inner.getBoundingClientRect().top - stickyTop : H;
+        const top = 96;                                    // lo que ocupa el nav flotante
+        const bottom = copyTop - 18;
+        // la perspectiva estira el dibujo hasta ~1.45 veces la escala
+        const cabe = (bottom - top) / (2 * 1.45 * 0.33);
+        if(cabe < 168){
+          /* Pantalla corta (un movil chico, o cualquier telefono en
+             horizontal): el texto ocupa todo y no queda hueco. En vez de
+             encajar una letra diminuta que igual pisa el titular, la D pasa a
+             ser el fondo del capitulo — grande, centrada y atenuada. */
+          watermark = true;
+          ox = W * 0.5;
+          oy = H * 0.42;
+          ring = Math.min(W * 0.92, H * 0.52);
+        } else {
+          oy = (top + bottom) / 2;
+          ring = Math.min(ring, cabe);
+        }
+      }
+      canvas.style.opacity = watermark ? '0.30' : '1';
+      const sticky = canvas.closest('.scrub-sticky');
+      if(sticky) sticky.classList.toggle('d-watermark', watermark);
       scale = ring * 0.33;
+
+      /* Los anillos y las piedras se colocan desde aca y no desde el CSS. Antes
+         cada uno llevaba sus propios porcentajes y bastaba con tocar un lado
+         para que la orbita girase alrededor de un punto al lado de la letra. */
+      const orbit = document.querySelector('#hero .hero-orbit');
+      const rocks = document.getElementById('hero-rocks');
+      [[orbit, 1], [rocks, 1.14]].forEach(([el, k]) => {
+        if(!el) return;
+        el.style.left = ox.toFixed(1) + 'px';
+        el.style.top = oy.toFixed(1) + 'px';
+        el.style.width = (ring * k).toFixed(1) + 'px';
+        el.style.height = (ring * k).toFixed(1) + 'px';
+      });
       lastAngle = null;
     }
 
@@ -1871,6 +1934,10 @@
 
     layout();
     window.addEventListener('resize', layout);
+    // Al terminar de cargar las fuentes el bloque de texto cambia de alto, y
+    // con el cambia el hueco que la letra tiene disponible: hay que remedirlo.
+    window.addEventListener('load', layout);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(layout).catch(()=>{});
     return { render, layout };
   }
 
@@ -1887,6 +1954,7 @@
       ghost:      wrap.querySelector('.hero-ghost'),
       ringTop:    wrap.querySelector('.ring-top'),
       ringBottom: wrap.querySelector('.ring-bottom'),
+      words:      wrap.querySelector('.scroll-words'),
       logo:       wrap.querySelector('#hero-d') ? heroLogo : null
     }));
 
@@ -1898,6 +1966,9 @@
       const progress = scrolled / total;
       const visible = rect.top < window.innerHeight && rect.bottom > 0;
       if(visible && ch.logo) ch.logo.render(progress);
+      // arranca con un tercio encendido y termina de encenderse enseguida:
+      // el efecto se ve, pero nadie se queda mirando un parrafo a medio prender
+      if(ch.words) litWords(ch.words, 0.35 + progress * 3);
       if(ch.content){
         // A diferencia de un capitulo intermedio, el texto del hero tiene que
         // verse apenas carga la pagina (progress 0) — solo se desvanece al final.
@@ -1934,6 +2005,8 @@
     }
     document.addEventListener('scroll', onScrollScrub, {passive:true});
     window.addEventListener('resize', onScrollScrub);
+    window.addEventListener('load', onScrollScrub);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(onScrollScrub).catch(()=>{});
     onScrollScrub();
 
     /* Piedras en orbita alrededor del logo. Se generan una vez y luego solo
@@ -2392,12 +2465,36 @@
     renderTestimonials();
   }
 
+  /* Los contadores (01 — Studio, 02 — Work...) estan escritos a mano en el
+     HTML. Si una seccion se oculta hay que renumerar, o la cuenta salta de 04
+     a 06 y se nota que falta algo. */
+  function renumberSections(){
+    let n = 0;
+    document.querySelectorAll('.sec-counter').forEach((el)=>{
+      const sec = el.closest('section, .scrub-wrap');
+      if(sec && sec.hidden) return;
+      n++;
+      const num = (n < 10 ? '0' + n : String(n)) + ' — ';
+      if(el.firstChild && el.firstChild.nodeType === 3) el.firstChild.nodeValue = num;
+      else el.insertBefore(document.createTextNode(num), el.firstChild);
+    });
+  }
+
   function renderTestimonials(){
     const rail = document.getElementById('testi-rail');
     if(!rail) return;
-    if(!testimonialsCache.length){
-      rail.innerHTML = '<div class="testi-empty reveal rv-down">' + escapeHtml(t('testi_empty')) + '</div>';
-      observeReveals();
+    const section = document.getElementById('testimonials');
+    const navLink = document.querySelector('.navlinks a[href="#testimonials"]');
+    // Una seccion que anuncia "clientes reales" y despues no ensena ninguno
+    // resta en vez de sumar, y en el telefono deja una pantalla entera vacia.
+    // Mientras no haya testimonios publicados, la seccion no existe; vuelve
+    // sola en cuanto se sube el primero desde el panel.
+    const vacia = !testimonialsCache.length;
+    if(section) section.hidden = vacia;
+    if(navLink) navLink.hidden = vacia;
+    renumberSections();
+    if(vacia){
+      rail.innerHTML = '';
       return;
     }
     rail.innerHTML = testimonialsCache.map((item, idx)=>{
