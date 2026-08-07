@@ -291,55 +291,117 @@
   @media (prefers-reduced-motion: reduce){ .orbit-ring{filter:none;} }
 
   /* ---- las plantillas flotando en el espacio ----
-     Cada una es una web en miniatura: barra de navegador y tres bloques con la
-     paleta de su estilo. No se clonan las maquetas grandes de la seccion de
-     estilos a proposito — aquellas tienen decenas de nodos cada una y aqui solo
-     hacen falta el color y la silueta, que a este tamano es lo unico que se
-     distingue. Seis piezas de siete nodos en vez de seis de treinta.
+     Cada una es una web en miniatura de verdad: barra de navegacion con logo,
+     enlaces y boton, titular, texto, llamada a la accion e imagen. No se clonan
+     las maquetas grandes porque no hace falta — a este tamano lo que se lee es
+     la estructura y el color, y eso se consigue con quince piezas en vez de
+     treinta y con la ventaja de poder recolocarlas para que cada estilo tenga
+     su composicion propia.
 
-     Solo se mueve transform, que la tarjeta grafica resuelve sin recalcular
-     nada de la pagina. */
+     El detalle interior no cuesta nada en movimiento: cada pieza es su propia
+     capa (will-change:transform), se pinta una vez y despues solo se desplaza.
+     Lo que cuesta es medir, no dibujar. */
   .hero-minis{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
-  .mini{position:absolute;left:0;top:0;width:var(--w);aspect-ratio:16/10;border-radius:7px;
+  .mini{position:absolute;left:0;top:0;width:var(--w);aspect-ratio:16/10;border-radius:8px;
     overflow:hidden;will-change:transform;
-    box-shadow:0 8px 18px -10px rgba(0,0,0,0.75), 0 0 0 1px rgba(239,233,221,0.07);
+    box-shadow:0 10px 22px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(239,233,221,0.09);
     opacity:0;transition:opacity 1.4s ease;}
-  .js-ready .mini{opacity:0.72;}
-  .mini .bar{position:absolute;top:0;left:0;right:0;height:19%;display:flex;
-    align-items:center;gap:2px;padding-left:5%;}
-  .mini .bar i{width:2px;height:2px;border-radius:50%;background:rgba(0,0,0,0.28);}
-  .mini .a,.mini .b,.mini .c{position:absolute;border-radius:2px;}
-  .mini .a{left:7%;top:32%;width:44%;height:13%;}
-  .mini .b{left:7%;top:52%;width:30%;height:8%;}
-  .mini .c{right:7%;top:30%;width:32%;height:46%;border-radius:4px;}
+  .js-ready .mini{opacity:0.9;}
 
-  /* cada estilo con la paleta de su maqueta grande */
+  /* barra de navegacion */
+  .mini .bar{position:absolute;top:0;left:0;right:0;height:17%;display:flex;
+    align-items:center;gap:4%;padding:0 5%;}
+  .mini .lg{width:7%;aspect-ratio:1;border-radius:50%;flex-shrink:0;}
+  .mini .nv{width:9%;height:9%;border-radius:1px;opacity:0.5;}
+  .mini .nb{margin-left:auto;width:17%;height:46%;border-radius:99px;}
+
+  /* contenido */
+  .mini .h1,.mini .h2{position:absolute;height:7.5%;border-radius:1.5px;}
+  .mini .h1{left:6%;top:29%;width:42%;}
+  .mini .h2{left:6%;top:41%;width:30%;}
+  .mini .p1,.mini .p2{position:absolute;height:3.5%;border-radius:1px;opacity:0.42;}
+  .mini .p1{left:6%;top:54%;width:36%;}
+  .mini .p2{left:6%;top:61%;width:26%;}
+  .mini .cta{position:absolute;left:6%;bottom:11%;width:26%;height:11%;border-radius:99px;}
+  .mini .img{position:absolute;right:5%;top:26%;width:34%;bottom:12%;border-radius:5px;}
+  /* pieza suelta que cambia de papel segun el estilo */
+  .mini .xt{position:absolute;border-radius:3px;}
+
+  /* 01 boutique: buscador en la barra y puntos de carrusel abajo */
   .m1{background:#eceae9;} .m1 .bar{background:#fff;}
-  .m1 .a{background:#14110f;} .m1 .b{background:rgba(20,17,15,0.35);}
-  .m1 .c{background:linear-gradient(150deg,#a8896a,#4d3b2c);}
+  .m1 .lg{background:#14110f;} .m1 .nv{background:#14110f;}
+  .m1 .nb{background:#f0efee;}
+  .m1 .h1,.m1 .h2{background:#14110f;} .m1 .p1,.m1 .p2{background:#14110f;}
+  .m1 .cta{background:#211d1a;}
+  .m1 .img{background:linear-gradient(150deg,#a8896a,#7d6047 45%,#4d3b2c);}
+  .m1 .xt{right:5%;bottom:6%;width:16%;height:2.5%;background:#d4574a;border-radius:99px;}
 
-  .m2{background:#fff;} .m2 .bar{background:#f4f5fa;}
-  .m2 .a{background:#1a1470;} .m2 .b{background:#3b4de8;}
-  .m2 .c{background:linear-gradient(155deg,#c9d0e8,#5d6488);}
+  /* 02 SaaS: todo centrado y una tarjeta de dato sobre la imagen */
+  .m2{background:#fff;} .m2 .bar{background:#fff;box-shadow:inset 0 -1px 0 #eef0f7;}
+  .m2 .lg{background:#3b4de8;border-radius:2px;} .m2 .nv{background:#4a5270;}
+  .m2 .nb{background:#3b4de8;}
+  .m2 .h1{left:22%;top:28%;width:56%;background:#1a1470;}
+  .m2 .h2{left:32%;top:40%;width:36%;background:#1a1470;}
+  .m2 .p1{left:28%;top:52%;width:44%;background:#4a5270;}
+  .m2 .p2{display:none;}
+  .m2 .cta{left:38%;bottom:8%;width:24%;background:#3b4de8;}
+  .m2 .img{left:30%;right:30%;top:58%;bottom:22%;background:linear-gradient(155deg,#c9d0e8,#5d6488);}
+  .m2 .xt{left:14%;top:60%;width:18%;height:15%;background:#14161f;}
 
-  .m3{background:#fbf8f4;} .m3 .bar{background:#f2ece2;}
-  .m3 .a{background:#1b2a63;} .m3 .b{background:rgba(27,23,20,0.3);}
-  .m3 .c{background:linear-gradient(150deg,#c8b49a,#4a3a2b);}
+  /* 03 editorial: titular a la izquierda, foto grande abajo */
+  .m3{background:#fbf8f4;} .m3 .bar{background:#fbf8f4;box-shadow:inset 0 -1px 0 #ece4d8;}
+  .m3 .lg{background:#1b1714;} .m3 .nv{background:#5d554b;}
+  .m3 .nb{background:#1b1714;}
+  .m3 .h1{top:26%;width:46%;background:#1b2a63;} .m3 .h2{top:38%;width:34%;background:#1b2a63;}
+  .m3 .p1{left:58%;top:27%;width:36%;background:#5d554b;}
+  .m3 .p2{left:64%;top:34%;width:30%;background:#5d554b;}
+  .m3 .cta{display:none;}
+  .m3 .img{left:6%;right:6%;top:52%;bottom:7%;width:auto;
+    background:linear-gradient(150deg,#c8b49a,#8d7256 48%,#4a3a2b);}
+  .m3 .xt{left:6%;top:44%;width:22%;height:7%;background:#fff;border-radius:99px;
+    box-shadow:0 2px 6px -2px rgba(27,23,20,0.4);}
 
-  .m4{background:#0f1512;} .m4 .bar{background:rgba(255,255,255,0.08);}
-  .m4 .bar i{background:rgba(255,255,255,0.35);}
-  .m4 .a{background:#fff;} .m4 .b{background:#e2513c;}
-  .m4 .c{background:linear-gradient(140deg,#4a6350,#0d120f);}
+  /* 04 inmersiva: foto a sangre y ficha flotando */
+  .m4{background:#0f1512;}
+  .m4 .img{inset:0;width:auto;border-radius:0;
+    background:linear-gradient(175deg,rgba(10,16,13,0.2),rgba(6,10,8,0.9)),
+      linear-gradient(140deg,#4a6350,#2b3a30 45%,#0d120f);}
+  .m4 .bar{background:rgba(255,255,255,0.06);z-index:2;}
+  .m4 .lg{background:#e2513c;border-radius:2px;} .m4 .nv{background:#fff;}
+  .m4 .nb{background:#e2513c;}
+  .m4 .h1,.m4 .h2{background:#fff;z-index:2;}
+  .m4 .p1,.m4 .p2{background:#fff;z-index:2;}
+  .m4 .cta{background:#1a211d;z-index:2;box-shadow:0 0 0 1px rgba(255,255,255,0.25);}
+  .m4 .xt{right:5%;top:26%;width:28%;height:34%;z-index:2;
+    background:rgba(255,255,255,0.16);box-shadow:0 0 0 1px rgba(255,255,255,0.28);}
 
-  .m5{background:#4b2fd4;} .m5 .bar{background:rgba(255,255,255,0.14);}
-  .m5 .bar i{background:rgba(255,255,255,0.4);}
-  .m5 .a{background:#fff;} .m5 .b{background:rgba(255,255,255,0.5);}
-  .m5 .c{background:linear-gradient(150deg,#f0d9a8,#6541c9);}
+  /* 05 bloque de color: palabra gigante detras y numeros en fila */
+  .m5{background:#4b2fd4;}
+  .m5 .bar{background:transparent;} .m5 .lg{background:#fff;border-radius:2px;}
+  .m5 .nv{background:#fff;} .m5 .nb{background:#fff;}
+  .m5 .h1{top:44%;width:44%;background:#fff;} .m5 .h2{top:55%;width:30%;background:#fff;}
+  .m5 .p1{top:70%;width:14%;height:5%;background:#fff;opacity:0.75;}
+  .m5 .p2{left:24%;top:70%;width:14%;height:5%;background:#fff;opacity:0.75;}
+  .m5 .cta{background:#fff;}
+  .m5 .img{right:5%;top:52%;bottom:12%;width:28%;
+    background:rgba(255,255,255,0.2);box-shadow:0 0 0 1px rgba(255,255,255,0.3);}
+  .m5 .xt{left:24%;right:24%;top:20%;height:18%;border-radius:2px;
+    background:rgba(255,255,255,0.13);}
 
-  .m6{background:#0c0c0d;} .m6 .bar{background:rgba(239,233,221,0.07);}
-  .m6 .bar i{background:rgba(224,190,130,0.5);}
-  .m6 .a{background:var(--bone);} .m6 .b{background:var(--brass-2);}
-  .m6 .c{background:radial-gradient(ellipse at 40% 40%, rgba(224,190,130,0.35), #0c0c0d 70%);}
+  /* 06 cinematografica: la suya, con el aro de luz */
+  .m6{background:#0c0c0d;}
+  .m6 .img{inset:0;width:auto;border-radius:0;
+    background:radial-gradient(ellipse 55% 48% at 70% 42%, rgba(224,190,130,0.3), transparent 65%),
+      linear-gradient(160deg,#14120f,#08080a 65%);}
+  .m6 .bar{background:transparent;z-index:2;}
+  .m6 .lg{background:var(--bone);} .m6 .nv{background:var(--bone);}
+  .m6 .nb{background:var(--brass);}
+  .m6 .h1{top:46%;width:44%;background:var(--bone);z-index:2;}
+  .m6 .h2{top:58%;width:28%;background:var(--brass-2);z-index:2;}
+  .m6 .p1,.m6 .p2{display:none;}
+  .m6 .cta{background:var(--brass);z-index:2;}
+  .m6 .xt{right:12%;top:34%;width:32%;aspect-ratio:1;border-radius:50%;background:none;
+    border:1px solid rgba(224,190,130,0.55);transform:rotateX(70deg);z-index:2;}
 
   @media (prefers-reduced-motion: reduce){ .hero-minis{display:none;} }
 
@@ -1582,7 +1644,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v25</span>
+  <span class="build-tag">v26</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -2595,7 +2657,7 @@
     if(minisHost && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       const movil = window.matchMedia('(max-width: 900px)').matches;
       const cuantas = movil ? 4 : 6;
-      const ancho = movil ? 74 : Math.min(window.innerWidth * 0.105, 128);
+      const ancho = movil ? 96 : Math.min(window.innerWidth * 0.145, 196);
       let semilla = 23;
       const rnd = ()=>{ semilla = (semilla * 1103515245 + 12345) % 2147483648; return semilla / 2147483648; };
 
@@ -2603,8 +2665,12 @@
         const el = document.createElement('div');
         el.className = 'mini m' + ((i % 6) + 1);
         el.style.setProperty('--w', ancho + 'px');
-        el.innerHTML = '<span class="bar"><i></i><i></i><i></i></span>' +
-                       '<span class="a"></span><span class="b"></span><span class="c"></span>';
+        el.innerHTML =
+          '<span class="bar"><i class="lg"></i><i class="nv"></i><i class="nv"></i>' +
+            '<i class="nv"></i><i class="nb"></i></span>' +
+          '<span class="img"></span><span class="xt"></span>' +
+          '<span class="h1"></span><span class="h2"></span>' +
+          '<span class="p1"></span><span class="p2"></span><span class="cta"></span>';
         el.style.transitionDelay = (i * 160) + 'ms';
         minisHost.appendChild(el);
         minis.push({
