@@ -198,6 +198,14 @@ iPhone/Mac a MP4 —el navegador no abre QuickTime— y captura un fotograma de
 portada. Esa portada es lo que se ve mientras el vídeo carga, o si no llega a
 cargar nunca.
 
+**Un detalle que conviene no "arreglar":** la portada se pinta como una imagen
+aparte, colocada debajo del vídeo, y *no* con el atributo `poster` del `<video>`.
+Parece un rodeo innecesario y no lo es: el navegador descarta el `poster` en
+cuanto el vídeo arranca o salta, y el recorrido por scroll hace justo eso. Con
+el atributo, el marco se quedaba negro en el móvil. Con la imagen separada, el
+vídeo puede reproducirse y saltar mientras debajo sigue estando la web real del
+cliente. Si alguien lo simplifica a `poster="..."`, vuelven los marcos negros.
+
 ---
 
 ## 8. Base de datos (Supabase)

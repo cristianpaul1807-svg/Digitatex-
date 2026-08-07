@@ -128,7 +128,10 @@
      real. Cada capa envuelve sobre si misma, asi nunca se termina.
      Esta presente en toda la pagina, debajo de todo el contenido.
      ============================================================ */
-  #depth-field{position:fixed;inset:0;z-index:0;pointer-events:none;background:#050506;}
+  /* overflow:hidden no es decoracion: la foto de dentro se monta un 4% mas
+     ancha por cada lado para poder moverla con el scroll, y sin recortarla
+     asomaba por la derecha y dejaba la pagina con scroll horizontal en tablet. */
+  #depth-field{position:fixed;inset:0;z-index:0;pointer-events:none;background:#050506;overflow:hidden;}
   /* Textura real de fondo. Es lo que da la profundidad que ningun degradado
      alcanzaba: polvo, grano y densidad irregular. Se monta mas alta que la
      pantalla para poder desplazarla con el scroll sin descubrir los bordes. */
@@ -582,7 +585,13 @@
   /* 16/9: relacion nativa de una grabacion de pantalla, entra sin franjas */
   .monitor-view{position:relative;aspect-ratio:16/9;background:linear-gradient(150deg,#14202b 0%,#0c0c0d 65%);overflow:hidden;}
   .monitor-view video,.monitor-view img{width:100%;height:100%;object-fit:cover;display:block;}
-  .monitor-glare{position:absolute;inset:0;pointer-events:none;
+  /* Tres capas dentro del marco, de abajo a arriba: la imagen de portada, el
+     video encima de ella, y el reflejo del cristal por encima de los dos. El
+     reflejo necesita su z-index escrito: al dar posicion al video, sin el se
+     quedaria por debajo y el monitor perderia el brillo. */
+  .case-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1;}
+  .monitor-view video,.own-view video{position:relative;z-index:2;transition:opacity .5s ease;}
+  .monitor-glare{position:absolute;inset:0;pointer-events:none;z-index:3;
     background:linear-gradient(115deg, rgba(239,233,221,0.09) 0%, transparent 34%, transparent 66%, rgba(239,233,221,0.04) 100%);}
   .monitor-stand{width:132px;height:12px;margin:0 auto;background:linear-gradient(180deg,#161618,#0e0e0f);border-radius:0 0 5px 5px;transition:background .5s;}
   .monitor-base{width:210px;height:9px;margin:0 auto;background:linear-gradient(180deg,#131315,#0b0b0c);
@@ -639,6 +648,12 @@
      ABOUT
      ============================================================ */
   #about{padding-top:16vh;padding-bottom:14vh;}
+  /* overflow-x:clip, no hidden: clip recorta sin convertir la caja en zona de
+     scroll, asi el recuadro del presupuesto de mas abajo sigue quedandose
+     pegado al bajar. Hace falta porque las entradas laterales empiezan
+     desplazadas 64px y en tablet eso asomaba por la derecha mientras duraba la
+     animacion, con su barra de scroll horizontal incluida. */
+  .about-grid,.quote-grid{overflow-x:clip;}
   .about-grid{display:grid;grid-template-columns:0.85fr 1.4fr;gap:60px;}
   @media (max-width:860px){ .about-grid{grid-template-columns:1fr;gap:40px;} }
   .about-stat{margin-top:46px;display:flex;gap:40px;flex-wrap:wrap;}
@@ -1644,7 +1659,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v27</span>
+  <span class="build-tag">v28</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -3211,30 +3226,56 @@
     if(!video || !mock) return;
 
 
-    /* El poster es una imagen normal: se puede ensenar de inmediato, sin
-       esperar a que llegue un solo byte de video. Eso es lo que hace que el
-       marco muestre la web del cliente desde el primer momento, en cualquier
-       telefono y con cualquier conexion. */
-    let montado = false;
-    let reproduciendo = false;
+    /* El poster deja de ser el atributo del video y pasa a ser una imagen
+       aparte, encima del marco y debajo del video.
+
+       El atributo poster tiene una regla incomoda: el navegador lo tira en
+       cuanto el video empieza o salta. Eso obligaba a elegir entre dos males —
+       o no se reproducia nunca (y entonces el video no se descargaba, porque
+       en iOS es justamente play() lo que dispara la descarga), o se reproducia
+       y el marco se quedaba negro mientras no llegaba imagen.
+
+       Con la imagen separada no hay que elegir: el video puede reproducirse,
+       saltar y hacer lo que necesite, y si no llega a decodificar nada, debajo
+       sigue estando la web real del cliente. */
+    let still = null;
+    if(posterSrc){
+      still = document.createElement('img');
+      still.className = 'case-still';
+      still.src = posterSrc;
+      still.alt = '';
+      still.setAttribute('aria-hidden', 'true');
+      video.parentNode.insertBefore(still, video);
+      mock.style.display = 'none';
+      // el video se queda montado pero transparente: asi iOS lo considera en
+      // pantalla y se digna a descargarlo, cosa que con display:none no hace
+      video.style.display = 'block';
+      video.style.opacity = '0';
+    }
+
+    /* Un solo sitio decide que el video ya tiene imagen. Ensenarlo y apuntarlo
+       al recorrido son la misma decision, asi que van juntos: si estuvieran en
+       dos manejadores distintos podria pasar que se viera pero no se moviera
+       con el scroll, que es justo lo que ocurria en iOS cuando loadeddata no
+       llegaba nunca. */
+    let conImagen = false;
     function mostrarVideo(){
-      if(montado) return;
-      montado = true;
+      if(conImagen) return;
+      conImagen = true;
+      if(!scrubbables.some(x => x.video === video)) scrubbables.push({ video });
       mock.style.display = 'none';
       video.style.display = 'block';
+      video.style.opacity = '1';
       document.dispatchEvent(new CustomEvent('digitatex:media-ready'));
     }
 
-    /* No se llama a play() hasta que haya fotogramas de verdad, y ese detalle
-       era todo el problema: el navegador solo pinta el poster mientras el video
-       no ha empezado. Al hacer play() en cuanto se conocia la duracion — sin un
-       solo fotograma descargado — el poster se descartaba y quedaba un
-       rectangulo negro. Se veia igual en wifi que en datos, porque no era la
-       red: era esta linea. */
-    function empezar(){
-      if(reproduciendo) return;
-      reproduciendo = true;
-      if(!scrubbables.some(x => x.video === video)) scrubbables.push({ video });
+    /* Ojo con el nombre: arriba del todo hay otra funcion llamada arrancar(),
+       la red de seguridad del arranque. Esta es otra cosa y va aparte para no
+       taparla sin querer. */
+    let arrancado = false;
+    function arrancarVideo(){
+      if(arrancado) return;
+      arrancado = true;
       // Safari pone su boton de play sobre cualquier video pausado, sin importar
       // como llego ahi. Igual que en el hero: se deja reproduciendo a velocidad 0
       // y el scroll mueve el frame por currentTime. Nunca .pause().
@@ -3244,42 +3285,27 @@
       else settle();
     }
 
-    /* Ahora si: con las variables ya declaradas. Llamar a mostrarVideo() antes
-       de esta linea reventaba con "Cannot access 'montado' before
-       initialization" y se llevaba por delante el resto del montaje. */
-    if(posterSrc){
-      video.poster = posterSrc;
-      mostrarVideo();
-    }
+    // el camino normal: el navegador avisa de que ya hay fotogramas
+    ['loadeddata','canplay'].forEach(ev=> video.addEventListener(ev, mostrarVideo));
+    /* Sin imagen de portada el relleno es la maqueta dibujada, y conviene
+       dejarla puesta hasta que haya un fotograma de verdad: cambiarla por un
+       video que todavia no ha decodificado nada es cambiarla por un rectangulo
+       negro. Por eso aqui se mira readyState en vez de fiarse del evento.
 
-    /* Aqui estaba el fallo que dejaba el marco negro en el telefono.
-
-       Se apuntaba el video al recorrido en cuanto se sabia su duracion, y el
-       recorrido escribe currentTime en cuanto el visitante hace scroll. Escribir
-       currentTime es pedir un salto, y en cuanto un video salta el navegador
-       descarta el poster. Con fotogramas eso no importa — se ve el fotograma
-       nuevo — pero en un movil que no ha descargado ninguno, lo que queda es
-       negro. Por eso se ponia negro justo al bajar, y no antes.
-
-       Ahora solo se apunta cuando hay imagen, en empezar(). Si el telefono no
-       llega a bajar un fotograma, nadie le pide saltar y el poster se queda. */
-    video.addEventListener('loadedmetadata', ()=>{
-      if(!posterSrc) mostrarVideo();
-    });
-    // Con fotogramas ya disponibles, el video toma el relevo del poster.
-    ['loadeddata','canplay'].forEach(ev=>
-      video.addEventListener(ev, ()=>{ empezar(); mostrarVideo(); }));
+       timeupdate esta en la lista porque en iOS loadeddata a veces no llega
+       nunca, y en cambio timeupdate si dispara en cuanto el video corre. */
+    ['loadedmetadata','timeupdate','progress'].forEach(ev=>
+      video.addEventListener(ev, ()=>{ if(video.readyState >= 2) mostrarVideo(); }));
     video.addEventListener('pause', ()=>{
-      if(!reproduciendo) return;
+      if(!arrancado) return;
       const p = video.play();
       if(p && typeof p.then === 'function') p.then(()=>{ video.playbackRate = 0; }).catch(()=>{});
     });
-    // sin video utilizable se queda la maqueta, que nunca deja el marco vacio
-    // Si el video falla pero hay poster, el poster se queda: sigue siendo la
-    // web real del cliente. Sin poster se vuelve a la maqueta de relleno.
+    // Si el video falla y hay imagen, la imagen se queda: sigue siendo la web
+    // real del cliente. Sin imagen se vuelve a la maqueta de relleno.
     video.addEventListener('error', ()=>{
-      if(posterSrc) return;
-      montado = false;
+      if(still){ video.style.opacity = '0'; conImagen = false; return; }
+      conImagen = false;
       video.style.display = 'none';
       mock.style.display = '';
     });
@@ -3294,6 +3320,9 @@
       io.disconnect();
       video.preload = 'auto';
       video.src = localSrc;
+      // En iOS es play() lo que hace que el video empiece a bajar de verdad;
+      // con solo poner el src puede quedarse esperando indefinidamente.
+      arrancarVideo();
       if(!overrideSrc) return;
       fetch(overrideSrc, { method:'HEAD' })
         .then(res=>{
@@ -3323,6 +3352,9 @@
     for(let i = 0; i < scrubbables.length; i++){
       const { video } = scrubbables[i];
       if(!video.duration || !isFinite(video.duration)) continue;
+      // readyState < 2 = no hay fotograma actual. Un salto ahora no pinta nada
+      // y solo gasta red y bateria.
+      if(video.readyState < 2) continue;
       // se queda justo antes del final: al tocar la duracion exacta el
       // atributo loop lo devolveria a 0 y el video daria un salto
       const target = Math.min(p * video.duration, video.duration - 0.06);
@@ -3359,8 +3391,8 @@
       for(let i = 0; i < scrubbables.length; i++){
         const { video } = scrubbables[i];
         if(!video.duration || !isFinite(video.duration)) continue;
-        // readyState < 2 = no hay fotograma actual. Pedirle un salto ahora
-        // tiraria el poster y dejaria el hueco negro.
+        // readyState < 2 = no hay fotograma actual. Un salto ahora no pinta nada
+        // y solo gasta red y bateria.
         if(video.readyState < 2) continue;
         const row = video.closest('.case-row') || work;
         const rp = progressOf(row);
