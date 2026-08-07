@@ -290,6 +290,59 @@
   }
   @media (prefers-reduced-motion: reduce){ .orbit-ring{filter:none;} }
 
+  /* ---- las plantillas flotando en el espacio ----
+     Cada una es una web en miniatura: barra de navegador y tres bloques con la
+     paleta de su estilo. No se clonan las maquetas grandes de la seccion de
+     estilos a proposito — aquellas tienen decenas de nodos cada una y aqui solo
+     hacen falta el color y la silueta, que a este tamano es lo unico que se
+     distingue. Seis piezas de siete nodos en vez de seis de treinta.
+
+     Solo se mueve transform, que la tarjeta grafica resuelve sin recalcular
+     nada de la pagina. */
+  .hero-minis{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .mini{position:absolute;left:0;top:0;width:var(--w);aspect-ratio:16/10;border-radius:7px;
+    overflow:hidden;will-change:transform;
+    box-shadow:0 8px 18px -10px rgba(0,0,0,0.75), 0 0 0 1px rgba(239,233,221,0.07);
+    opacity:0;transition:opacity 1.4s ease;}
+  .js-ready .mini{opacity:0.72;}
+  .mini .bar{position:absolute;top:0;left:0;right:0;height:19%;display:flex;
+    align-items:center;gap:2px;padding-left:5%;}
+  .mini .bar i{width:2px;height:2px;border-radius:50%;background:rgba(0,0,0,0.28);}
+  .mini .a,.mini .b,.mini .c{position:absolute;border-radius:2px;}
+  .mini .a{left:7%;top:32%;width:44%;height:13%;}
+  .mini .b{left:7%;top:52%;width:30%;height:8%;}
+  .mini .c{right:7%;top:30%;width:32%;height:46%;border-radius:4px;}
+
+  /* cada estilo con la paleta de su maqueta grande */
+  .m1{background:#eceae9;} .m1 .bar{background:#fff;}
+  .m1 .a{background:#14110f;} .m1 .b{background:rgba(20,17,15,0.35);}
+  .m1 .c{background:linear-gradient(150deg,#a8896a,#4d3b2c);}
+
+  .m2{background:#fff;} .m2 .bar{background:#f4f5fa;}
+  .m2 .a{background:#1a1470;} .m2 .b{background:#3b4de8;}
+  .m2 .c{background:linear-gradient(155deg,#c9d0e8,#5d6488);}
+
+  .m3{background:#fbf8f4;} .m3 .bar{background:#f2ece2;}
+  .m3 .a{background:#1b2a63;} .m3 .b{background:rgba(27,23,20,0.3);}
+  .m3 .c{background:linear-gradient(150deg,#c8b49a,#4a3a2b);}
+
+  .m4{background:#0f1512;} .m4 .bar{background:rgba(255,255,255,0.08);}
+  .m4 .bar i{background:rgba(255,255,255,0.35);}
+  .m4 .a{background:#fff;} .m4 .b{background:#e2513c;}
+  .m4 .c{background:linear-gradient(140deg,#4a6350,#0d120f);}
+
+  .m5{background:#4b2fd4;} .m5 .bar{background:rgba(255,255,255,0.14);}
+  .m5 .bar i{background:rgba(255,255,255,0.4);}
+  .m5 .a{background:#fff;} .m5 .b{background:rgba(255,255,255,0.5);}
+  .m5 .c{background:linear-gradient(150deg,#f0d9a8,#6541c9);}
+
+  .m6{background:#0c0c0d;} .m6 .bar{background:rgba(239,233,221,0.07);}
+  .m6 .bar i{background:rgba(224,190,130,0.5);}
+  .m6 .a{background:var(--bone);} .m6 .b{background:var(--brass-2);}
+  .m6 .c{background:radial-gradient(ellipse at 40% 40%, rgba(224,190,130,0.35), #0c0c0d 70%);}
+
+  @media (prefers-reduced-motion: reduce){ .hero-minis{display:none;} }
+
   /* ---- piedras orbitando el logo ----
      Cada una vive en un contenedor que gira: el giro del contenedor la lleva
      por la orbita, y un contragiro sobre la piedra evita que ademas de
@@ -1108,6 +1161,9 @@
       <span class="orbit-ring ring-top"></span>
       <span class="orbit-ring ring-bottom"></span>
     </div>
+    <!-- Las seis plantillas flotando en el espacio. Van por detras de la D
+         (z-index 1 contra el 2 del lienzo) y rebotan contra los bordes. -->
+    <div class="hero-minis" id="hero-minis" aria-hidden="true"></div>
     <div class="hero-rocks" id="hero-rocks" aria-hidden="true"></div>
     <span class="sec-counter">01 — <span data-i18n="sec_hero">Studio</span></span>
     <div class="wrap hero-inner chapter-content">
@@ -1526,7 +1582,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v24</span>
+  <span class="build-tag">v25</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -2394,6 +2450,11 @@
      ============================================================ */
   function initScrubChapters(){
     const heroLogo = initHeroLogo();
+    /* Estas dos viven aca arriba a proposito: onScrollScrub las lee y se llama
+       antes de llegar al bloque de las plantillas. Declararlas ahi abajo tiraba
+       todo el hero con "Cannot access 'ultimoY' before initialization". */
+    let empujon = 0;
+    let ultimoY = window.scrollY || 0;
     const chapters = Array.from(document.querySelectorAll('.scrub-wrap')).map((wrap) => ({
       wrap,
       content:    wrap.querySelector('.chapter-content'),
@@ -2440,6 +2501,10 @@
     let ticking = false;
     let onChaptersUpdated = null;
     function onScrollScrub(){
+      const y = window.scrollY || 0;
+      // el empujon es proporcional a lo que se movio el dedo, con tope
+      empujon = Math.max(Math.min((y - ultimoY) * 0.55, 70), -70);
+      ultimoY = y;
       if(!ticking){
         requestAnimationFrame(() => {
           chapters.forEach(updateChapter);
@@ -2516,12 +2581,102 @@
        separa en profundidad en vez de leerse como dos circulos planos.
        Llevan bucle propio porque tienen que seguir girando aunque el visitante
        no scrollee; solo corre mientras el hero se ve y la pestaña esta activa. */
+    /* ---- las plantillas flotando ----
+       Fisica de andar por casa: posicion, velocidad y rebote contra los bordes.
+       El scroll les mete un empujon — al bajar la pagina salen disparadas y
+       despues se van calmando solas.
+
+       El paso de tiempo se mide de verdad y se limita a 50 ms: si la pestana se
+       queda en segundo plano, el navegador deja de dar cuadros y al volver
+       llegaria un salto enorme que las mandaria fuera de la pantalla. */
+    const minisHost = document.getElementById('hero-minis');
+    const minis = [];
+
+    if(minisHost && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const movil = window.matchMedia('(max-width: 900px)').matches;
+      const cuantas = movil ? 4 : 6;
+      const ancho = movil ? 74 : Math.min(window.innerWidth * 0.105, 128);
+      let semilla = 23;
+      const rnd = ()=>{ semilla = (semilla * 1103515245 + 12345) % 2147483648; return semilla / 2147483648; };
+
+      for(let i = 0; i < cuantas; i++){
+        const el = document.createElement('div');
+        el.className = 'mini m' + ((i % 6) + 1);
+        el.style.setProperty('--w', ancho + 'px');
+        el.innerHTML = '<span class="bar"><i></i><i></i><i></i></span>' +
+                       '<span class="a"></span><span class="b"></span><span class="c"></span>';
+        el.style.transitionDelay = (i * 160) + 'ms';
+        minisHost.appendChild(el);
+        minis.push({
+          el,
+          w: ancho, h: ancho * 0.625,
+          x: rnd() * 0.86, y: rnd() * 0.86,   // proporcion de la caja, no pixeles
+          vx: (rnd() - 0.5) * 26,
+          vy: (rnd() - 0.5) * 26,
+          giro: (rnd() - 0.5) * 16,
+          vgiro: (rnd() - 0.5) * 5
+        });
+      }
+    }
+
+    /* El tamano de la caja se mide una vez y se guarda. Leerlo en cada cuadro
+       obliga al navegador a recalcular la maquetacion sesenta veces por segundo
+       para saber algo que no cambia hasta que se gira el telefono: costaba 8 fps
+       en movil. */
+    let cajaW = 0, cajaH = 0;
+    function medirCaja(){
+      if(!minisHost) return;
+      cajaW = minisHost.offsetWidth;
+      cajaH = minisHost.offsetHeight;
+    }
+    window.addEventListener('resize', medirCaja);
+
+    function moverMinis(dt){
+      if(!minis.length) return;
+      if(!cajaW || !cajaH) medirCaja();
+      const W = cajaW, H = cajaH;
+      if(W < 10 || H < 10) return;
+
+      for(let i = 0; i < minis.length; i++){
+        const m = minis[i];
+        // el empujon del scroll se reparte: casi todo hacia abajo, algo de lado
+        if(empujon){
+          m.vy += empujon * (0.5 + (i % 3) * 0.22);
+          m.vx += empujon * ((i % 2 ? 0.16 : -0.16));
+          m.vgiro += empujon * 0.04;
+        }
+        m.vx *= 0.992; m.vy *= 0.992; m.vgiro *= 0.99;
+
+        // nunca se quedan del todo quietas: el hero se veria muerto
+        const vel = Math.hypot(m.vx, m.vy);
+        if(vel < 7){ const k = 7 / (vel || 1); m.vx *= k; m.vy *= k; }
+        if(vel > 260){ const k = 260 / vel; m.vx *= k; m.vy *= k; }
+
+        let px = m.x * W + m.vx * dt;
+        let py = m.y * H + m.vy * dt;
+
+        // rebote contra las esquinas de la pantalla, perdiendo algo de energia
+        if(px < 0){ px = 0; m.vx = Math.abs(m.vx) * 0.86; m.vgiro = -m.vgiro; }
+        if(py < 0){ py = 0; m.vy = Math.abs(m.vy) * 0.86; m.vgiro = -m.vgiro; }
+        if(px > W - m.w){ px = W - m.w; m.vx = -Math.abs(m.vx) * 0.86; m.vgiro = -m.vgiro; }
+        if(py > H - m.h){ py = H - m.h; m.vy = -Math.abs(m.vy) * 0.86; m.vgiro = -m.vgiro; }
+
+        m.x = px / W; m.y = py / H;
+        m.giro += m.vgiro * dt;
+        m.el.style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0) rotate(' + m.giro.toFixed(2) + 'deg)';
+      }
+      empujon = 0;
+    }
+
     const ringed = chapters.filter(c => c.ringTop || c.ringBottom);
     if(ringed.length){
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let spinning = false;
+      let tPrevio = 0;
       function spin(time){
         if(!spinning) return;
+        const dt = tPrevio ? Math.min((time - tPrevio) / 1000, 0.05) : 0.016;
+        tPrevio = time;
         const drift = reduce ? 0 : time * 0.004;
         let anyVisible = false;
         for(const ch of ringed){
@@ -2539,11 +2694,12 @@
         }
         if(!anyVisible){ spinning = false; return; }
         updateRocks(ringed[0] ? (ringed[0].progress || 0) : 0, time);
+        moverMinis(dt);
         requestAnimationFrame(spin);
       }
       function maybeSpin(){
         const should = !document.hidden && ringed.some(c => c.visible);
-        if(should && !spinning){ spinning = true; requestAnimationFrame(spin); }
+        if(should && !spinning){ spinning = true; tPrevio = 0; requestAnimationFrame(spin); }
       }
       onChaptersUpdated = maybeSpin;
       document.addEventListener('visibilitychange', maybeSpin);
