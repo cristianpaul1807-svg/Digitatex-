@@ -1644,7 +1644,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v26</span>
+  <span class="build-tag">v27</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -3252,9 +3252,18 @@
       mostrarVideo();
     }
 
-    // Con la duracion ya se puede recorrer, aunque todavia no se reproduzca.
+    /* Aqui estaba el fallo que dejaba el marco negro en el telefono.
+
+       Se apuntaba el video al recorrido en cuanto se sabia su duracion, y el
+       recorrido escribe currentTime en cuanto el visitante hace scroll. Escribir
+       currentTime es pedir un salto, y en cuanto un video salta el navegador
+       descarta el poster. Con fotogramas eso no importa — se ve el fotograma
+       nuevo — pero en un movil que no ha descargado ninguno, lo que queda es
+       negro. Por eso se ponia negro justo al bajar, y no antes.
+
+       Ahora solo se apunta cuando hay imagen, en empezar(). Si el telefono no
+       llega a bajar un fotograma, nadie le pide saltar y el poster se queda. */
     video.addEventListener('loadedmetadata', ()=>{
-      if(!scrubbables.some(x => x.video === video)) scrubbables.push({ video });
       if(!posterSrc) mostrarVideo();
     });
     // Con fotogramas ya disponibles, el video toma el relevo del poster.
@@ -3350,6 +3359,9 @@
       for(let i = 0; i < scrubbables.length; i++){
         const { video } = scrubbables[i];
         if(!video.duration || !isFinite(video.duration)) continue;
+        // readyState < 2 = no hay fotograma actual. Pedirle un salto ahora
+        // tiraria el poster y dejaria el hueco negro.
+        if(video.readyState < 2) continue;
         const row = video.closest('.case-row') || work;
         const rp = progressOf(row);
         // se queda justo antes del final: tocar la duracion exacta hace que
