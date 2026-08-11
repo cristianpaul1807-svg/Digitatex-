@@ -8,6 +8,10 @@ COPY nginx.conf /etc/nginx/conf.d/digitatex.conf
 
 COPY index.html 404.html robots.txt sitemap.xml /usr/share/nginx/html/
 COPY assets/ /usr/share/nginx/html/assets/
+# El hub de enlaces de Instagram. Va en su propia carpeta para que la direccion
+# sea /links: nginx sirve el index.html de dentro. Si esta linea falta, la
+# pagina existe en el repositorio y da 404 en produccion.
+COPY links/ /usr/share/nginx/html/links/
 
 EXPOSE 80
 

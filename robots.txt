@@ -4,4 +4,9 @@ Allow: /
 # El SQL y las herramientas internas no tienen por que aparecer en Google.
 Disallow: /supabase-setup.sql
 
+# El hub de enlaces es el destino de la biografia de Instagram, no contenido
+# que deba competir en Google: indexarlo pondria una lista de enlaces por
+# encima de la web real. La pagina lleva ademas su propia etiqueta noindex.
+Disallow: /links
+
 Sitemap: https://digitatex.com/sitemap.xml
