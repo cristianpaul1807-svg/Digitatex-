@@ -160,6 +160,10 @@
   }
   .icono img{width:100%;height:100%;object-fit:cover;display:block;}
   .icono svg{width:24px;height:24px;display:block;}
+  /* Un logo con fondo claro llena la casilla entera y el borde oscuro de arriba
+     le queda como un cerco sucio. Con el borde claro la casilla se lee como el
+     icono de una app, que es justo lo que es. */
+  .icono[data-fondo="claro"]{border-color:rgba(255,255,255,0.5);}
 
   .texto{flex:1;min-width:0;}
   /* display:block no es opcional: son <span>, y sin esto el titulo y el
@@ -277,13 +281,13 @@
       titulo: 'DIGITATEX — Agencia Web 3D Profesional',
       sub:    'Scroll cinematográfico + base de datos + IA',
       url:    'https://digitatex.com',
-      icono:  { texto: 'DG' }
+      icono:  { img: '/assets/logo-digitatex.png' }
     },
     {
       titulo: 'Trimm.online — Software SAAS Belleza / Barberías',
       sub:    'Reservas, clientes y pagos automatizados',
       url:    'https://trimm.online',
-      icono:  { texto: 'TR' }
+      icono:  { img: '/assets/logo-trimm.png', fondo: 'claro' }
     },
     {
       titulo: 'Reserva tu auditoría gratis',
@@ -347,7 +351,9 @@
 
     trozos.push(
       abre +
-        '<span class="icono">' + pintarIcono(e.icono) + '</span>' +
+        '<span class="icono"' +
+          (e.icono && e.icono.fondo === 'claro' ? ' data-fondo="claro"' : '') +
+        '>' + pintarIcono(e.icono) + '</span>' +
         '<span class="texto">' +
           '<span class="t">' + esc(e.titulo) + '</span>' +
           (e.sub ? '<span class="s">' + esc(e.sub) + '</span>' : '') +
