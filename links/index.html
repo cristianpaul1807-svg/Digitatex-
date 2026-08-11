@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Esta pagina no se indexa. Es un destino para la biografia de Instagram, no
+     contenido que deba competir en Google con la web: si Google la indexara,
+     acabaria posicionando una lista de enlaces por encima del sitio real. La
+     etiqueta de aqui y la regla de robots.txt hacen lo mismo por dos vias. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Christian Paul · Digitatex</title>
+<meta name="description" content="Enlaces oficiales de Christian Paul — Digitatex y Trimm.online.">
+
+<meta property="og:title" content="Christian Paul · Digitatex">
+<meta property="og:description" content="Agencia web premium y software para negocios de belleza.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://digitatex.com/links/">
+<meta property="og:image" content="https://digitatex.com/assets/og-card.jpg">
+<link rel="canonical" href="https://digitatex.com/links/">
+<link rel="icon" href="/assets/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --fondo:#080808;
+    --hueso:#efe9dd;
+    --hueso-dim:#c9c2b2;
+    --piedra:#a8a294;
+    --laton:#b9924f;
+    --laton-2:#e0be82;
+    --linea:rgba(239,233,221,0.12);
+    --linea-fuerte:rgba(239,233,221,0.2);
+    --tarjeta:rgba(255,255,255,0.035);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--fondo);
+    color:var(--hueso);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;                 /* svh y no vh: en iOS la barra del navegador
+                                          se traga 100vh y deja un hueco al final */
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+  }
+
+  /* El resplandor del fondo va en un pseudo-elemento fijo, no en el body: asi no
+     se desplaza con el scroll ni obliga a repintar la pagina entera. */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(680px 480px at 50% -8%,  rgba(224,190,130,0.10), transparent 62%),
+      radial-gradient(520px 420px at 50% 108%, rgba(185,146,79,0.07),  transparent 66%);
+    z-index:0;
+  }
+
+  .envoltura{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:440px;
+    margin:0 auto;
+    padding:56px 20px calc(40px + env(safe-area-inset-bottom));
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ---- cabecera ---- */
+  .perfil{text-align:center;margin-bottom:34px;}
+
+  .retrato{
+    width:110px;height:110px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    position:relative;
+    background:linear-gradient(150deg,#1a1a1d,#0e0e10);
+    border:2px solid rgba(255,255,255,0.9);
+    box-shadow:0 0 0 6px rgba(255,255,255,0.04), 0 16px 46px -14px rgba(224,190,130,0.45);
+    overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .retrato img{width:100%;height:100%;object-fit:cover;display:block;}
+  /* Iniciales de reserva: se ven mientras no haya foto, y desaparecen solas en
+     cuanto se deja una en assets/. Asi la pagina nunca sale con un hueco roto. */
+  .retrato .iniciales{
+    font-family:'Fraunces',Georgia,serif;
+    font-size:38px;letter-spacing:0.02em;color:var(--laton-2);
+  }
+
+  .nombre{
+    font-family:'Fraunces',Georgia,serif;
+    font-size:30px;font-weight:400;letter-spacing:-0.01em;margin-bottom:8px;
+  }
+  .cargo{
+    font-size:14.5px;line-height:1.5;color:var(--hueso-dim);
+    max-width:330px;margin:0 auto 16px;
+  }
+  .cargo b{color:var(--hueso);font-weight:600;}
+
+  .insignia{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--laton-2);
+    border:1px solid rgba(224,190,130,0.32);
+    background:rgba(224,190,130,0.07);
+    padding:8px 16px;border-radius:999px;
+  }
+  .insignia s{
+    width:6px;height:6px;border-radius:50%;background:var(--laton-2);
+    display:block;text-decoration:none;
+    box-shadow:0 0 10px 1px rgba(224,190,130,0.8);
+  }
+
+  /* ---- enlaces ---- */
+  .lista{display:flex;flex-direction:column;gap:13px;}
+
+  .enlace{
+    display:flex;align-items:center;gap:15px;
+    padding:17px 18px;
+    background:var(--tarjeta);
+    border:1px solid var(--linea);
+    border-radius:16px;
+    text-decoration:none;color:inherit;
+    -webkit-tap-highlight-color:transparent;
+    transform-style:preserve-3d;
+    will-change:transform;
+    transition:transform .3s cubic-bezier(.22,1,.36,1),
+               border-color .3s ease, background .3s ease, box-shadow .3s ease;
+  }
+  /* El realce se aplica con una clase, no solo con :hover, porque en el telefono
+     no hay hover: el mismo efecto entra al tocar. */
+  .enlace.activo{
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(224,190,130,0.42);
+    box-shadow:0 18px 40px -20px rgba(0,0,0,0.9), 0 0 0 1px rgba(224,190,130,0.12);
+  }
+  .enlace:focus-visible{outline:2px solid var(--laton-2);outline-offset:3px;}
+
+  .icono{
+    width:46px;height:46px;flex-shrink:0;
+    border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,#17171a,#0d0d0f);
+    border:1px solid var(--linea-fuerte);
+    font-family:'Fraunces',Georgia,serif;
+    font-size:16px;font-weight:600;letter-spacing:0.03em;
+    color:var(--laton-2);
+    overflow:hidden;
+  }
+  .icono img{width:100%;height:100%;object-fit:cover;display:block;}
+  .icono svg{width:24px;height:24px;display:block;}
+
+  .texto{flex:1;min-width:0;}
+  /* display:block no es opcional: son <span>, y sin esto el titulo y el
+     subtitulo se pegan en la misma linea corrida. */
+  .texto .t{
+    display:block;
+    font-size:15px;font-weight:600;line-height:1.3;margin-bottom:4px;
+    /* sin truncar: en movil un nombre largo debe partirse, no cortarse */
+    overflow-wrap:anywhere;
+  }
+  .texto .s{display:block;font-size:12.5px;line-height:1.42;color:var(--piedra);overflow-wrap:anywhere;}
+
+  .flecha{
+    flex-shrink:0;width:18px;height:18px;color:var(--piedra);
+    transition:transform .3s cubic-bezier(.22,1,.36,1), color .3s ease;
+  }
+  .enlace.activo .flecha{transform:translateX(3px);color:var(--laton-2);}
+
+  /* variante verde para WhatsApp */
+  .enlace[data-tono="whatsapp"] .icono{
+    background:linear-gradient(150deg,#25d366,#1da851);
+    border-color:rgba(255,255,255,0.25);
+  }
+  .enlace[data-tono="whatsapp"] .icono svg{fill:#fff;}
+  .enlace[data-tono="whatsapp"].activo{border-color:rgba(37,211,102,0.5);}
+
+  /* placeholders: presentes pero claramente inactivos */
+  .enlace.proximamente{
+    opacity:0.38;
+    cursor:default;
+    pointer-events:none;
+  }
+  .etiqueta{
+    font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--piedra);border:1px solid var(--linea);
+    padding:4px 9px;border-radius:999px;flex-shrink:0;
+  }
+
+  /* ---- pie ---- */
+  .pie{
+    margin-top:auto;padding-top:38px;text-align:center;
+    font-size:11.5px;letter-spacing:0.05em;color:#6f6b63;
+  }
+  .pie a{color:var(--piedra);text-decoration:none;}
+  .pie a:hover{color:var(--laton-2);}
+
+  /* ---- entrada ---- */
+  .sube{opacity:0;transform:translateY(16px);}
+  .sube.dentro{
+    opacity:1;transform:none;
+    transition:opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .sube,.sube.dentro{opacity:1;transform:none;transition:none;}
+    .enlace{transition:border-color .2s ease, background .2s ease;}
+  }
+
+  /* pantallas muy estrechas */
+  @media (max-width:340px){
+    .envoltura{padding:44px 14px 32px;}
+    .icono{width:42px;height:42px;}
+    .texto .t{font-size:14px;}
+    .nombre{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<main class="envoltura">
+
+  <header class="perfil">
+    <div class="retrato sube" id="retrato">
+      <span class="iniciales" id="iniciales">CP</span>
+    </div>
+    <h1 class="nombre sube">Christian Paul</h1>
+    <p class="cargo sube">Founder <b>@digitatex_</b> &nbsp;|&nbsp; Creador de <b>Trimm.online</b></p>
+    <span class="insignia sube"><s></s>Webs 3D que convierten</span>
+  </header>
+
+  <nav class="lista" id="lista" aria-label="Enlaces"></nav>
+
+  <footer class="pie sube">
+    <a href="https://digitatex.com">digitatex.com</a> · © <span id="anio">2026</span> Digitatex
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ==========================================================================
+     LOS ENLACES SE EDITAN AQUI Y EN NINGUN OTRO SITIO
+
+     Para anadir uno nuevo, copia un bloque y cambialo. El orden de la lista es
+     el orden en que salen en la pagina.
+
+       titulo      texto principal
+       sub         linea de apoyo (opcional)
+       url         a donde lleva
+       icono       tres formas de ponerlo:
+                     { texto:'DG' }                    -> monograma
+                     { img:'/assets/logo-trimm.png' }  -> imagen propia
+                     { svg:'<svg …></svg>' }           -> icono dibujado
+       tono        'whatsapp' pinta el icono de verde. Se puede omitir.
+       proximamente: true  -> sale en gris y no se puede pulsar
+     ========================================================================== */
+
+  var WHATSAPP = '393290914158';
+  var MENSAJE  = 'Hola Digitatex, vengo de Instagram y quiero la auditoría gratis de mi web.';
+
+  var ENLACES = [
+    {
+      titulo: 'DIGITATEX — Agencia Web 3D Profesional',
+      sub:    'Scroll cinematográfico + base de datos + IA',
+      url:    'https://digitatex.com',
+      icono:  { texto: 'DG' }
+    },
+    {
+      titulo: 'Trimm.online — Software SAAS Belleza / Barberías',
+      sub:    'Reservas, clientes y pagos automatizados',
+      url:    'https://trimm.online',
+      icono:  { texto: 'TR' }
+    },
+    {
+      titulo: 'Reserva tu auditoría gratis',
+      sub:    'Te digo por WhatsApp qué falla en tu web',
+      url:    'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(MENSAJE),
+      tono:   'whatsapp',
+      icono:  { svg: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.1 3 3.5 8.6 3.5 15.5c0 2.4.7 4.7 1.9 6.6L3 29l7.1-2.3c1.8 1 3.8 1.5 5.9 1.5 6.9 0 12.5-5.6 12.5-12.5S22.9 3 16 3zm0 22.7c-1.8 0-3.6-.5-5.2-1.4l-.4-.2-3.9 1.3 1.3-3.8-.2-.4c-1-1.6-1.6-3.5-1.6-5.4 0-5.6 4.6-10.2 10.2-10.2 2.7 0 5.3 1.1 7.2 3s3 4.5 3 7.2c0 5.6-4.6 10.2-10.2 10.2zm5.6-7.6c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1c-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1s0-.5.1-.6l.5-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.8.4s-1.1 1-1.1 2.6 1.1 3 1.3 3.2c.2.2 2.2 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2.1-1.5s.3-1.3.2-1.5c-.1-.1-.3-.2-.6-.3z"/></svg>' }
+    },
+    {
+      titulo: 'Comunidad Digital con Propósito',
+      sub:    'Próximamente',
+      proximamente: true,
+      icono:  { texto: 'CD' }
+    },
+    {
+      titulo: 'Recursos gratis / Plantillas',
+      sub:    'Próximamente',
+      proximamente: true,
+      icono:  { texto: 'RG' }
+    }
+  ];
+
+  /* ====================== de aqui para abajo, el motor ====================== */
+
+  var FLECHA = '<svg class="flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+               'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+               '<path d="M9 18l6-6-6-6"/></svg>';
+
+  // Todo lo que viene del array se escapa antes de entrar en el HTML. Hoy lo
+  // edita el dueno a mano, pero el dia que salga de una base de datos esto ya
+  // esta resuelto y no hay que acordarse.
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function pintarIcono(ic){
+    if(!ic) return '';
+    if(ic.svg)   return ic.svg;                       // dibujado por nosotros, no se escapa
+    if(ic.img)   return '<img src="' + esc(ic.img) + '" alt="" loading="lazy">';
+    return esc(ic.texto || '·');
+  }
+
+  var lista = document.getElementById('lista');
+  var trozos = [];
+
+  ENLACES.forEach(function(e, i){
+    var proximo = !!e.proximamente;
+    var etiqueta = proximo
+      ? '<span class="etiqueta">Pronto</span>'
+      : FLECHA;
+
+    // Un placeholder no es un enlace: se pinta como <div> para que el teclado no
+    // se pare en el y el lector de pantalla no lo anuncie como algo pulsable.
+    var abre = proximo
+      ? '<div class="enlace proximamente sube" style="transition-delay:' + (i * 55) + 'ms">'
+      : '<a class="enlace sube" href="' + esc(e.url) + '" target="_blank" rel="noopener noreferrer"' +
+        (e.tono ? ' data-tono="' + esc(e.tono) + '"' : '') +
+        ' style="transition-delay:' + (i * 55) + 'ms">';
+
+    trozos.push(
+      abre +
+        '<span class="icono">' + pintarIcono(e.icono) + '</span>' +
+        '<span class="texto">' +
+          '<span class="t">' + esc(e.titulo) + '</span>' +
+          (e.sub ? '<span class="s">' + esc(e.sub) + '</span>' : '') +
+        '</span>' +
+        etiqueta +
+      (proximo ? '</div>' : '</a>')
+    );
+  });
+
+  lista.innerHTML = trozos.join('');
+
+  /* Foto de perfil. Si el archivo no existe, se queda el monograma en vez de
+     dejar el icono roto del navegador: basta con dejar la foto en esa ruta para
+     que aparezca, sin tocar codigo. */
+  (function retrato(){
+    var caja = document.getElementById('retrato');
+    var img = new Image();
+    img.onload = function(){
+      caja.innerHTML = '';
+      img.alt = 'Christian Paul';
+      caja.appendChild(img);
+    };
+    img.onerror = function(){ /* se queda "CP" */ };
+    img.src = '/assets/christian-paul.jpg';
+  })();
+
+  document.getElementById('anio').textContent = new Date().getFullYear();
+
+  /* ---- entrada suave ---- */
+  var animar = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var suben = document.querySelectorAll('.sube');
+  if(!animar){
+    suben.forEach(function(el){ el.classList.add('dentro'); });
+  } else {
+    // dos cuadros de margen para que el navegador aplique el estado inicial
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        suben.forEach(function(el, i){
+          if(!el.style.transitionDelay) el.style.transitionDelay = (i * 45) + 'ms';
+          el.classList.add('dentro');
+        });
+      });
+    });
+  }
+
+  /* ---- realce e inclinacion ----
+     El giro se calcula con la posicion del puntero dentro de la tarjeta. Los
+     grados son pocos a proposito: pasado cierto punto deja de parecer relieve y
+     parece un fallo. En pantalla tactil no hay inclinacion, solo el realce al
+     tocar, porque el dedo tapa justo la zona del efecto. */
+  var tactil = window.matchMedia('(hover: none)').matches;
+  var GIRO = 5;
+
+  document.querySelectorAll('.enlace:not(.proximamente)').forEach(function(t){
+    if(!tactil && animar){
+      t.addEventListener('pointermove', function(ev){
+        var r = t.getBoundingClientRect();
+        var px = (ev.clientX - r.left) / r.width  - 0.5;
+        var py = (ev.clientY - r.top)  / r.height - 0.5;
+        t.style.transform =
+          'perspective(700px) rotateX(' + (-py * GIRO) + 'deg) rotateY(' + (px * GIRO) + 'deg) scale(1.02)';
+      });
+      t.addEventListener('pointerenter', function(){ t.classList.add('activo'); });
+      t.addEventListener('pointerleave', function(){
+        t.classList.remove('activo');
+        t.style.transform = '';
+      });
+    } else {
+      t.addEventListener('touchstart', function(){ t.classList.add('activo'); }, { passive:true });
+      ['touchend','touchcancel'].forEach(function(ev){
+        t.addEventListener(ev, function(){ t.classList.remove('activo'); }, { passive:true });
+      });
+    }
+    t.addEventListener('focus', function(){ t.classList.add('activo'); });
+    t.addEventListener('blur',  function(){ t.classList.remove('activo'); t.style.transform = ''; });
+  });
+})();
+</script>
+</body>
+</html>
