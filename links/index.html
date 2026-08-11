@@ -126,7 +126,8 @@
   .lista{display:flex;flex-direction:column;gap:13px;}
 
   .enlace{
-    display:flex;align-items:center;gap:15px;
+    position:relative;                   /* ancla del enlace estirado de dentro */
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
     padding:17px 18px;
     background:var(--tarjeta);
     border:1px solid var(--linea);
@@ -164,6 +165,51 @@
      le queda como un cerco sucio. Con el borde claro la casilla se lee como el
      icono de una app, que es justo lo que es. */
   .icono[data-fondo="claro"]{border-color:rgba(255,255,255,0.5);}
+
+  /* La tarjeta dejo de ser un enlace y paso a ser un contenedor en cuanto hubo
+     que meterle las redes dentro: un <a> no puede contener otro <a>. Ahora el
+     enlace principal cubre toda la tarjeta con un pseudo-elemento estirado, y
+     los iconos de redes van por encima con su propia z. */
+  .principal{
+    display:flex;align-items:center;gap:12px;
+    flex:1 1 100%;min-width:0;
+    text-decoration:none;color:inherit;
+  }
+  .principal::after{content:'';position:absolute;inset:0;border-radius:16px;z-index:1;}
+  .principal:focus-visible::after{outline:2px solid var(--laton-2);outline-offset:3px;}
+
+  /* Las redes van en su propia fila, sangradas para quedar bajo el texto de su
+     proyecto. Puestas a la derecha le robaban ancho al titulo y lo partian en
+     tres lineas; aqui ademas se lee sin ambiguedad de quien son. */
+  .redes{
+    position:relative;z-index:2;        /* por encima del enlace estirado */
+    display:flex;align-items:center;gap:8px;
+    flex:0 0 100%;
+    padding-left:58px;                  /* 46 del logo + 12 del hueco */
+    margin-top:11px;
+  }
+  .red{
+    width:34px;height:34px;flex-shrink:0;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--piedra);
+    background:rgba(255,255,255,0.045);
+    border:1px solid var(--linea);
+    transition:color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .red svg{width:17px;height:17px;display:block;}
+  .red:hover,.red:focus-visible{
+    color:var(--hueso);
+    background:rgba(255,255,255,0.1);
+    border-color:var(--linea-fuerte);
+    transform:translateY(-1px);
+  }
+  /* un guino de color al pasar por encima, sin llenar la pagina de logos
+     saturados que romperian el tono oscuro */
+  .red[data-red="instagram"]:hover,.red[data-red="instagram"]:focus-visible{color:#e17bb0;}
+  .red[data-red="tiktok"]:hover,.red[data-red="tiktok"]:focus-visible{color:#5ce1e6;}
+  .red:focus-visible{outline:2px solid var(--laton-2);outline-offset:2px;}
 
   .texto{flex:1;min-width:0;}
   /* display:block no es opcional: son <span>, y sin esto el titulo y el
@@ -270,6 +316,9 @@
                      { img:'/assets/logo-trimm.png' }  -> imagen propia
                      { svg:'<svg …></svg>' }           -> icono dibujado
        tono        'whatsapp' pinta el icono de verde. Se puede omitir.
+       redes       redes sociales DE ESE PROYECTO, dentro de su propia tarjeta:
+                     redes: [ {red:'instagram', url:'…'}, {red:'tiktok', url:'…'} ]
+                   Se dibuja el logo de cada red. Reconocidas: instagram, tiktok.
        proximamente: true  -> sale en gris y no se puede pulsar
      ========================================================================== */
 
@@ -281,13 +330,21 @@
       titulo: 'DIGITATEX — Agencia Web 3D Profesional',
       sub:    'Scroll cinematográfico + base de datos + IA',
       url:    'https://digitatex.com',
-      icono:  { img: '/assets/logo-digitatex.png' }
+      icono:  { img: '/assets/logo-digitatex.png' },
+      redes: [
+        { red:'instagram', url:'https://www.instagram.com/digitatex_' },
+        { red:'tiktok',    url:'https://www.tiktok.com/@digitatex'    }
+      ]
     },
     {
       titulo: 'Trimm.online — Software SAAS Belleza / Barberías',
       sub:    'Reservas, clientes y pagos automatizados',
       url:    'https://trimm.online',
-      icono:  { img: '/assets/logo-trimm.png', fondo: 'claro' }
+      icono:  { img: '/assets/logo-trimm.png', fondo: 'claro' },
+      redes: [
+        { red:'instagram', url:'https://www.instagram.com/trimm_online' },
+        { red:'tiktok',    url:'https://www.tiktok.com/@trimm_online'   }
+      ]
     },
     {
       titulo: 'Reserva tu auditoría gratis',
@@ -316,6 +373,37 @@
                'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
                '<path d="M9 18l6-6-6-6"/></svg>';
 
+  // Logos de las redes, dibujados aqui para no depender de ninguna libreria de
+  // iconos. Van monocromos y toman color al pasar por encima: en una pagina
+  // oscura, dos logos a todo color se comen la jerarquia de las tarjetas.
+  var LOGOS_RED = {
+    instagram: {
+      nombre: 'Instagram',
+      svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">' +
+           '<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/>' +
+           '<circle cx="12" cy="12" r="4.1"/>' +
+           '<circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
+    },
+    tiktok: {
+      nombre: 'TikTok',
+      svg: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+           '<path d="M16.7 5.9a4.3 4.3 0 0 1-1.1-2.9h-3.1v12.4a2.6 2.6 0 1 1-1.9-2.5V9.7a5.8 5.8 0 1 0 5 5.7V9.1a7.3 7.3 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.2-1.5z"/></svg>'
+    }
+  };
+
+  function pintarRedes(redes, deQuien){
+    if(!redes || !redes.length) return '';
+    var trozos = redes.map(function(r){
+      var L = LOGOS_RED[r.red];
+      if(!L || !r.url) return '';
+      // el enlace es solo un icono, asi que necesita nombre para quien no lo ve
+      return '<a class="red" data-red="' + esc(r.red) + '" href="' + esc(r.url) + '" ' +
+             'target="_blank" rel="noopener noreferrer" ' +
+             'aria-label="' + esc(L.nombre + ' de ' + deQuien) + '">' + L.svg + '</a>';
+    }).filter(Boolean);
+    return trozos.length ? '<span class="redes">' + trozos.join('') + '</span>' : '';
+  }
+
   // Todo lo que viene del array se escapa antes de entrar en el HTML. Hoy lo
   // edita el dueno a mano, pero el dia que salga de una base de datos esto ya
   // esta resuelto y no hay que acordarse.
@@ -337,30 +425,38 @@
 
   ENLACES.forEach(function(e, i){
     var proximo = !!e.proximamente;
-    var etiqueta = proximo
-      ? '<span class="etiqueta">Pronto</span>'
-      : FLECHA;
+
+    var dentro =
+      '<span class="icono"' +
+        (e.icono && e.icono.fondo === 'claro' ? ' data-fondo="claro"' : '') +
+      '>' + pintarIcono(e.icono) + '</span>' +
+      '<span class="texto">' +
+        '<span class="t">' + esc(e.titulo) + '</span>' +
+        (e.sub ? '<span class="s">' + esc(e.sub) + '</span>' : '') +
+      '</span>';
 
     // Un placeholder no es un enlace: se pinta como <div> para que el teclado no
     // se pare en el y el lector de pantalla no lo anuncie como algo pulsable.
-    var abre = proximo
-      ? '<div class="enlace proximamente sube" style="transition-delay:' + (i * 55) + 'ms">'
-      : '<a class="enlace sube" href="' + esc(e.url) + '" target="_blank" rel="noopener noreferrer"' +
-        (e.tono ? ' data-tono="' + esc(e.tono) + '"' : '') +
-        ' style="transition-delay:' + (i * 55) + 'ms">';
-
-    trozos.push(
-      abre +
-        '<span class="icono"' +
-          (e.icono && e.icono.fondo === 'claro' ? ' data-fondo="claro"' : '') +
-        '>' + pintarIcono(e.icono) + '</span>' +
-        '<span class="texto">' +
-          '<span class="t">' + esc(e.titulo) + '</span>' +
-          (e.sub ? '<span class="s">' + esc(e.sub) + '</span>' : '') +
-        '</span>' +
-        etiqueta +
-      (proximo ? '</div>' : '</a>')
-    );
+    if(proximo){
+      trozos.push(
+        '<div class="enlace proximamente sube" style="transition-delay:' + (i * 55) + 'ms">' +
+          dentro + '<span class="etiqueta">Pronto</span>' +
+        '</div>'
+      );
+    } else {
+      // el nombre corto del proyecto, para el aria-label de cada red
+      var dueno = e.titulo.split(/[—–-]/)[0].trim() || e.titulo;
+      trozos.push(
+        '<div class="enlace sube"' +
+          (e.tono ? ' data-tono="' + esc(e.tono) + '"' : '') +
+          ' style="transition-delay:' + (i * 55) + 'ms">' +
+          '<a class="principal" href="' + esc(e.url) + '" target="_blank" rel="noopener noreferrer">' +
+            dentro + FLECHA +
+          '</a>' +
+          pintarRedes(e.redes, dueno) +
+        '</div>'
+      );
+    }
   });
 
   lista.innerHTML = trozos.join('');
