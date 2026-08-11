@@ -118,6 +118,83 @@ header{
 .float-card .fc-price{font-weight:800;color:var(--gold)}
 .ribbon{position:absolute;top:22px;right:-38px;transform:rotate(35deg);background:var(--rose);color:#fff;font-size:11px;font-weight:800;letter-spacing:.08em;padding:6px 46px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 
+/* ===== STATS STRIP (tarjeta flotante bajo el hero) ===== */
+.stats-strip{position:relative;z-index:5;margin-top:-38px}
+.stats-card{
+  background:#fff;border-radius:24px;box-shadow:var(--shadow-sm);border:1px solid var(--line);
+  padding:28px 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px;
+}
+@media (max-width:860px){.stats-card{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.stats-card{grid-template-columns:1fr;padding:22px}}
+.stat-feat{display:flex;flex-direction:column;gap:6px}
+.stat-feat .icon-wrap{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:flex;align-items:center;justify-content:center;color:#241a0c;margin-bottom:4px}
+.stat-feat b{font-family:var(--serif);font-size:16px}
+.stat-feat span{font-size:12.5px;color:#8a7f84;line-height:1.4}
+
+/* ===== COLLAGE (piezas del momento) ===== */
+.collage-grid{
+  display:grid;gap:20px;
+  grid-template-columns:1.1fr 1fr 1fr;
+  grid-template-rows:200px 200px;
+  grid-template-areas:"big mid1 mid2" "big text text";
+}
+@media (max-width:900px){
+  .collage-grid{grid-template-columns:1fr 1fr;grid-template-rows:220px 180px 180px;grid-template-areas:"big big" "mid1 mid2" "text text"}
+}
+@media (max-width:560px){
+  .collage-grid{grid-template-columns:1fr;grid-template-rows:260px 200px 200px auto;grid-template-areas:"big" "mid1" "mid2" "text"}
+}
+.collage-item{
+  position:relative;border-radius:20px;overflow:hidden;cursor:pointer;
+  display:flex;align-items:flex-end;transition:transform .22s ease;
+}
+.collage-item:hover{transform:translateY(-4px)}
+.collage-item.area-big{grid-area:big}
+.collage-item.area-mid1{grid-area:mid1}
+.collage-item.area-mid2{grid-area:mid2}
+.collage-item .dress{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:46%;color:rgba(248,243,236,.94)}
+.collage-text{
+  grid-area:text;background:var(--cream-2);border-radius:20px;padding:26px;
+  display:flex;flex-direction:column;justify-content:center;gap:10px;
+}
+.collage-text h3{font-family:var(--serif);font-size:22px;line-height:1.2}
+.collage-text p{font-size:13.5px;color:var(--ink-2);max-width:320px}
+.collage-num{
+  position:absolute;top:10px;left:14px;font-family:var(--serif);font-size:54px;font-weight:700;
+  color:rgba(248,243,236,.16);line-height:1;pointer-events:none;
+}
+.collage-chip{
+  position:relative;z-index:2;margin:14px;background:rgba(24,19,26,.55);backdrop-filter:blur(6px);
+  border:1px solid rgba(248,243,236,.22);border-radius:14px;padding:12px 14px;color:var(--cream);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;width:calc(100% - 28px);
+}
+.collage-chip .cc-name{font-family:var(--serif);font-size:14px}
+.collage-chip .cc-ref{font-size:10.5px;color:#d8c9ce}
+.collage-chip .cc-price{font-weight:800;color:var(--gold);font-size:14px}
+
+/* ===== BRAND BANNER (franja + wordmark gigante) ===== */
+.brand-banner{background:var(--ink);color:var(--cream);padding:70px 0 0;overflow:hidden;position:relative;text-align:center}
+.brand-banner .pill{position:static;display:inline-flex;margin-bottom:18px}
+.brand-banner h2{font-family:var(--serif);font-size:clamp(30px,5.5vw,54px);line-height:1.08}
+.brand-banner h2 em{font-style:italic;color:var(--gold)}
+.brand-banner .btn{margin-top:22px}
+.banner-dresses{display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-top:46px;padding:0 20px}
+.banner-piece{
+  width:100px;height:130px;border-radius:16px 16px 0 0;position:relative;overflow:hidden;flex:none;
+}
+.banner-piece:nth-child(odd){transform:translateY(14px)}
+.banner-piece .dress{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:56%;color:rgba(248,243,236,.9)}
+@media (max-width:700px){.banner-piece{width:70px;height:96px}}
+@media (max-width:520px){.banner-piece:nth-child(4),.banner-piece:nth-child(5){display:none}}
+.brand-wordmark{
+  font-family:var(--serif);font-weight:700;letter-spacing:-.02em;
+  font-size:clamp(64px,14vw,180px);line-height:.85;color:transparent;
+  -webkit-text-stroke:1.5px rgba(248,243,236,.5);
+  background:linear-gradient(180deg,rgba(248,243,236,.14),rgba(248,243,236,0));
+  -webkit-background-clip:text;background-clip:text;
+  padding:30px 20px 10px;white-space:nowrap;
+}
+
 /* ===== SECTION HEADS ===== */
 .section{padding:74px 0}
 .section-tight{padding:44px 0}
@@ -360,6 +437,51 @@ tr:last-child td{border-bottom:none}
   <symbol id="ic-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
   <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></symbol>
   <symbol id="ic-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></symbol>
+
+  <!-- Variantes de prenda: cada corte tiene su propio dibujo -->
+  <symbol id="ic-dress-vneck" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 6 L50 20 L62 6" />
+    <path d="M50 20 C40 24 34 20 30 24 L18 100 C16 112 22 122 34 124 L34 134 L66 134 L66 124 C78 122 84 112 82 100 L70 24 C66 20 60 24 50 20" />
+    <path d="M30 24 C40 32 60 32 70 24" />
+    <path d="M22 60 C40 68 60 68 78 60" opacity=".55"/>
+  </symbol>
+  <symbol id="ic-dress-slit" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 8 L40 18 M60 8 L60 18" />
+    <path d="M40 18 C34 22 30 26 28 32 L20 104 C18 116 24 126 36 128 L36 134 L64 134 L64 128 C76 126 82 116 80 104 L72 32 C70 26 66 22 60 18" />
+    <path d="M52 70 L44 128" opacity=".6"/>
+    <path d="M26 62 C42 70 58 70 74 62" opacity=".5"/>
+  </symbol>
+  <symbol id="ic-dress-corset" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M36 10 C34 16 32 20 30 26 L22 100 C20 114 26 126 38 128 L38 134 L62 134 L62 128 C74 126 80 114 78 100 L70 26 C68 20 66 16 64 10" />
+    <path d="M34 30 L66 30 M33 42 L67 42 M33 54 L67 54" opacity=".6"/>
+    <path d="M36 10 C42 16 58 16 64 10" />
+  </symbol>
+  <symbol id="ic-dress-sequin" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 6 C38 14 34 18 30 24 L18 100 C16 112 22 122 34 124 L34 134 L66 134 L66 124 C78 122 84 112 82 100 L70 24 C66 18 62 14 62 6" />
+    <path d="M38 6 C42 12 58 12 62 6" />
+    <g fill="currentColor" stroke="none" opacity=".7">
+      <circle cx="34" cy="40" r="1.6"/><circle cx="46" cy="34" r="1.6"/><circle cx="58" cy="42" r="1.6"/><circle cx="66" cy="56" r="1.6"/>
+      <circle cx="30" cy="60" r="1.6"/><circle cx="50" cy="58" r="1.6"/><circle cx="40" cy="76" r="1.6"/><circle cx="60" cy="80" r="1.6"/>
+      <circle cx="34" cy="96" r="1.6"/><circle cx="62" cy="100" r="1.6"/>
+    </g>
+  </symbol>
+  <symbol id="ic-dress-ribbed" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 8 L26 20 L30 30 L34 22" />
+    <path d="M62 8 L74 20 L70 30 L66 22" />
+    <path d="M38 8 C38 14 34 18 30 24 L20 100 C18 112 24 122 36 124 L36 134 L64 134 L64 124 C76 122 82 112 80 100 L70 24 C66 18 62 14 62 8" />
+    <path d="M28 36 L72 36 M27 48 L73 48 M26 60 L74 60 M25 72 L75 72 M24 84 L76 84 M23 96 L77 96" opacity=".45"/>
+  </symbol>
+  <symbol id="ic-dress-offshoulder" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 14 C36 22 64 22 76 14" />
+    <path d="M24 14 C22 20 24 26 30 28 L18 100 C16 112 22 122 34 124 L34 134 L66 134 L66 124 C78 122 84 112 82 100 L70 28 C76 26 78 20 76 14" />
+    <path d="M22 60 C40 68 60 68 78 60" opacity=".5"/>
+  </symbol>
+  <symbol id="ic-bag-clutch" viewBox="0 0 100 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="24" y="60" width="52" height="40" rx="8"/>
+    <path d="M24 72 L76 72" opacity=".5"/>
+    <path d="M40 60 C40 50 60 50 60 60" />
+    <circle cx="50" cy="80" r="3" fill="currentColor" stroke="none"/>
+  </symbol>
 </svg>
 
 <!-- ============ STORE (client) ============ -->
@@ -408,7 +530,7 @@ tr:last-child td{border-bottom:none}
       <div class="hero-art">
         <div class="ribbon">NUEVO</div>
         <div class="glow"></div>
-        <svg class="dress"><use href="#ic-dress"/></svg>
+        <svg class="dress"><use id="heroDressUse" href="#ic-dress"/></svg>
         <div class="float-card">
           <div>
             <div class="fc-name serif" id="heroFeatName">—</div>
@@ -417,6 +539,43 @@ tr:last-child td{border-bottom:none}
           <div class="fc-price" id="heroFeatPrice">—</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS STRIP ============ -->
+  <section class="stats-strip">
+    <div class="wrap">
+      <div class="stats-card">
+        <div class="stat-feat">
+          <span class="icon-wrap"><svg class="icon-sm"><use href="#ic-star"/></svg></span>
+          <b>Tela Premium</b><span>Stretch de alta compresión, corte que marca figura</span>
+        </div>
+        <div class="stat-feat">
+          <span class="icon-wrap"><svg class="icon-sm"><use href="#ic-truck"/></svg></span>
+          <b>Entrega en 48–72h</b><span>Coordinada por WhatsApp según tu provincia</span>
+        </div>
+        <div class="stat-feat">
+          <span class="icon-wrap"><svg class="icon-sm"><use href="#ic-check"/></svg></span>
+          <b>Tallas S – XL</b><span>Guía de tallas disponible al pedir</span>
+        </div>
+        <div class="stat-feat">
+          <span class="icon-wrap"><svg class="icon-sm"><use href="#ic-wa"/></svg></span>
+          <b>Pedido en 1 mensaje</b><span>Referencia, talla y precio ya incluidos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COLLAGE: PIEZAS DEL MOMENTO ============ -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">Recién llegado</span>
+          <h2 class="serif">Piezas del momento</h2>
+        </div>
+      </div>
+      <div class="collage-grid" id="collage"></div>
     </div>
   </section>
 
@@ -465,6 +624,15 @@ tr:last-child td{border-bottom:none}
       <p>Piezas seleccionadas y presentadas por influencers cubanas. Tu nombre, tu estilo, tu colección — nosotros ponemos la tienda.</p>
       <a href="#catalogo" class="btn btn-gold">Ver Colección Cintia <svg class="icon-sm"><use href="#ic-arrow"/></svg></a>
     </div>
+  </section>
+
+  <!-- ============ BRAND BANNER ============ -->
+  <section class="brand-banner">
+    <span class="pill gold">Nueva colección</span>
+    <h2 class="serif">Da el siguiente paso<br>con <em>Bella Habana</em></h2>
+    <a href="#catalogo" class="btn btn-gold">Comprar ahora <svg class="icon-sm"><use href="#ic-arrow"/></svg></a>
+    <div class="banner-dresses" id="bannerDresses"></div>
+    <div class="brand-wordmark">BELLA HABANA</div>
   </section>
 
   <footer id="contacto">
@@ -577,6 +745,18 @@ tr:last-child td{border-bottom:none}
         <select id="fStyle"><option value="1">Negro / Vino</option><option value="2">Terracota</option><option value="3">Oliva / Oro</option><option value="4">Verde Salvia</option><option value="5">Vino / Oro</option></select>
       </div>
     </div>
+    <div class="field"><label>Corte / ilustración</label>
+      <select id="fIcon">
+        <option value="ic-dress">Bodycon clásico</option>
+        <option value="ic-dress-vneck">Escote en V</option>
+        <option value="ic-dress-slit">Midi con abertura</option>
+        <option value="ic-dress-corset">Corset</option>
+        <option value="ic-dress-sequin">Lentejuelas</option>
+        <option value="ic-dress-ribbed">Acanalado</option>
+        <option value="ic-dress-offshoulder">Off-shoulder</option>
+        <option value="ic-bag-clutch">Cartera / accesorio</option>
+      </select>
+    </div>
     <div class="field"><label>Tallas (separadas por coma)</label><input id="fSizes" placeholder="S, M, L, XL"></div>
     <div class="field"><label>Descripción</label><textarea id="fDesc" placeholder="Corte ajustado, tela stretch, ideal para salidas de noche."></textarea></div>
     <div class="chk-row">
@@ -604,14 +784,14 @@ const STORE_CONFIG = {
 };
 
 const DEFAULT_PRODUCTS = [
-  {id:"p1",ref:"VJ-001",name:"Vestido Bodycon Habana Negro",cat:"Ajustados",price:32,style:1,sizes:["S","M","L"],desc:"Corte ajustado total, tela stretch de alta compresión. Ideal para salir de noche y marcar figura.",featured:true,active:true},
-  {id:"p2",ref:"VJ-002",name:"Vestido Ajustado Malecón Rojo",cat:"Ajustados",price:34,style:2,sizes:["S","M","L","XL"],desc:"Rojo intenso, escote en V y silueta entallada. La pieza que no pasa desapercibida.",featured:true,active:true},
-  {id:"p3",ref:"VJ-003",name:"Colección Cintia — Vestido Firma",cat:"Colección Colaboradoras",price:45,style:5,sizes:["S","M","L"],desc:"Edición firmada por Cintia. Corte midi ajustado con abertura lateral, tela premium.",featured:true,active:true},
-  {id:"p4",ref:"VJ-004",name:"Vestido Midi Corset",cat:"Fiesta",price:38,style:3,sizes:["S","M","L"],desc:"Estructura tipo corset, midi, perfecto para eventos y fiestas.",featured:false,active:true},
-  {id:"p5",ref:"VJ-005",name:"Vestido Fiesta Lentejuelas",cat:"Fiesta",price:50,style:5,sizes:["S","M"],desc:"Brillo total de pies a cabeza. Para la noche que quieres recordar.",featured:false,active:true},
-  {id:"p6",ref:"VJ-006",name:"Vestido Casual Acanalado",cat:"Casual",price:28,style:4,sizes:["S","M","L","XL"],desc:"Tela acanalada cómoda y ajustada, ideal para el día a día con estilo.",featured:false,active:true},
-  {id:"p7",ref:"VJ-007",name:"Vestido Off-Shoulder Ajustado",cat:"Ajustados",price:36,style:2,sizes:["S","M","L"],desc:"Hombros descubiertos, silueta ajustada, tela con buen agarre.",featured:false,active:true},
-  {id:"p8",ref:"VA-001",name:"Cartera a Juego Dorada",cat:"Accesorios",price:15,style:3,sizes:["Única"],desc:"El accesorio perfecto para completar cualquiera de nuestros vestidos.",featured:false,active:true}
+  {id:"p1",ref:"VJ-001",name:"Vestido Bodycon Habana Negro",cat:"Ajustados",price:32,style:1,icon:"ic-dress",sizes:["S","M","L"],desc:"Corte ajustado total, tela stretch de alta compresión. Ideal para salir de noche y marcar figura.",featured:true,active:true},
+  {id:"p2",ref:"VJ-002",name:"Vestido Ajustado Malecón Rojo",cat:"Ajustados",price:34,style:2,icon:"ic-dress-vneck",sizes:["S","M","L","XL"],desc:"Rojo intenso, escote en V y silueta entallada. La pieza que no pasa desapercibida.",featured:true,active:true},
+  {id:"p3",ref:"VJ-003",name:"Colección Cintia — Vestido Firma",cat:"Colección Colaboradoras",price:45,style:5,icon:"ic-dress-slit",sizes:["S","M","L"],desc:"Edición firmada por Cintia. Corte midi ajustado con abertura lateral, tela premium.",featured:true,active:true},
+  {id:"p4",ref:"VJ-004",name:"Vestido Midi Corset",cat:"Fiesta",price:38,style:3,icon:"ic-dress-corset",sizes:["S","M","L"],desc:"Estructura tipo corset, midi, perfecto para eventos y fiestas.",featured:false,active:true},
+  {id:"p5",ref:"VJ-005",name:"Vestido Fiesta Lentejuelas",cat:"Fiesta",price:50,style:5,icon:"ic-dress-sequin",sizes:["S","M"],desc:"Brillo total de pies a cabeza. Para la noche que quieres recordar.",featured:false,active:true},
+  {id:"p6",ref:"VJ-006",name:"Vestido Casual Acanalado",cat:"Casual",price:28,style:4,icon:"ic-dress-ribbed",sizes:["S","M","L","XL"],desc:"Tela acanalada cómoda y ajustada, ideal para el día a día con estilo.",featured:false,active:true},
+  {id:"p7",ref:"VJ-007",name:"Vestido Off-Shoulder Ajustado",cat:"Ajustados",price:36,style:2,icon:"ic-dress-offshoulder",sizes:["S","M","L"],desc:"Hombros descubiertos, silueta ajustada, tela con buen agarre.",featured:false,active:true},
+  {id:"p8",ref:"VA-001",name:"Cartera a Juego Dorada",cat:"Accesorios",price:15,style:3,icon:"ic-bag-clutch",sizes:["Única"],desc:"El accesorio perfecto para completar cualquiera de nuestros vestidos.",featured:false,active:true}
 ];
 
 /* ============ DATA LAYER (localStorage hoy, Supabase mañana) ============ */
@@ -685,7 +865,7 @@ function cardHTML(p){
     <div class="card-media bg-${p.style}">
       ${p.featured ? `<span class="pill gold">Destacado</span>` : `<span class="pill">${p.cat}</span>`}
       <button class="heart" data-stop="1" aria-label="Favorito"><svg><use href="#ic-heart"/></svg></button>
-      <svg class="dress"><use href="#ic-dress"/></svg>
+      <svg class="dress"><use href="#${p.icon||'ic-dress'}"/></svg>
     </div>
     <div class="card-body">
       <span class="card-cat">${p.cat}</span>
@@ -711,11 +891,50 @@ function renderGrid(){
   document.getElementById("grid").innerHTML = filtered.map(cardHTML).join("") || `<p style="grid-column:1/-1;color:#8a7f84">No hay productos en esta categoría todavía.</p>`;
 }
 
+function collageChip(p){
+  return `
+  <svg class="dress"><use href="#${p.icon||'ic-dress'}"/></svg>
+  <div class="collage-num">${p.slotNum}</div>
+  <div class="collage-chip">
+    <div><div class="cc-name serif">${p.name}</div><div class="cc-ref">Ref. ${p.ref}</div></div>
+    <div class="cc-price">${money(p.price)}</div>
+  </div>`;
+}
+
+function renderCollage(){
+  const active = Store.all().filter(p=>p.active);
+  if(active.length===0){ document.getElementById("collage").innerHTML = ""; return; }
+  const pick = (i)=> active[i % active.length];
+  const big = {...pick(0), slotNum:"01"};
+  const mid1 = {...pick(1), slotNum:"02"};
+  const mid2 = {...pick(2), slotNum:"03"};
+  document.getElementById("collage").innerHTML = `
+    <article class="collage-item area-big bg-${big.style}" data-id="${big.id}">${collageChip(big)}</article>
+    <article class="collage-item area-mid1 bg-${mid1.style}" data-id="${mid1.id}">${collageChip(mid1)}</article>
+    <article class="collage-item area-mid2 bg-${mid2.style}" data-id="${mid2.id}">${collageChip(mid2)}</article>
+    <div class="collage-text">
+      <h3 class="serif">Piezas frescas cada semana</h3>
+      <p>Nuevos vestidos entran al catálogo constantemente. Pide por WhatsApp antes de que se agote tu talla.</p>
+      <a href="#catalogo" class="viewall">Ver todo el catálogo <svg class="icon"><use href="#ic-arrow"/></svg></a>
+    </div>
+  `;
+}
+
+function renderBannerDresses(){
+  const active = Store.all().filter(p=>p.active);
+  const holder = document.getElementById("bannerDresses");
+  if(!holder) return;
+  holder.innerHTML = active.slice(0,5).map(p=>`
+    <div class="banner-piece bg-${p.style}"><svg class="dress"><use href="#${p.icon||'ic-dress'}"/></svg></div>
+  `).join("");
+}
+
 function renderHeroFeatured(){
   const featured = Store.all().find(p=>p.featured && p.active) || Store.all()[0];
   if(!featured) return;
   document.getElementById("heroFeatName").textContent = featured.name;
   document.getElementById("heroFeatPrice").textContent = money(featured.price);
+  document.getElementById("heroDressUse").setAttribute("href", "#"+(featured.icon||"ic-dress"));
 }
 
 function renderCartBadge(){
@@ -737,7 +956,7 @@ function renderCart(){
   }
   body.innerHTML = items.map(i=>`
     <div class="cart-item">
-      <div class="ci-media bg-${i.style||1}"><svg class="dress"><use href="#ic-dress"/></svg></div>
+      <div class="ci-media bg-${i.style||1}"><svg class="dress"><use href="#${i.icon||'ic-dress'}"/></svg></div>
       <div class="ci-info">
         <span class="ci-name">${i.name}</span>
         <span class="ci-meta">Ref. ${i.ref} · Talla ${i.size}</span>
@@ -777,7 +996,7 @@ function drawModal(){
   const p = modalState.product;
   document.getElementById("productModal").innerHTML = `
     <button class="modal-close" id="modalCloseBtn"><svg class="icon-sm"><use href="#ic-close"/></svg></button>
-    <div class="modal-media bg-${p.style}"><svg class="dress"><use href="#ic-dress"/></svg></div>
+    <div class="modal-media bg-${p.style}"><svg class="dress"><use href="#${p.icon||'ic-dress'}"/></svg></div>
     <div class="modal-info">
       <span class="card-cat">${p.cat}</span>
       <h2 class="serif">${p.name}</h2>
@@ -804,7 +1023,7 @@ function drawModal(){
   document.getElementById("qtyMinus").onclick = ()=>{ modalState.qty = Math.max(1,modalState.qty-1); document.getElementById("qtyVal").textContent = modalState.qty; };
   document.getElementById("qtyPlus").onclick = ()=>{ modalState.qty += 1; document.getElementById("qtyVal").textContent = modalState.qty; };
   document.getElementById("addToCartBtn").onclick = ()=>{
-    CartStore.add({id:p.id,ref:p.ref,name:p.name,price:p.price,size:modalState.size,qty:modalState.qty,style:p.style});
+    CartStore.add({id:p.id,ref:p.ref,name:p.name,price:p.price,size:modalState.size,qty:modalState.qty,style:p.style,icon:p.icon});
     renderCart(); renderCartBadge();
     showToast("Añadido al carrito");
     closeProductModal();
@@ -848,7 +1067,7 @@ function renderAdminTable(){
   const list = Store.all().filter(p=> p.name.toLowerCase().includes(term) || p.ref.toLowerCase().includes(term));
   document.getElementById("adminBody").innerHTML = list.map(p=>`
     <tr>
-      <td><div class="mini-swatch bg-${p.style}"><svg class="dress"><use href="#ic-dress"/></svg></div></td>
+      <td><div class="mini-swatch bg-${p.style}"><svg class="dress"><use href="#${p.icon||'ic-dress'}"/></svg></div></td>
       <td><b>${p.name}</b><br><span style="color:#8a7f84;font-size:12px">${p.cat}</span></td>
       <td>${p.ref}</td>
       <td>${p.cat}</td>
@@ -872,6 +1091,7 @@ function openForm(product){
   document.getElementById("fPrice").value = product?.price || "";
   document.getElementById("fCat").value = product?.cat || "Ajustados";
   document.getElementById("fStyle").value = product?.style || "1";
+  document.getElementById("fIcon").value = product?.icon || "ic-dress";
   document.getElementById("fSizes").value = product?.sizes?.join(", ") || "S, M, L";
   document.getElementById("fDesc").value = product?.desc || "";
   document.getElementById("fFeatured").checked = !!product?.featured;
@@ -890,6 +1110,7 @@ function saveForm(){
     name, ref, price,
     cat: document.getElementById("fCat").value,
     style: document.getElementById("fStyle").value,
+    icon: document.getElementById("fIcon").value,
     sizes: document.getElementById("fSizes").value.split(",").map(s=>s.trim()).filter(Boolean),
     desc: document.getElementById("fDesc").value.trim(),
     featured: document.getElementById("fFeatured").checked,
@@ -898,7 +1119,7 @@ function saveForm(){
   Store.upsert(product);
   closeForm();
   renderAdminTable();
-  renderChips(); renderGrid(); renderHeroFeatured();
+  renderChips(); renderGrid(); renderCollage(); renderBannerDresses(); renderHeroFeatured();
   showToast("Producto guardado");
 }
 
@@ -911,6 +1132,8 @@ function trySessionAdmin(){ return sessionStorage.getItem("bh_admin")==="1"; }
 document.addEventListener("DOMContentLoaded", ()=>{
   renderChips();
   renderGrid();
+  renderCollage();
+  renderBannerDresses();
   renderHeroFeatured();
   renderCartBadge();
 
@@ -934,6 +1157,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if(e.target.closest("[data-stop]")){ e.stopPropagation(); return; }
     const card = e.target.closest(".card");
     if(card) openProductModal(card.dataset.id);
+  });
+
+  // Collage clicks (open modal)
+  document.getElementById("collage").addEventListener("click", e=>{
+    const item = e.target.closest(".collage-item");
+    if(item) openProductModal(item.dataset.id);
   });
 
   // Cart open/close
@@ -1005,7 +1234,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   document.getElementById("backToStore").onclick = closeAdmin;
   document.getElementById("logoutBtn").onclick = ()=>{ sessionStorage.removeItem("bh_admin"); closeAdmin(); };
   document.getElementById("newProductBtn").onclick = ()=> openForm(null);
-  document.getElementById("resetDemoBtn").onclick = ()=>{ Store.reset(); renderAdminTable(); renderChips(); renderGrid(); renderHeroFeatured(); showToast("Catálogo restaurado"); };
+  document.getElementById("resetDemoBtn").onclick = ()=>{ Store.reset(); renderAdminTable(); renderChips(); renderGrid(); renderCollage(); renderBannerDresses(); renderHeroFeatured(); showToast("Catálogo restaurado"); };
   document.getElementById("adminSearch").addEventListener("input", e=>{ adminSearchTerm = e.target.value; renderAdminTable(); });
 
   document.getElementById("adminBody").addEventListener("click", e=>{
@@ -1013,7 +1242,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if(edit){ openForm(Store.all().find(x=>x.id===edit.dataset.edit)); return; }
     const del = e.target.closest("[data-del]");
     if(del){
-      if(confirm("¿Eliminar este producto?")){ Store.remove(del.dataset.del); renderAdminTable(); renderChips(); renderGrid(); renderHeroFeatured(); showToast("Producto eliminado"); }
+      if(confirm("¿Eliminar este producto?")){ Store.remove(del.dataset.del); renderAdminTable(); renderChips(); renderGrid(); renderCollage(); renderBannerDresses(); renderHeroFeatured(); showToast("Producto eliminado"); }
     }
   });
 
