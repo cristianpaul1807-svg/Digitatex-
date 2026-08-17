@@ -201,13 +201,49 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
      acaba en 81px, el texto empieza en 467, quedan 366 de hueco y la banda mide
      226. Centrada ahi no pisa ninguno de los dos, y cuando el texto se funde al
      final del recorrido el producto queda arriba en vez de dejar un vacio. */
-  .scrub-bg video{object-fit:contain;object-position:center 25%;}
+  .scrub-bg video{object-fit:contain;object-position:center 22%;}
   /* la viñeta se aclara arriba para no ensuciar el video ya recortado */
+  /* La sombra empieza a subir en el 34% y no en el 46%. En pantallas cortas la
+     banda de video baja hasta donde empieza el eyebrow y no hay forma de
+     separarlos: el texto cruzaba el pale, madera clara, y ahi el tono de acento
+     se perdia. Oscureciendo el quinto inferior de la banda — que es suelo — el
+     texto recupera fondo sin comerse el producto. */
   .scrub-vignette{background:
-    linear-gradient(to bottom, rgba(12,12,13,0.55) 0%, rgba(12,12,13,0) 22%, rgba(12,12,13,0) 46%, rgba(12,12,13,0.93) 72%, rgba(12,12,13,0.97) 100%);}
+    linear-gradient(to bottom, rgba(12,12,13,0.55) 0%, rgba(12,12,13,0) 20%, rgba(12,12,13,0) 34%, rgba(12,12,13,0.72) 46%, rgba(12,12,13,0.93) 62%, rgba(12,12,13,0.97) 100%);}
   .chapter-content p{font-size:14.5px;line-height:1.7;}
   .chapter-cta{margin-top:24px;gap:10px;}
   .chapter-cta .btn{padding:13px 20px;font-size:11px;}
+  /* El texto del hero no se funde en el telefono. La base lo hace aparecer en
+     el primer 6% del recorrido y desaparecer en el ultimo 12%, para que el
+     video termine limpio. Con un video a pantalla completa eso funciona; con
+     uno contenido, en los dos extremos queda la banda arriba y medio movil
+     vacio debajo — que es justo el hueco que se veia. El !important es
+     necesario: el guion escribe la opacidad en el atributo style. */
+  .chapter-content{opacity:1 !important;transform:none !important;}
+  /* El bloque de texto lleva su propio fondo en el telefono. En pantallas
+     cortas la banda de video baja hasta donde empieza el texto y no hay forma
+     de separarlos; el eyebrow cruzaba el pale — madera clara — y ahi se quedaba
+     en 1.21:1, ilegible. Un degradado general no llegaba: hace falta suelo
+     propio justo detras de las letras. Se extiende hasta los bordes de la
+     pantalla para que no se vea como una caja pegada encima. */
+  .chapter-content{
+    margin-left:-24px;margin-right:-24px;
+    /* 44px de aire arriba para que el degradado termine de subir ANTES de la
+       primera linea. Con menos, el eyebrow caia en el tramo claro y se quedaba
+       en 2.8:1 sobre el pale. */
+    padding:44px 24px 6px;
+    background:linear-gradient(to bottom,
+      rgba(12,12,13,0) 0%, rgba(12,12,13,0.55) 5%,
+      rgba(12,12,13,0.9) 11%, rgba(12,12,13,0.95) 100%);
+  }
+  /* El margen inferior tiene que contar con la franja de prototipo, que va fija
+     abajo: sin esto tapaba el segundo boton. Al publicar, cuando la franja
+     desaparezca, se puede bajar a 4vh. */
+  .scrub-sticky{padding-bottom:calc(4vh + 48px);}
+  /* La indicacion de "scorri" se quita en el telefono: con el texto ya siempre
+     visible cae justo encima de los botones. En movil nadie necesita que le
+     digan que se desliza. */
+  .scroll-cue{display:none;}
 }
 
 /* Pantallas cortas (iPhone SE y similares). Ahi no caben a la vez el menu, la
@@ -215,12 +251,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
    sobre 667 de pantalla. Se estrecha la caja del video, que al ir contenido
    baja tambien de alto — 160px en vez de 211 — y el texto encoge un punto.
    Sigue viendose el producto entero, que es lo que no se podia sacrificar. */
-@media (max-width:760px) and (max-height:740px){
-  .scrub-bg{left:12%;right:12%;}
-  .scrub-bg video{object-position:center 20%;}
-  .chapter-content h1{font-size:28px;}
-  .chapter-content p{font-size:13.5px;line-height:1.6;}
+/* Pantallas cortas de verdad. El umbral baja a 640px: con 740 entraban
+   telefonos normales en Safari — la barra de direcciones y la de traduccion
+   comen alto — y ahi el video se encogia sin motivo. Aqui no se toca el ancho
+   del video, solo se aprieta el texto, porque reducir la banda era justo lo
+   que hacia que se notara mas el hueco. */
+@media (max-width:760px) and (max-height:640px){
+  .chapter-content h1{font-size:26px;}
+  .chapter-content p{font-size:13px;line-height:1.55;margin-top:14px;}
   .chapter-content p.eyebrow{font-size:10px;}
+  .chapter-cta{margin-top:16px;}
+  .scrub-sticky{padding-bottom:3vh;}
 }
 
 /* ---- manifiesto (fija) ---- */
