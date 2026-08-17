@@ -27,6 +27,12 @@ y `<!-- VARIABLE -->` en cada bloque.
   la única forma de evitarlo es que seguir "reproduciendo" con velocidad 0). Incluye un
   listener de `pause` que reintenta el priming si el navegador lo pausa solo.
   Esta es una lección aprendida en producción — no simplificar ni "arreglar" esta lógica.
+- **Hero en teléfono**: bajo 760px el video va `object-fit:contain` (con `cover` se pierde
+  el 74% del ancho y un video de producto queda decapitado), el texto del hero NO se funde
+  (`opacity:1 !important`, porque con el video contenido los dos extremos del recorrido
+  dejan medio móvil vacío) y `.chapter-content` lleva su propio degradado de fondo. Los
+  tres van juntos: quitar uno rompe a los otros dos. El bloque de pantalla corta arranca en
+  `max-height:640px` y solo aprieta el texto — estrechar la caja del video empeora el hueco.
 - **Reveal-on-scroll**: `IntersectionObserver` + clases `.reveal` / `.reveal-scale`,
   clases de retraso `.d1`-`.d4`.
 - **Firma visual**: línea vertical de acento (`.scroll-spine`) fija en el borde derecho

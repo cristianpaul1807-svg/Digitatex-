@@ -156,25 +156,55 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
    VARIABLE: si el vídeo del cliente es ambiental y no de producto, se puede
    volver a cover en este bloque. */
 @media (max-width:760px){
-  .scrub-bg video{object-fit:contain;object-position:center 30%;}
+  .scrub-bg video{object-fit:contain;object-position:center 24%;}
+  /* La sombra empieza a subir en el 34% y no en el 46%: la banda de vídeo baja
+     hasta donde arranca el texto y no hay forma de separarlos, así que el
+     quinto inferior de la banda — que casi siempre es suelo — se oscurece para
+     devolverle fondo al texto sin comerse el motivo. */
   .scrub-vignette{background:
-    linear-gradient(to bottom, rgba(12,12,13,0.55) 0%, rgba(12,12,13,0) 22%, rgba(12,12,13,0) 46%, rgba(12,12,13,0.93) 72%, rgba(12,12,13,0.97) 100%);}
+    linear-gradient(to bottom, rgba(12,12,13,0.55) 0%, rgba(12,12,13,0) 20%, rgba(12,12,13,0) 34%, rgba(12,12,13,0.72) 46%, rgba(12,12,13,0.93) 62%, rgba(12,12,13,0.97) 100%);}
+  /* El texto del hero NO se funde en el teléfono. El motor lo hace aparecer en
+     el primer 6% del recorrido y desaparecer en el último 12%, para que el
+     vídeo termine limpio. Con un vídeo a pantalla completa eso funciona; con
+     uno contenido — que es lo que hace el bloque de arriba — en los dos
+     extremos queda la banda arriba y medio móvil vacío debajo, y se lee como un
+     fallo de carga. El !important es necesario: el guion escribe la opacidad en
+     el atributo style. */
+  .chapter-content{opacity:1 !important;transform:none !important;}
+  /* Y el bloque de texto lleva su propio fondo. Un degradado general sobre la
+     viñeta no llega: hace falta suelo propio justo detrás de las letras, porque
+     el eyebrow es lo primero que cruza la parte iluminada del fotograma. Se
+     extiende hasta los bordes de la pantalla (los márgenes negativos compensan
+     el padding de section) para que no se lea como una caja pegada encima. */
+  .chapter-content{
+    margin-left:-24px;margin-right:-24px;
+    /* Los 44px de aire arriba son para que el degradado acabe de subir ANTES de
+       la primera línea. Con menos, el eyebrow cae en el tramo claro. */
+    padding:44px 24px 6px;
+    background:linear-gradient(to bottom,
+      rgba(12,12,13,0) 0%, rgba(12,12,13,0.55) 5%,
+      rgba(12,12,13,0.9) 11%, rgba(12,12,13,0.95) 100%);
+  }
   .chapter-content p{font-size:14.5px;line-height:1.7;}
   .chapter-cta{margin-top:24px;gap:10px;}
   .chapter-cta .btn{padding:13px 20px;font-size:11px;}
+  /* La indicación de "scroll" se quita en el teléfono: con el texto siempre
+     visible cae justo encima de los botones. En móvil nadie necesita que le
+     digan que se desliza. */
+  .scroll-cue{display:none;}
 }
 
-/* Pantallas cortas (iPhone SE y similares). Con el vídeo contenido a todo lo
-   ancho, el menú, la banda y el bloque de texto no caben a la vez: en un SE son
-   81 + 211 + 437 = 729 px sobre 667 de pantalla, y la banda acaba pisando el
-   texto. Se estrecha la caja del vídeo — al ir contenido, baja también de alto —
-   y el texto encoge un punto. Comprobar siempre en 375×667, que es donde salta. */
-@media (max-width:760px) and (max-height:740px){
-  .scrub-bg{left:12%;right:12%;}
-  .scrub-bg video{object-position:center 20%;}
-  .chapter-content h1{font-size:28px;}
-  .chapter-content p{font-size:13.5px;line-height:1.6;}
+/* Pantallas cortas de verdad (iPhone SE y similares). El umbral es 640 y no
+   740: con 740 entraban teléfonos normales en Safari — la barra de direcciones
+   y la de traducción comen alto — y el vídeo se encogía sin motivo, que es
+   justo lo que hace que se note más el hueco. Aquí NO se toca el ancho del
+   vídeo: solo se aprieta el texto. Comprobar en 375×667, que es donde salta. */
+@media (max-width:760px) and (max-height:640px){
+  .chapter-content h1{font-size:26px;}
+  .chapter-content p{font-size:13px;line-height:1.55;margin-top:14px;}
   .chapter-content p.eyebrow{font-size:10px;}
+  .chapter-cta{margin-top:16px;}
+  .scrub-sticky{padding-bottom:3vh;}
 }
 
 /* ---- manifiesto (fija) ---- */
