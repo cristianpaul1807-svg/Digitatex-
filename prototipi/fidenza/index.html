@@ -192,13 +192,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
    Con contain se ve el fotograma entero. La banda es mas baja, pero se
    entiende que es una caja de madera montandose. */
 @media (max-width:760px){
-  .scrub-bg video{object-fit:contain;object-position:center 30%;}
+  /* El hero es mas corto en el telefono. Con 340vh se recorren tres pantallas y
+     media de un video de 10 segundos, y el ultimo tramo se pasa en el estado
+     final: banda de video arriba y nada debajo. */
+  .scrub-wrap{height:240vh;}
+  /* El 25% no es estetico: es donde la banda de video queda centrada en el
+     hueco real que hay entre el menu y el texto. Medido en un iPhone: el menu
+     acaba en 81px, el texto empieza en 467, quedan 366 de hueco y la banda mide
+     226. Centrada ahi no pisa ninguno de los dos, y cuando el texto se funde al
+     final del recorrido el producto queda arriba en vez de dejar un vacio. */
+  .scrub-bg video{object-fit:contain;object-position:center 25%;}
   /* la viñeta se aclara arriba para no ensuciar el video ya recortado */
   .scrub-vignette{background:
     linear-gradient(to bottom, rgba(12,12,13,0.55) 0%, rgba(12,12,13,0) 22%, rgba(12,12,13,0) 46%, rgba(12,12,13,0.93) 72%, rgba(12,12,13,0.97) 100%);}
   .chapter-content p{font-size:14.5px;line-height:1.7;}
   .chapter-cta{margin-top:24px;gap:10px;}
   .chapter-cta .btn{padding:13px 20px;font-size:11px;}
+}
+
+/* Pantallas cortas (iPhone SE y similares). Ahi no caben a la vez el menu, la
+   banda de video a todo lo ancho y el bloque de texto: 81 + 211 + 437 son 729
+   sobre 667 de pantalla. Se estrecha la caja del video, que al ir contenido
+   baja tambien de alto — 160px en vez de 211 — y el texto encoge un punto.
+   Sigue viendose el producto entero, que es lo que no se podia sacrificar. */
+@media (max-width:760px) and (max-height:740px){
+  .scrub-bg{left:12%;right:12%;}
+  .scrub-bg video{object-position:center 20%;}
+  .chapter-content h1{font-size:28px;}
+  .chapter-content p{font-size:13.5px;line-height:1.6;}
+  .chapter-content p.eyebrow{font-size:10px;}
 }
 
 /* ---- manifiesto (fija) ---- */
