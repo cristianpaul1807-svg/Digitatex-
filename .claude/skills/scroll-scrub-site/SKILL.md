@@ -59,10 +59,33 @@ y `<!-- VARIABLE -->` en cada bloque.
    `<video id="renov-film">` dentro del hero, ajustando `src`. Las dos palabras del
    indicador de progreso (`.chapter-track`, ej. "Avant"/"Après") se ajustan según lo que
    indique el usuario para ese nicho (ej. "Matière première" → "Produit fini").
-5. **Paleta de acento**: por defecto usa `--brass`/`--brass-2` (latón/dorado) de la
+5. **Fondo de página desde el vídeo** (recomendado cuando el vídeo tiene un
+   entorno reconocible): el corte entre el hero y el resto de la página se nota
+   porque arriba hay un lugar y debajo negro plano. Se resuelve extrayendo un
+   fotograma del propio vídeo del cliente, desenfocándolo fuerte y oscureciéndolo,
+   y poniéndolo como fondo fijo de toda la página:
+
+   ```bash
+   ffmpeg -ss 0.1 -i video.mp4 -frames:v 1 \
+     -vf "gblur=sigma=48,eq=brightness=-0.22:contrast=0.75:saturation=0.5,scale=1600:900" sfondo.jpg
+   ```
+
+   Va en un pseudo-elemento `body::before` con `position:fixed` (nunca
+   `background-attachment:fixed`, que falla en iOS) y un velo plano encima. Las
+   secciones con fondo sólido (`#approach`, `#testimonios`, `.phase`,
+   `.testi-card`) pasan a `rgba(21,21,19,0.55-0.66)` para que la textura las
+   atraviese, y `.scrub-bg` pasa a `transparent`.
+
+   **El velo se mide, no se elige a ojo**: hay que comprobar el punto más claro
+   de la textura contra los cuatro tonos de texto (`--bone`, `--bone-dim`,
+   `--stone`, `--brass-2`). En el caso medido, sin velo `--stone` se quedaba en
+   2.70:1; con 0.64 el peor de los cuatro sube a 4.6:1 y la textura conserva
+   rango suficiente para verse.
+
+6. **Paleta de acento**: por defecto usa `--brass`/`--brass-2` (latón/dorado) de la
    referencia. Si el nicho lo justifica (ej. azul industrial, verde sustentable), ajustar
    SOLO esas dos variables — negro/hueso y todo lo demás queda intacto.
-6. **Logo**: si el cliente tiene logo, usar `.logo-badge` (fondo blanco, esquinas
+7. **Logo**: si el cliente tiene logo, usar `.logo-badge` (fondo blanco, esquinas
    redondeadas, imagen del logo adentro) — nunca ponerlo directamente dentro de `<nav>`
    sin ese contenedor, porque `<nav>` no lleva `mix-blend-mode` (va en `.brand-text` y
    `.navlinks`) precisamente para que un logo con fondo sólido no se invierta de color.

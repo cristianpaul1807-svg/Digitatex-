@@ -69,8 +69,31 @@
   --line-strong:rgba(239,233,221,0.28);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--ink);color:var(--bone);font-family:'Inter',sans-serif;font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+html{scroll-behavior:smooth;background:var(--ink);}
+body{background:transparent;color:var(--bone);font-family:'Inter',sans-serif;font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ---- fondo de la pagina: el mismo sitio donde se rodo el video ----
+   El corte entre el hero y el resto se notaba porque arriba hay una nave
+   industrial y debajo negro plano. Esto es un fotograma del propio video, muy
+   desenfocado y oscurecido, asi que la pagina entera respira el mismo espacio.
+
+   El velo de 0.64 no es estetico, es medido: el punto mas claro de la textura
+   esta en gris 71, y sin velo las etiquetas en --stone se quedaban en 2.70:1.
+   Con este velo el peor de los cuatro tonos de texto sube a 4.6:1 y la textura
+   conserva 22 niveles de rango, que es suficiente para que se vea.
+
+   Va en un pseudo-elemento position:fixed y no con background-attachment:fixed
+   porque esa propiedad se comporta mal en iOS. */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(12,12,13,0.64), rgba(12,12,13,0.64)),
+    url('sfondo.jpg') center center / cover no-repeat;
+}
 ::selection{background:var(--brass);color:var(--ink);}
 h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.01em;}
 a{color:inherit;text-decoration:none;}
@@ -136,7 +159,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
 /* ---- hero scroll-scrub (fija) ---- */
 .scrub-wrap{position:relative;height:340vh;}
 .scrub-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:9vh;}
-.scrub-bg{position:absolute;inset:0;z-index:0;background:var(--ink);}
+.scrub-bg{position:absolute;inset:0;z-index:0;background:transparent;}
 .scrub-bg video{width:100%;height:100%;object-fit:cover;display:block;}
 .scrub-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(12,12,13,0.92) 10%, transparent 60%),linear-gradient(to bottom, rgba(12,12,13,0.6) 0%, rgba(12,12,13,0.08) 32%, rgba(12,12,13,0.9) 100%);}
 .chapter-index{position:absolute;top:104px;left:48px;z-index:2;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--stone);letter-spacing:0.05em;}
@@ -209,26 +232,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
 @media (max-width:760px){ .service-row{grid-template-columns:40px 1fr;row-gap:14px;} .service-list-items{grid-column:1/-1;} .service-arrow{display:none;} }
 
 /* ---- proceso (fija) ---- */
-#approach{padding-top:16vh;padding-bottom:16vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+#approach{padding-top:16vh;padding-bottom:16vh;background:rgba(21,21,19,0.66);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .approach-head{max-width:52ch;margin-bottom:72px;}
 .approach-head h2{font-size:clamp(30px,4vw,50px);margin-top:20px;}
 .approach-head p{margin-top:20px;font-size:15px;color:var(--bone-dim);line-height:1.8;}
 .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
-.phase{background:var(--ink-2);padding:44px 36px;position:relative;}
+.phase{background:rgba(21,21,19,0.55);padding:44px 36px;position:relative;}
 .phase-index{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--brass-2);}
 .phase h3{font-size:22px;margin-top:22px;font-weight:400;}
 .phase p{margin-top:14px;font-size:13.5px;color:var(--bone-dim);line-height:1.8;}
 @media (max-width:860px){ .phases{grid-template-columns:1fr;} }
 
 /* ---- testimonios (fija) ---- */
-#testimonios{padding-top:14vh;padding-bottom:14vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+#testimonios{padding-top:14vh;padding-bottom:14vh;background:rgba(21,21,19,0.66);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .testi-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap;}
 .testi-head h2{font-size:clamp(28px,3.6vw,46px);max-width:16ch;}
 .google-badge{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--bone-dim);}
 .google-badge .stars{color:var(--brass-2);letter-spacing:2px;font-size:14px;}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
 @media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
-.testi-card{background:var(--ink-2);padding:36px 32px;}
+.testi-card{background:rgba(21,21,19,0.55);padding:36px 32px;}
 .testi-card .stars{color:var(--brass-2);letter-spacing:2px;font-size:13px;margin-bottom:18px;}
 .testi-card p{font-size:14.5px;line-height:1.85;color:var(--bone-dim);}
 .testi-card .author{margin-top:22px;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--bone);}
