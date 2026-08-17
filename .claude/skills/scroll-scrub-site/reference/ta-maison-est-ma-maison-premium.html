@@ -471,7 +471,18 @@ function initScrubChapters() {
     const cue = wrap.querySelector('.scroll-cue');
     const state = { wrap, video, content, fill, cue, ready: false, duration: 0 };
     if (video) {
-      video.addEventListener('loadedmetadata', () => { state.ready = true; state.duration = video.duration; });
+      /* La comprobación de readyState no es redundante: es lo que impide que el
+         hero se quede congelado. El recorrido solo se activa cuando ready pasa a
+         true, y antes eso ocurría únicamente dentro del oyente de
+         loadedmetadata. Si el vídeo ya tenía metadatos cuando arranca el motor
+         —conexión rápida, vídeo en caché, archivo pequeño— ese evento YA había
+         disparado, el oyente no llegaba a ejecutarse nunca y ready se quedaba en
+         false: el vídeo cargaba, se veía el primer fotograma, y no se movía con
+         el scroll. Medido en un caso real: readyState=4 ya en DOMContentLoaded.
+         No quitar la segunda línea. */
+      const markReady = () => { state.ready = true; state.duration = video.duration; };
+      video.addEventListener('loadedmetadata', markReady);
+      if (video.readyState >= 1) markReady();
       // Safari muestra su botón de play nativo sobre cualquier <video> "pausado",
       // sin importar cómo llegó a ese estado. La única forma de evitarlo es que
       // el video esté genuinamente en reproducción (video.paused=false), así que
