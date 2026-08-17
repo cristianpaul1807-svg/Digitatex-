@@ -27,12 +27,13 @@ y `<!-- VARIABLE -->` en cada bloque.
   la única forma de evitarlo es que seguir "reproduciendo" con velocidad 0). Incluye un
   listener de `pause` que reintenta el priming si el navegador lo pausa solo.
   Esta es una lección aprendida en producción — no simplificar ni "arreglar" esta lógica.
-- **Hero en teléfono**: bajo 760px el video va `object-fit:contain` (con `cover` se pierde
-  el 74% del ancho y un video de producto queda decapitado), el texto del hero NO se funde
-  (`opacity:1 !important`, porque con el video contenido los dos extremos del recorrido
-  dejan medio móvil vacío) y `.chapter-content` lleva su propio degradado de fondo. Los
-  tres van juntos: quitar uno rompe a los otros dos. El bloque de pantalla corta arranca en
-  `max-height:640px` y solo aprieta el texto — estrechar la caja del video empeora el hueco.
+- **Hero en teléfono**: bajo 760px el video va `object-fit:contain` (con `cover` a pantalla
+  completa se pierde el 74% del ancho y un video de producto queda decapitado), el texto
+  del hero NO se funde (`opacity:1 !important`, porque con el video contenido los dos
+  extremos del recorrido dejan medio móvil vacío) y `.chapter-content` lleva su propio
+  degradado de fondo. Los tres van juntos: quitar uno rompe a los otros dos. El bloque de
+  pantalla corta arranca en `max-height:640px` y solo aprieta el texto — estrechar la caja
+  del video empeora el hueco. Ver el punto 5 para quitarle el recuadro a esa banda.
 - **Reveal-on-scroll**: `IntersectionObserver` + clases `.reveal` / `.reveal-scale`,
   clases de retraso `.d1`-`.d4`.
 - **Firma visual**: línea vertical de acento (`.scroll-spine`) fija en el borde derecho
@@ -87,6 +88,33 @@ y `<!-- VARIABLE -->` en cada bloque.
    `--stone`, `--brass-2`). En el caso medido, sin velo `--stone` se quedaba en
    2.70:1; con 0.64 el peor de los cuatro sube a 4.6:1 y la textura conserva
    rango suficiente para verse.
+
+   **Y ese mismo fotograma quita el recuadro del hero en el teléfono.** Con el
+   vídeo contenido, la banda queda como un rectángulo pegado sobre negro plano,
+   con dos bordes duros. La receta, toda dentro del bloque `@media
+   (max-width:760px)`:
+
+   - `.scrub-bg::before` con el fotograma otra vez, pero con la mitad de velo y
+     `background-size:100% 100%` (estirado, no `cover`: así el horizonte cae más
+     o menos donde toca en vez de quedar un campo plano de suelo ampliado). Es la
+     sala del vídeo continuada por toda la pantalla.
+   - La banda arranca en `top:0`, no centrada en el hueco. El menú va fijo y
+     flota sobre ella, y esa parte del fotograma suele ser pared vacía.
+   - Se recorta por los lados con `object-fit:cover` y un alto explícito:
+     `height:min(max(100vw * 0.5625/f, 40vh), 100vw * 0.879)`, donde `f` es la
+     fracción del ancho del fotograma que hay que conservar. **`f` se mide, no se
+     elige**: hay que sacar fotogramas a lo largo del vídeo y buscar los
+     extremos horizontales del producto — si vive entre el 22% y el 82%, `f=0.80`
+     es seguro y la banda crece un 25%.
+   - `mask-image:linear-gradient(to bottom,#000 0%,#000 74%,transparent 100%)` en
+     el vídeo, y otra máscara parecida en `.scrub-bg::before`, para que ni el
+     borde de la banda ni el borde inferior del hero pegajoso dejen escalón.
+   - `.chapter-index{display:none}`: con la banda arriba del todo, cae encima
+     del producto.
+
+   Efecto secundario que interesa: mientras el vídeo no ha decodificado, lo que
+   se ve es la sala desenfocada con la silueta del producto, nunca una caja
+   negra.
 
 6. **Paleta de acento**: por defecto usa `--brass`/`--brass-2` (latón/dorado) de la
    referencia. Si el nicho lo justifica (ej. azul industrial, verde sustentable), ajustar
