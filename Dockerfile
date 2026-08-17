@@ -12,6 +12,9 @@ COPY assets/ /usr/share/nginx/html/assets/
 # sea /links: nginx sirve el index.html de dentro. Si esta linea falta, la
 # pagina existe en el repositorio y da 404 en produccion.
 COPY links/ /usr/share/nginx/html/links/
+# Prototipos que se ensenan a clientes antes de contratar. Van sin indexar y
+# fuera del sitemap: son webs de otras empresas, no contenido de Digitatex.
+COPY prototipi/ /usr/share/nginx/html/prototipi/
 
 EXPOSE 80
 
