@@ -9,4 +9,8 @@ Disallow: /supabase-setup.sql
 # encima de la web real. La pagina lleva ademas su propia etiqueta noindex.
 Disallow: /links
 
+# Los prototipos son webs de otras empresas alojadas aqui temporalmente para
+# ensenarlas. Indexarlas bajo nuestro dominio les haria competencia a ellas.
+Disallow: /prototipi
+
 Sitemap: https://digitatex.com/sitemap.xml

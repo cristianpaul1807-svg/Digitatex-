@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- VARIABLE: title tag -->
+<title>Imballaggi Industriali in Legno per Export — Fidenza Service Srl | Fidenza (PR)</title>
+<!-- VARIABLE: meta description -->
+<meta name="description" content="Casse e gabbie in legno su misura, imballaggio barriera e pallet per spedizioni industriali ed export. Fidenza, Parma ed Emilia-Romagna. Preventivo gratuito.">
+<!-- Alojado en digitatex.com como prototipo para ensenar al cliente, asi que NO
+     se indexa: es la web de otra empresa y no debe aparecer en Google bajo
+     nuestro dominio ni competir con la suya cuando la tenga. Cuando el
+     prototipo se convierta en su web, en su dominio, esto vuelve a
+     "index, follow" y el canonical apunta a su direccion real. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://digitatex.com/prototipi/fidenza/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fidenza Service Srl">
+<meta property="og:title" content="Imballaggi Industriali in Legno per Export — Fidenza Service Srl">
+<meta property="og:description" content="Casse su misura, imballaggio barriera e pallet per spedizioni industriali. Fidenza (PR).">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- VARIABLE: JSON-LD — datos estructurados del negocio para Google.
+     DESACTIVADO EN EL PROTOTIPO A PROPOSITO. Publicar datos de contacto
+     inventados de una empresa real, en formato legible por maquinas y bajo otro
+     dominio, es peor que no publicarlos: lo recogen agregadores y directorios.
+     Se reactiva quitando los comentarios cuando el cliente confirme telefono,
+     direccion y web reales, y ya en su propio dominio.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Fidenza Service Srl",
+  "description": "Imballaggi industriali in legno su misura, imballaggio barriera e pallet per spedizioni ed export.",
+  "url": "PENDIENTE",
+  "telephone": "PENDIENTE",
+  "priceRange": "$$",
+  "address": { "@type": "PostalAddress", "addressLocality": "Fidenza", "addressRegion": "PR", "addressCountry": "IT" },
+  "areaServed": [{ "@type": "AdministrativeArea", "name": "Emilia-Romagna" }]
+}
+</script>
+-->
+
+<style>
+/* ============================================================================
+   BASE FIJA — sistema de diseño scroll-scrub-site. NO MODIFICAR estructura,
+   selectores, mecánica de scroll ni tipografía entre generaciones. La única
+   variable de color permitida es --brass / --brass-2 (ver comentario abajo).
+   ============================================================================ */
+:root{
+  --ink:#0c0c0d;
+  --ink-2:#151513;
+  --bone:#efe9dd;
+  --bone-dim:#c9c2b2;
+  --stone:#8f8a7d;
+  /* VARIABLE: paleta de acento. El nicho lo justifica — el film barrera del
+     video es azul industrial (#244E86 medido del propio video). Ese tono crudo
+     da 2.34:1 sobre el fondo negro, inservible para texto, asi que la escala se
+     sube hasta que cumple: --brass-2 llega a 8.86:1 como texto sobre el fondo,
+     y --brass a 4.90:1 con el texto oscuro encima en el relleno del boton. */
+  --brass-0:#1b3a63;
+  --brass:#3d82cc;
+  --brass-2:#7fb3e8;
+  --line:rgba(239,233,221,0.14);
+  --line-strong:rgba(239,233,221,0.28);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--bone);font-family:'Inter',sans-serif;font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--brass);color:var(--ink);}
+h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-0.01em;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+.eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-2);font-weight:500;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--brass);display:inline-block;}
+section{position:relative;padding:0 48px;}
+@media (max-width:760px){ section{padding:0 24px;} }
+.wrap{max-width:1180px;margin:0 auto;}
+
+/* ---- nav (fija) ---- */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:26px 48px;}
+.brand-mark{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-size:15px;letter-spacing:0.02em;font-weight:500;}
+.brand-text{mix-blend-mode:difference;}
+.brand-text .accent{color:var(--brass-2);}
+.logo-badge{display:flex;align-items:center;flex-shrink:0;background:#ffffff;border-radius:14px;padding:8px 12px;box-shadow:0 2px 12px rgba(0,0,0,0.28);}
+.logo-badge img{height:34px;width:auto;display:block;}
+@media (max-width:760px){ .brand-mark{gap:8px;} .brand-text{font-size:13px;} .logo-badge{padding:6px 9px;border-radius:11px;} .logo-badge img{height:22px;} }
+.navlinks{display:flex;gap:36px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:difference;}
+.navlinks a{opacity:0.75;transition:opacity .3s;}
+.navlinks a:hover,.navlinks a.current{opacity:1;}
+@media (max-width:760px){ .navlinks{display:none;} nav{padding:22px 24px;} }
+.nav-toggle{display:none;background:none;border:none;color:var(--bone);cursor:pointer;padding:6px;mix-blend-mode:difference;}
+.nav-toggle svg{width:22px;height:22px;}
+.nav-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:58;opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.nav-backdrop.open{opacity:1;pointer-events:auto;}
+.nav-drawer-close{display:none;}
+@media (max-width:760px){
+  .nav-toggle{display:block;} .nav-backdrop{display:block;}
+  .navlinks{display:flex;position:fixed;top:0;left:0;bottom:0;width:78vw;max-width:300px;z-index:64;background:var(--ink-2);border-right:1px solid var(--line-strong);flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:88px 32px 32px;font-size:15px;mix-blend-mode:normal;transform:translateX(-100%);transition:transform .35s cubic-bezier(.22,1,.36,1);box-shadow:20px 0 60px rgba(0,0,0,0.4);}
+  .navlinks.mobile-open{transform:translateX(0);}
+  .navlinks a{width:100%;padding:16px 0;border-bottom:1px solid var(--line);opacity:1;}
+  .nav-drawer-close{display:flex;position:absolute;top:26px;right:24px;background:none;border:none;color:var(--bone-dim);cursor:pointer;padding:6px;}
+  .nav-drawer-close svg{width:20px;height:20px;}
+}
+
+/* ---- barra de progreso horizontal (fija) ---- */
+.page-progress{position:fixed;top:0;left:0;height:2px;background:var(--brass-2);z-index:70;width:0%;box-shadow:0 0 10px 1px var(--brass);}
+
+/* ---- firma visual: línea vertical de acento (fija) ---- */
+.scroll-spine{position:fixed;top:0;right:22px;width:2px;height:100vh;z-index:70;background:var(--line);pointer-events:none;}
+.scroll-spine .fill{position:absolute;top:0;left:0;width:100%;height:0%;background:linear-gradient(to bottom, var(--brass-2), var(--brass));}
+.scroll-spine .dot{position:absolute;left:50%;top:0%;width:7px;height:7px;border-radius:50%;background:var(--brass-2);box-shadow:0 0 10px 2px var(--brass);transform:translate(-50%,-50%);}
+@media (max-width:760px){ .scroll-spine{display:none;} }
+
+/* ---- botones (fija) ---- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border:1px solid var(--line-strong);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;transition:all .35s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;background:none;cursor:pointer;color:var(--bone);font-family:'Inter',sans-serif;}
+.btn span{position:relative;z-index:1;transition:color .35s;}
+.btn::before{content:'';position:absolute;inset:0;background:var(--brass);transform:translateY(101%);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.btn:hover::before{transform:translateY(0);}
+.btn:hover span{color:var(--ink);}
+.btn:hover{border-color:var(--brass);}
+.btn svg{width:14px;height:14px;position:relative;z-index:1;}
+.btn-ghost{border-color:var(--line-strong);}
+
+/* ---- reveal-on-scroll (fija) ---- */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-scale{opacity:0;transform:scale(0.96);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);}
+.reveal-scale.in{opacity:1;transform:scale(1);}
+.d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;} .d4{transition-delay:.32s;}
+
+/* ---- hero scroll-scrub (fija) ---- */
+.scrub-wrap{position:relative;height:340vh;}
+.scrub-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:9vh;}
+.scrub-bg{position:absolute;inset:0;z-index:0;background:var(--ink);}
+.scrub-bg video{width:100%;height:100%;object-fit:cover;display:block;}
+.scrub-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(12,12,13,0.92) 10%, transparent 60%),linear-gradient(to bottom, rgba(12,12,13,0.6) 0%, rgba(12,12,13,0.08) 32%, rgba(12,12,13,0.9) 100%);}
+.chapter-index{position:absolute;top:104px;left:48px;z-index:2;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--stone);letter-spacing:0.05em;}
+@media (max-width:760px){ .chapter-index{left:24px;top:96px;} }
+.chapter-track{position:absolute;top:106px;right:48px;z-index:2;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--bone-dim);}
+.chapter-track .track{width:100px;height:1px;background:var(--line-strong);position:relative;}
+.chapter-track .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--brass-2);}
+@media (max-width:760px){ .chapter-track{display:none;} }
+.chapter-content{position:relative;z-index:2;max-width:640px;transition:opacity .3s linear, transform .3s linear;}
+@media (min-width:861px){ .chapter-content{margin-left:44px;} }
+.chapter-content h1{font-size:clamp(34px,5.4vw,68px);line-height:1.02;font-weight:400;}
+.chapter-content p{margin-top:20px;font-size:15.5px;line-height:1.75;color:var(--bone-dim);max-width:46ch;}
+.chapter-cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;}
+.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone-dim);}
+.scroll-cue .line{width:1px;height:40px;background:linear-gradient(to bottom, var(--brass), transparent);animation:pulseline 2.2s ease-in-out infinite;}
+@keyframes pulseline{0%,100%{opacity:0.3;}50%{opacity:1;}}
+
+/* ---- manifiesto (fija) ---- */
+#manifesto{padding-top:15vh;padding-bottom:15vh;}
+.manifesto-grid{display:grid;grid-template-columns:0.9fr 1.4fr;gap:60px;align-items:start;}
+@media (max-width:860px){ .manifesto-grid{grid-template-columns:1fr;} }
+#manifesto .eyebrow{margin-bottom:24px;}
+.manifesto-stat{margin-top:56px;display:flex;gap:44px;flex-wrap:wrap;}
+.stat-num{font-family:'Fraunces',serif;font-size:40px;color:var(--brass-2);line-height:1;}
+.stat-label{font-size:12px;color:var(--bone-dim);margin-top:8px;max-width:16ch;letter-spacing:0.02em;}
+.manifesto-lead{font-size:clamp(26px,3.4vw,44px);line-height:1.28;font-weight:300;}
+.manifesto-lead .accent{color:var(--brass-2);font-style:italic;}
+.manifesto-body{margin-top:28px;font-size:16px;line-height:1.85;color:var(--bone-dim);max-width:58ch;}
+
+/* ---- servicios (fija) ---- */
+#services{padding-top:14vh;padding-bottom:10vh;border-top:1px solid var(--line);}
+.services-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:64px;flex-wrap:wrap;}
+.services-head h2{font-size:clamp(30px,4vw,54px);max-width:14ch;font-weight:400;}
+.services-head p{max-width:36ch;font-size:14px;color:var(--bone-dim);line-height:1.7;}
+.service-list{display:flex;flex-direction:column;}
+.service-row{display:grid;grid-template-columns:70px 1fr 1.1fr 90px;gap:32px;align-items:center;padding:40px 0;border-top:1px solid var(--line);transition:background .4s;cursor:default;}
+.service-row:last-child{border-bottom:1px solid var(--line);}
+.service-row:hover{background:rgba(239,233,221,0.025);}
+.service-num{font-family:'Fraunces',serif;font-size:14px;color:var(--stone);font-style:italic;}
+.service-name{font-family:'Fraunces',serif;font-size:clamp(22px,2.6vw,32px);font-weight:400;}
+.service-list-items{font-size:13px;color:var(--bone-dim);line-height:2;letter-spacing:0.01em;}
+.service-arrow{width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;justify-self:end;transition:all .4s cubic-bezier(.22,1,.36,1);}
+.service-row:hover .service-arrow{background:var(--brass);border-color:var(--brass);transform:rotate(45deg);}
+.service-arrow svg{width:14px;height:14px;transition:stroke .4s;}
+.service-row:hover .service-arrow svg{stroke:var(--ink);}
+@media (max-width:760px){ .service-row{grid-template-columns:40px 1fr;row-gap:14px;} .service-list-items{grid-column:1/-1;} .service-arrow{display:none;} }
+
+/* ---- proceso (fija) ---- */
+#approach{padding-top:16vh;padding-bottom:16vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.approach-head{max-width:52ch;margin-bottom:72px;}
+.approach-head h2{font-size:clamp(30px,4vw,50px);margin-top:20px;}
+.approach-head p{margin-top:20px;font-size:15px;color:var(--bone-dim);line-height:1.8;}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+.phase{background:var(--ink-2);padding:44px 36px;position:relative;}
+.phase-index{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--brass-2);}
+.phase h3{font-size:22px;margin-top:22px;font-weight:400;}
+.phase p{margin-top:14px;font-size:13.5px;color:var(--bone-dim);line-height:1.8;}
+@media (max-width:860px){ .phases{grid-template-columns:1fr;} }
+
+/* ---- testimonios (fija) ---- */
+#testimonios{padding-top:14vh;padding-bottom:14vh;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.testi-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap;}
+.testi-head h2{font-size:clamp(28px,3.6vw,46px);max-width:16ch;}
+.google-badge{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--bone-dim);}
+.google-badge .stars{color:var(--brass-2);letter-spacing:2px;font-size:14px;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+@media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+.testi-card{background:var(--ink-2);padding:36px 32px;}
+.testi-card .stars{color:var(--brass-2);letter-spacing:2px;font-size:13px;margin-bottom:18px;}
+.testi-card p{font-size:14.5px;line-height:1.85;color:var(--bone-dim);}
+.testi-card .author{margin-top:22px;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--bone);}
+
+/* ---- CTA + formulario (fija) ---- */
+#contact{padding-top:16vh;padding-bottom:8vh;position:relative;overflow:hidden;}
+.cta-core{text-align:center;max-width:760px;margin:0 auto;}
+#contact h2{font-size:clamp(38px,6.4vw,80px);line-height:1.02;}
+#contact h2 em{font-style:italic;color:var(--brass-2);}
+.cta-actions{display:flex;justify-content:center;gap:18px;margin-top:44px;flex-wrap:wrap;}
+#contact-form-section{padding-top:10vh;padding-bottom:16vh;}
+#lead-form{scroll-margin-top:100px;}
+.contact-form-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:start;max-width:1180px;margin:0 auto;}
+@media (max-width:900px){ .contact-form-grid{grid-template-columns:1fr;gap:48px;} }
+.contact-col h4{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass-2);margin-bottom:16px;}
+.contact-col p, .contact-col a{font-size:14px;line-height:2;color:var(--bone-dim);display:block;}
+.contact-col a:hover{color:var(--brass-2);}
+.lead-form{display:flex;flex-direction:column;gap:22px;}
+.field label{display:block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin-bottom:10px;}
+.field input,.field textarea,.field select{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-strong);color:var(--bone);font-family:'Inter',sans-serif;font-size:15px;padding:10px 0;outline:none;transition:border-color .3s;}
+.field textarea{resize:vertical;min-height:110px;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--brass-2);}
+.field select option{background:var(--ink);}
+.lead-form .submit-row{margin-top:10px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.form-status{font-size:13px;color:var(--bone-dim);}
+.form-status.ok{color:var(--brass-2);}
+.form-status.err{color:#e08a82;}
+
+/* ---- footer (fija) ---- */
+footer{padding:28px 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;font-size:11px;color:var(--stone);letter-spacing:0.04em;}
+footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
+@media (max-width:760px){ footer{flex-direction:column;gap:10px;padding:24px;} footer .tagline{order:-1;} }
+
+/* VARIABLE: aviso de prototipo. Se quita al publicar. Existe para que nadie
+   confunda una demo con la web en produccion. */
+.demo-flag{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--brass);color:var(--ink);
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;padding:7px 16px;font-weight:600;}
+@media (max-width:760px){ .demo-flag{font-size:9.5px;padding:6px 10px;} }
+</style>
+</head>
+<body>
+
+<div class="page-progress" id="page-progress"></div>
+<div class="scroll-spine" id="scroll-spine"><div class="fill"></div><div class="dot"></div></div>
+
+<!-- VARIABLE: sin logo del cliente todavia -> se quita .logo-badge y queda el texto -->
+<nav>
+  <div class="brand-mark">
+    <span class="brand-text">FIDENZA <span class="accent">SERVICE</span></span>
+  </div>
+  <div class="navlinks">
+    <a href="#hero" class="current">Home</a>
+    <a href="#services">Servizi</a>
+    <a href="#approach">Processo</a>
+    <a href="#testimonios">Clienti</a>
+    <a href="#lead-form">Contatti</a>
+  </div>
+</nav>
+
+<!-- ============================================================================
+     HERO — scroll-scrubbed video.
+     ============================================================================ -->
+<div class="scrub-wrap" id="hero">
+  <section class="scrub-sticky">
+    <div class="scrub-bg">
+      <video id="renov-film" class="scrub-video" muted playsinline webkit-playsinline="true" autoplay preload="auto"
+        disablePictureInPicture disableRemotePlayback controlsList="nodownload noplaybackrate nofullscreen">
+        <source src="hero-imballaggio.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="scrub-vignette"></div>
+    <span class="chapter-index">01 — Imballaggio</span>
+    <div class="chapter-track"><span>Legno grezzo</span><span class="track"><span class="fill"></span></span><span>Pronto a partire</span></div>
+    <div class="chapter-content">
+      <p class="eyebrow">Imballaggi industriali · Fidenza (PR)</p>
+      <h1>Parte intero.<br>E <em style="font-style:italic;color:var(--brass-2);">arriva</em> intero.</h1>
+      <p>Casse in legno costruite sulla misura del pezzo, chiuse con barriera contro umidità e salsedine. Perché un macchinario danneggiato in viaggio non è un problema di trasporto: è un problema di imballaggio.</p>
+      <div class="chapter-cta">
+        <a href="#lead-form" class="btn"><span>Richiedi un preventivo</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#services" class="btn btn-ghost"><span>I nostri servizi</span></a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>Scorri per vedere</span><span class="line"></span></div>
+  </section>
+</div>
+
+<!-- ============================================================================
+     MANIFIESTO
+     ============================================================================ -->
+<section id="manifesto">
+  <div class="wrap manifesto-grid">
+    <div class="reveal">
+      <p class="eyebrow">Come lavoriamo</p>
+      <!-- PENDIENTE: estas dos cifras describen el metodo, no la empresa, porque
+           no se han verificado datos suyos. Sustituir por las reales (anni di
+           attivita, pezzi imballati, ecc.) cuando el cliente las confirme. -->
+      <div class="manifesto-stat">
+        <div><div class="stat-num">1:1</div><div class="stat-label">ogni cassa costruita sulla misura esatta del pezzo</div></div>
+        <div><div class="stat-num">ISPM-15</div><div class="stat-label">standard fitosanitario richiesto fuori dall'Unione Europea</div></div>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <p class="manifesto-lead">L'imballaggio si nota solo <span class="accent">quando qualcosa è andato storto.</span></p>
+      <p class="manifesto-body">Un pezzo che arriva ossidato, un angolo schiacciato, una cassa respinta in dogana perché il legno non è trattato. Sono tutti costi che non compaiono nel preventivo del trasporto, e che paga sempre chi spedisce. Per questo misuriamo il pezzo prima di tagliare il primo listello: la cassa nasce intorno alla merce, non il contrario.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     SERVIZI
+     ============================================================================ -->
+<section id="services">
+  <div class="wrap">
+    <div class="services-head reveal">
+      <h2>Cosa costruiamo<br>e come lo chiudiamo.</h2>
+      <p>Dal pezzo singolo fuori misura alla fornitura continuativa per linee di produzione.</p>
+    </div>
+    <div class="service-list">
+      <div class="service-row reveal">
+        <span class="service-num">01</span>
+        <span class="service-name">Casse e gabbie in legno</span>
+        <span class="service-list-items">Su misura sul pezzo · Legno e compensato · Rinforzi interni</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="service-row reveal">
+        <span class="service-num">02</span>
+        <span class="service-name">Imballaggio barriera</span>
+        <span class="service-list-items">Film barriera · Essiccante · Protezione da umidità e salsedine</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="service-row reveal">
+        <span class="service-num">03</span>
+        <span class="service-name">Pallet e basi su misura</span>
+        <span class="service-list-items">Pallet · Slitte · Basi rinforzate per carichi pesanti</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="service-row reveal">
+        <span class="service-num">04</span>
+        <span class="service-name">Imballaggio presso il cliente</span>
+        <span class="service-list-items">Macchinari non movimentabili · Intervento in sede · Fissaggio e stivaggio</span>
+        <span class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#efe9dd" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     PROCESO EN 3 FASES
+     ============================================================================ -->
+<section id="approach">
+  <div class="wrap">
+    <div class="approach-head reveal">
+      <p class="eyebrow">Il processo</p>
+      <h2>Tre passaggi, sempre<br>nello stesso ordine.</h2>
+      <p>Nessuna cassa esce senza che le tre fasi siano state fatte e verificate.</p>
+    </div>
+    <div class="phases">
+      <div class="phase reveal">
+        <span class="phase-index">01</span>
+        <h3>Rilievo e misura</h3>
+        <p>Si misura il pezzo, si valuta il peso, i punti di appoggio e come verrà movimentato. Da qui esce il disegno della cassa, non da un catalogo di misure standard.</p>
+      </div>
+      <div class="phase reveal d1">
+        <span class="phase-index">02</span>
+        <h3>Costruzione</h3>
+        <p>Struttura, pannellatura e rinforzi interni perché la merce non si muova. Il legno destinato fuori dall'Unione Europea va trattato secondo lo standard fitosanitario ISPM-15.</p>
+      </div>
+      <div class="phase reveal d2">
+        <span class="phase-index">03</span>
+        <h3>Barriera e chiusura</h3>
+        <p>Film barriera ed essiccante contro condensa e salsedine, poi chiusura e marcatura. È la fase che decide se il pezzo arriva asciutto dopo settimane di nave.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     TESTIMONIOS — placeholders. Nunca inventar resenas.
+     ============================================================================ -->
+<section id="testimonios">
+  <div class="wrap">
+    <div class="testi-head reveal">
+      <h2>Cosa dicono<br>i nostri clienti.</h2>
+      <div class="google-badge"><span class="stars">★★★★★</span><span>Recensioni da raccogliere</span></div>
+    </div>
+    <div class="testi-grid">
+      <!-- PENDIENTE: tres recensiones REALES del cliente. Estos textos son
+           marcadores visibles a proposito: una resena inventada en la web de una
+           empresa es publicidad enganosa, no relleno. -->
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Esempio di recensione — da sostituire con un commento reale di un cliente."</p>
+        <div class="author">— Cliente, settore da definire</div>
+      </div>
+      <div class="testi-card reveal d1">
+        <div class="stars">★★★★★</div>
+        <p>"Esempio di recensione — da sostituire con un commento reale di un cliente."</p>
+        <div class="author">— Cliente, settore da definire</div>
+      </div>
+      <div class="testi-card reveal d2">
+        <div class="stars">★★★★★</div>
+        <p>"Esempio di recensione — da sostituire con un commento reale di un cliente."</p>
+        <div class="author">— Cliente, settore da definire</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================================
+     CTA + FORMULARIO + FOOTER
+     ============================================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-core reveal">
+      <p class="eyebrow" style="justify-content:center;">Pronti a spedire</p>
+      <h2 style="margin-top:20px;">Dicci cosa devi<br><em>spedire</em>.</h2>
+    </div>
+  </div>
+</section>
+
+<section id="contact-form-section">
+  <div class="contact-form-grid">
+    <div class="reveal">
+      <!-- PENDIENTE: datos de contacto reales del cliente -->
+      <div class="contact-col" style="margin-bottom:40px;">
+        <h4>Contatto diretto</h4>
+        <a href="mailto:info@esempio.it">info@esempio.it</a>
+        <a href="tel:+390000000000">+39 000 000 0000</a>
+      </div>
+      <div class="contact-col" style="margin-bottom:40px;">
+        <h4>Sede</h4>
+        <p>Fidenza (PR) — Emilia-Romagna</p>
+      </div>
+      <div class="contact-col">
+        <h4>Orari</h4>
+        <p>Lunedì - Venerdì: 8:00 - 18:00</p>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <!-- VARIABLE: campos adaptados al sector — lo que hace falta para cotizar
+           un imballaggio es la merce, las medidas, el peso y el destino. -->
+      <form id="lead-form" class="lead-form">
+        <div class="field"><label for="name">Nome e cognome *</label><input type="text" id="name" name="name" required></div>
+        <div class="field"><label for="company">Azienda *</label><input type="text" id="company" name="company" required></div>
+        <div class="field"><label for="phone">Telefono *</label><input type="tel" id="phone" name="phone" required></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" name="email"></div>
+        <div class="field">
+          <label for="destination">Destinazione</label>
+          <select id="destination" name="destination">
+            <option value="">Seleziona…</option>
+            <option value="italia">Italia</option>
+            <option value="ue">Unione Europea</option>
+            <option value="extra-ue">Fuori dall'Unione Europea (serve ISPM-15)</option>
+            <option value="non-so">Non lo so ancora</option>
+          </select>
+        </div>
+        <div class="field"><label for="goods">Cosa devi imballare — misure e peso indicativi *</label><textarea id="goods" name="goods" required placeholder="Es. macchinario 2,4 × 1,2 × 1,8 m, circa 1.400 kg, spedizione via mare"></textarea></div>
+        <div class="submit-row">
+          <button type="submit" class="btn"><span>Richiedi preventivo gratuito</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span id="form-status" class="form-status"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Fidenza Service Srl</span>
+  <span class="tagline">Imballaggi industriali in legno — Fidenza (PR), Emilia-Romagna</span>
+</footer>
+
+<div class="demo-flag">Prototipo Digitatex · contenuti e dati aziendali da confermare</div>
+
+<script>
+/* ============================================================================
+   BASE FIJA — motor de scroll-scrub + reveal + progreso. NO MODIFICAR.
+   ============================================================================ */
+
+function initScrubChapters() {
+  const chapters = Array.from(document.querySelectorAll('.scrub-wrap')).map((wrap) => {
+    const video = wrap.querySelector('video');
+    const content = wrap.querySelector('.chapter-content');
+    const fill = wrap.querySelector('.chapter-track .fill');
+    const cue = wrap.querySelector('.scroll-cue');
+    const state = { wrap, video, content, fill, cue, ready: false, duration: 0 };
+    if (video) {
+      /* CORRECCION SOBRE LA BASE — condicion de carrera.
+         Antes el recorrido solo se activaba dentro del oyente de loadedmetadata.
+         Si el video ya tenia metadatos cuando arranca el motor (conexion rapida,
+         video en cache, archivo pequeno), ese evento YA habia disparado, el
+         oyente no se ejecutaba nunca y state.ready se quedaba en false para
+         siempre: el video cargaba, se veia el primer fotograma, y no se movia
+         con el scroll. Medido aqui: readyState=4 ya en DOMContentLoaded.
+         Por eso, ademas del oyente, se comprueba el estado actual. */
+      const marcarListo = () => { state.ready = true; state.duration = video.duration; };
+      video.addEventListener('loadedmetadata', marcarListo);
+      if (video.readyState >= 1) marcarListo();
+      // Safari muestra su botón de play nativo sobre cualquier <video> "pausado",
+      // sin importar cómo llegó a ese estado. La única forma de evitarlo es que
+      // el video esté genuinamente en reproducción (video.paused=false), así que
+      // se deja "play" para siempre pero con velocidad 0 — el scroll es lo único
+      // que mueve el frame, vía currentTime.
+      const primeVideo = () => {
+        const p = video.play();
+        const freeze = () => { video.playbackRate = 0; };
+        if (p && typeof p.then === 'function') {
+          p.then(freeze).catch(() => { try { video.currentTime = 0.01; } catch (e) {} });
+        } else {
+          freeze();
+        }
+      };
+      if (video.readyState >= 1) primeVideo();
+      else { video.load(); video.addEventListener('loadedmetadata', primeVideo, { once: true }); }
+      video.addEventListener('pause', primeVideo);
+    }
+    return state;
+  });
+
+  function updateChapter(ch) {
+    const rect = ch.wrap.getBoundingClientRect();
+    const total = ch.wrap.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+    const scrolled = Math.min(Math.max(-rect.top, 0), total);
+    const progress = scrolled / total;
+    const visible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (visible && ch.video && ch.ready && ch.duration) ch.video.currentTime = progress * ch.duration;
+    if (ch.fill) ch.fill.style.width = progress * 100 + '%';
+    if (ch.content) {
+      const fadeIn = Math.min(progress / 0.06, 1);
+      const fadeOut = progress > 0.88 ? Math.max(1 - (progress - 0.88) / 0.12, 0) : 1;
+      const op = Math.min(fadeIn, fadeOut);
+      ch.content.style.opacity = op;
+      ch.content.style.transform = 'translateY(' + (18 - op * 18) + 'px)';
+    }
+    if (ch.cue) ch.cue.style.opacity = progress < 0.04 ? 1 : 0;
+  }
+
+  if (!chapters.length) return;
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => { chapters.forEach(updateChapter); ticking = false; });
+      ticking = true;
+    }
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+}
+
+function initProgressIndicators() {
+  const bar = document.getElementById('page-progress');
+  const spine = document.getElementById('scroll-spine');
+  const spineFill = spine ? spine.querySelector('.fill') : null;
+  const spineDot = spine ? spine.querySelector('.dot') : null;
+  function update() {
+    const h = document.documentElement;
+    const ratio = Math.min(Math.max(h.scrollTop / (h.scrollHeight - h.clientHeight), 0), 1);
+    if (bar) bar.style.width = ratio * 100 + '%';
+    if (spineFill) spineFill.style.height = ratio * 100 + '%';
+    if (spineDot) spineDot.style.top = ratio * 100 + '%';
+  }
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+function initReveal() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => io.observe(el));
+}
+
+function mountMobileNav() {
+  const nav = document.querySelector('nav');
+  const links = document.querySelector('.navlinks');
+  if (!nav || !links) return;
+  const toggle = document.createElement('button');
+  toggle.className = 'nav-toggle';
+  toggle.setAttribute('aria-label', 'Apri il menu');
+  toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  nav.appendChild(toggle);
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'nav-drawer-close';
+  closeBtn.setAttribute('aria-label', 'Chiudi il menu');
+  closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  links.prepend(closeBtn);
+  const open = () => { links.classList.add('mobile-open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const close = () => { links.classList.remove('mobile-open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; };
+  toggle.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  links.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+}
+
+// VARIABLE: endpoint de envio del formulario. Vacio a proposito en el prototipo:
+// las solicitudes tienen que ir al correo del cliente, no al nuestro.
+const FORM_ENDPOINT = '';
+
+function initContactForm() {
+  const form = document.getElementById('lead-form');
+  if (!form) return;
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!FORM_ENDPOINT) {
+      status.textContent = 'Prototipo: il modulo non è ancora collegato a un servizio di invio.';
+      status.className = 'form-status err';
+      return;
+    }
+    status.textContent = 'Invio in corso…';
+    status.className = 'form-status';
+    try {
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (res.ok) { status.textContent = 'Grazie! Ti ricontattiamo a breve.'; status.className = 'form-status ok'; form.reset(); }
+      else { status.textContent = 'Invio non riuscito. Riprova.'; status.className = 'form-status err'; }
+    } catch (err) {
+      status.textContent = 'Invio non riuscito. Riprova.';
+      status.className = 'form-status err';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  mountMobileNav();
+  initScrubChapters();
+  initProgressIndicators();
+  initReveal();
+  initContactForm();
+});
+</script>
+</body>
+</html>
