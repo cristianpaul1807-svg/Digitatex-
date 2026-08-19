@@ -22,10 +22,15 @@ export const productChapters: ProductChapter[] = [
   },
 ];
 
+/**
+ * Hotspots live over the object, on the right half of the stage. That is not
+ * only where they point — it is the only half that is free. The synchronised
+ * copy occupies the left, and a hotspot placed there lands on the headline.
+ */
 export const productHotspots: ProductHotspot[] = [
-  { from: 0.4, to: 0.72, x: 22, y: 30, label: 'Canvas source', detail: 'No asset. Eight vertices and one light vector.' },
-  { from: 0.56, to: 0.9, x: 28, y: 62, label: 'Contact shadow', detail: 'Grounds the object instead of floating it.' },
-  { from: 0.76, to: 1, x: 18, y: 44, label: 'Rim light', detail: 'Arrives last, once the shape has been read.' },
+  { from: 0.4, to: 0.72, x: 42, y: 22, label: 'Canvas source', detail: 'No asset. Eight vertices and one light vector.' },
+  { from: 0.56, to: 0.9, x: 46, y: 80, label: 'Contact shadow', detail: 'Grounds the object instead of floating it.' },
+  { from: 0.76, to: 1, x: 79, y: 24, label: 'Rim light', detail: 'Arrives last, once the shape has been read.' },
 ];
 
 export const faqItems: AccordionItem[] = [
