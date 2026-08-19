@@ -9,8 +9,8 @@ export type RevealKind = 'fade' | 'fade-up' | 'fade-scale' | 'clip';
 
 export interface ScrollRevealOptions extends ScrollWindow {
   kind?: RevealKind;
-  /** Selector for children to stagger. Omit to animate the container itself. */
-  children?: string;
+  /** Selector for descendants to stagger. Omit to animate the container itself. */
+  childSelector?: string;
   stagger?: number;
   duration?: number;
   delay?: number;
@@ -61,7 +61,7 @@ function clipFor(origin: NonNullable<ScrollRevealOptions['clipFrom']>) {
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(options: ScrollRevealOptions = {}) {
   const {
     kind = 'fade-up',
-    children,
+    childSelector,
     stagger = staggerPreset.default,
     duration: dur = duration.entrance,
     delay = 0,
@@ -83,7 +83,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(options:
     () => {
       const root = ref.current;
       if (!root) return;
-      const targets: Element[] = children ? gsap.utils.toArray(children, root) : [root];
+      const targets: Element[] = childSelector ? gsap.utils.toArray(childSelector, root) : [root];
       if (!targets.length) return;
 
       if (reduced || disabled) {
