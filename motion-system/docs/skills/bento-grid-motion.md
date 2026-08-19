@@ -1,8 +1,8 @@
-# Bento Grid Motion
+# Entrada de rejilla bento
 
-`bento-grid-motion` · Cards & Bento · intermediate
+`bento-grid-motion` · Tarjetas y bento · intermedio
 
-Staggered entrance for an asymmetric grid, ordered by DOM position.
+Entrada escalonada para una rejilla asimétrica, en orden de lectura.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Staggered entrance for an asymmetric grid, ordered by DOM position.
 
 - **Export:** `BentoGrid`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Staggered entrance for an asymmetric grid, ordered by DOM position.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Cards rise in reading order, 0.07s apart. |
-| Tablet | Identical. |
-| Mobile | **simplified** — The grid collapses to one column, where DOM and visual order already agree. |
-| Reduced motion | **static** — All cards visible. |
+| Desktop | Las tarjetas suben en orden de lectura, con 0,07 s entre cada una. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — La rejilla pasa a una columna, donde el orden de lectura y el visual ya coinciden. |
+| Reduced motion | **estático** — Todas las tarjetas visibles. |
 
 ## When to use it
 
-- Feature grids
-- Service overviews
-- Dashboards
+- Rejillas de características
+- Resúmenes de servicios
+- Paneles de control

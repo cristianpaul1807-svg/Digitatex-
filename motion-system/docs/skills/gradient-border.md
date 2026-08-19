@@ -1,8 +1,8 @@
-# Gradient Border
+# Borde degradado
 
-`gradient-border` · Atmosphere · intermediate
+`gradient-border` · Atmósfera · intermedio
 
-Gradient hairline around a surface, masked so glass behind it survives.
+Un filo degradado alrededor de la superficie, enmascarado para que el cristal de debajo sobreviva.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Gradient hairline around a surface, masked so glass behind it survives.
 
 - **Export:** `GradientBorder`
 - **Technology:** CSS
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Gradient hairline around a surface, masked so glass behind it survives.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | mask-composite: exclude paints only the ring, leaving any backdrop-filter underneath intact. |
-| Tablet | Identical. |
-| Mobile | **identical** — Free. |
-| Reduced motion | **identical** — Static. |
+| Desktop | La máscara pinta solo el aro, así que el desenfoque de debajo sigue funcionando. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Gratis. |
+| Reduced motion | **igual** — Estática. |
 
 ## When to use it
 
-- Featured cards
-- Pricing highlights
-- Active states
+- Tarjetas destacadas
+- Planes destacados
+- Estados activos

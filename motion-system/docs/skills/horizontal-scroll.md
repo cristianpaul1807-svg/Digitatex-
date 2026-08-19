@@ -1,8 +1,8 @@
-# Horizontal Scroll
+# Scroll horizontal
 
-`horizontal-scroll` · Scroll Motion · advanced
+`horizontal-scroll` · Movimiento por scroll · avanzado
 
-Vertical scrolling drives a horizontal track across a pinned section.
+El scroll vertical mueve una tira lateral mientras la sección está anclada.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Vertical scrolling drives a horizontal track across a pinned section.
 
 - **Export:** `HorizontalScrollSection`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** medium
+- **Performance cost:** medio
 
 ## Usage
 
@@ -24,13 +24,13 @@ Vertical scrolling drives a horizontal track across a pinned section.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Pin distance computed from the real track width and recomputed on refresh. |
-| Tablet | Same, shorter track. |
-| Mobile | **simplified** — Native swipe strip with scroll-snap and overscroll containment, so swiping past the end does not trigger the back gesture. |
-| Reduced motion | **simplified** — Native strip. |
+| Desktop | La distancia se calcula del ancho real de la tira y se recalcula al recargar medidas. |
+| Tablet | Igual, con una tira más corta. |
+| Mobile | **simplificado** — Tira deslizable nativa con imán y contención, para que pasarse del final no dispare el gesto de volver atrás. |
+| Reduced motion | **simplificado** — Tira deslizable normal. |
 
 ## When to use it
 
-- Portfolio galleries
-- Timelines
-- Product ranges
+- Galerías de porfolio
+- Líneas de tiempo
+- Gamas de producto

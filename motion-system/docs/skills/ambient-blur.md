@@ -1,8 +1,8 @@
-# Ambient Blur
+# Desenfoque de fondo
 
-`ambient-blur` · Atmosphere · basic
+`ambient-blur` · Atmósfera · básico
 
-Frosted plane over whatever sits behind it.
+Un plano esmerilado sobre lo que haya detrás.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Frosted plane over whatever sits behind it.
 
 - **Export:** `AmbientBlur`
 - **Technology:** CSS
-- **Performance cost:** high
+- **Performance cost:** alto
 
 ## Usage
 
@@ -24,13 +24,13 @@ Frosted plane over whatever sits behind it.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | backdrop-filter blur and saturation with a tint. |
-| Tablet | Reduced radius. |
-| Mobile | **simplified** — Halve the radius or replace it with a solid tint. This is the most expensive property in the library. |
-| Reduced motion | **identical** — Static. |
+| Desktop | Desenfoque y saturación del fondo, con un tinte encima. |
+| Tablet | Con menos radio. |
+| Mobile | **simplificado** — Bajar el radio a la mitad o cambiarlo por un tinte opaco. Es la propiedad más cara de la librería. |
+| Reduced motion | **igual** — Estática. |
 
 ## When to use it
 
-- Sticky navigation
-- Modal backdrops
-- Overlay panels
+- Menús que se quedan pegados
+- Fondos de ventana modal
+- Paneles superpuestos

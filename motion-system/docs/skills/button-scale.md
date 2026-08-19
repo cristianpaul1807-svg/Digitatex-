@@ -1,8 +1,8 @@
-# Button Scale
+# Botón que responde
 
-`button-scale` · Microinteractions · basic
+`button-scale` · Microinteracciones · básico
 
-Hover and press feedback at 1.02 and 0.98.
+Respuesta al cursor y a la pulsación: 102% y 98%.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Hover and press feedback at 1.02 and 0.98.
 
 - **Export:** `MagneticButton`
 - **Technology:** Framer Motion
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,11 +24,11 @@ Hover and press feedback at 1.02 and 0.98.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 1.02 on hover, 0.98 on press, 200ms. |
-| Tablet | Press state only. |
-| Mobile | **simplified** — Press feedback survives; hover does not exist. |
-| Reduced motion | **disabled** — Colour transition only. |
+| Desktop | 102% con el cursor encima, 98% al pulsar, en 200 ms. |
+| Tablet | Solo el estado de pulsación. |
+| Mobile | **simplificado** — La respuesta al pulsar se mantiene; la del cursor no existe. |
+| Reduced motion | **desactivado** — Solo transición de color. |
 
 ## When to use it
 
-- Every button in the system
+- Todos los botones del sistema

@@ -22,9 +22,9 @@ export function S01Load({ onInspect }: { onInspect: (id: string) => void }) {
     <ShowcaseSection
       id="s01"
       index="01"
-      eyebrow="Load & Transitions"
-      title="The first three seconds."
-      intro="A loader is the only part of a site everybody sees and nobody asked for. It earns its place by setting a tone, remembering it has already done so, and never standing between a visitor and the content."
+      eyebrow="Carga y transiciones"
+      title="Los tres primeros segundos."
+      intro="Un loader es lo único de una web que todo el mundo ve y nadie pidió. Se gana su sitio marcando un tono, acordándose de que ya lo hizo, y no poniéndose nunca entre el visitante y el contenido."
     >
       {/* The real loader replayed, not a mock. A demo of a loader that is not
           the loader is a demo of nothing. */}
@@ -37,22 +37,22 @@ export function S01Load({ onInspect }: { onInspect: (id: string) => void }) {
           <div className="flex flex-col items-center gap-5 py-14">
             <span className="loader-shimmer font-display text-7xl leading-none">MS</span>
             <MagneticButton variant="ghost" onClick={() => setReplay((r) => r + 1)}>
-              Replay loader
+              Verlo otra vez
             </MagneticButton>
           </div>
         </Demo>
 
         <Demo label={<SkillLabel skill={skillsById['page-reveal']!} onInspect={onInspect} />} stageClassName="flex items-center justify-center p-8">
           <p className="max-w-sm text-center text-[15px] leading-relaxed text-bone-dim">
-            This block entered with <code className="font-mono text-accent">page-reveal</code>: fourteen pixels and an opacity,
-            running while the hero does something larger. Two big moves at once cancel each other out.
+            Este bloque entró con <code className="font-mono text-accent">page-reveal</code>: catorce píxeles y una opacidad,
+            mientras el hero hace algo más grande. Dos movimientos grandes a la vez se anulan el uno al otro.
           </p>
         </Demo>
       </div>
 
       <div className="mt-14">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-bone-faint">
-          J01–J05 · Section transitions · each fires as it enters
+          J01–J05 · Transiciones de sección · cada una salta al entrar
         </p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {KINDS.map((kind) => {
@@ -68,7 +68,7 @@ export function S01Load({ onInspect }: { onInspect: (id: string) => void }) {
                     onClick={() => onInspect(skill.id)}
                     className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
                   >
-                    Inspect
+                    Ver ficha
                   </button>
                 </div>
               </SectionTransition>

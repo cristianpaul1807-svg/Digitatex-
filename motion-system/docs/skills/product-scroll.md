@@ -1,8 +1,8 @@
-# Product Scroll
+# Producto por scroll
 
-`product-scroll` · Product Experience · advanced
+`product-scroll` · Experiencia de producto · avanzado
 
-Pinned product stage with synchronised chapters and hotspots, over a video, an image sequence or a canvas renderer.
+Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Pinned product stage with synchronised chapters and hotspots, over a video, an i
 
 - **Export:** `ProductScroll`
 - **Technology:** GSAP · ScrollTrigger · Canvas · hls.js · React
-- **Performance cost:** high
+- **Performance cost:** alto
 
 ## Usage
 
@@ -24,13 +24,13 @@ Pinned product stage with synchronised chapters and hotspots, over a video, an i
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Three interchangeable sources behind one API; chapters, hotspots and the progress rail all read the same value. |
-| Tablet | Pinned with a shorter scroll length. |
-| Mobile | **simplified** — Takes a stacked fallback layout. A product shot at 375px wide with a caption over it is unreadable. |
-| Reduced motion | **simplified** — Stacked fallback; first frame only. |
+| Desktop | Tres fuentes intercambiables tras una misma interfaz; capítulos, anotaciones y barra de avance leen el mismo valor. |
+| Tablet | Anclado, con menos recorrido. |
+| Mobile | **simplificado** — Pasa a una maqueta apilada. Un producto a 375 px de ancho con un texto encima no hay quien lo lea. |
+| Reduced motion | **simplificado** — Maqueta apilada; solo el primer fotograma. |
 
 ## When to use it
 
-- Product storytelling
-- Hardware and industrial sites
-- 3D render showcases
+- Contar un producto
+- Webs de industria y maquinaria
+- Escaparates de render 3D

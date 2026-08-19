@@ -2,76 +2,76 @@
 
 41 skills across 11 categories.
 
-## Load & Transitions
+## Carga y transiciones
 
-- [Cinematic Loader](skills/cinematic-loader.md) — `cinematic-loader`
-- [Page Reveal](skills/page-reveal.md) — `page-reveal`
+- [Loader cinematográfico](skills/cinematic-loader.md) — `cinematic-loader`
+- [Entrada de página](skills/page-reveal.md) — `page-reveal`
 
-## Hero & Cinematic
+## Hero y cine
 
-- [Cinematic Hero](skills/cinematic-hero.md) — `cinematic-hero`
-- [Background Video (HLS)](skills/background-video.md) — `background-video`
-- [Media Overlay](skills/media-overlay.md) — `media-overlay`
-- [Ambient Particles (Dust)](skills/ambient-particles.md) — `ambient-particles`
+- [Hero cinematográfico](skills/cinematic-hero.md) — `cinematic-hero`
+- [Vídeo de fondo (HLS)](skills/background-video.md) — `background-video`
+- [Velo sobre el vídeo](skills/media-overlay.md) — `media-overlay`
+- [Partículas de polvo](skills/ambient-particles.md) — `ambient-particles`
 
-## Text Motion
+## Movimiento de texto
 
-- [Text Reveal](skills/text-reveal.md) — `text-reveal`
-- [Split Text Reveal](skills/split-text-reveal.md) — `split-text-reveal`
-- [Fade Up](skills/fade-up.md) — `fade-up`
-- [Fade + Scale](skills/fade-scale.md) — `fade-scale`
-- [Stagger Reveal](skills/stagger-reveal.md) — `stagger-reveal`
-- [Clip Reveal](skills/clip-reveal.md) — `clip-reveal`
+- [Aparición del titular](skills/text-reveal.md) — `text-reveal`
+- [Partidor de texto](skills/split-text-reveal.md) — `split-text-reveal`
+- [Entrada desde abajo](skills/fade-up.md) — `fade-up`
+- [Entrada con escala](skills/fade-scale.md) — `fade-scale`
+- [Entrada escalonada](skills/stagger-reveal.md) — `stagger-reveal`
+- [Barrido con máscara](skills/clip-reveal.md) — `clip-reveal`
 
-## Scroll Motion
+## Movimiento por scroll
 
-- [Scroll Reveal Engine](skills/scroll-reveal-engine.md) — `scroll-reveal-engine`
+- [Motor de entradas por scroll](skills/scroll-reveal-engine.md) — `scroll-reveal-engine`
 - [Parallax](skills/parallax.md) — `parallax`
-- [Sticky Storytelling](skills/sticky-story.md) — `sticky-story`
-- [Horizontal Scroll](skills/horizontal-scroll.md) — `horizontal-scroll`
-- [Scroll-Scrub Media](skills/scroll-scrub-media.md) — `scroll-scrub-media`
+- [Relato anclado](skills/sticky-story.md) — `sticky-story`
+- [Scroll horizontal](skills/horizontal-scroll.md) — `horizontal-scroll`
+- [Vídeo recorrido por scroll](skills/scroll-scrub-media.md) — `scroll-scrub-media`
 
-## Product Experience
+## Experiencia de producto
 
-- [Product Scroll](skills/product-scroll.md) — `product-scroll`
+- [Producto por scroll](skills/product-scroll.md) — `product-scroll`
 
-## Cards & Bento
+## Tarjetas y bento
 
-- [Card Hover Lift](skills/card-hover-lift.md) — `card-hover-lift`
-- [Card Scale](skills/card-scale.md) — `card-scale`
-- [Image Zoom](skills/image-zoom.md) — `image-zoom`
-- [Glass Card](skills/glass-card.md) — `glass-card`
-- [Bento Grid Motion](skills/bento-grid-motion.md) — `bento-grid-motion`
+- [Tarjeta que se eleva](skills/card-hover-lift.md) — `card-hover-lift`
+- [Tarjeta que crece](skills/card-scale.md) — `card-scale`
+- [Zoom de imagen](skills/image-zoom.md) — `image-zoom`
+- [Tarjeta de cristal](skills/glass-card.md) — `glass-card`
+- [Entrada de rejilla bento](skills/bento-grid-motion.md) — `bento-grid-motion`
 
-## Microinteractions
+## Microinteracciones
 
-- [Button Scale](skills/button-scale.md) — `button-scale`
-- [Magnetic Button](skills/magnetic-button.md) — `magnetic-button`
-- [Magnetic Link](skills/magnetic-link.md) — `magnetic-link`
-- [Hover Glow](skills/hover-glow.md) — `hover-glow`
-- [Image Tilt](skills/image-tilt.md) — `image-tilt`
+- [Botón que responde](skills/button-scale.md) — `button-scale`
+- [Botón magnético](skills/magnetic-button.md) — `magnetic-button`
+- [Enlace magnético](skills/magnetic-link.md) — `magnetic-link`
+- [Resplandor que sigue al cursor](skills/hover-glow.md) — `hover-glow`
+- [Inclinación 3D](skills/image-tilt.md) — `image-tilt`
 
-## Marquee
+## Tira infinita
 
-- [Infinite Marquee](skills/infinite-marquee.md) — `infinite-marquee`
+- [Tira infinita](skills/infinite-marquee.md) — `infinite-marquee`
 
-## UI Motion
+## Movimiento de interfaz
 
-- [Animated Accordion](skills/animated-accordion.md) — `animated-accordion`
+- [Acordeón animado](skills/animated-accordion.md) — `animated-accordion`
 
-## Section Transitions
+## Transiciones de sección
 
-- [Fade Section Transition](skills/fade-section-transition.md) — `fade-section-transition`
-- [Scale Section Transition](skills/scale-section-transition.md) — `scale-section-transition`
-- [Clip Section Transition](skills/clip-section-transition.md) — `clip-section-transition`
-- [Blur Transition](skills/blur-transition.md) — `blur-transition`
-- [Cinematic Section Transition](skills/cinematic-section-transition.md) — `cinematic-section-transition`
+- [Sección que aparece](skills/fade-section-transition.md) — `fade-section-transition`
+- [Sección que se asienta](skills/scale-section-transition.md) — `scale-section-transition`
+- [Sección que se descubre](skills/clip-section-transition.md) — `clip-section-transition`
+- [Sección que enfoca](skills/blur-transition.md) — `blur-transition`
+- [Transición cinematográfica](skills/cinematic-section-transition.md) — `cinematic-section-transition`
 
-## Atmosphere
+## Atmósfera
 
-- [Grain / Noise](skills/grain.md) — `grain`
-- [Radial Glow](skills/radial-glow.md) — `radial-glow`
-- [Vignette](skills/vignette.md) — `vignette`
-- [Light Sweep](skills/light-sweep.md) — `light-sweep`
-- [Ambient Blur](skills/ambient-blur.md) — `ambient-blur`
-- [Gradient Border](skills/gradient-border.md) — `gradient-border`
+- [Grano de película](skills/grain.md) — `grain`
+- [Resplandor de fondo](skills/radial-glow.md) — `radial-glow`
+- [Viñeta](skills/vignette.md) — `vignette`
+- [Barrido de luz](skills/light-sweep.md) — `light-sweep`
+- [Desenfoque de fondo](skills/ambient-blur.md) — `ambient-blur`
+- [Borde degradado](skills/gradient-border.md) — `gradient-border`

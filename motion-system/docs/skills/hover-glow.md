@@ -1,8 +1,8 @@
-# Hover Glow
+# Resplandor que sigue al cursor
 
-`hover-glow` · Microinteractions · intermediate
+`hover-glow` · Microinteracciones · intermedio
 
-Radial highlight that tracks the cursor across a surface.
+Un halo de luz que persigue al cursor por la superficie.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Radial highlight that tracks the cursor across a surface.
 
 - **Export:** `useHoverGlow`
 - **Technology:** CSS · React
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ const ref = useHoverGlow({ size: 320 })
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Two CSS custom properties feed one static gradient, so no gradient is reparsed per pointer event. |
-| Tablet | Static centred glow. |
-| Mobile | **simplified** — Static centred glow at half intensity, so the surface still reads as lit. |
-| Reduced motion | **simplified** — Static centred glow. |
+| Desktop | Dos variables de CSS alimentan un único degradado fijo, así que no se reconstruye el degradado en cada movimiento. |
+| Tablet | Resplandor fijo y centrado. |
+| Mobile | **simplificado** — Resplandor fijo y centrado a media intensidad, para que la superficie siga leyéndose iluminada. |
+| Reduced motion | **simplificado** — Resplandor fijo y centrado. |
 
 ## When to use it
 
-- Cards
-- Panels
-- CTA surfaces
+- Tarjetas
+- Paneles
+- Zonas de llamada a la acción

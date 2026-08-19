@@ -1,8 +1,8 @@
-# Glass Card
+# Tarjeta de cristal
 
-`glass-card` · Cards & Bento · basic
+`glass-card` · Tarjetas y bento · básico
 
-Translucent blurred surface with a hairline border and an upper-lip highlight.
+Superficie translúcida y desenfocada, con borde de un píxel y un brillo en el canto superior.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Translucent blurred surface with a hairline border and an upper-lip highlight.
 
 - **Export:** `GlassCard`
 - **Technology:** CSS
-- **Performance cost:** medium
+- **Performance cost:** medio
 
 ## Usage
 
@@ -24,13 +24,13 @@ Translucent blurred surface with a hairline border and an upper-lip highlight.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | backdrop-filter blur with saturation, plus the top-edge highlight that makes it read as glass. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Reduce the blur radius. backdrop-filter is the single most expensive property in this library on mobile GPUs. |
-| Reduced motion | **identical** — Static surface. |
+| Desktop | Desenfoque del fondo con algo de saturación, más el brillo del canto que la hace leerse como cristal. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Bajar el radio de desenfoque. Es la propiedad más cara de toda la librería en la gráfica de un móvil. |
+| Reduced motion | **igual** — Superficie estática. |
 
 ## When to use it
 
-- Cards over imagery
-- Floating panels
-- Navigation bars
+- Tarjetas sobre fotografía
+- Paneles flotantes
+- Barras de navegación

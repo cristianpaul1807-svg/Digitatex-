@@ -1,8 +1,8 @@
-# Magnetic Link
+# Enlace magnético
 
-`magnetic-link` · Microinteractions · basic
+`magnetic-link` · Microinteracciones · básico
 
-Weaker magnetic pull for inline links, with no scale.
+La misma atracción, más floja y sin crecer, para enlaces dentro del texto.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Weaker magnetic pull for inline links, with no scale.
 
 - **Export:** `MagneticLink`
 - **Technology:** GSAP
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Weaker magnetic pull for inline links, with no scale.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 0.22 strength, 34px radius, no scale: a link that grows competes with its own paragraph. |
-| Tablet | Disabled on coarse pointers. |
-| Mobile | **disabled** — Plain link. |
-| Reduced motion | **disabled** — Plain link. |
+| Desktop | Fuerza 0,22 y radio 34 px, sin escala: un enlace que crece compite con su propio párrafo. |
+| Tablet | Apagado con puntero grueso. |
+| Mobile | **desactivado** — Un enlace normal. |
+| Reduced motion | **desactivado** — Un enlace normal. |
 
 ## When to use it
 
-- Footer navigation
-- Inline emphasis
-- Menu items
+- Menú del pie
+- Énfasis dentro del texto
+- Elementos de menú

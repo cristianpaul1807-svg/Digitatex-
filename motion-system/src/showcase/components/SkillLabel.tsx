@@ -12,10 +12,10 @@ const techLabel: Record<string, string> = {
 };
 
 const costTone: Record<string, string> = {
-  none: 'text-emerald-300/80',
-  low: 'text-emerald-300/80',
-  medium: 'text-amber-300/80',
-  high: 'text-rose-300/80',
+  nulo: 'text-emerald-300/80',
+  bajo: 'text-emerald-300/80',
+  medio: 'text-amber-300/80',
+  alto: 'text-rose-300/80',
 };
 
 export interface SkillLabelProps {
@@ -54,11 +54,11 @@ export function SkillLabel({ skill, onInspect, compact = false }: SkillLabelProp
       {!compact && (
         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-white/[0.07] pt-3 font-mono text-[10px] uppercase tracking-wider">
           <div className="flex justify-between gap-2">
-            <dt className="text-bone-faint">Cost</dt>
+            <dt className="text-bone-faint">Coste</dt>
             <dd className={costTone[skill.performanceCost]}>{skill.performanceCost}</dd>
           </div>
           <div className="flex justify-between gap-2">
-            <dt className="text-bone-faint">Mobile</dt>
+            <dt className="text-bone-faint">Móvil</dt>
             <dd className="text-bone-dim">{skill.mobile.behaviour}</dd>
           </div>
         </dl>
@@ -70,7 +70,7 @@ export function SkillLabel({ skill, onInspect, compact = false }: SkillLabelProp
           onClick={() => onInspect(skill.id)}
           className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
         >
-          Inspect skill
+          Ver ficha
         </button>
       )}
     </div>

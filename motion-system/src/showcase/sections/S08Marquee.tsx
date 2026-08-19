@@ -18,9 +18,9 @@ export function S08Marquee({ onInspect }: { onInspect: (id: string) => void }) {
     <ShowcaseSection
       id="s08"
       index="08"
-      eyebrow="Marquee"
-      title="One strip, three speeds."
-      intro="Pure CSS. Hover to pause any of them. Under reduced motion all three become ordinary scrollable strips, because the words were always the point and the movement was decoration."
+      eyebrow="Tira infinita"
+      title="Una tira, tres velocidades."
+      intro="CSS puro. Pasa el cursor para parar cualquiera. Con movimiento reducido las tres pasan a deslizarse a mano, porque lo importante siempre fueron las palabras y el movimiento era adorno."
     >
       <div className="space-y-8">
         <Marquee speed={30}>
@@ -45,9 +45,9 @@ export function S08Marquee({ onInspect }: { onInspect: (id: string) => void }) {
         </Marquee>
 
         <div className="grid gap-3 pt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-bone-faint sm:grid-cols-3">
-          <span>30s · forward · pauses</span>
-          <span>18s · reverse · pauses</span>
-          <span>52s · forward · no pause</span>
+          <span>30 s · hacia delante · se para</span>
+          <span>18 s · al revés · se para</span>
+          <span>52 s · hacia delante · no se para</span>
         </div>
 
         <div className="max-w-sm">

@@ -1,8 +1,8 @@
-# Cinematic Loader
+# Loader cinematográfico
 
-`cinematic-loader` · Load & Transitions · intermediate
+`cinematic-loader` · Carga y transiciones · intermedio
 
-Full-screen entrance overlay with a shimmering mark and an eased exit.
+Velo a pantalla completa con el logotipo brillando y una salida suavizada.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Full-screen entrance overlay with a shimmering mark and an eased exit.
 
 - **Export:** `CinematicLoader`
 - **Technology:** GSAP · React · CSS
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Full-screen entrance overlay with a shimmering mark and an eased exit.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Full 3s hold, shimmering monogram, 0.9s eased exit that lifts the mark as the veil drops. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Same timing, but the hold is the first thing to cut if LCP is tight. |
-| Reduced motion | **disabled** — Removed entirely, hold included. Asking for less motion is not asking to wait longer for it. |
+| Desktop | Aguanta 3 segundos, el monograma brilla, y sale en 0,9 s levantando la marca mientras el velo cae. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Mismos tiempos, pero la espera es lo primero que se recorta si la carga va justa. |
+| Reduced motion | **desactivado** — Se quita entero, la espera incluida. Pedir menos movimiento no es pedir esperar más por él. |
 
 ## When to use it
 
-- Agency and portfolio sites
-- Campaign microsites
-- Anywhere the first frame sets a tone
+- Webs de agencia y porfolios
+- Microsites de campaña
+- Donde el primer fotograma marca el tono

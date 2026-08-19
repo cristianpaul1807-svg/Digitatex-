@@ -35,9 +35,9 @@ export function S07Atmosphere({ onInspect }: { onInspect: (id: string) => void }
     <ShowcaseSection
       id="s07"
       index="07"
-      eyebrow="Atmosphere"
-      title="What sits between the layers."
-      intro="Seven effects that never carry meaning on their own and change the feel of everything they sit over. Shown on real compositions, because on an empty box they demonstrate nothing."
+      eyebrow="Atmósfera"
+      title="Lo que va entre las capas."
+      intro="Siete efectos que por sí solos no significan nada y cambian cómo se siente todo lo que tienen debajo. Van sobre composiciones reales, porque sobre una caja vacía no demuestran nada."
     >
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Plate id="grain" onInspect={onInspect} plate={0}>

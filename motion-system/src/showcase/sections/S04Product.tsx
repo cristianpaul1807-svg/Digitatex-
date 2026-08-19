@@ -26,10 +26,10 @@ export function S04Product({ onInspect }: { onInspect: (id: string) => void }) {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex items-baseline gap-4">
           <span className="font-mono text-[11px] tracking-[0.2em] text-accent">04</span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-bone-faint">Product Experience</span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-bone-faint">Experiencia de producto</span>
         </div>
         <TextReveal as="h2" by="lines" className="mt-5 max-w-3xl font-display text-4xl leading-[1.05] text-bone md:text-6xl">
-          A product that answers to the scroll.
+          Un producto que responde al scroll.
         </TextReveal>
         <div className="mt-8 max-w-sm">
           <SkillLabel skill={skillsById['product-scroll']!} onInspect={onInspect} />

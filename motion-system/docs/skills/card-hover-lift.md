@@ -1,8 +1,8 @@
-# Card Hover Lift
+# Tarjeta que se eleva
 
-`card-hover-lift` · Cards & Bento · basic
+`card-hover-lift` · Tarjetas y bento · básico
 
-Card rises toward the viewer on hover.
+La tarjeta sube hacia quien mira al pasar el cursor.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Card rises toward the viewer on hover.
 
 - **Export:** `HoverCard`
 - **Technology:** Framer Motion
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Card rises toward the viewer on hover.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 6px rise over 300ms. |
-| Tablet | Identical where a pointer exists. |
-| Mobile | **disabled** — No listener attached. A hover that fires on tap makes the card look broken in the moment before navigation. |
-| Reduced motion | **disabled** — Colour feedback only. |
+| Desktop | 6 px de subida en 300 ms. |
+| Tablet | Igual allí donde hay puntero. |
+| Mobile | **desactivado** — Ni se instala el detector. Un efecto de cursor que se dispara al tocar hace que la tarjeta parezca rota justo antes de navegar. |
+| Reduced motion | **desactivado** — Solo cambio de color. |
 
 ## When to use it
 
-- Bento grids
-- Case study cards
-- Pricing tables
+- Rejillas bento
+- Tarjetas de caso
+- Tablas de precios

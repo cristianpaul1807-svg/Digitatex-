@@ -17,16 +17,16 @@ import { FullSystem } from '@/showcase/sections/FullSystem';
 import { AmbientBlur } from '@/motion/effects/AmbientBlur';
 
 const NAV = [
-  ['s01', 'Load'],
-  ['s02', 'Text'],
+  ['s01', 'Carga'],
+  ['s02', 'Texto'],
   ['s03', 'Scroll'],
-  ['s04', 'Product'],
-  ['s05', 'Cards'],
-  ['s06', 'Interaction'],
-  ['s07', 'Atmosphere'],
-  ['s08', 'Marquee'],
-  ['s09', 'UI'],
-  ['full-system', 'Full system'],
+  ['s04', 'Producto'],
+  ['s05', 'Tarjetas'],
+  ['s06', 'Interacción'],
+  ['s07', 'Atmósfera'],
+  ['s08', 'Tira'],
+  ['s09', 'Interfaz'],
+  ['full-system', 'La web completa'],
 ] as const;
 
 /** Counts read straight from the registry, so they can never go stale. */
@@ -66,7 +66,7 @@ export default function App() {
           <section className="border-t border-white/[0.07] py-16">
             <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-bone-faint">
-                {motionSkills.length} skills · 11 categories · one registry
+                {motionSkills.length} efectos · 11 categorías · un solo catálogo
               </p>
               <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.16em] text-bone-dim">
                 {byCategory.map((c) => (

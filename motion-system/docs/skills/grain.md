@@ -1,8 +1,8 @@
-# Grain / Noise
+# Grano de película
 
-`grain` · Atmosphere · basic
+`grain` · Atmósfera · básico
 
-Film-like texture over the interface, stepped rather than smooth.
+Textura de película sobre la interfaz, a saltos y no suave.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Film-like texture over the interface, stepped rather than smooth.
 
 - **Export:** `Grain`
 - **Technology:** CSS
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Film-like texture over the interface, stepped rather than smooth.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Inline SVG feTurbulence tile, rasterised once and repeated. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Drop the animation, keep the texture. |
-| Reduced motion | **static** — Texture without the shimmer. |
+| Desktop | Un mosaico de ruido en SVG, dibujado una vez y repetido. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Se quita la animación y se queda la textura. |
+| Reduced motion | **estático** — Textura sin el titileo. |
 
 ## When to use it
 
-- Dark interfaces
-- Cinematic heroes
-- Photography-led sites
+- Interfaces oscuras
+- Heros cinematográficos
+- Webs dominadas por fotografía

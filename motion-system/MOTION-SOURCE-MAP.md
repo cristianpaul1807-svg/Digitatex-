@@ -19,235 +19,235 @@ thresholds, fallbacks.
 
 ### REFERENCE: "then ease-out fade"
 
-→ **`page-reveal`** — Page Reveal  
-   The page entrance that follows the loader out: a short rise and fade.  
-   *GSAP · React · none cost · mobile: identical · reduced motion: static*
+→ **`page-reveal`** — Entrada de página  
+   La entrada que sigue al loader: una subida corta y una opacidad.  
+   *GSAP · React · nulo cost · mobile: igual · reduced motion: estático*
 
-→ **`fade-section-transition`** — Fade Section Transition  
-   Section fades in as it enters.  
-   *GSAP · ScrollTrigger · none cost · mobile: identical · reduced motion: static*
+→ **`fade-section-transition`** — Sección que aparece  
+   La sección aparece al entrar en pantalla.  
+   *GSAP · ScrollTrigger · nulo cost · mobile: igual · reduced motion: estático*
 
-→ **`scale-section-transition`** — Scale Section Transition  
-   Section settles from 1.06 to 1.  
-   *GSAP · ScrollTrigger · none cost · mobile: identical · reduced motion: static*
+→ **`scale-section-transition`** — Sección que se asienta  
+   La sección se asienta del 106% al 100%.  
+   *GSAP · ScrollTrigger · nulo cost · mobile: igual · reduced motion: estático*
 
-→ **`clip-section-transition`** — Clip Section Transition  
-   Section unmasks from a rounded inset to full bleed.  
-   *GSAP · ScrollTrigger · CSS · low cost · mobile: identical · reduced motion: static*
+→ **`clip-section-transition`** — Sección que se descubre  
+   La sección se descubre desde un recuadro redondeado hasta ocupar todo el ancho.  
+   *GSAP · ScrollTrigger · CSS · bajo cost · mobile: igual · reduced motion: estático*
 
-→ **`blur-transition`** — Blur Transition  
-   Section resolves from blurred to sharp.  
-   *GSAP · ScrollTrigger · CSS · high cost · mobile: simplified · reduced motion: static*
+→ **`blur-transition`** — Sección que enfoca  
+   La sección pasa de desenfocada a nítida.  
+   *GSAP · ScrollTrigger · CSS · alto cost · mobile: simplificado · reduced motion: estático*
 
-→ **`cinematic-section-transition`** — Cinematic Section Transition  
-   Clip, scale and blur composed into one signature entrance.  
-   *GSAP · ScrollTrigger · CSS · high cost · mobile: simplified · reduced motion: static*
+→ **`cinematic-section-transition`** — Transición cinematográfica  
+   Máscara, escala y desenfoque compuestos en una sola entrada de autor.  
+   *GSAP · ScrollTrigger · CSS · alto cost · mobile: simplificado · reduced motion: estático*
 
 ### REFERENCE: "Scroll: GSAP ScrollTrigger for section reveals"
 
-→ **`text-reveal`** — Text Reveal  
-   Headline that rises into view by line, word, character or as a whole.  
-   *GSAP · ScrollTrigger · low cost · mobile: simplified · reduced motion: static*
+→ **`text-reveal`** — Aparición del titular  
+   El titular entra subiendo, por líneas, por palabras, por letras o entero.  
+   *GSAP · ScrollTrigger · bajo cost · mobile: simplificado · reduced motion: estático*
 
-→ **`fade-up`** — Fade Up  
-   The workhorse entrance: opacity plus a short directional rise.  
-   *GSAP · ScrollTrigger · none cost · mobile: simplified · reduced motion: static*
+→ **`fade-up`** — Entrada desde abajo  
+   La entrada de siempre: opacidad más una subida corta.  
+   *GSAP · ScrollTrigger · nulo cost · mobile: simplificado · reduced motion: estático*
 
-→ **`fade-scale`** — Fade + Scale  
-   Entrance that settles from 0.94 to 1 while fading in.  
-   *GSAP · ScrollTrigger · none cost · mobile: identical · reduced motion: static*
+→ **`fade-scale`** — Entrada con escala  
+   Entra asentándose del 94% al 100% mientras aparece.  
+   *GSAP · ScrollTrigger · nulo cost · mobile: igual · reduced motion: estático*
 
-→ **`stagger-reveal`** — Stagger Reveal  
-   Children animate in sequence from one trigger.  
-   *GSAP · ScrollTrigger · low cost · mobile: simplified · reduced motion: static*
+→ **`stagger-reveal`** — Entrada escalonada  
+   Los hijos entran en secuencia desde un solo disparador.  
+   *GSAP · ScrollTrigger · bajo cost · mobile: simplificado · reduced motion: estático*
 
-→ **`clip-reveal`** — Clip Reveal  
-   Content wiped into view with an animated clip-path.  
-   *GSAP · ScrollTrigger · CSS · low cost · mobile: identical · reduced motion: static*
+→ **`clip-reveal`** — Barrido con máscara  
+   El contenido se descubre con un barrido, no con una opacidad.  
+   *GSAP · ScrollTrigger · CSS · bajo cost · mobile: igual · reduced motion: estático*
 
-→ **`scroll-reveal-engine`** — Scroll Reveal Engine  
-   The single ScrollTrigger abstraction every reveal goes through: cleanup, initial state, reduced motion and dev markers handled once.  
-   *GSAP · ScrollTrigger · React · low cost · mobile: identical · reduced motion: disabled*
+→ **`scroll-reveal-engine`** — Motor de entradas por scroll  
+   La única pieza por la que pasan todas las entradas: limpieza, estado inicial, movimiento reducido y marcas de depuración, resueltos una sola vez.  
+   *GSAP · ScrollTrigger · React · bajo cost · mobile: igual · reduced motion: desactivado*
 
 ### REFERENCE: "Each card: rounded 16px, glass surface, hover lift 6px"
 
-→ **`card-hover-lift`** — Card Hover Lift  
-   Card rises toward the viewer on hover.  
-   *Framer Motion · none cost · mobile: disabled · reduced motion: disabled*
+→ **`card-hover-lift`** — Tarjeta que se eleva  
+   La tarjeta sube hacia quien mira al pasar el cursor.  
+   *Framer Motion · nulo cost · mobile: desactivado · reduced motion: desactivado*
 
-→ **`image-zoom`** — Image Zoom  
-   Image scales inside a fixed frame while the frame stays put.  
-   *Framer Motion · CSS · none cost · mobile: disabled · reduced motion: disabled*
+→ **`image-zoom`** — Zoom de imagen  
+   La imagen crece dentro de un marco fijo, y el marco no se mueve.  
+   *Framer Motion · CSS · nulo cost · mobile: desactivado · reduced motion: desactivado*
 
-→ **`glass-card`** — Glass Card  
-   Translucent blurred surface with a hairline border and an upper-lip highlight.  
-   *CSS · medium cost · mobile: simplified · reduced motion: identical*
+→ **`glass-card`** — Tarjeta de cristal  
+   Superficie translúcida y desenfocada, con borde de un píxel y un brillo en el canto superior.  
+   *CSS · medio cost · mobile: simplificado · reduced motion: igual*
 
-→ **`ambient-blur`** — Ambient Blur  
-   Frosted plane over whatever sits behind it.  
-   *CSS · high cost · mobile: simplified · reduced motion: identical*
+→ **`ambient-blur`** — Desenfoque de fondo  
+   Un plano esmerilado sobre lo que haya detrás.  
+   *CSS · alto cost · mobile: simplificado · reduced motion: igual*
 
-→ **`gradient-border`** — Gradient Border  
-   Gradient hairline around a surface, masked so glass behind it survives.  
-   *CSS · none cost · mobile: identical · reduced motion: identical*
+→ **`gradient-border`** — Borde degradado  
+   Un filo degradado alrededor de la superficie, enmascarado para que el cristal de debajo sobreviva.  
+   *CSS · nulo cost · mobile: igual · reduced motion: igual*
 
 ### REFERENCE: "Sticky-pinned scroll variant on desktop"
 
-→ **`sticky-story`** — Sticky Storytelling  
-   Pinned section that steps through chapters, driving text and visuals from one progress value.  
-   *GSAP · ScrollTrigger · React · medium cost · mobile: simplified · reduced motion: simplified*
+→ **`sticky-story`** — Relato anclado  
+   La sección se ancla y va pasando capítulos, moviendo texto e imagen desde un mismo valor de avance.  
+   *GSAP · ScrollTrigger · React · medio cost · mobile: simplificado · reduced motion: simplificado*
 
-→ **`horizontal-scroll`** — Horizontal Scroll  
-   Vertical scrolling drives a horizontal track across a pinned section.  
-   *GSAP · ScrollTrigger · medium cost · mobile: simplified · reduced motion: simplified*
+→ **`horizontal-scroll`** — Scroll horizontal  
+   El scroll vertical mueve una tira lateral mientras la sección está anclada.  
+   *GSAP · ScrollTrigger · medio cost · mobile: simplificado · reduced motion: simplificado*
 
-→ **`scroll-scrub-media`** — Scroll-Scrub Media  
-   Video or image sequence whose frame is chosen by scroll position.  
-   *GSAP · ScrollTrigger · Canvas · high cost · mobile: simplified · reduced motion: static*
+→ **`scroll-scrub-media`** — Vídeo recorrido por scroll  
+   Vídeo o secuencia de imágenes cuyo fotograma lo elige la posición del scroll.  
+   *GSAP · ScrollTrigger · Canvas · alto cost · mobile: simplificado · reduced motion: estático*
 
-→ **`product-scroll`** — Product Scroll  
-   Pinned product stage with synchronised chapters and hotspots, over a video, an image sequence or a canvas renderer.  
-   *GSAP · ScrollTrigger · Canvas · hls.js · React · high cost · mobile: simplified · reduced motion: simplified*
+→ **`product-scroll`** — Producto por scroll  
+   Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.  
+   *GSAP · ScrollTrigger · Canvas · hls.js · React · alto cost · mobile: simplificado · reduced motion: simplificado*
 
 ### REFERENCE: "Hover: card lift, button slight scale (1.02)"
 
-→ **`magnetic-button`** — Magnetic Button  
-   Button leans toward the cursor inside a radius and springs back on leave.  
-   *GSAP · Framer Motion · low cost · mobile: disabled · reduced motion: disabled*
+→ **`magnetic-button`** — Botón magnético  
+   El botón se inclina hacia el cursor dentro de un radio y vuelve al salir.  
+   *GSAP · Framer Motion · bajo cost · mobile: desactivado · reduced motion: desactivado*
 
-→ **`magnetic-link`** — Magnetic Link  
-   Weaker magnetic pull for inline links, with no scale.  
-   *GSAP · none cost · mobile: disabled · reduced motion: disabled*
+→ **`magnetic-link`** — Enlace magnético  
+   La misma atracción, más floja y sin crecer, para enlaces dentro del texto.  
+   *GSAP · nulo cost · mobile: desactivado · reduced motion: desactivado*
 
-→ **`image-tilt`** — Image Tilt  
-   3D lean toward the cursor, capped at about 7 degrees.  
-   *GSAP · low cost · mobile: disabled · reduced motion: disabled*
+→ **`image-tilt`** — Inclinación 3D  
+   La superficie se inclina hacia el cursor, con tope en unos 7 grados.  
+   *GSAP · bajo cost · mobile: desactivado · reduced motion: desactivado*
 
 ### REFERENCE: "Loading screen (3s monogram shimmer, ease-out fade)"
 
-→ **`cinematic-loader`** — Cinematic Loader  
-   Full-screen entrance overlay with a shimmering mark and an eased exit.  
-   *GSAP · React · CSS · low cost · mobile: simplified · reduced motion: disabled*
+→ **`cinematic-loader`** — Loader cinematográfico  
+   Velo a pantalla completa con el logotipo brillando y una salida suavizada.  
+   *GSAP · React · CSS · bajo cost · mobile: simplificado · reduced motion: desactivado*
 
-→ **`light-sweep`** — Light Sweep  
-   Specular band travelling across a surface, on hover or on a loop.  
-   *CSS · low cost · mobile: simplified · reduced motion: disabled*
+→ **`light-sweep`** — Barrido de luz  
+   Una banda de brillo que cruza la superficie, al pasar el cursor o en bucle.  
+   *CSS · bajo cost · mobile: simplificado · reduced motion: desactivado*
 
 ### REFERENCE: "50% black overlay"
 
-→ **`media-overlay`** — Media Overlay  
-   Configurable wash over media — flat, directional or radial — that makes overlaid text legible.  
-   *CSS · none cost · mobile: identical · reduced motion: identical*
+→ **`media-overlay`** — Velo sobre el vídeo  
+   Capa configurable sobre el vídeo — plana, direccional o radial — que hace legible el texto de encima.  
+   *CSS · nulo cost · mobile: igual · reduced motion: igual*
 
-→ **`vignette`** — Vignette  
-   Edge darkening that settles the eye on the centre.  
-   *CSS · none cost · mobile: identical · reduced motion: identical*
+→ **`vignette`** — Viñeta  
+   Oscurece los bordes para que el ojo se pose en el centro.  
+   *CSS · nulo cost · mobile: igual · reduced motion: igual*
 
 ### REFERENCE: "Subtle dust particle layer on top"
 
-→ **`ambient-particles`** — Ambient Particles (Dust)  
-   Canvas dust motes drifting upward, each breathing at its own rate.  
-   *Canvas · React · medium cost · mobile: simplified · reduced motion: disabled*
+→ **`ambient-particles`** — Partículas de polvo  
+   Motas de polvo en canvas que suben flotando, cada una respirando a su ritmo.  
+   *Canvas · React · medio cost · mobile: simplificado · reduced motion: desactivado*
 
-→ **`grain`** — Grain / Noise  
-   Film-like texture over the interface, stepped rather than smooth.  
-   *CSS · low cost · mobile: simplified · reduced motion: static*
+→ **`grain`** — Grano de película  
+   Textura de película sobre la interfaz, a saltos y no suave.  
+   *CSS · bajo cost · mobile: simplificado · reduced motion: estático*
 
 ### REFERENCE: "Headline mixing sans + italic serif"
 
-→ **`text-reveal`** — Text Reveal  
-   Headline that rises into view by line, word, character or as a whole.  
-   *GSAP · ScrollTrigger · low cost · mobile: simplified · reduced motion: static*
+→ **`text-reveal`** — Aparición del titular  
+   El titular entra subiendo, por líneas, por palabras, por letras o entero.  
+   *GSAP · ScrollTrigger · bajo cost · mobile: simplificado · reduced motion: estático*
 
-→ **`split-text-reveal`** — Split Text Reveal  
-   The splitter underneath Text Reveal: cuts text into spans while preserving the accessible label.  
-   *GSAP · low cost · mobile: simplified · reduced motion: disabled*
+→ **`split-text-reveal`** — Partidor de texto  
+   El motor que hay debajo del titular: parte el texto en trozos sin perder la etiqueta accesible.  
+   *GSAP · bajo cost · mobile: simplificado · reduced motion: desactivado*
 
 ### REFERENCE: "button slight scale (1.02)"
 
-→ **`card-scale`** — Card Scale  
-   Subtle scale on hover, composable with lift.  
-   *Framer Motion · none cost · mobile: disabled · reduced motion: disabled*
+→ **`card-scale`** — Tarjeta que crece  
+   Un crecimiento mínimo al pasar el cursor, combinable con la elevación.  
+   *Framer Motion · nulo cost · mobile: desactivado · reduced motion: desactivado*
 
-→ **`button-scale`** — Button Scale  
-   Hover and press feedback at 1.02 and 0.98.  
-   *Framer Motion · none cost · mobile: simplified · reduced motion: disabled*
+→ **`button-scale`** — Botón que responde  
+   Respuesta al cursor y a la pulsación: 102% y 98%.  
+   *Framer Motion · nulo cost · mobile: simplificado · reduced motion: desactivado*
 
 ### REFERENCE: "Background: subtle radial lime glow at bottom-center"
 
-→ **`hover-glow`** — Hover Glow  
-   Radial highlight that tracks the cursor across a surface.  
-   *CSS · React · low cost · mobile: simplified · reduced motion: simplified*
+→ **`hover-glow`** — Resplandor que sigue al cursor  
+   Un halo de luz que persigue al cursor por la superficie.  
+   *CSS · React · bajo cost · mobile: simplificado · reduced motion: simplificado*
 
-→ **`radial-glow`** — Radial Glow  
-   Coloured light bloom anchored anywhere in a section.  
-   *CSS · none cost · mobile: identical · reduced motion: static*
+→ **`radial-glow`** — Resplandor de fondo  
+   Un foco de luz de color, anclado donde haga falta dentro de una sección.  
+   *CSS · nulo cost · mobile: igual · reduced motion: estático*
 
 ### REFERENCE: "Hero section (full-bleed HLS video bg, centered headline)"
 
-→ **`cinematic-hero`** — Cinematic Hero  
-   Full-viewport hero composing background media, overlay, glow, particles, vignette and grain in a fixed layer order.  
-   *React · CSS · Canvas · hls.js · medium cost · mobile: simplified · reduced motion: static*
+→ **`cinematic-hero`** — Hero cinematográfico  
+   Hero a pantalla completa que compone vídeo de fondo, velo, resplandor, partículas, viñeta y grano en un orden de capas fijo.  
+   *React · CSS · Canvas · hls.js · medio cost · mobile: simplificado · reduced motion: estático*
 
 ### REFERENCE: "Hero takes 100svh"
 
-→ **`cinematic-hero`** — Cinematic Hero  
-   Full-viewport hero composing background media, overlay, glow, particles, vignette and grain in a fixed layer order.  
-   *React · CSS · Canvas · hls.js · medium cost · mobile: simplified · reduced motion: static*
+→ **`cinematic-hero`** — Hero cinematográfico  
+   Hero a pantalla completa que compone vídeo de fondo, velo, resplandor, partículas, viñeta y grano en un orden de capas fijo.  
+   *React · CSS · Canvas · hls.js · medio cost · mobile: simplificado · reduced motion: estático*
 
 ### REFERENCE: "Background: hls.js video with 50% black overlay"
 
-→ **`background-video`** — Background Video (HLS)  
-   Autoplaying muted background video with an HLS path, progressive fallbacks and three separate still-image fallbacks.  
-   *hls.js · React · high cost · mobile: static · reduced motion: static*
+→ **`background-video`** — Vídeo de fondo (HLS)  
+   Vídeo de fondo mudo que arranca solo, con camino HLS, fuentes progresivas de respaldo y tres alternativas distintas a imagen fija.  
+   *hls.js · React · alto cost · mobile: estático · reduced motion: estático*
 
 ### REFERENCE: "Mobile: disable parallax, simplify hover states"
 
 → **`parallax`** — Parallax  
-   Moves an element at a different rate from the page, expressed relative to its own size.  
-   *GSAP · ScrollTrigger · low cost · mobile: disabled · reduced motion: disabled*
+   Mueve un elemento a distinta velocidad que la página, en proporción a su propio tamaño.  
+   *GSAP · ScrollTrigger · bajo cost · mobile: desactivado · reduced motion: desactivado*
 
 ### REFERENCE: "scroll-controlled"
 
-→ **`product-scroll`** — Product Scroll  
-   Pinned product stage with synchronised chapters and hotspots, over a video, an image sequence or a canvas renderer.  
-   *GSAP · ScrollTrigger · Canvas · hls.js · React · high cost · mobile: simplified · reduced motion: simplified*
+→ **`product-scroll`** — Producto por scroll  
+   Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.  
+   *GSAP · ScrollTrigger · Canvas · hls.js · React · alto cost · mobile: simplificado · reduced motion: simplificado*
 
 ### REFERENCE: "8 cards in an asymmetric grid"
 
-→ **`bento-grid-motion`** — Bento Grid Motion  
-   Staggered entrance for an asymmetric grid, ordered by DOM position.  
-   *GSAP · ScrollTrigger · low cost · mobile: simplified · reduced motion: static*
+→ **`bento-grid-motion`** — Entrada de rejilla bento  
+   Entrada escalonada para una rejilla asimétrica, en orden de lectura.  
+   *GSAP · ScrollTrigger · bajo cost · mobile: simplificado · reduced motion: estático*
 
 ### REFERENCE: "Marquee: CSS infinite scroll, pauses on hover"
 
-→ **`infinite-marquee`** — Infinite Marquee  
-   Seamless looping strip in CSS, pausing on hover.  
-   *CSS · React · none cost · mobile: identical · reduced motion: static*
+→ **`infinite-marquee`** — Tira infinita  
+   Tira que gira sin costura, en CSS puro, y se para al pasar el cursor.  
+   *CSS · React · nulo cost · mobile: igual · reduced motion: estático*
 
 ### REFERENCE: "BUILT WITH AI"
 
-→ **`infinite-marquee`** — Infinite Marquee  
-   Seamless looping strip in CSS, pausing on hover.  
-   *CSS · React · none cost · mobile: identical · reduced motion: static*
+→ **`infinite-marquee`** — Tira infinita  
+   Tira que gira sin costura, en CSS puro, y se para al pasar el cursor.  
+   *CSS · React · nulo cost · mobile: igual · reduced motion: estático*
 
 ### REFERENCE: "NOT BY AI ·"
 
-→ **`infinite-marquee`** — Infinite Marquee  
-   Seamless looping strip in CSS, pausing on hover.  
-   *CSS · React · none cost · mobile: identical · reduced motion: static*
+→ **`infinite-marquee`** — Tira infinita  
+   Tira que gira sin costura, en CSS puro, y se para al pasar el cursor.  
+   *CSS · React · nulo cost · mobile: igual · reduced motion: estático*
 
 ### REFERENCE: "FAQ accordion"
 
-→ **`animated-accordion`** — Animated Accordion  
-   Height and opacity panel transition with full keyboard and ARIA support.  
-   *Framer Motion · React · low cost · mobile: identical · reduced motion: simplified*
+→ **`animated-accordion`** — Acordeón animado  
+   Los paneles abren y cierran con altura y opacidad, con teclado y accesibilidad completos.  
+   *Framer Motion · React · bajo cost · mobile: igual · reduced motion: simplificado*
 
 ### REFERENCE: "Smooth height + opacity transition (300ms ease-out)"
 
-→ **`animated-accordion`** — Animated Accordion  
-   Height and opacity panel transition with full keyboard and ARIA support.  
-   *Framer Motion · React · low cost · mobile: identical · reduced motion: simplified*
+→ **`animated-accordion`** — Acordeón animado  
+   Los paneles abren y cierran con altura y opacidad, con teclado y accesibilidad completos.  
+   *Framer Motion · React · bajo cost · mobile: igual · reduced motion: simplificado*
 
 ---
 

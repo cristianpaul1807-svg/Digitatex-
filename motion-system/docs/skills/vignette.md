@@ -1,8 +1,8 @@
-# Vignette
+# Viñeta
 
-`vignette` · Atmosphere · basic
+`vignette` · Atmósfera · básico
 
-Edge darkening that settles the eye on the centre.
+Oscurece los bordes para que el ojo se pose en el centro.
 
 ## Source reference
 
@@ -10,9 +10,9 @@ Edge darkening that settles the eye on the centre.
 
 ## Implementation
 
-- **Export:** `Vignette`
+- **Export:** `Viñeta`
 - **Technology:** CSS
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Edge darkening that settles the eye on the centre.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Elliptical gradient with configurable intensity and spread. |
-| Tablet | Identical. |
-| Mobile | **identical** — Free. |
-| Reduced motion | **identical** — Static. |
+| Desktop | Degradado elíptico, con intensidad y extensión configurables. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Gratis. |
+| Reduced motion | **igual** — Estática. |
 
 ## When to use it
 
-- Over video
-- Full-bleed imagery
-- Cinematic framing
+- Sobre vídeo
+- Imagen a sangre
+- Encuadre cinematográfico

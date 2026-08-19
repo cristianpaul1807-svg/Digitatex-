@@ -1,8 +1,8 @@
-# Fade Section Transition
+# Sección que aparece
 
-`fade-section-transition` · Section Transitions · basic
+`fade-section-transition` · Transiciones de sección · básico
 
-Section fades in as it enters.
+La sección aparece al entrar en pantalla.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Section fades in as it enters.
 
 - **Export:** `SectionTransition`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,11 +24,11 @@ Section fades in as it enters.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 1.2s opacity. |
-| Tablet | Identical. |
-| Mobile | **identical** — Opacity only. |
-| Reduced motion | **static** — Visible immediately. |
+| Desktop | 1,2 s de opacidad. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Solo opacidad. |
+| Reduced motion | **estático** — Visible desde el principio. |
 
 ## When to use it
 
-- The default section entrance
+- La entrada de sección por defecto
