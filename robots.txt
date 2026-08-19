@@ -13,4 +13,8 @@ Disallow: /links
 # ensenarlas. Indexarlas bajo nuestro dominio les haria competencia a ellas.
 Disallow: /prototipi
 
+# El sistema de movimiento es documentacion interna del equipo, no contenido
+# publico. Lleva ademas su propia etiqueta noindex.
+Disallow: /motion
+
 Sitemap: https://digitatex.com/sitemap.xml
