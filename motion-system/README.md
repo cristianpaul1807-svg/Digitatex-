@@ -170,7 +170,7 @@ Everything else is transform and opacity, which the compositor handles for free.
 
 ---
 
-## Two things that cost a debugging pass, written down so they do not again
+## Three things that cost a debugging pass, written down so they do not again
 
 **A transform on an ancestor breaks every pin inside it.** `PageReveal` animates
 `y` on the page wrapper, and GSAP leaves the transform in place when a tween
@@ -183,6 +183,18 @@ ticked up perfectly. `clearProps` on completion, then `ScrollTrigger.refresh()`.
 `body` a scroll container, so `position: sticky` sticks to it rather than to the
 viewport. `overflow-x: clip` prevents the horizontal scrollbar without creating
 a scroll port.
+
+**Reading `sessionStorage` throws in a sandboxed iframe.** Not writing —
+*reading*. Without `allow-same-origin` the document has an opaque origin and no
+storage bucket, so the property access itself raises a SecurityError. Thrown
+from a React effect it unmounts the entire tree, and the visitor gets a black
+page with nothing to explain it. That is how this showcase first arrived when it
+was handed over as a file, viewed inside a chat panel.
+
+Everything storage-related now goes through `safeStorage`, and the loader — the
+one component guaranteed to be in front of everything else — wraps its whole
+effect in a try/catch plus a timer that uncovers the page regardless. A failure
+in a loader is not a missing effect; it is a blank site.
 
 ---
 
