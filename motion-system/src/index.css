@@ -35,6 +35,14 @@
     }
   }
 
+  /* The nav is fixed, so an anchor jump would otherwise land with the section
+     heading underneath it. scroll-margin is the one-line fix and it applies to
+     both `scrollIntoView` and plain #hash navigation. */
+  section[id],
+  div[id] {
+    scroll-margin-top: 104px;
+  }
+
   ::selection { @apply bg-accent text-ink; }
 
   :focus-visible {

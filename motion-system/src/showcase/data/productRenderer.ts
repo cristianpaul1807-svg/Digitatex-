@@ -70,13 +70,25 @@ export const renderProduct: CanvasRenderer = (ctx, t, { w, h }) => {
   });
 
   // Contact shadow, so the object sits in a space instead of floating in one.
-  const shadow = ctx.createRadialGradient(cx, cy + unit * 1.25, 0, cx, cy + unit * 1.25, unit * 2.1);
-  shadow.addColorStop(0, 'rgba(0,0,0,0.55)');
+  //
+  // Kept small and reasonably opaque on purpose. A wide, very low-alpha
+  // gradient over a near-black background makes Chromium's 256px raster tiles
+  // visible as faint rectangles — it reads as a rendering bug rather than as
+  // shade. Less area and more contrast per pixel removes it.
+  const sy = cy + unit * 1.2;
+  const shadow = ctx.createRadialGradient(cx, sy, 0, cx, sy, unit * 1.35);
+  shadow.addColorStop(0, 'rgba(0,0,0,0.62)');
+  shadow.addColorStop(0.5, 'rgba(0,0,0,0.26)');
   shadow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.save();
+  ctx.translate(cx, sy);
+  ctx.scale(1, 0.32);
+  ctx.translate(-cx, -sy);
   ctx.fillStyle = shadow;
   ctx.beginPath();
-  ctx.ellipse(cx, cy + unit * 1.25, unit * 2.1, unit * 0.42, 0, 0, Math.PI * 2);
+  ctx.arc(cx, sy, unit * 1.35, 0, Math.PI * 2);
   ctx.fill();
+  ctx.restore();
 
   const faces = FACES.map((f) => {
     const pts = f.map((i) => projected[i]!);
@@ -88,24 +100,32 @@ export const renderProduct: CanvasRenderer = (ctx, t, { w, h }) => {
   }).sort((a, b) => a.depth - b.depth);
 
   for (const face of faces) {
-    const shade = 0.06 + face.lambert * 0.34;
+    // Ambient floor of 0.10 so an unlit face is still a surface and not a hole,
+    // and a wide range above it so the turn actually reads as a turn.
+    const shade = 0.10 + face.lambert * 0.62;
     ctx.beginPath();
     face.pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
     ctx.closePath();
-    ctx.fillStyle = `rgba(${Math.round(210 * shade + 12)},${Math.round(232 * shade + 14)},${Math.round(150 * shade + 16)},0.96)`;
+    ctx.fillStyle = `rgba(${Math.round(196 * shade + 16)},${Math.round(222 * shade + 18)},${Math.round(140 * shade + 20)},0.97)`;
     ctx.fill();
-    ctx.strokeStyle = `rgba(200,242,74,${0.1 + face.lambert * 0.5})`;
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = `rgba(200,242,74,${0.14 + face.lambert * 0.62})`;
+    ctx.lineWidth = 1.2;
     ctx.stroke();
   }
 
   // Rim light in the final act, once the object has stopped introducing itself.
   const rim = Math.max(0, (t - 0.72) / 0.28);
   if (rim > 0) {
-    const g = ctx.createRadialGradient(cx, cy, unit * 0.4, cx, cy, unit * 3.2);
-    g.addColorStop(0, `rgba(200,242,74,${0.16 * rim})`);
+    // Bounded to the object's own neighbourhood rather than the whole canvas,
+    // for the same tile-seam reason as the shadow above.
+    const r = unit * 2.6;
+    const g = ctx.createRadialGradient(cx, cy, unit * 0.5, cx, cy, r);
+    g.addColorStop(0, `rgba(200,242,74,${0.2 * rim})`);
+    g.addColorStop(0.55, `rgba(200,242,74,${0.06 * rim})`);
     g.addColorStop(1, 'rgba(200,242,74,0)');
     ctx.fillStyle = g;
-    ctx.fillRect(0, 0, w, h);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
   }
 };
