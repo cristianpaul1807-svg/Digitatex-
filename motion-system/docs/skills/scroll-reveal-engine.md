@@ -1,8 +1,8 @@
-# Scroll Reveal Engine
+# Motor de entradas por scroll
 
-`scroll-reveal-engine` · Scroll Motion · advanced
+`scroll-reveal-engine` · Movimiento por scroll · avanzado
 
-The single ScrollTrigger abstraction every reveal goes through: cleanup, initial state, reduced motion and dev markers handled once.
+La única pieza por la que pasan todas las entradas: limpieza, estado inicial, movimiento reducido y marcas de depuración, resueltos una sola vez.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ The single ScrollTrigger abstraction every reveal goes through: cleanup, initial
 
 - **Export:** `useScrollReveal`
 - **Technology:** GSAP · ScrollTrigger · React
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,11 +24,11 @@ const ref = useScrollReveal({ kind: "fade-up", children: ":scope > *" })
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Triggers scoped to a container and reverted on unmount by useGSAP. |
-| Tablet | Identical. |
-| Mobile | **identical** — ignoreMobileResize is set globally so URL-bar collapse does not refresh every trigger. |
-| Reduced motion | **disabled** — No trigger created; targets are made visible. |
+| Desktop | Los disparadores viven dentro de su contenedor y se deshacen solos al desmontarlo. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Se ignora el cambio de alto del móvil, para que plegar la barra de direcciones no recalcule todos los disparadores. |
+| Reduced motion | **desactivado** — No se crea disparador; los elementos se muestran directamente. |
 
 ## When to use it
 
-- The foundation of every other scroll skill
+- La base de todos los demás efectos de scroll

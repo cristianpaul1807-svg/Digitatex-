@@ -1,8 +1,8 @@
-# Image Zoom
+# Zoom de imagen
 
-`image-zoom` · Cards & Bento · basic
+`image-zoom` · Tarjetas y bento · básico
 
-Image scales inside a fixed frame while the frame stays put.
+La imagen crece dentro de un marco fijo, y el marco no se mueve.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Image scales inside a fixed frame while the frame stays put.
 
 - **Export:** `ZoomImage`
 - **Technology:** Framer Motion · CSS
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Image scales inside a fixed frame while the frame stays put.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 1.06 over 700ms inside an overflow-hidden frame. |
-| Tablet | Identical. |
-| Mobile | **disabled** — No hover state exists. |
-| Reduced motion | **disabled** — Static image. |
+| Desktop | Crece un 6% en 700 ms dentro de un marco que recorta. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **desactivado** — En el móvil no existe el estado de cursor encima. |
+| Reduced motion | **desactivado** — Imagen quieta. |
 
 ## When to use it
 
-- Portfolio thumbnails
-- Editorial cards
-- Product tiles
+- Miniaturas de porfolio
+- Tarjetas editoriales
+- Fichas de producto

@@ -1,8 +1,8 @@
-# Light Sweep
+# Barrido de luz
 
-`light-sweep` · Atmosphere · basic
+`light-sweep` · Atmósfera · básico
 
-Specular band travelling across a surface, on hover or on a loop.
+Una banda de brillo que cruza la superficie, al pasar el cursor o en bucle.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Specular band travelling across a surface, on hover or on a loop.
 
 - **Export:** `LightSweep`
 - **Technology:** CSS
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Specular band travelling across a surface, on hover or on a loop.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Transform on a gradient: composite only, no repaint. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Hover mode never fires; use loop mode or omit it. |
-| Reduced motion | **disabled** — Renders nothing. |
+| Desktop | Solo mueve un degradado: compone, no repinta. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — El modo por cursor nunca se dispara; usar el modo en bucle o quitarlo. |
+| Reduced motion | **desactivado** — No dibuja nada. |
 
 ## When to use it
 
-- Buttons
-- Cards
-- Logo marks
+- Botones
+- Tarjetas
+- Logotipos

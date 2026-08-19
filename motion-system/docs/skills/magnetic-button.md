@@ -1,8 +1,8 @@
-# Magnetic Button
+# Botón magnético
 
-`magnetic-button` · Microinteractions · intermediate
+`magnetic-button` · Microinteracciones · intermedio
 
-Button leans toward the cursor inside a radius and springs back on leave.
+El botón se inclina hacia el cursor dentro de un radio y vuelve al salir.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Button leans toward the cursor inside a radius and springs back on leave.
 
 - **Export:** `MagneticButton`
 - **Technology:** GSAP · Framer Motion
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,12 +24,12 @@ Button leans toward the cursor inside a radius and springs back on leave.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Element-scoped pointer listener and gsap.quickTo, so a moving cursor retargets one live tween instead of spawning one per event. |
-| Tablet | Disabled unless a fine pointer is present. |
-| Mobile | **disabled** — No listener is attached at all. There is no cursor to be attracted to. |
-| Reduced motion | **disabled** — Plain button. |
+| Desktop | El detector vive en el propio botón y reapunta una sola animación viva, en vez de crear una por cada movimiento del ratón. |
+| Tablet | Apagado salvo que haya un puntero fino. |
+| Mobile | **desactivado** — Ni se instala el detector. No hay cursor al que atraerse. |
+| Reduced motion | **desactivado** — Un botón normal. |
 
 ## When to use it
 
-- Primary CTAs
-- Hero actions
+- Botones principales
+- Acciones del hero

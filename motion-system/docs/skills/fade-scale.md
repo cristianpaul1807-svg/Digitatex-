@@ -1,8 +1,8 @@
-# Fade + Scale
+# Entrada con escala
 
-`fade-scale` · Text Motion · basic
+`fade-scale` · Movimiento de texto · básico
 
-Entrance that settles from 0.94 to 1 while fading in.
+Entra asentándose del 94% al 100% mientras aparece.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Entrance that settles from 0.94 to 1 while fading in.
 
 - **Export:** `FadeScale`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Entrance that settles from 0.94 to 1 while fading in.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Scale 0.94 to 1 with opacity. |
-| Tablet | Identical. |
-| Mobile | **identical** — Transform and opacity only. |
-| Reduced motion | **static** — Placed at final scale. |
+| Desktop | Escala del 94% al 100% junto con la opacidad. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Solo transform y opacidad. |
+| Reduced motion | **estático** — Se coloca ya a su tamaño final. |
 
 ## When to use it
 
-- Media blocks
-- Cards
-- Logos
+- Bloques de imagen o vídeo
+- Tarjetas
+- Logotipos

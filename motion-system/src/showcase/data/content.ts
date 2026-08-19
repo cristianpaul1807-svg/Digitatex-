@@ -4,21 +4,21 @@ import type { ProductChapter, ProductHotspot } from '@/components/sections/Produ
 export const productChapters: ProductChapter[] = [
   {
     at: 0,
-    eyebrow: '01 — Source',
-    title: 'One stage.\nThree sources.',
-    body: 'Video, image sequence or a canvas renderer. Everything downstream reads the same progress value, so swapping the source changes one prop and nothing else.',
+    eyebrow: '01 — Fuente',
+    title: 'Un escenario.\nTres fuentes.',
+    body: 'Vídeo, secuencia de imágenes o dibujo por canvas. Todo lo demás lee el mismo valor de avance, así que cambiar de fuente es cambiar un dato y nada más.',
   },
   {
     at: 0.34,
-    eyebrow: '02 — Sequence',
-    title: 'Scroll is\nthe timeline.',
-    body: 'The visitor sets the pace. Nothing plays on its own, nothing has to be waited out, and the same gesture that reads the page drives the object.',
+    eyebrow: '02 — Ritmo',
+    title: 'El scroll es\nla línea de tiempo.',
+    body: 'El ritmo lo marca quien mira. Nada se reproduce solo, nada hay que esperar, y el mismo gesto que lee la página mueve el objeto.',
   },
   {
     at: 0.66,
-    eyebrow: '03 — Annotation',
-    title: 'Detail arrives\nwhen it is earned.',
-    body: 'Hotspots appear inside a progress window and leave again, so a specification lands at the moment the object is showing the thing it describes.',
+    eyebrow: '03 — Anotación',
+    title: 'El detalle llega\ncuando toca.',
+    body: 'Las anotaciones aparecen dentro de un tramo del recorrido y se van, para que cada dato llegue justo cuando el objeto enseña lo que ese dato describe.',
   },
 ];
 
@@ -28,44 +28,44 @@ export const productChapters: ProductChapter[] = [
  * copy occupies the left, and a hotspot placed there lands on the headline.
  */
 export const productHotspots: ProductHotspot[] = [
-  { from: 0.4, to: 0.72, x: 42, y: 22, label: 'Canvas source', detail: 'No asset. Eight vertices and one light vector.' },
-  { from: 0.56, to: 0.9, x: 46, y: 80, label: 'Contact shadow', detail: 'Grounds the object instead of floating it.' },
-  { from: 0.76, to: 1, x: 79, y: 24, label: 'Rim light', detail: 'Arrives last, once the shape has been read.' },
+  { from: 0.4, to: 0.72, x: 42, y: 22, label: 'Dibujado por canvas', detail: 'Sin ningún archivo. Ocho vértices y un vector de luz.' },
+  { from: 0.56, to: 0.9, x: 46, y: 80, label: 'Sombra de contacto', detail: 'Posa el objeto en el suelo en vez de dejarlo flotando.' },
+  { from: 0.76, to: 1, x: 79, y: 24, label: 'Luz de borde', detail: 'Llega la última, cuando la forma ya se ha leído.' },
 ];
 
 export const faqItems: AccordionItem[] = [
   {
     id: 'when',
-    question: 'When should a section not animate?',
+    question: '¿Cuándo NO debe animarse una sección?',
     answer:
-      'When the content is the reason someone came. Pricing, specifications, contact details and error states should be present on arrival. Motion is for the parts of a page that reward exploration, not for the parts that answer a question.',
+      'Cuando el contenido es el motivo por el que alguien ha entrado. Precios, fichas técnicas, datos de contacto y mensajes de error tienen que estar ahí al llegar. El movimiento es para las partes que premian explorar, no para las que responden una pregunta.',
   },
   {
     id: 'both',
-    question: 'Why two animation libraries?',
+    question: '¿Por qué dos librerías de animación?',
     answer:
-      'They do different jobs. GSAP owns anything tied to scroll position — timelines, pinning, scrubbing — because ScrollTrigger has no real equivalent. Framer Motion owns component state, where declarative variants and AnimatePresence are far less code than the imperative alternative. The rule is that no single property is ever animated by both.',
+      'Hacen trabajos distintos. GSAP se encarga de todo lo atado a la posición del scroll — líneas de tiempo, anclajes, recorrer un vídeo — porque ahí no tiene rival. Framer Motion se encarga del estado de los componentes, donde escribir qué estados existen es mucho menos código que animarlos a mano. La regla es que ninguna propiedad la animan las dos.',
   },
   {
     id: 'reduced',
-    question: 'What does reduced motion actually change?',
+    question: '¿Qué cambia de verdad con el movimiento reducido?',
     answer:
-      'Every skill declares its own fallback, and none of them is the same animation played faster. Parallax and particles stop existing. Text reveals stop splitting, which also leaves the accessibility tree untouched. Marquees become scrollable strips. Pinned sections become stacked ones. Content is never hidden behind an animation that no longer runs.',
+      'Cada efecto declara su propia alternativa, y ninguna es la misma animación más rápida. El parallax y las partículas dejan de existir. Los titulares dejan de partirse, lo que además deja intacto el árbol de accesibilidad. Las tiras infinitas pasan a deslizarse a mano. Las secciones ancladas se apilan. Y nunca se esconde contenido detrás de una animación que ya no corre.',
   },
   {
     id: 'budget',
-    question: 'What does all this cost?',
+    question: '¿Cuánto cuesta todo esto?',
     answer:
-      'Most of it is free: transform and opacity are composited. The expensive ones are named in the registry — backdrop-filter, filter: blur, scrubbed video and particle canvases. Each carries a performance rating, so the cost is a decision at the point of use rather than a discovery at the end of the project.',
+      'Casi todo es gratis: mover y desvanecer lo resuelve el compositor. Los caros están señalados uno a uno — el desenfoque de fondo, el desenfoque normal, el vídeo recorrido por scroll y las partículas. Cada efecto lleva su coste escrito, para que sea una decisión al usarlo y no un descubrimiento al final del proyecto.',
   },
 ];
 
 export const marqueeStatements = [
-  'MOTION AS HIERARCHY',
-  'NOT EVERYTHING SHOULD ANIMATE',
-  'ACCESSIBILITY OVERRIDES EFFECT',
-  'SCROLL REWARDS EXPLORATION',
-  'MEASURE, DO NOT GUESS',
+  'EL MOVIMIENTO ES JERARQUÍA',
+  'NO TODO DEBE MOVERSE',
+  'LA ACCESIBILIDAD MANDA SOBRE EL EFECTO',
+  'EL SCROLL PREMIA EXPLORAR',
+  'MEDIR, NO ADIVINAR',
 ];
 
 export const plates = ['media/plate-a.jpg', 'media/plate-b.jpg', 'media/plate-c.jpg', 'media/plate-d.jpg'];

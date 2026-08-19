@@ -1,8 +1,8 @@
-# Media Overlay
+# Velo sobre el vídeo
 
-`media-overlay` · Hero & Cinematic · basic
+`media-overlay` · Hero y cine · básico
 
-Configurable wash over media — flat, directional or radial — that makes overlaid text legible.
+Capa configurable sobre el vídeo — plana, direccional o radial — que hace legible el texto de encima.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Configurable wash over media — flat, directional or radial — that makes over
 
 - **Export:** `MediaOverlay`
 - **Technology:** CSS
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Configurable wash over media — flat, directional or radial — that makes over
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Directional gradient by default: darkens the band the copy sits on and leaves the rest of the image alive. |
-| Tablet | Identical. |
-| Mobile | **identical** — Often needs more opacity: less screen means text sits over busier parts of the frame. |
-| Reduced motion | **identical** — Static by nature. |
+| Desktop | Degradado direccional por defecto: oscurece solo la franja donde va el texto y deja viva el resto de la imagen. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Suele necesitar más opacidad: con menos pantalla el texto cae sobre zonas más cargadas del fotograma. |
+| Reduced motion | **igual** — Es estático por naturaleza. |
 
 ## When to use it
 
-- Any text over media
-- Hero legibility
-- Card image scrims
+- Cualquier texto sobre vídeo o foto
+- Legibilidad del hero
+- Velos en imágenes de tarjeta

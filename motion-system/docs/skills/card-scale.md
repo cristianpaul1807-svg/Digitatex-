@@ -1,8 +1,8 @@
-# Card Scale
+# Tarjeta que crece
 
-`card-scale` · Cards & Bento · basic
+`card-scale` · Tarjetas y bento · básico
 
-Subtle scale on hover, composable with lift.
+Un crecimiento mínimo al pasar el cursor, combinable con la elevación.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Subtle scale on hover, composable with lift.
 
 - **Export:** `HoverCard`
 - **Technology:** Framer Motion
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,12 +24,12 @@ Subtle scale on hover, composable with lift.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 1.01 to 1.03. Beyond that it reads as a different card rather than the same one responding. |
-| Tablet | Identical. |
-| Mobile | **disabled** — No hover state exists. |
-| Reduced motion | **disabled** — Off. |
+| Desktop | Entre el 101% y el 103%. Más que eso se lee como otra tarjeta, no como la misma respondiendo. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **desactivado** — En el móvil no existe el estado de cursor encima. |
+| Reduced motion | **desactivado** — Apagado. |
 
 ## When to use it
 
-- Feature cards
-- Media tiles
+- Tarjetas de característica
+- Mosaicos de imagen

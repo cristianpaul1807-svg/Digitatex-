@@ -1,8 +1,8 @@
-# Fade Up
+# Entrada desde abajo
 
-`fade-up` · Text Motion · basic
+`fade-up` · Movimiento de texto · básico
 
-The workhorse entrance: opacity plus a short directional rise.
+La entrada de siempre: opacidad más una subida corta.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ The workhorse entrance: opacity plus a short directional rise.
 
 - **Export:** `FadeUp`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,12 +24,12 @@ The workhorse entrance: opacity plus a short directional rise.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 36px rise, 0.8s, power3.out. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Distance drops to ~16px: a long travel on a short viewport arrives late. |
-| Reduced motion | **static** — Visible immediately; no trigger created. |
+| Desktop | 36 px de subida en 0,8 s. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — La distancia baja a unos 16 px: un recorrido largo en una pantalla corta llega tarde. |
+| Reduced motion | **estático** — Visible desde el principio; no se crea ningún disparador. |
 
 ## When to use it
 
-- Almost anything
-- The default when unsure
+- Casi cualquier cosa
+- La opción por defecto si dudas

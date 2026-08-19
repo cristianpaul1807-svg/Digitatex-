@@ -11,11 +11,11 @@ export type MotionCategory =
 
 export type MotionTech = 'gsap' | 'scrolltrigger' | 'framer-motion' | 'css' | 'canvas' | 'hls.js' | 'react';
 
-export type PerformanceCost = 'none' | 'low' | 'medium' | 'high';
-export type Difficulty = 'basic' | 'intermediate' | 'advanced';
+export type PerformanceCost = 'nulo' | 'bajo' | 'medio' | 'alto';
+export type Difficulty = 'básico' | 'intermedio' | 'avanzado';
 
 /** How a skill degrades. Never "the same but smaller" — always a decision. */
-export type FallbackBehaviour = 'identical' | 'simplified' | 'static' | 'disabled';
+export type FallbackBehaviour = 'igual' | 'simplificado' | 'estático' | 'desactivado';
 
 export interface SkillFallback {
   behaviour: FallbackBehaviour;

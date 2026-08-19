@@ -1,8 +1,8 @@
-# Clip Reveal
+# Barrido con máscara
 
-`clip-reveal` · Text Motion · intermediate
+`clip-reveal` · Movimiento de texto · intermedio
 
-Content wiped into view with an animated clip-path.
+El contenido se descubre con un barrido, no con una opacidad.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Content wiped into view with an animated clip-path.
 
 - **Export:** `ClipReveal`
 - **Technology:** GSAP · ScrollTrigger · CSS
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Content wiped into view with an animated clip-path.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Vertical, horizontal or centre wipe. |
-| Tablet | Identical. |
-| Mobile | **identical** — clip-path animates on the compositor; no repaint. |
-| Reduced motion | **static** — Clip removed, content shown. |
+| Desktop | Barrido vertical, horizontal o desde el centro. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — El barrido lo resuelve el compositor; no repinta nada. |
+| Reduced motion | **estático** — Se quita la máscara y se ve el contenido. |
 
 ## When to use it
 
-- Images
-- Editorial dividers
-- Full-bleed panel reveals
+- Imágenes
+- Separadores editoriales
+- Descubrir paneles a sangre

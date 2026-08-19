@@ -1,8 +1,8 @@
-# Stagger Reveal
+# Entrada escalonada
 
-`stagger-reveal` · Text Motion · basic
+`stagger-reveal` · Movimiento de texto · básico
 
-Children animate in sequence from one trigger.
+Los hijos entran en secuencia desde un solo disparador.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Children animate in sequence from one trigger.
 
 - **Export:** `StaggerReveal`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Children animate in sequence from one trigger.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 0.08s between children, in DOM order. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Tighter step: on a single column a 12-item stagger at 0.08s takes a full second to finish. |
-| Reduced motion | **static** — All children visible at once. |
+| Desktop | 0,08 s entre cada hijo, en el orden en que están escritos. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Paso más corto: en una sola columna, doce elementos a 0,08 s tardan un segundo entero. |
+| Reduced motion | **estático** — Todos los hijos visibles a la vez. |
 
 ## When to use it
 
-- Lists
-- Feature grids
-- Navigation
+- Listas
+- Rejillas de características
+- Menús

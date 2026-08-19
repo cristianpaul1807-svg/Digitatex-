@@ -1,8 +1,8 @@
-# Clip Section Transition
+# Sección que se descubre
 
-`clip-section-transition` · Section Transitions · intermediate
+`clip-section-transition` · Transiciones de sección · intermedio
 
-Section unmasks from a rounded inset to full bleed.
+La sección se descubre desde un recuadro redondeado hasta ocupar todo el ancho.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Section unmasks from a rounded inset to full bleed.
 
 - **Export:** `SectionTransition`
 - **Technology:** GSAP · ScrollTrigger · CSS
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,12 +24,12 @@ Section unmasks from a rounded inset to full bleed.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | clip-path inset with an animated corner radius. |
-| Tablet | Identical. |
-| Mobile | **identical** — Composited. |
-| Reduced motion | **static** — Clip removed. |
+| Desktop | Máscara que se abre, con las esquinas redondeándose en el camino. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Lo resuelve el compositor. |
+| Reduced motion | **estático** — Se quita la máscara. |
 
 ## When to use it
 
-- Hero-to-content handoffs
-- Chapter breaks
+- El paso del hero al contenido
+- Cortes de capítulo

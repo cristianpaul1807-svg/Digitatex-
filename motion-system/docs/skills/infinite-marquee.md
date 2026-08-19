@@ -1,8 +1,8 @@
-# Infinite Marquee
+# Tira infinita
 
-`infinite-marquee` · Marquee · basic
+`infinite-marquee` · Tira infinita · básico
 
-Seamless looping strip in CSS, pausing on hover.
+Tira que gira sin costura, en CSS puro, y se para al pasar el cursor.
 
 ## Source reference
 
@@ -10,9 +10,9 @@ Seamless looping strip in CSS, pausing on hover.
 
 ## Implementation
 
-- **Export:** `Marquee`
+- **Export:** `Tira infinita`
 - **Technology:** CSS · React
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Seamless looping strip in CSS, pausing on hover.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Track duplicated exactly once and translated -50%; the duplicate is aria-hidden so the strip is read once. |
-| Tablet | Identical. |
-| Mobile | **identical** — Composited off the main thread, so it is one of the few effects that costs nothing on a phone. |
-| Reduced motion | **static** — Becomes a normal scrollable strip. The words were the point; the movement was decoration. |
+| Desktop | La tira se duplica exactamente una vez y se desplaza la mitad; la copia se oculta a los lectores de pantalla para que no se lea dos veces. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Lo resuelve el compositor fuera del hilo principal: de los pocos efectos que no cuestan nada en un móvil. |
+| Reduced motion | **estático** — Se convierte en una tira que se desliza a mano. Las palabras eran lo importante; el movimiento era adorno. |
 
 ## When to use it
 
-- Client logos
-- Statement strips
-- Service lists
+- Logotipos de clientes
+- Tiras de mensaje
+- Listas de servicios

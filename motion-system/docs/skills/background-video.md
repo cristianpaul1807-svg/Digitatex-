@@ -1,8 +1,8 @@
-# Background Video (HLS)
+# Vídeo de fondo (HLS)
 
-`background-video` · Hero & Cinematic · advanced
+`background-video` · Hero y cine · avanzado
 
-Autoplaying muted background video with an HLS path, progressive fallbacks and three separate still-image fallbacks.
+Vídeo de fondo mudo que arranca solo, con camino HLS, fuentes progresivas de respaldo y tres alternativas distintas a imagen fija.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Autoplaying muted background video with an HLS path, progressive fallbacks and t
 
 - **Export:** `HlsVideo`
 - **Technology:** hls.js · React
-- **Performance cost:** high
+- **Performance cost:** alto
 
 ## Usage
 
@@ -24,13 +24,13 @@ Autoplaying muted background video with an HLS path, progressive fallbacks and t
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | hls.js where needed; native HLS in Safari, where loading the library too would mean two players fighting over one element. |
-| Tablet | Identical, capped to the player size. |
-| Mobile | **static** — Poster when posterOnMobile is set. Also falls back to the poster on Save-Data and 2G, for different reasons than the phone case. |
-| Reduced motion | **static** — Poster frame. Motion nobody asked for is exactly what the setting means. |
+| Desktop | hls.js donde hace falta; HLS nativo en Safari, donde cargar además la librería serían dos reproductores peleando por un mismo elemento. |
+| Tablet | Igual, limitado al tamaño del reproductor. |
+| Mobile | **estático** — Imagen fija si se activa posterOnMobile. También cae a la imagen con Ahorro de datos y en 2G, por motivos distintos al del teléfono. |
+| Reduced motion | **estático** — Fotograma fijo. Movimiento que nadie pidió es justo lo que esa preferencia significa. |
 
 ## When to use it
 
-- Hero backgrounds
-- Ambient section backdrops
-- Showreels
+- Fondos de hero
+- Fondos ambientales de sección
+- Bobinas de trabajo

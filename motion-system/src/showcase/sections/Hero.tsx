@@ -28,23 +28,23 @@ export function Hero() {
       }}
       overlay={{ opacity: 0.62, gradient: 'to-bottom' }}
     >
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">Digitatex · Internal</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">Digitatex · Uso interno</p>
 
       <TextReveal as="h1" by="lines" className="mt-7 font-display text-[clamp(3rem,9vw,7.5rem)] font-light leading-[0.95] tracking-tight text-bone">
-        Motion System
+        Sistema de Movimiento
       </TextReveal>
 
       <FadeUp delay={0.35}>
         <p className="mx-auto mt-7 max-w-xl text-balance text-[17px] leading-relaxed text-bone-dim">
-          Reusable animation &amp; visual effects for premium digital experiences.
+          Animación y efectos visuales reutilizables, para webs que se recuerdan.
         </p>
       </FadeUp>
 
       <FadeUp delay={0.5}>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <MagneticButton onClick={() => go('s01')}>Explore the system</MagneticButton>
+          <MagneticButton onClick={() => go('s01')}>Ver los efectos</MagneticButton>
           <MagneticButton variant="ghost" onClick={() => go('full-system')}>
-            Full system demo
+            La web completa
           </MagneticButton>
         </div>
       </FadeUp>

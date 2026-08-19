@@ -1,8 +1,8 @@
-# Sticky Storytelling
+# Relato anclado
 
-`sticky-story` · Scroll Motion · advanced
+`sticky-story` · Movimiento por scroll · avanzado
 
-Pinned section that steps through chapters, driving text and visuals from one progress value.
+La sección se ancla y va pasando capítulos, moviendo texto e imagen desde un mismo valor de avance.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Pinned section that steps through chapters, driving text and visuals from one pr
 
 - **Export:** `StickyStory`
 - **Technology:** GSAP · ScrollTrigger · React
-- **Performance cost:** medium
+- **Performance cost:** medio
 
 ## Usage
 
@@ -24,13 +24,13 @@ Pinned section that steps through chapters, driving text and visuals from one pr
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | The section pins and chapters cross-fade in place with a progress rail. |
-| Tablet | Pinned, shorter scroll per chapter. |
-| Mobile | **simplified** — A different layout, not a smaller one: chapters stack and scroll normally, because pinning fights the URL bar on a phone. |
-| Reduced motion | **simplified** — Falls back to the stacked layout. |
+| Desktop | La sección se ancla y los capítulos se funden en el sitio, con una barra de avance. |
+| Tablet | Anclada, con menos recorrido por capítulo. |
+| Mobile | **simplificado** — Una maqueta distinta, no una más pequeña: los capítulos se apilan y se recorren normal, porque anclar pelea con la barra del navegador en el móvil. |
+| Reduced motion | **simplificado** — Pasa a la maqueta apilada. |
 
 ## When to use it
 
-- Process and method sections
-- Case studies
-- Feature walkthroughs
+- Secciones de proceso o método
+- Casos de estudio
+- Recorridos por funcionalidades

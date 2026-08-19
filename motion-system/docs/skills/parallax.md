@@ -1,8 +1,8 @@
 # Parallax
 
-`parallax` · Scroll Motion · intermediate
+`parallax` · Movimiento por scroll · intermedio
 
-Moves an element at a different rate from the page, expressed relative to its own size.
+Mueve un elemento a distinta velocidad que la página, en proporción a su propio tamaño.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Moves an element at a different rate from the page, expressed relative to its ow
 
 - **Export:** `useParallax`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ const ref = useParallax({ speed: 0.18 })
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Travel is a fraction of the element size, so one value works at every breakpoint. |
-| Tablet | Reduced speed. |
-| Mobile | **disabled** — Off by default. Short scrolls and a finger on the glass turn parallax into lag. |
-| Reduced motion | **disabled** — No tween created. |
+| Desktop | El recorrido es una fracción del tamaño del elemento, así que un solo valor sirve en todas las pantallas. |
+| Tablet | Velocidad reducida. |
+| Mobile | **desactivado** — Apagado por defecto. Con un recorrido corto y el dedo en el cristal, el parallax se percibe como retraso. |
+| Reduced motion | **desactivado** — No se crea la animación. |
 
 ## When to use it
 
-- Hero imagery
-- Editorial sections
-- Layered backgrounds
+- Imágenes de hero
+- Secciones editoriales
+- Fondos por capas

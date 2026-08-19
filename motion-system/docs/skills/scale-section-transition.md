@@ -1,8 +1,8 @@
-# Scale Section Transition
+# Sección que se asienta
 
-`scale-section-transition` · Section Transitions · basic
+`scale-section-transition` · Transiciones de sección · básico
 
-Section settles from 1.06 to 1.
+La sección se asienta del 106% al 100%.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Section settles from 1.06 to 1.
 
 - **Export:** `SectionTransition`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,12 +24,12 @@ Section settles from 1.06 to 1.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Scale with opacity. |
-| Tablet | Identical. |
-| Mobile | **identical** — Transform only. |
-| Reduced motion | **static** — Placed at final scale. |
+| Desktop | Escala junto con la opacidad. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Transform only. |
+| Reduced motion | **estático** — Se coloca ya a su tamaño final. |
 
 ## When to use it
 
-- Media-led sections
-- Full-bleed panels
+- Secciones dominadas por imagen
+- Paneles a sangre

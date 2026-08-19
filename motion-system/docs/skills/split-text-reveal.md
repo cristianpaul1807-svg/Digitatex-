@@ -1,8 +1,8 @@
-# Split Text Reveal
+# Partidor de texto
 
-`split-text-reveal` · Text Motion · advanced
+`split-text-reveal` · Movimiento de texto · avanzado
 
-The splitter underneath Text Reveal: cuts text into spans while preserving the accessible label.
+El motor que hay debajo del titular: parte el texto en trozos sin perder la etiqueta accesible.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ The splitter underneath Text Reveal: cuts text into spans while preserving the a
 
 - **Export:** `splitText`
 - **Technology:** GSAP
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,12 +24,12 @@ const { parts, revert } = splitText(el, "lines")
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Char, word or line splitting, measured after fonts are ready. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Character splitting is avoided: dozens of inline-block spans per headline cost layout for little visible gain. |
-| Reduced motion | **disabled** — Not invoked. |
+| Desktop | Parte por letras, palabras o líneas, midiendo con las tipografías ya cargadas. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Se evita partir por letras: decenas de trozos por titular cuestan cálculo de maquetación para poca ganancia visible. |
+| Reduced motion | **desactivado** — No se llega a usar. |
 
 ## When to use it
 
-- Cinematic headlines
-- Kinetic typography
+- Titulares cinematográficos
+- Tipografía en movimiento

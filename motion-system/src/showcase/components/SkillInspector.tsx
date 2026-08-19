@@ -54,7 +54,7 @@ export function SkillInspector({ skill, onClose }: SkillInspectorProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-ink/80 backdrop-blur-sm" />
+          <button type="button" aria-label="Cerrar" onClick={onClose} className="absolute inset-0 bg-ink/80 backdrop-blur-sm" />
           <motion.div
             role="dialog"
             aria-modal="true"
@@ -85,19 +85,19 @@ export function SkillInspector({ skill, onClose }: SkillInspectorProps) {
             <p className="mt-5 text-[15px] leading-relaxed text-bone">{skill.description}</p>
 
             <dl className="mt-6">
-              <Row label="Technology" value={skill.dependencies.join(' · ')} />
-              <Row label="Difficulty" value={skill.difficulty} />
-              <Row label="Performance" value={skill.performanceCost} />
-              <Row label="Desktop" value={skill.desktop} />
-              <Row label="Tablet" value={skill.tablet} />
-              <Row label="Mobile" value={<><span className="text-bone">{skill.mobile.behaviour}</span> — {skill.mobile.note}</>} />
-              <Row label="Reduced motion" value={<><span className="text-bone">{skill.reducedMotion.behaviour}</span> — {skill.reducedMotion.note}</>} />
-              <Row label="Recommended" value={skill.recommendedUse.join(' · ')} />
-              <Row label="Source" value={<em className="text-bone-faint">{skill.sourceReference}</em>} />
+              <Row label="Tecnología" value={skill.dependencies.join(' · ')} />
+              <Row label="Dificultad" value={skill.difficulty} />
+              <Row label="Coste" value={skill.performanceCost} />
+              <Row label="Escritorio" value={skill.desktop} />
+              <Row label="Tableta" value={skill.tablet} />
+              <Row label="Móvil" value={<><span className="text-bone">{skill.mobile.behaviour}</span> — {skill.mobile.note}</>} />
+              <Row label="Movimiento reducido" value={<><span className="text-bone">{skill.reducedMotion.behaviour}</span> — {skill.reducedMotion.note}</>} />
+              <Row label="Cuándo usarlo" value={skill.recommendedUse.join(' · ')} />
+              <Row label="De dónde sale" value={<em className="text-bone-faint">{skill.sourceReference}</em>} />
             </dl>
 
             <div className="mt-6 rounded-xl border border-white/10 bg-black/40 p-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-bone-faint">Usage</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-bone-faint">Cómo se usa</p>
               <pre className="mt-2 overflow-x-auto font-mono text-[12px] leading-relaxed text-accent/90">
                 <code>{skill.usage}</code>
               </pre>

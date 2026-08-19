@@ -1,8 +1,8 @@
-# Cinematic Section Transition
+# Transición cinematográfica
 
-`cinematic-section-transition` · Section Transitions · advanced
+`cinematic-section-transition` · Transiciones de sección · avanzado
 
-Clip, scale and blur composed into one signature entrance.
+Máscara, escala y desenfoque compuestos en una sola entrada de autor.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Clip, scale and blur composed into one signature entrance.
 
 - **Export:** `SectionTransition`
 - **Technology:** GSAP · ScrollTrigger · CSS
-- **Performance cost:** high
+- **Performance cost:** alto
 
 ## Usage
 
@@ -24,11 +24,11 @@ Clip, scale and blur composed into one signature entrance.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 1.6s, expo.out, three properties at once. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Drops the blur channel. |
-| Reduced motion | **static** — Content placed. |
+| Desktop | 1,6 s y tres propiedades a la vez. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Se queda sin el desenfoque. |
+| Reduced motion | **estático** — El contenido se coloca sin más. |
 
 ## When to use it
 
-- One moment per page: the point where the story turns
+- Un solo momento por página: donde el relato gira

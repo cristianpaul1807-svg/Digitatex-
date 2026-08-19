@@ -1,8 +1,8 @@
-# Cinematic Hero
+# Hero cinematográfico
 
-`cinematic-hero` · Hero & Cinematic · intermediate
+`cinematic-hero` · Hero y cine · intermedio
 
-Full-viewport hero composing background media, overlay, glow, particles, vignette and grain in a fixed layer order.
+Hero a pantalla completa que compone vídeo de fondo, velo, resplandor, partículas, viñeta y grano en un orden de capas fijo.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Full-viewport hero composing background media, overlay, glow, particles, vignett
 
 - **Export:** `CinematicHero`
 - **Technology:** React · CSS · Canvas · hls.js
-- **Performance cost:** medium
+- **Performance cost:** medio
 
 ## Usage
 
@@ -24,13 +24,13 @@ Full-viewport hero composing background media, overlay, glow, particles, vignett
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | All layers active over a playing video. |
-| Tablet | All layers, reduced particle count. |
-| Mobile | **simplified** — Poster instead of video, a third of the particles. Sized in svh so the CTA is not hidden under the address bar on arrival. |
-| Reduced motion | **static** — Poster frame, no particles, no glow pulse. The composition survives. |
+| Desktop | Todas las capas activas sobre un vídeo en marcha. |
+| Tablet | Todas las capas, con menos partículas. |
+| Mobile | **simplificado** — Imagen fija en vez de vídeo y un tercio de las partículas. Medido en svh para que el botón no quede bajo la barra de direcciones al llegar. |
+| Reduced motion | **estático** — Fotograma fijo, sin partículas y sin latido del resplandor. La composición se mantiene. |
 
 ## When to use it
 
-- Agency landing pages
-- Product launches
-- Brand campaign sites
+- Landings de agencia
+- Lanzamientos de producto
+- Webs de campaña de marca

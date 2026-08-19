@@ -1,8 +1,8 @@
-# Text Reveal
+# Aparición del titular
 
-`text-reveal` · Text Motion · intermediate
+`text-reveal` · Movimiento de texto · intermedio
 
-Headline that rises into view by line, word, character or as a whole.
+El titular entra subiendo, por líneas, por palabras, por letras o entero.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Headline that rises into view by line, word, character or as a whole.
 
 - **Export:** `TextReveal`
 - **Technology:** GSAP · ScrollTrigger
-- **Performance cost:** low
+- **Performance cost:** bajo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Headline that rises into view by line, word, character or as a whole.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Lines rise out of an overflow mask, staggered, after document.fonts.ready. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Word or element mode: a long headline split into many lines on a narrow screen staggers for too long. |
-| Reduced motion | **static** — No split at all, which also leaves the accessibility tree untouched. |
+| Desktop | Las líneas suben desde detrás de una máscara, escalonadas, una vez cargadas las tipografías. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Por palabras o entero: un titular largo partido en muchas líneas tarda demasiado en una pantalla estrecha. |
+| Reduced motion | **estático** — No se parte nada, lo que además deja intacto el árbol de accesibilidad. |
 
 ## When to use it
 
-- Hero headlines
-- Section openers
-- Pull quotes
+- Titulares de hero
+- Aperturas de sección
+- Citas destacadas

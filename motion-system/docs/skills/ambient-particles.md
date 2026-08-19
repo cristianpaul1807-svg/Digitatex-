@@ -1,8 +1,8 @@
-# Ambient Particles (Dust)
+# Partículas de polvo
 
-`ambient-particles` · Hero & Cinematic · intermediate
+`ambient-particles` · Hero y cine · intermedio
 
-Canvas dust motes drifting upward, each breathing at its own rate.
+Motas de polvo en canvas que suben flotando, cada una respirando a su ritmo.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Canvas dust motes drifting upward, each breathing at its own rate.
 
 - **Export:** `DustParticles`
 - **Technology:** Canvas · React
-- **Performance cost:** medium
+- **Performance cost:** medio
 
 ## Usage
 
@@ -24,12 +24,12 @@ Canvas dust motes drifting upward, each breathing at its own rate.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | ~46 motes on one canvas layer. The loop stops the moment the layer leaves the viewport. |
-| Tablet | Same, fewer motes. |
-| Mobile | **simplified** — A third of the count, or removed outright with disableOnMobile. |
-| Reduced motion | **disabled** — Nothing rendered; the canvas is not even mounted. |
+| Desktop | Unas 46 motas en una sola capa de canvas. El bucle se detiene en cuanto la capa sale de pantalla. |
+| Tablet | Igual, con menos motas. |
+| Mobile | **simplificado** — Un tercio de la cantidad, o fuera del todo con disableOnMobile. |
+| Reduced motion | **desactivado** — No se dibuja nada; el canvas ni siquiera se monta. |
 
 ## When to use it
 
-- Cinematic heroes
-- Dark atmospheric sections
+- Heros cinematográficos
+- Secciones oscuras con atmósfera

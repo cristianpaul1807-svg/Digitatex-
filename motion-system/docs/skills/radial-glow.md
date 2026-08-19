@@ -1,8 +1,8 @@
-# Radial Glow
+# Resplandor de fondo
 
-`radial-glow` · Atmosphere · basic
+`radial-glow` · Atmósfera · básico
 
-Coloured light bloom anchored anywhere in a section.
+Un foco de luz de color, anclado donde haga falta dentro de una sección.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Coloured light bloom anchored anywhere in a section.
 
 - **Export:** `RadialGlow`
 - **Technology:** CSS
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,13 +24,13 @@ Coloured light bloom anchored anywhere in a section.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Position, size, colour and intensity configurable, with an optional 9s breathing pulse. |
-| Tablet | Identical. |
-| Mobile | **identical** — A gradient costs nothing. |
-| Reduced motion | **static** — Pulse removed; the glow stays. |
+| Desktop | Posición, tamaño, color e intensidad configurables, con un latido opcional de 9 s. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Un degradado no cuesta nada. |
+| Reduced motion | **estático** — Se quita el latido; el resplandor se queda. |
 
 ## When to use it
 
-- Hero backgrounds
-- CTA sections
-- Accent anchoring
+- Fondos de hero
+- Secciones de cierre
+- Anclar el color de acento

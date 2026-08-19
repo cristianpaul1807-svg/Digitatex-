@@ -1,8 +1,8 @@
-# Blur Transition
+# Sección que enfoca
 
-`blur-transition` · Section Transitions · intermediate
+`blur-transition` · Transiciones de sección · intermedio
 
-Section resolves from blurred to sharp.
+La sección pasa de desenfocada a nítida.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Section resolves from blurred to sharp.
 
 - **Export:** `SectionTransition`
 - **Technology:** GSAP · ScrollTrigger · CSS
-- **Performance cost:** high
+- **Performance cost:** alto
 
 ## Usage
 
@@ -24,12 +24,12 @@ Section resolves from blurred to sharp.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 14px to 0 blur. |
-| Tablet | Reduced radius. |
-| Mobile | **simplified** — Prefer fade. filter: blur repaints the whole subtree every frame, which is fine as a short entrance and costly when scrubbed. |
-| Reduced motion | **static** — Sharp immediately. |
+| Desktop | De 14 px de desenfoque a cero. |
+| Tablet | Con menos radio. |
+| Mobile | **simplificado** — Mejor usar la aparición simple. El desenfoque repinta todo el bloque en cada fotograma: aceptable como entrada corta, caro si se recorre con el scroll. |
+| Reduced motion | **estático** — Nítida desde el principio. |
 
 ## When to use it
 
-- A single hero handoff
-- Sparingly
+- Un único paso desde el hero
+- Con mucha moderación

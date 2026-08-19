@@ -1,8 +1,8 @@
-# Scroll-Scrub Media
+# Vídeo recorrido por scroll
 
-`scroll-scrub-media` · Scroll Motion · advanced
+`scroll-scrub-media` · Movimiento por scroll · avanzado
 
-Video or image sequence whose frame is chosen by scroll position.
+Vídeo o secuencia de imágenes cuyo fotograma lo elige la posición del scroll.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ Video or image sequence whose frame is chosen by scroll position.
 
 - **Export:** `useScrollScrubVideo`
 - **Technology:** GSAP · ScrollTrigger · Canvas
-- **Performance cost:** high
+- **Performance cost:** alto
 
 ## Usage
 
@@ -24,13 +24,13 @@ const { containerRef, videoRef } = useScrollScrubVideo()
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | Seeks inside requestAnimationFrame, never faster than the decoder can deliver. |
-| Tablet | Identical. |
-| Mobile | **simplified** — Shorter clips or fewer frames. Needs a server answering HTTP Range, or it will not seek at all. |
-| Reduced motion | **static** — First frame held. |
+| Desktop | Busca el fotograma dentro del ciclo de dibujado, nunca más rápido de lo que el decodificador entrega. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **simplificado** — Clips más cortos o menos fotogramas. Necesita un servidor que responda peticiones Range o no se puede recorrer. |
+| Reduced motion | **estático** — Se queda en el primer fotograma. |
 
 ## When to use it
 
-- Product reveals
-- Before and after transformations
-- Assembly and process films
+- Presentaciones de producto
+- Antes y después
+- Vídeos de montaje o de proceso

@@ -1,8 +1,8 @@
-# Page Reveal
+# Entrada de página
 
-`page-reveal` · Load & Transitions · basic
+`page-reveal` · Carga y transiciones · básico
 
-The page entrance that follows the loader out: a short rise and fade.
+La entrada que sigue al loader: una subida corta y una opacidad.
 
 ## Source reference
 
@@ -12,7 +12,7 @@ The page entrance that follows the loader out: a short rise and fade.
 
 - **Export:** `PageReveal`
 - **Technology:** GSAP · React
-- **Performance cost:** none
+- **Performance cost:** nulo
 
 ## Usage
 
@@ -24,12 +24,12 @@ The page entrance that follows the loader out: a short rise and fade.
 
 | Context | Behaviour |
 | --- | --- |
-| Desktop | 14px rise over 1s, starting as the loader clears. |
-| Tablet | Identical. |
-| Mobile | **identical** — Opacity and transform only, so it is free everywhere. |
-| Reduced motion | **static** — Content is placed, not animated. |
+| Desktop | 14 px de subida en 1 s, arrancando cuando el loader se retira. |
+| Tablet | Igual que en escritorio. |
+| Mobile | **igual** — Solo opacidad y transform, así que no cuesta nada en ningún sitio. |
+| Reduced motion | **estático** — El contenido se coloca, no se anima. |
 
 ## When to use it
 
-- Every page that uses the loader
-- Route transitions
+- Toda página que use el loader
+- Cambios de ruta

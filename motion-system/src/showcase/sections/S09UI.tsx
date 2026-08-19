@@ -14,29 +14,29 @@ export function S09UI({ onInspect }: { onInspect: (id: string) => void }) {
     <ShowcaseSection
       id="s09"
       index="09"
-      eyebrow="UI Motion"
-      title="Motion that reports state."
-      intro="The least glamorous category and the one that carries the most weight: these are the animations a visitor actually interacts with rather than watches."
+      eyebrow="Movimiento de interfaz"
+      title="Movimiento que informa."
+      intro="La categoría menos vistosa y la que más peso lleva: estas son las animaciones con las que un visitante interactúa de verdad, en vez de mirarlas."
     >
       <div className="grid gap-12 lg:grid-cols-[1fr_320px] lg:items-start">
         <div>
           <Accordion items={faqItems} mode="single" defaultOpen={['when']} />
           <p className="mt-6 text-[13px] leading-relaxed text-bone-faint">
-            Try it with the keyboard. Tab to a question, press Enter or Space, and note that the closed panels are not merely
-            hidden — they are unmounted, so tabbing never lands inside one.
+            Pruébalo con el teclado. Llega a una pregunta con el tabulador y pulsa Intro o Espacio. Los paneles cerrados no están
+            solo ocultos: no existen, así que el tabulador nunca cae dentro de uno.
           </p>
         </div>
 
         <div className="space-y-4">
           <SkillLabel skill={skillsById['animated-accordion']!} onInspect={onInspect} />
           <div className="rounded-xl border border-white/10 bg-ink/70 p-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-bone-faint">Modal transition</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-bone-faint">Ventana modal</p>
             <p className="mt-2 text-[13px] leading-relaxed text-bone-dim">
-              The same dialog the Inspect Skill panel uses: Escape to close, backdrop to close, scroll locked behind it.
+              El mismo diálogo que usa la ficha de cada efecto: se cierra con Escape o tocando fuera, y bloquea el scroll de detrás.
             </p>
             <div className="mt-4">
               <MagneticButton variant="ghost" onClick={() => setDemoModal(true)}>
-                Open dialog
+                Abrir la ventana
               </MagneticButton>
             </div>
           </div>

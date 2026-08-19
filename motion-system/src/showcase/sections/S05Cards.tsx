@@ -7,12 +7,12 @@ import { GradientBorder } from '@/motion/effects/GradientBorder';
 import { plates } from '../data/content';
 
 const CARDS = [
-  { id: 'glass-card', title: 'Glass surface', body: 'Translucent fill, hairline border, and the upper-lip highlight that makes it read as glass rather than a faded box.', span: 'md:col-span-2 md:row-span-2', plate: 0, tilt: false, lift: 6 },
-  { id: 'card-hover-lift', title: 'Hover lift', body: 'Six pixels toward the viewer.', span: '', plate: 1, tilt: false, lift: 6 },
-  { id: 'image-zoom', title: 'Image zoom', body: 'The image scales; the frame does not move.', span: '', plate: 2, tilt: false, lift: 0 },
-  { id: 'hover-glow', title: 'Cursor glow', body: 'Two custom properties feeding one static gradient.', span: 'md:col-span-2', plate: 3, tilt: false, lift: 4 },
-  { id: 'image-tilt', title: 'Tilt', body: 'Capped at seven degrees.', span: '', plate: 0, tilt: true, lift: 0 },
-  { id: 'card-scale', title: 'Card scale', body: 'One or two percent, never more.', span: '', plate: 1, tilt: false, lift: 0, scale: 1.02 },
+  { id: 'glass-card', title: 'Superficie de cristal', body: 'Relleno translúcido, borde de un píxel, y el brillo del canto superior que la hace leerse como cristal y no como una caja apagada.', span: 'md:col-span-2 md:row-span-2', plate: 0, tilt: false, lift: 6 },
+  { id: 'card-hover-lift', title: 'Se eleva', body: 'Seis píxeles hacia quien mira.', span: '', plate: 1, tilt: false, lift: 6 },
+  { id: 'image-zoom', title: 'Zoom de imagen', body: 'La imagen crece; el marco no se mueve.', span: '', plate: 2, tilt: false, lift: 0 },
+  { id: 'hover-glow', title: 'Resplandor', body: 'Dos variables alimentando un único degradado fijo.', span: 'md:col-span-2', plate: 3, tilt: false, lift: 4 },
+  { id: 'image-tilt', title: 'Inclinación', body: 'Con tope en siete grados.', span: '', plate: 0, tilt: true, lift: 0 },
+  { id: 'card-scale', title: 'Crece un poco', body: 'Un uno o un dos por ciento, nunca más.', span: '', plate: 1, tilt: false, lift: 0, scale: 1.02 },
 ];
 
 export function S05Cards({ onInspect }: { onInspect: (id: string) => void }) {
@@ -20,9 +20,9 @@ export function S05Cards({ onInspect }: { onInspect: (id: string) => void }) {
     <ShowcaseSection
       id="s05"
       index="05"
-      eyebrow="Cards & Bento"
-      title="Surfaces that answer back."
-      intro="Six card skills, composed rather than duplicated. Hover any of them; on a touch device none of these fire at all, and the cards are simply cards."
+      eyebrow="Tarjetas y bento"
+      title="Superficies que responden."
+      intro="Seis efectos de tarjeta, combinados en vez de duplicados. Pasa el cursor por cualquiera; en una pantalla táctil ninguno se dispara, y las tarjetas son simplemente tarjetas."
     >
       <BentoGrid className="md:grid-cols-4" stagger={0.07}>
         {CARDS.map((c) => {
@@ -39,7 +39,7 @@ export function S05Cards({ onInspect }: { onInspect: (id: string) => void }) {
                   onClick={() => onInspect(skill.id)}
                   className="mt-4 self-start font-mono text-[10px] uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
                 >
-                  Inspect
+                  Ver ficha
                 </button>
               </div>
             </HoverCard>
