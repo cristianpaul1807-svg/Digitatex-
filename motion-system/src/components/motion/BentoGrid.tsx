@@ -22,7 +22,7 @@ export interface BentoGridProps {
 export function BentoGrid({ children, stagger = 0.07, className = '' }: BentoGridProps) {
   const ref = useScrollReveal<HTMLDivElement>({
     kind: 'fade-up',
-    children: ':scope > *',
+    childSelector: ':scope > *',
     stagger,
     distance: 28,
     start: 'top 82%',

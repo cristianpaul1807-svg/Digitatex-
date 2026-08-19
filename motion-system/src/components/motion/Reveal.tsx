@@ -42,7 +42,7 @@ export interface StaggerRevealProps extends Omit<RevealProps, 'children'> {
  * wants and what people almost always forget to write.
  */
 export function StaggerReveal({ children, childSelector = ':scope > *', className = '', ...options }: StaggerRevealProps) {
-  const ref = useScrollReveal<HTMLDivElement>({ ...options, children: childSelector });
+  const ref = useScrollReveal<HTMLDivElement>({ ...options, childSelector });
   return (
     <div ref={ref} className={className}>
       {children}
