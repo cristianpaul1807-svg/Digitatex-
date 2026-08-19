@@ -67,10 +67,14 @@
   }
 
   /* ---- K02 Radial glow -------------------------------------------------- */
-  .glow-breathe { animation: glow-breathe 9s ease-in-out infinite; }
+  /* Opacity only, no scale. Scaling a full-bleed `inset-0` layer pushes it
+     past the viewport on both sides, and any ancestor that does not happen to
+     clip turns that into a horizontal scrollbar on the whole document. The
+     gradient is soft enough that opacity alone reads as the same breath. */
+  .glow-breathe { animation: glow-breathe 9s ease-in-out infinite; will-change: opacity; }
   @keyframes glow-breathe {
-    0%, 100% { opacity: 0.75; transform: scale(1); }
-    50%      { opacity: 1;    transform: scale(1.06); }
+    0%, 100% { opacity: 0.72; }
+    50%      { opacity: 1; }
   }
 
   /* ---- K04 Light sweep -------------------------------------------------- */

@@ -15,6 +15,12 @@ COPY links/ /usr/share/nginx/html/links/
 # Prototipos que se ensenan a clientes antes de contratar. Van sin indexar y
 # fuera del sitemap: son webs de otras empresas, no contenido de Digitatex.
 COPY prototipi/ /usr/share/nginx/html/prototipi/
+# El sistema de movimiento interno. Se copia el dist YA CONSTRUIDO y no se
+# compila aqui a proposito: una etapa de build con npm dentro de esta imagen
+# significa que un fallo instalando dependencias tumba digitatex.com entero.
+# El precio es que el dist se versiona; a cambio, este Dockerfile no puede
+# fallar por nada que pase fuera del repositorio.
+COPY motion-system/dist/ /usr/share/nginx/html/motion/
 
 EXPOSE 80
 
