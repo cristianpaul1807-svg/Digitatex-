@@ -16,7 +16,10 @@ export function Hero() {
   return (
     <CinematicHero
       media={{
-        hls: 'media/hls/index.m3u8',
+        // En la version de un solo archivo no hay manifiesto que servir: todo
+        // esta incrustado. Safari reproduce HLS de forma nativa y se quedaria
+        // con un src roto, asi que ahi se omite y tiran las fuentes progresivas.
+        hls: __SINGLE_FILE__ ? undefined : 'media/hls/index.m3u8',
         sources: [
           { src: 'media/atmosphere.webm', type: 'video/webm' },
           { src: 'media/atmosphere.mp4', type: 'video/mp4' },

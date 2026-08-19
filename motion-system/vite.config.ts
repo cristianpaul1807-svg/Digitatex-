@@ -7,6 +7,7 @@ export default defineConfig({
   // The showcase is served from a sub-path in production (digitatex.com/motion/),
   // so asset URLs have to be relative rather than root-absolute.
   base: './',
+  define: { __SINGLE_FILE__: 'false' },
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   build: {
     target: 'es2020',
