@@ -1,6 +1,6 @@
 # Skill documentation
 
-41 skills across 11 categories.
+42 skills across 11 categories.
 
 ## Carga y transiciones
 
@@ -34,6 +34,7 @@
 ## Experiencia de producto
 
 - [Producto por scroll](skills/product-scroll.md) — `product-scroll`
+- [Objeto en viaje](skills/objeto-en-viaje.md) — `objeto-en-viaje`
 
 ## Tarjetas y bento
 

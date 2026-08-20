@@ -15,7 +15,7 @@ thresholds, fallbacks.
 
 ---
 
-## 22 reference fragments → 41 skills
+## 22 reference fragments → 42 skills
 
 ### REFERENCE: "then ease-out fade"
 
@@ -69,6 +69,28 @@ thresholds, fallbacks.
    La única pieza por la que pasan todas las entradas: limpieza, estado inicial, movimiento reducido y marcas de depuración, resueltos una sola vez.  
    *GSAP · ScrollTrigger · React · bajo cost · mobile: igual · reduced motion: desactivado*
 
+### REFERENCE: "Sticky-pinned scroll variant on desktop"
+
+→ **`sticky-story`** — Relato anclado  
+   La sección se ancla y va pasando capítulos, moviendo texto e imagen desde un mismo valor de avance.  
+   *GSAP · ScrollTrigger · React · medio cost · mobile: simplificado · reduced motion: simplificado*
+
+→ **`horizontal-scroll`** — Scroll horizontal  
+   El scroll vertical mueve una tira lateral mientras la sección está anclada.  
+   *GSAP · ScrollTrigger · medio cost · mobile: simplificado · reduced motion: simplificado*
+
+→ **`scroll-scrub-media`** — Vídeo recorrido por scroll  
+   Vídeo o secuencia de imágenes cuyo fotograma lo elige la posición del scroll.  
+   *GSAP · ScrollTrigger · Canvas · alto cost · mobile: simplificado · reduced motion: estático*
+
+→ **`product-scroll`** — Producto por scroll  
+   Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.  
+   *GSAP · ScrollTrigger · Canvas · hls.js · React · alto cost · mobile: simplificado · reduced motion: simplificado*
+
+→ **`objeto-en-viaje`** — Objeto en viaje  
+   Un objeto 3D dibujado en un lienzo fijo detrás de TODA la página, que se monta, se cierra y se envuelve mientras el lector recorre las secciones.  
+   *GSAP · ScrollTrigger · Canvas · medio cost · mobile: simplificado · reduced motion: estático*
+
 ### REFERENCE: "Each card: rounded 16px, glass surface, hover lift 6px"
 
 → **`card-hover-lift`** — Tarjeta que se eleva  
@@ -90,24 +112,6 @@ thresholds, fallbacks.
 → **`gradient-border`** — Borde degradado  
    Un filo degradado alrededor de la superficie, enmascarado para que el cristal de debajo sobreviva.  
    *CSS · nulo cost · mobile: igual · reduced motion: igual*
-
-### REFERENCE: "Sticky-pinned scroll variant on desktop"
-
-→ **`sticky-story`** — Relato anclado  
-   La sección se ancla y va pasando capítulos, moviendo texto e imagen desde un mismo valor de avance.  
-   *GSAP · ScrollTrigger · React · medio cost · mobile: simplificado · reduced motion: simplificado*
-
-→ **`horizontal-scroll`** — Scroll horizontal  
-   El scroll vertical mueve una tira lateral mientras la sección está anclada.  
-   *GSAP · ScrollTrigger · medio cost · mobile: simplificado · reduced motion: simplificado*
-
-→ **`scroll-scrub-media`** — Vídeo recorrido por scroll  
-   Vídeo o secuencia de imágenes cuyo fotograma lo elige la posición del scroll.  
-   *GSAP · ScrollTrigger · Canvas · alto cost · mobile: simplificado · reduced motion: estático*
-
-→ **`product-scroll`** — Producto por scroll  
-   Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.  
-   *GSAP · ScrollTrigger · Canvas · hls.js · React · alto cost · mobile: simplificado · reduced motion: simplificado*
 
 ### REFERENCE: "Hover: card lift, button slight scale (1.02)"
 
@@ -163,6 +167,16 @@ thresholds, fallbacks.
    El motor que hay debajo del titular: parte el texto en trozos sin perder la etiqueta accesible.  
    *GSAP · bajo cost · mobile: simplificado · reduced motion: desactivado*
 
+### REFERENCE: "scroll-controlled"
+
+→ **`product-scroll`** — Producto por scroll  
+   Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.  
+   *GSAP · ScrollTrigger · Canvas · hls.js · React · alto cost · mobile: simplificado · reduced motion: simplificado*
+
+→ **`objeto-en-viaje`** — Objeto en viaje  
+   Un objeto 3D dibujado en un lienzo fijo detrás de TODA la página, que se monta, se cierra y se envuelve mientras el lector recorre las secciones.  
+   *GSAP · ScrollTrigger · Canvas · medio cost · mobile: simplificado · reduced motion: estático*
+
 ### REFERENCE: "button slight scale (1.02)"
 
 → **`card-scale`** — Tarjeta que crece  
@@ -206,12 +220,6 @@ thresholds, fallbacks.
 → **`parallax`** — Parallax  
    Mueve un elemento a distinta velocidad que la página, en proporción a su propio tamaño.  
    *GSAP · ScrollTrigger · bajo cost · mobile: desactivado · reduced motion: desactivado*
-
-### REFERENCE: "scroll-controlled"
-
-→ **`product-scroll`** — Producto por scroll  
-   Escenario de producto anclado, con capítulos y anotaciones sincronizados, sobre vídeo, secuencia de imágenes o dibujo por canvas.  
-   *GSAP · ScrollTrigger · Canvas · hls.js · React · alto cost · mobile: simplificado · reduced motion: simplificado*
 
 ### REFERENCE: "8 cards in an asymmetric grid"
 
