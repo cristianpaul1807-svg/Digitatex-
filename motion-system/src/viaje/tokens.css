@@ -1,64 +1,74 @@
 /* ============================================================================
    FIDENZA — ficha de estilo
    ----------------------------------------------------------------------------
-   Escrita con el mismo formato que una ficha de Refero: los colores llevan ROL,
-   no solo valor; la escala tipográfica lleva su interletrado por tamaño; y hay
-   exactamente tres niveles de superficie.
+   Escrita con el formato de una ficha de Refero: cada color lleva su ROL, la
+   escala tipográfica lleva su interletrado por tamaño, y hay exactamente tres
+   niveles de superficie.
 
-   La lección que se copia de esa referencia no es la paleta — es la disciplina:
+   La lógica de la referencia, aplicada a otro material:
 
-     · UN solo color cromático. Todo lo demás son pasos del mismo gris frío.
-     · UNA sola tipografía que grita, y una que calla. Nada más.
-     · La profundidad se hace con pasos de color, NUNCA con sombras.
-     · El interletrado se aprieta cuanto más grande es la letra.
-     · La página es un cartel, no un escaparate: primero el tipo, después el
-       producto.
+     Aquella parte de una marca de especias. Campo = una versión OSCURA y
+     SATURADA de su familia cálida. Acento = una versión BRILLANTE de esa misma
+     familia. Producto = crudo sobre el campo, sin marco.
+
+     Aquí el material de la marca es film azul y madera. Así que el campo es un
+     azul profundo saturado —el del propio film— y el acento es el dorado de la
+     madera. Dos materiales reales, no dos colores elegidos.
+
+   Y por eso el producto del hero es la caja DE MADERA y no la envuelta: cálido
+   sobre frío se despega del fondo. La caja azul sobre campo azul desaparecería
+   —se comprobó, y en el cierre hay que ponerle un suelo más hondo detrás para
+   que se recorte.
    ========================================================================== */
 
 :root {
   /* ---- color ------------------------------------------------------------ */
-  /* Lienzo. Todas las secciones son este color: la profundidad no viene de
-     alternar bandas claras y oscuras, viene de la escala del tipo. */
-  --acciaio:        #101318;   /* lienzo de toda la página */
-  --acciaio-alto:   #171b21;   /* superficie de tarjeta */
-  --acciaio-fondo:  #0a0c0f;   /* la superficie más honda */
-  --linea:          #232830;   /* filetes, bordes de campo, divisores */
+  /* Campo. TODA la página es este color: la profundidad no viene de alternar
+     bandas claras y oscuras, viene de la escala del tipo. */
+  --campo:        #0e3a63;
+  /* Superficie de tarjeta y superficie más honda. Dos pasos del mismo azul. */
+  --campo-alto:   #10456f;
+  --campo-fondo:  #082742;
+  --linea:        #1b5384;
 
-  /* El único color cromático permitido. Sale del film barrera del propio
-     producto, así que no es una decisión estética: es el material. */
-  --blu:            #4a90e2;
-  --blu-fondo:      #1d3a5c;
+  /* El acento: el dorado de la madera. Es el único color que sale de la
+     familia azul, y por eso es el que manda la mirada. */
+  --legno:        #e0b878;
+  --legno-fuerte: #f0cd97;
 
-  /* Madera. Es el segundo material, no un segundo acento: aparece solo donde
-     hay producto, nunca en un botón ni en un texto. */
-  --legno:          #c9a06a;
+  --osso:         #f4f1ea;
+  --osso-medio:   #b9c8d8;
+  --osso-tenue:   #7f97ad;
 
-  --osso:           #f2efe9;   /* texto principal */
-  --osso-medio:     #9aa0a8;   /* texto secundario */
-  --osso-tenue:     #626871;   /* etiquetas, metadatos */
+  /* Rojo de aviso. Reservado a una sola cosa: lo que se rompe. */
+  --rotto:        #e2533f;
 
   /* ---- tipografía ------------------------------------------------------- */
   /* Una que grita y una que calla. Anton hace de Druk: condensada, pesada, sin
-     itálica y sin más pesos — que es exactamente lo que la hace disciplinada. */
-  --display: 'Anton', 'Arial Narrow', sans-serif;
+     itálicas y sin más pesos — lo que la hace disciplinada es justo eso. */
+  --display: 'Anton', 'Arial Narrow', Impact, sans-serif;
   --texto:   'Inter', system-ui, sans-serif;
 
-  /* El interletrado se aprieta según sube el tamaño. Es la parte que sostiene
-     el carácter: un titular de 200px con el tracking por defecto se deshace. */
-  --t-etiqueta:  11px;  --i-etiqueta:  0.22em;  --l-etiqueta: 1.2;
-  --t-cuerpo:    16px;  --i-cuerpo:    0em;     --l-cuerpo:   1.65;
-  --t-guia:      22px;  --i-guia:     -0.005em; --l-guia:     1.35;
-  --t-titulo:    clamp(42px, 7vw, 92px);   --i-titulo:  -0.02em;  --l-titulo:  0.92;
-  --t-cartel:    clamp(64px, 15vw, 210px); --i-cartel:  -0.035em; --l-cartel:  0.82;
+  /* El interletrado se aprieta según sube el tamaño. Sostiene el carácter: un
+     titular de 200px con el tracking por defecto se deshace. */
+  --t-etiqueta:  11px;  --i-etiqueta:  0.24em;
+  --t-cuerpo:    16px;  --i-cuerpo:    0em;
+  --t-guia:      21px;  --i-guia:     -0.005em;
+  --t-titulo:    clamp(44px, 7vw, 104px);  --i-titulo: -0.025em;  --l-titulo: 0.88;
+  /* El tope de 152px no es una preferencia: es la medida que deja caber las
+     cuatro líneas del titular dentro de 100svh en una pantalla de portátil,
+     con la caja al lado y el pie debajo. Se midió. Un cartel que se sale por
+     abajo no es un cartel grande, es un cartel roto. */
+  --t-cartel:    clamp(60px, 12vw, 152px); --i-cartel: -0.04em;   --l-cartel: 0.78;
 
   /* ---- ritmo ------------------------------------------------------------ */
-  --aire-seccion: clamp(96px, 14vh, 180px);
-  --margen:       clamp(20px, 5vw, 64px);
-  --ancho:        1440px;
+  --aire:    clamp(88px, 13vh, 168px);
+  --margen:  clamp(20px, 5vw, 60px);
+  --ancho:   1440px;
 
   /* ---- formas ----------------------------------------------------------- */
-  /* Pastilla completa en todo lo que se pulsa; radio corto solo en tarjetas.
-     Mezclar los dos radios es lo que hace que una interfaz parezca de plantilla. */
+  /* Pastilla completa en todo lo que se pulsa, radio corto solo en tarjetas.
+     Mezclar los dos radios es lo que hace que algo parezca una plantilla. */
   --r-boton:   9999px;
   --r-tarjeta: 4px;
 }

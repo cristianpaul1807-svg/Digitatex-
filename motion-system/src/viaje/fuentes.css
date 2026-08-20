@@ -1,0 +1,42 @@
+/* ============================================================================
+   Tipografías servidas desde el propio dominio.
+   ----------------------------------------------------------------------------
+   No es una optimización: es la única forma de poder DISEÑAR la página. Con el
+   <link> a Google Fonts, cualquier entorno sin salida a fonts.gstatic.com
+   —un navegador sin red, una captura automática, una revisión offline— compone
+   el titular con la sustituta, y una condensada pesada sustituida por Arial no
+   se parece ni de lejos. Se estaba maquetando a ciegas.
+
+   De paso desaparecen dos conexiones a terceros antes del primer pintado, y la
+   página deja de mandar la IP del visitante a un dominio ajeno.
+
+   Solo el subconjunto latino: es una página en italiano. Anton 18 KB,
+   Inter 48 KB. El rango es el que declara la propia hoja de Google, copiado
+   tal cual para que el navegador no descargue nada si el texto no lo necesita.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  /* swap y no block: el titular es lo primero que se lee; más vale verlo con
+     la sustituta durante 100 ms que ver un hueco. */
+  font-display: swap;
+  src: url('/fuentes/f0.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Inter v20 es variable: un único fichero cubre todo el eje de peso, así que
+   400 y 500 salen del mismo archivo y no hay una segunda descarga. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fuentes/f1.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}

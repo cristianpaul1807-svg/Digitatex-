@@ -1,176 +1,125 @@
 /* ============================================================================
-   Maquetación de la página del viaje.
-   Se apoya en tokens.css: aquí no hay ni un color ni un tamaño sueltos.
+   Maquetación. Se apoya en tokens.css: aquí no hay ni un color suelto.
    ========================================================================== */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  background: var(--acciaio);
+  background: var(--campo);
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
-  /* clip y no hidden, aquí también: hidden convertiría el documento en
-     contenedor de scroll. Con clip no hay barra horizontal y position:sticky
-     sigue anclándose a la ventana. */
+  /* clip y no hidden: hidden convertiría el documento en contenedor de scroll
+     y cualquier position:sticky pasaría a pegarse a él en vez de a la ventana. */
   overflow-x: clip;
 }
 
 body {
-  background: var(--acciaio);
+  background: var(--campo);
   color: var(--osso);
   font-family: var(--texto);
   font-size: var(--t-cuerpo);
-  line-height: var(--l-cuerpo);
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
-  /* clip y no hidden: hidden convierte el body en contenedor de scroll y
-     rompería cualquier position:sticky que colgara de él. */
   overflow-x: clip;
 }
 
-::selection { background: var(--blu); color: var(--acciaio); }
+::selection { background: var(--legno); color: var(--campo-fondo); }
+:focus-visible { outline: 2px solid var(--legno); outline-offset: 3px; }
 
-:focus-visible {
-  outline: 2px solid var(--blu);
-  outline-offset: 3px;
-}
+/* height:auto no es decorativo. Los <img> llevan width/height en el HTML para
+   que el navegador reserve el hueco y no haya salto de maquetación; sin esto,
+   en cuanto el CSS toca el ancho, el alto se queda con el del atributo y la
+   imagen sale estirada. Pasó: la caja del hero salía 886px de alta metida en
+   un hueco de 640 de ancho. */
+img { display: block; max-width: 100%; height: auto; }
 
-/* ---- el lienzo del objeto ------------------------------------------------
-   Fijo, detrás de todo, sin capturar ni un clic. El contenido pasa por
-   delante. Esta es toda la arquitectura de la página.                        */
-#escena {
+/* ---- textura de fondo ----------------------------------------------------
+   Retícula de plano técnico. Es el equivalente industrial de las acuarelas
+   botánicas de la referencia: no se lee, se nota. Casi invisible en reposo, y
+   es lo que le quita al campo el aspecto de color plano digital.
+
+   Va en SVG incrustado y no en un .webp: son cuatro líneas, pesa menos que la
+   petición que ahorraría, y al ser vectorial no muestra el muaré que deja una
+   trama de mapa de bits cuando el navegador la escala en pantallas 2x.       */
+.trama {
   position: fixed;
   inset: 0;
   z-index: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1'%3E%3Cpath d='M0 .5H120M.5 0V120' opacity='.07'/%3E%3Cpath d='M0 30.5H120M0 60.5H120M0 90.5H120M30.5 0V120M60.5 0V120M90.5 0V120' opacity='.03'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
 }
 
-/* Un velo entre el objeto y el texto: sin él, la madera clara pasa por debajo
-   de un párrafo y se lo come. Con él, el objeto sigue viéndose entero y el
-   texto no pierde ni un punto de contraste. */
-.velo {
+/* Un foco cálido arriba a la izquierda, de donde viene la luz del render.
+   Sin él, el campo azul es una pared. */
+.foco {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 78% 62% at 50% 50%, rgba(16, 19, 24, 0) 0%, rgba(16, 19, 24, 0.18) 66%, rgba(16, 19, 24, 0.62) 100%);
+  background: radial-gradient(ellipse 70% 55% at 22% 6%, rgba(224, 184, 120, 0.17) 0%, rgba(224, 184, 120, 0) 62%);
 }
 
 main { position: relative; z-index: 2; }
 
-/* ---- grano ---------------------------------------------------------------
-   Un mosaico de ruido en SVG, dibujado una vez y repetido. Es lo que quita el
-   aspecto de degradado digital al fondo plano.                               */
-.grano {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* ---- barra superior ------------------------------------------------------ */
+/* ---- barra --------------------------------------------------------------- */
 .barra {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 40;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px var(--margen);
-  font-family: var(--texto);
+  padding: 20px var(--margen);
 }
-
 .marca {
   font-family: var(--display);
-  font-size: 19px;
-  letter-spacing: 0.02em;
+  font-size: 21px;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
-.marca em { font-style: normal; color: var(--blu); }
+.marca em { font-style: normal; color: var(--legno); }
 
-/* Pastilla completa en todo lo que se pulsa. Mezclar radios es lo que hace que
-   una interfaz parezca sacada de una plantilla. */
 .pastilla {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 10px 20px;
-  border: 1px solid var(--linea);
+  gap: 8px;
+  padding: 9px 19px;
+  border: 1px solid var(--legno);
   border-radius: var(--r-boton);
   background: transparent;
-  color: var(--osso);
-  font-family: var(--texto);
+  color: var(--legno);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  cursor: pointer;
-  transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-.pastilla:hover { border-color: var(--blu); color: var(--blu); }
+.pastilla:hover { background: var(--legno); color: var(--campo-fondo); }
+.pastilla.llena { background: var(--legno); color: var(--campo-fondo); }
+.pastilla.llena:hover { background: var(--legno-fuerte); }
 
-.pastilla.llena {
-  background: var(--blu);
-  border-color: var(--blu);
-  color: var(--acciaio);
-}
-.pastilla.llena:hover { background: #5c9de8; border-color: #5c9de8; color: var(--acciaio); }
-
-/* ---- riel de capítulos ---------------------------------------------------
-   Sustituye a la barra de progreso: dice en qué capítulo estás, no cuánto
-   queda. Es más útil y ocupa menos.                                          */
-#riel {
-  position: fixed;
-  top: 50%;
-  right: var(--margen);
-  transform: translateY(-50%);
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: flex-end;
-}
-#riel span {
-  display: block;
-  width: 22px;
-  height: 1px;
-  background: var(--linea);
-  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.45s ease;
-}
-#riel span.activo { width: 46px; background: var(--blu); }
-
-/* ---- secciones ----------------------------------------------------------- */
-section {
-  position: relative;
-  padding: var(--aire-seccion) var(--margen);
-  max-width: var(--ancho);
-  margin: 0 auto;
-  /* Cada acto necesita su pantalla. Con las secciones apretadas, el montaje,
-     el cierre y el envuelto se atropellaban en un solo golpe de scroll. */
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* En una pantalla estrecha las dos pastillas de la barra no caben junto a la
+   marca y se le montan encima. Se cae la secundaria — el mismo enlace está
+   repetido en el pie del hero, así que no se pierde ningún destino. */
+@media (max-width: 719px) {
+  .barra .pastilla:not(.llena) { display: none; }
 }
 
+/* ---- tipografía ---------------------------------------------------------- */
 .etiqueta {
-  font-family: var(--texto);
   font-size: var(--t-etiqueta);
   font-weight: 500;
   letter-spacing: var(--i-etiqueta);
-  line-height: var(--l-etiqueta);
   text-transform: uppercase;
-  color: var(--blu);
+  color: var(--legno);
 }
 
-/* El titular de cartel. Todo el carácter de la página está en estas cuatro
-   líneas: condensada, apretada, y tan grande que deja de leerse como texto y
-   empieza a leerse como imagen. */
+/* El titular de cartel: tan grande que deja de leerse como texto y empieza a
+   leerse como imagen. Es todo el carácter de la página. */
 .cartel {
   font-family: var(--display);
   font-size: var(--t-cartel);
@@ -178,10 +127,11 @@ section {
   letter-spacing: var(--i-cartel);
   text-transform: uppercase;
   font-weight: 400;
+  color: var(--osso);
 }
 .cartel .mascara { display: block; overflow: hidden; }
 .cartel .dentro { display: block; }
-.cartel em { font-style: normal; color: var(--blu); }
+.cartel em { font-style: normal; color: var(--legno); }
 
 .titulo {
   font-family: var(--display);
@@ -191,82 +141,168 @@ section {
   text-transform: uppercase;
   font-weight: 400;
 }
+.titulo em { font-style: normal; color: var(--legno); }
 
-.guia {
-  font-size: var(--t-guia);
-  line-height: var(--l-guia);
-  letter-spacing: var(--i-guia);
-  color: var(--osso-medio);
-  max-width: 34ch;
-}
+.guia { font-size: var(--t-guia); line-height: 1.4; color: var(--osso-medio); max-width: 30ch; }
+p.cuerpo { color: var(--osso-medio); max-width: 42ch; }
 
-p.cuerpo {
-  color: var(--osso-medio);
-  max-width: 42ch;
-}
-
-/* El bloque de texto lleva su propio suelo. Es lo que permite bajar el velo
-   general y dejar que el objeto se vea entero: el contraste se resuelve
-   detras de las letras, no oscureciendo toda la ventana. */
-.bloque {
-  position: relative;
-  isolation: isolate;
-}
-.bloque::before {
-  content: '';
-  position: absolute;
-  inset: -28px -36px;
-  z-index: -1;
-  border-radius: 8px;
-  background: radial-gradient(ellipse 74% 68% at 40% 50%, rgba(16, 19, 24, 0.94) 0%, rgba(16, 19, 24, 0.78) 58%, rgba(16, 19, 24, 0) 100%);
-}
-
-/* Filete punteado como separador: le da a la página el ritmo de una etiqueta
-   impresa, y ocupa el lugar del espacio en blanco sin gastar altura. */
+/* Filete punteado: ritmo de etiqueta impresa, y ocupa el lugar del espacio en
+   blanco sin gastar altura. */
 .filete {
   height: 1px;
-  max-width: var(--ancho);
-  margin: 0 auto;
-  background-image: linear-gradient(to right, var(--linea) 0 6px, transparent 6px 12px);
-  background-size: 12px 1px;
+  background-image: linear-gradient(to right, var(--linea) 0 5px, transparent 5px 11px);
+  background-size: 11px 1px;
 }
 
-/* ---- hero ---------------------------------------------------------------- */
+/* ---- hero ----------------------------------------------------------------
+   Toda la composición está aquí: el titular ocupa la mitad izquierda, la ficha
+   técnica ancla la esquina de arriba y la caja llena la derecha saliéndose un
+   poco del cuadro.                                                           */
 .hero {
+  position: relative;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 120px;
+  justify-content: flex-end;
+  padding: 120px var(--margen) 0;
+  max-width: var(--ancho);
+  margin: 0 auto;
 }
-.hero .cartel { max-width: 15ch; }
-.hero .pie {
+.hero-tipo { position: relative; z-index: 1; }
+.hero .cartel { max-width: 9ch; }
+
+/* El producto: crudo sobre el campo. Sin marco, sin tarjeta, sin esquina
+   redondeada. Es la regla que más cuesta respetar y la que más se nota.
+
+   Sale un poco del cuadro por la derecha, pero solo un poco. El tope de 660px
+   no es estético: el recorte viene de un render de 1280×720 y la caja mide 592
+   píxeles reales de ancho. Pintada más grande que eso se ve blanda, y una foto
+   de producto blanda arruina la página entera por muy bien montada que esté. */
+.producto {
+  position: absolute;
+  z-index: 2;
+  right: calc(var(--margen) * -0.5);
+  bottom: 4vh;
+  width: min(48vw, 660px);
+  /* drop-shadow y no box-shadow: la imagen tiene alfa, y box-shadow dibujaría
+     el rectángulo en vez de la silueta. */
+  filter: drop-shadow(0 30px 40px rgba(4, 18, 32, 0.55));
+  pointer-events: none;
+}
+
+/* Ficha técnica en la esquina superior derecha.
+   Sin ella queda un cuarto de pantalla vacío encima de la caja, y ese hueco es
+   lo que hace que una composición parezca sin terminar. Además es el idioma de
+   la referencia: el producto crudo y, al lado, su medida escrita en pequeño. */
+.ficha {
+  position: absolute;
+  z-index: 3;
+  top: 148px;
+  right: var(--margen);
+  width: 250px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.75;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--osso-tenue);
+}
+.ficha dt {
+  font-size: var(--t-etiqueta);
+  letter-spacing: var(--i-etiqueta);
+  color: var(--legno);
+  margin-bottom: 10px;
+}
+.ficha dd + dt { margin-top: 18px; }
+.ficha dd { color: var(--osso-medio); }
+.ficha dd b { font-weight: 500; color: var(--osso); }
+
+/* El pie se queda en la mitad izquierda a propósito. Si se reparte a lo ancho,
+   los botones caen sobre la caja y hay que meter una capa oscura debajo para
+   poder leerlos — que es justo el parche que ensucia este tipo de composición. */
+.hero-pie {
+  position: relative;
+  z-index: 3;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 28px;
-  margin-top: 52px;
+  gap: 24px;
+  padding: 36px 0 44px;
+  max-width: min(600px, 56%);
 }
-.acciones { display: flex; flex-wrap: wrap; gap: 12px; }
+.acciones { display: flex; flex-wrap: wrap; gap: 10px; }
 
-/* ---- composiciones asimétricas -------------------------------------------
-   Las secciones alternan lado para que el objeto del fondo nunca quede tapado
-   por el texto: cuando la caja viaja a la derecha, el texto está a la
-   izquierda, y al revés.                                                     */
-.dos {
-  display: grid;
-  gap: clamp(32px, 6vw, 96px);
+/* ---- tira de mensaje ------------------------------------------------------ */
+.tira {
+  border-block: 1px solid var(--linea);
+  background: var(--campo-fondo);
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  display: flex;
+}
+.tira-pista {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 44px;
+  padding: 15px 22px 15px 0;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: clamp(19px, 2.5vw, 32px);
+  text-transform: uppercase;
+  color: var(--osso);
+  animation: correr 34s linear infinite;
+}
+.tira:hover .tira-pista { animation-play-state: paused; }
+.tira-pista i { font-style: normal; color: var(--legno); }
+@keyframes correr {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+
+/* ---- secciones ------------------------------------------------------------ */
+section {
+  position: relative;
+  z-index: 2;
+  padding: var(--aire) var(--margen);
+  max-width: var(--ancho);
+  margin: 0 auto;
+}
+
+.dos { display: grid; gap: clamp(28px, 5vw, 84px); align-items: center; }
+@media (min-width: 900px) {
+  .dos { grid-template-columns: 1fr 1fr; }
+  .dos.invertido > *:first-child { grid-column: 2; }
+  .dos.invertido > *:last-child { grid-column: 1; grid-row: 1; }
+}
+
+/* ---- el vídeo, recorrido por scroll ---------------------------------------
+   Aquí sí va el render entero con su fondo de estudio: en una banda a sangre
+   ese fondo oscuro deja de ser un problema y pasa a ser el escenario.        */
+.banda { position: relative; z-index: 2; height: 320svh; background: #0b0d10; }
+.banda-fija {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
   align-items: center;
 }
-@media (min-width: 900px) {
-  /* 46/54: la columna de texto se queda corta a proposito, para que ni la
-     linea mas larga entre en la mitad por donde pasa el objeto. */
-  .dos { grid-template-columns: 46fr 54fr; }
-  .dos.derecha { grid-template-columns: 54fr 46fr; }
-  .dos.derecha > *:first-child { grid-column: 2; }
-  .dos.derecha > *:last-child { grid-column: 1; grid-row: 1; }
+.banda video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.banda-velo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(11, 13, 16, 0.93) 0%, rgba(11, 13, 16, 0.6) 38%, rgba(11, 13, 16, 0) 68%);
 }
+.banda-tipo {
+  position: relative;
+  padding: 0 var(--margen);
+  max-width: var(--ancho);
+  margin: 0 auto;
+  width: 100%;
+}
+.banda-tipo .titulo { max-width: 12ch; }
 
 /* ---- cifras --------------------------------------------------------------- */
 .cifras {
@@ -277,88 +313,125 @@ p.cuerpo {
   border-radius: var(--r-tarjeta);
   overflow: hidden;
 }
-@media (min-width: 720px) { .cifras { grid-template-columns: repeat(3, 1fr); } }
-/* La banda de cifras respeta la misma regla que las demás secciones: se queda
-   en su mitad y deja la otra libre para el objeto. A ancho completo tapaba la
-   caja justo en el acto en el que acaba de envolverse. */
-@media (min-width: 900px) {
-  #cifras > * { max-width: 58%; margin-left: auto; }
-}
-.cifra {
-  background: var(--acciaio-alto);
-  padding: 32px 26px;
-}
+@media (min-width: 760px) { .cifras { grid-template-columns: repeat(3, 1fr); } }
+.cifra { background: var(--campo-alto); padding: 34px 26px; }
 .cifra b {
   display: block;
   font-family: var(--display);
-  font-size: clamp(38px, 5vw, 62px);
+  font-size: clamp(40px, 5vw, 68px);
   line-height: 1;
   letter-spacing: -0.02em;
   font-weight: 400;
-  color: var(--blu);
-  /* Una cifra partida en dos líneas deja de leerse como cifra. */
+  color: var(--legno);
   white-space: nowrap;
 }
-.cifra span {
-  display: block;
-  margin-top: 12px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--osso-tenue);
+.cifra span { display: block; margin-top: 12px; font-size: 14px; line-height: 1.5; color: var(--osso-tenue); }
+
+/* ---- cierre ---------------------------------------------------------------
+   Aquí el producto ya va envuelto en film azul, y el campo también es azul: sin
+   ayuda desaparece. La ayuda es un suelo más hondo debajo —el tercer paso del
+   mismo azul— para que la envuelta tenga contra qué recortarse.               */
+.cierre { position: relative; text-align: center; padding-bottom: 0; overflow: hidden; }
+.cierre::after {
+  content: '';
+  position: absolute;
+  inset: 38% 0 0;
+  z-index: 0;
+  background: linear-gradient(to bottom, rgba(8, 39, 66, 0) 0%, var(--campo-fondo) 62%);
+  pointer-events: none;
+}
+.cierre > * { position: relative; z-index: 2; }
+.cierre .cartel { margin-inline: auto; max-width: 13ch; }
+/* z-index propio: el producto viene después en el HTML y, sin esto, se come
+   los botones — que son el único motivo por el que existe esta sección. */
+.cierre .acciones { position: relative; z-index: 4; justify-content: center; margin-top: 38px; }
+.cierre .producto {
+  position: relative;
+  z-index: 1;
+  right: auto;
+  bottom: auto;
+  width: min(52vw, 560px);
+  margin: 30px auto -7vh;
+  filter: drop-shadow(0 26px 44px rgba(3, 14, 26, 0.7));
 }
 
-/* ---- cierre --------------------------------------------------------------- */
-.cierre { text-align: center; padding-bottom: calc(var(--aire-seccion) * 1.2); }
-.cierre .cartel { margin-inline: auto; max-width: 16ch; }
-.cierre .acciones { justify-content: center; margin-top: 40px; }
-
 footer {
+  position: relative;
+  z-index: 2;
   border-top: 1px solid var(--linea);
-  padding: 26px var(--margen);
+  background: var(--campo-fondo);
+  padding: 24px var(--margen);
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   justify-content: space-between;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--osso-tenue);
-  position: relative;
-  z-index: 2;
-  background: var(--acciaio-fondo);
 }
 
-/* ---- teléfono ------------------------------------------------------------
-   El objeto NO se apaga en el móvil: se aparta. Sube a la banda superior y se
-   queda ahí mientras el texto pasa por debajo, porque a 390px de ancho un
-   objeto centrado y un párrafo encima no caben.                              */
+/* ---- teléfono -------------------------------------------------------------
+   El producto no se encoge dentro de la misma composición: cambia de sitio.
+   En vertical va debajo del titular y a todo el ancho, que es donde una
+   pantalla estrecha lo puede enseñar entero.                                 */
 @media (max-width: 899px) {
-  #riel { display: none; }
-  /* La banda de arriba queda limpia para el objeto; el oscurecido empieza
-     justo donde empieza el texto. Con el velo anterior — que arrancaba en el
-     34% — la caja no se veía en absoluto. */
-  .velo {
-    background: linear-gradient(to bottom, rgba(16, 19, 24, 0) 0%, rgba(16, 19, 24, 0) 30%, rgba(16, 19, 24, 0.72) 44%, rgba(16, 19, 24, 0.95) 58%, rgba(16, 19, 24, 0.97) 100%);
+  /* En el móvil el hero deja de ser una composición superpuesta y pasa a ser
+     una columna. Se reordena con `order` en vez de mover el HTML: en pantalla
+     ancha la ficha tiene que ir ANTES de la caja para caer en la esquina de
+     arriba, y en vertical tiene que ir DESPUÉS, ya como pie de foto. */
+  .hero { justify-content: flex-start; padding-top: 100px; min-height: auto; }
+  .hero .cartel { max-width: 100%; }
+  .hero-tipo { order: 1; }
+  .hero-pie { order: 4; max-width: 100%; padding: 24px 0 38px; }
+
+  .ficha {
+    order: 3;
+    position: static;
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 18px;
+    align-items: baseline;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--linea);
   }
-  /* Y las secciones arrancan por debajo de esa banda, para no pisarla. */
-  section { justify-content: flex-end; padding-top: 46svh; padding-bottom: 12svh; min-height: 100svh; }
-  .hero { padding-top: 46svh; }
-  .barra .pastilla:not(.llena) { display: none; }
-  /* El bloque de texto ya no necesita su propio suelo: lo da el velo. */
-  .bloque::before { display: none; }
-  /* Y las columnas se apilan sin que nada se salga por el lado. */
-  .cifra b { white-space: normal; }
+  .ficha dt { margin-bottom: 0; }
+  .ficha dd + dt { margin-top: 0; }
+  .ficha dd { text-align: right; }
+
+  .producto {
+    order: 2;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 108%;
+    margin: 14px -4% 0;
+    filter: drop-shadow(0 22px 26px rgba(4, 18, 32, 0.58));
+  }
+
+  .banda { height: 250svh; }
+  /* contain y no cover. En vertical, `cover` de un vídeo 16:9 tira el 74% del
+     ancho y lo que queda en pantalla es un primer plano de la veta de la
+     madera: se pierde justo lo único que este plano tiene que contar, que es
+     la caja montándose. Contenido queda una banda arriba y debajo el texto, y
+     como el fondo de la sección ya es del color del estudio no salen franjas
+     negras: sale sala. */
+  .banda video { object-fit: contain; object-position: center 22%; }
+  .banda-velo {
+    background: linear-gradient(to bottom, rgba(11, 13, 16, 0.18) 0%, rgba(11, 13, 16, 0.32) 34%, rgba(11, 13, 16, 0.94) 66%, rgba(11, 13, 16, 0.97) 100%);
+  }
+  .banda-fija { align-items: flex-end; padding-bottom: 7svh; }
+  .cierre .producto { width: 112%; margin: 26px -6% -3vh; }
 }
 
-/* ---- movimiento reducido -------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
-
-/* Sin JavaScript el texto tiene que verse igual: nunca se esconde nada desde
-   el CSS que dependa de un guion para volver. */
-.cartel .dentro { will-change: transform; }
