@@ -46,6 +46,9 @@ export function Hero() {
           <MagneticButton variant="ghost" onClick={() => go('full-system')}>
             La web completa
           </MagneticButton>
+          <MagneticButton variant="ghost" onClick={() => { window.location.href = 'viaje.html'; }}>
+            Objeto en viaje ↗
+          </MagneticButton>
         </div>
       </FadeUp>
 

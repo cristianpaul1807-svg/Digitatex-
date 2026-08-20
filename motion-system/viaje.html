@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>Objeto en viaje — Digitatex</title>
+    <meta name="description" content="Un objeto 3D que atraviesa la página entera en vez de vivir dentro de una sección." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- El objeto vive aquí, fijo y detrás de todo. Las secciones pasan por
+         delante. Esa es toda la arquitectura de la página. -->
+    <canvas id="escena" aria-hidden="true"></canvas>
+    <div class="velo" aria-hidden="true"></div>
+    <div class="grano" aria-hidden="true"></div>
+
+    <header class="barra">
+      <span class="marca">Fidenza<em>.</em></span>
+      <nav style="display: flex; gap: 10px">
+        <a class="pastilla" href="#proceso">Proceso</a>
+        <a class="pastilla llena" href="#cierre">Preventivo</a>
+      </nav>
+    </header>
+
+    <div id="riel" aria-hidden="true">
+      <span data-punto="hero" class="activo"></span>
+      <span data-punto="materia"></span>
+      <span data-punto="proceso"></span>
+      <span data-punto="barrera"></span>
+      <span data-punto="cifras"></span>
+      <span data-punto="cierre"></span>
+    </div>
+
+    <main>
+      <section class="hero" id="hero">
+        <p class="etiqueta" data-sube>Imballaggi industriali · Fidenza (PR)</p>
+        <h1 class="cartel" data-cartel style="margin-top: 26px">
+          Parte intero.
+          E arriva
+          intero.
+        </h1>
+        <div class="pie bloque">
+          <p class="guia" data-sube>
+            Casse in legno costruite sulla misura del pezzo. Cerrada, sellada y envuelta en film
+            barrera antes de salir por la puerta.
+          </p>
+          <div class="acciones" data-sube>
+            <a class="pastilla llena" href="#cierre">Richiedi un preventivo</a>
+            <a class="pastilla" href="#proceso">Come lavoriamo</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="filete"></div>
+
+      <section id="materia">
+        <div class="dos">
+          <div class="bloque">
+            <p class="etiqueta" data-sube>01 — Materia prima</p>
+            <h2 class="titulo" data-sube style="margin-top: 22px">
+              Empieza como<br />tablas sueltas.
+            </h2>
+          </div>
+          <p class="cuerpo bloque" data-sube>
+            Nada de medidas estándar. Cada bastidor se corta a la medida exacta del pezzo que va
+            dentro, porque el espacio libre dentro de una caja es exactamente donde se rompen las
+            cosas en un camión.
+          </p>
+        </div>
+      </section>
+
+      <div class="filete"></div>
+
+      <section id="proceso">
+        <div class="dos derecha">
+          <div class="bloque">
+            <p class="etiqueta" data-sube>02 — Montaje</p>
+            <h2 class="titulo" data-sube style="margin-top: 22px">
+              Se cierra<br />alrededor.
+            </h2>
+          </div>
+          <p class="cuerpo bloque" data-sube>
+            Las duelas suben de abajo arriba y la tapa entra la última. Mira el fondo mientras
+            desplazas: la caja que estás leyendo se está montando de verdad, no es un vídeo.
+          </p>
+        </div>
+      </section>
+
+      <div class="filete"></div>
+
+      <section id="barrera">
+        <div class="dos">
+          <div class="bloque">
+            <p class="etiqueta" data-sube>03 — Barriera</p>
+            <h2 class="titulo" data-sube style="margin-top: 22px">
+              Y entonces<br />se sella.
+            </h2>
+          </div>
+          <p class="cuerpo bloque" data-sube>
+            Film barrera contra humedad y salitre. Un macchinario danneggiato in viaggio non è un
+            problema di trasporto: es un problema de embalaje, y se resuelve aquí.
+          </p>
+        </div>
+      </section>
+
+      <div class="filete"></div>
+
+      <section id="cifras">
+        <p class="etiqueta" data-sube style="margin-bottom: 34px">04 — En números</p>
+        <div class="cifras" data-sube>
+          <div class="cifra">
+            <b>1:1</b>
+            <span>Cada caja construida a la medida exacta de su pieza</span>
+          </div>
+          <div class="cifra">
+            <b>ISPM-15</b>
+            <span>Estándar fitosanitario exigido fuera de la Unión Europea</span>
+          </div>
+          <div class="cifra">
+            <b>48h</b>
+            <span>Del plano al palé cargado, en piezas estándar</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="filete"></div>
+
+      <section class="cierre" id="cierre">
+        <p class="etiqueta" data-sube>05 — Y llega entero</p>
+        <h2 class="cartel" data-cartel style="margin-top: 26px">
+          Cuéntanos
+          qué hay
+          que mover.
+        </h2>
+        <div class="acciones" data-sube>
+          <a class="pastilla llena" href="#cierre">Richiedi un preventivo</a>
+          <a class="pastilla" href="/motion/">Volver al catálogo</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Digitatex · Prototipo interno</span>
+      <span>Objeto en viaje · una sola skill</span>
+    </footer>
+
+    <noscript>
+      <div style="position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;padding:2rem;background:#101318;color:#f2efe9;text-align:center;font-family:Inter,system-ui,sans-serif">
+        <div style="max-width:32rem">
+          <p style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#4a90e2">Digitatex</p>
+          <h1 style="font-family:Anton,sans-serif;text-transform:uppercase;font-size:clamp(2rem,7vw,3.5rem);line-height:1;margin:1.2rem 0 0">Esta página necesita JavaScript.</h1>
+          <p style="margin-top:1rem;line-height:1.6;color:#9aa0a8">El objeto se dibuja según desplazas, así que sin él no hay nada que enseñar.</p>
+        </div>
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/viaje/main.ts"></script>
+  </body>
+</html>

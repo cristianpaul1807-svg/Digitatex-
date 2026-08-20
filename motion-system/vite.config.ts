@@ -11,9 +11,14 @@ export default defineConfig({
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   build: {
     target: 'es2020',
-    // GSAP and Framer Motion are both large. Splitting them keeps the entry
-    // chunk small enough that the loader paints before the animation code lands.
+    // Dos paginas: el catalogo y la demo del objeto en viaje. La segunda no
+    // usa React ni Framer — solo GSAP y un canvas — asi que separarlas hace que
+    // no cargue 115 KB que no toca.
     rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        viaje: fileURLToPath(new URL('./viaje.html', import.meta.url)),
+      },
       output: {
         manualChunks: { gsap: ['gsap', '@gsap/react'], framer: ['framer-motion'], hls: ['hls.js'] },
       },
