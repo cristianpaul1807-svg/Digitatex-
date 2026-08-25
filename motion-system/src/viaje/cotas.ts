@@ -5,28 +5,30 @@ import type { Scheda } from './scheda';
  *
  * Va en SVG y no en divs con bordes porque un plano es geometría: flechas que
  * tienen que tocar exactamente el borde de la pieza, líneas que se cruzan sin
- * pisarse, y un trazo que se dibuja solo al entrar. Con divs sale un dibujo
+ * pisarse, y trazos que se dibujan solos al entrar. Con divs sale un dibujo
  * aproximado; con SVG sale el dibujo.
  *
  * ── El sistema de coordenadas ──────────────────────────────────────────────
  *
- * El viewBox es 0–100 en los dos ejes, y NO conserva la proporción
- * (preserveAspectRatio="none"). Es decir: 0,0 es la esquina superior izquierda
- * del lienzo de la secuencia y 100,100 la inferior derecha, se estire lo que se
- * estire. Así los anclajes se escriben una vez en porcentaje y valen para
- * cualquier tamaño de pantalla, sin recalcular nada al redimensionar.
+ * El viewBox son los píxeles reales del lienzo de la secuencia, 1280×650, con
+ * el `preserveAspectRatio` de siempre. Y el contenedor lleva `aspect-ratio:
+ * 1280/650`, así que la caja del SVG y la del canvas son exactamente la misma
+ * a cualquier tamaño de pantalla: lo que se dibuja en la coordenada 354,178
+ * cae sobre el píxel 354,178 del fotograma, se vea la página donde se vea.
  *
- * El precio de no conservar la proporción es que un círculo saldría ovalado y
- * un trazo horizontal más fino que uno vertical. Por eso TODO lo que tiene que
- * salir redondo o de grosor constante —globos, textos, puntas de flecha— se
- * dibuja en un segundo SVG superpuesto que sí conserva la proporción, y solo
- * las líneas rectas viven en el estirado.
+ * El primer intento fue con dos SVG —uno estirado para las líneas y otro
+ * proporcional para los círculos— y estaba mal: al conservar la proporción, el
+ * segundo encajaba sus 100 unidades contra el lado corto y las centraba
+ * respecto al otro, así que las dos capas dejaban de coincidir. Con un único
+ * sistema en píxeles del lienzo el problema no existe: los círculos salen
+ * redondos y los textos sin deformar porque nada se estira.
  *
  * ── Dónde está la caja ─────────────────────────────────────────────────────
  *
- * Medido sobre el último fotograma de la secuencia con scripts/, no a ojo.
+ * Medido sobre el último fotograma de la secuencia, no puesto a ojo.
  */
-export const CAJA = { izq: 27.7, der: 73.0, arr: 27.4, aba: 98.3 };
+export const LIENZO = { w: 1280, h: 650 };
+export const CAJA = { izq: 354, der: 935, arr: 178, aba: 639 };
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -45,15 +47,13 @@ function cota(
   a: { x: number; y: number },
   b: { x: number; y: number },
   texto: string,
-  lado: 'arriba' | 'abajo' | 'izquierda' | 'derecha',
 ) {
-  const linea = el('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, class: 'cota-linea' });
-  grupo.appendChild(linea);
+  grupo.appendChild(el('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, class: 'cota-linea' }));
 
   // Topes perpendiculares en los extremos. En un plano de verdad son lo que
   // dice hasta dónde llega la medida; sin ellos la línea es solo una raya.
   const vertical = Math.abs(b.x - a.x) < Math.abs(b.y - a.y);
-  const t = 1.1;
+  const t = 9;
   for (const p of [a, b]) {
     grupo.appendChild(
       el('line', {
@@ -68,21 +68,18 @@ function cota(
 
   const mx = (a.x + b.x) / 2;
   const my = (a.y + b.y) / 2;
-  const sep = 2.2;
-  const desp = {
-    arriba: { x: mx, y: my - sep, anchor: 'middle' },
-    abajo: { x: mx, y: my + sep + 1.4, anchor: 'middle' },
-    izquierda: { x: mx - sep, y: my, anchor: 'end' },
-    derecha: { x: mx + sep, y: my, anchor: 'start' },
-  }[lado];
 
   const t2 = el('text', {
-    x: desp.x,
-    y: desp.y,
-    'text-anchor': desp.anchor,
-    'dominant-baseline': 'middle',
+    x: vertical ? mx - 8 : mx,
+    y: vertical ? my : my + 26,
+    'text-anchor': 'middle',
+    'dominant-baseline': vertical ? 'auto' : 'auto',
     class: 'cota-texto',
   });
+  // La cota vertical va girada, como en cualquier plano de taller. No es un
+  // guiño: escrita en horizontal ocupa a lo ancho lo que mide la palabra, y
+  // ahí al lado están los globos numerados. Girada ocupa el alto de una línea.
+  if (vertical) t2.setAttribute('transform', `rotate(-90 ${mx - 8} ${my})`);
   t2.textContent = texto;
   grupo.appendChild(t2);
 }
@@ -91,19 +88,33 @@ function cota(
  * Construye el plano dentro de `raiz`.
  * Devuelve los elementos que main.ts tiene que animar.
  */
-export function dibujarCotas(raiz: HTMLElement, scheda: Scheda) {
+export function dibujarCotas(raiz: HTMLElement, scheda: Scheda, compacto = false) {
   raiz.textContent = '';
 
   const svg = el('svg', {
-    viewBox: '0 0 100 100',
-    preserveAspectRatio: 'none',
-    class: 'plano',
+    viewBox: `0 0 ${LIENZO.w} ${LIENZO.h}`,
+    class: compacto ? 'plano plano-compacto' : 'plano',
     'aria-hidden': 'true',
   });
 
-  const gCotas = el('g', { class: 'plano-cotas' });
+  /* En vertical el plano se aprieta contra el producto y pierde la cota de
+     profundidad. No es una versión recortada por pereza: el dibujo se escala
+     con el ancho de la pantalla, y en 390 px las guías largas dejan los globos
+     fuera del recuadro y los números a 6 px. Un plano que no se lee no es un
+     plano. La profundidad sigue estando escrita en la ficha de abajo. */
+  const brazo = compacto ? 46 : 120;
+
   const gGuias = el('g', { class: 'plano-guias' });
+  const gCotas = el('g', { class: 'plano-cotas' });
   svg.append(gGuias, gCotas);
+
+  /* La línea de suelo. Es lo que convierte "la caja se paró ahí" en "la caja
+     aterrizó": sin una referencia horizontal, un objeto recortado sobre un
+     campo plano flota, por mucha sombra que se le ponga debajo. Se dibuja a la
+     altura exacta de la base del pallet y se sale por los dos lados. */
+  gCotas.appendChild(
+    el('line', { x1: -60, y1: CAJA.aba + 2, x2: LIENZO.w + 60, y2: CAJA.aba + 2, class: 'cota-suelo' }),
+  );
 
   const m = (clave: string) => scheda.misure.find((x) => x.chiave === clave);
   const valor = (clave: string) => {
@@ -111,67 +122,50 @@ export function dibujarCotas(raiz: HTMLElement, scheda: Scheda) {
     return v ? `${v.valore} ${v.unita}` : '';
   };
 
-  /* Altura: a la izquierda de la caja, en vertical. */
-  const xAlt = CAJA.izq - 6;
+  /* Altura: a la izquierda, en vertical. */
+  const xAlt = CAJA.izq - (compacto ? 96 : 62);
   if (m('altezza')) {
-    cota(gCotas, { x: xAlt, y: CAJA.arr }, { x: xAlt, y: CAJA.aba }, valor('altezza'), 'izquierda');
+    cota(gCotas, { x: xAlt, y: CAJA.arr }, { x: xAlt, y: CAJA.aba }, valor('altezza'));
     // Líneas de referencia que llevan la cota hasta la pieza. Punteadas y más
-    // finas: no son la medida, solo dicen de dónde sale.
+    // tenues: no son la medida, solo dicen de dónde sale.
     gCotas.appendChild(el('line', { x1: xAlt, y1: CAJA.arr, x2: CAJA.izq, y2: CAJA.arr, class: 'cota-ref' }));
     gCotas.appendChild(el('line', { x1: xAlt, y1: CAJA.aba, x2: CAJA.izq, y2: CAJA.aba, class: 'cota-ref' }));
   }
 
   /* Anchura: debajo, en horizontal. */
-  const yAnc = CAJA.aba + 4.5;
+  const yAnc = CAJA.aba - 4;
   if (m('larghezza')) {
-    cota(gCotas, { x: CAJA.izq, y: yAnc }, { x: CAJA.der, y: yAnc }, valor('larghezza'), 'abajo');
-    gCotas.appendChild(el('line', { x1: CAJA.izq, y1: CAJA.aba, x2: CAJA.izq, y2: yAnc, class: 'cota-ref' }));
-    gCotas.appendChild(el('line', { x1: CAJA.der, y1: CAJA.aba, x2: CAJA.der, y2: yAnc, class: 'cota-ref' }));
+    cota(gCotas, { x: CAJA.izq, y: yAnc }, { x: CAJA.der, y: yAnc }, valor('larghezza'));
   }
 
-  /* Profundidad: en diagonal, siguiendo la fuga del render. La caja está en
-     tres cuartos, así que la única cota honesta para el fondo es la que va
-     paralela a esa arista. */
-  if (m('profondita')) {
+  /* Profundidad: arriba a la derecha, siguiendo la fuga. La caja está en tres
+     cuartos, así que la cota del fondo va paralela a esa arista y no recta. */
+  if (m('profondita') && !compacto) {
     cota(
       gCotas,
-      { x: CAJA.der + 3, y: CAJA.arr + 6 },
-      { x: CAJA.der + 3, y: CAJA.arr - 3 },
+      { x: CAJA.der - 150, y: CAJA.arr - 42 },
+      { x: CAJA.der + 26, y: CAJA.arr - 42 },
       valor('profondita'),
-      'derecha',
     );
+    gCotas.appendChild(el('line', { x1: CAJA.der + 26, y1: CAJA.arr - 42, x2: CAJA.der, y2: CAJA.arr + 6, class: 'cota-ref' }));
   }
 
   /* Globos numerados con su línea guía, uno por pieza de la leyenda. */
-  const globos: SVGGElement[] = [];
+  const marcas: SVGGElement[] = [];
   scheda.legenda.forEach((v) => {
-    // El punto que se señala va en % de la CAJA, no del lienzo: así una pieza
+    // El punto señalado va en % de la CAJA, no del lienzo: así una pieza
     // apuntada al 50/50 cae en el centro del producto y no en el del hueco.
     const px = CAJA.izq + ((CAJA.der - CAJA.izq) * v.x) / 100;
     const py = CAJA.arr + ((CAJA.aba - CAJA.arr) * v.y) / 100;
-    // El globo se aparta hacia el lado más cercano, para no taparlo todo.
-    const haciaIzq = v.x < 50;
-    const gx = haciaIzq ? CAJA.izq - 11 : CAJA.der + 11;
-    const gy = py;
+    const gx = v.lato === 'sx' ? CAJA.izq - brazo : CAJA.der + brazo;
 
-    const g = el('g', { class: 'globo' });
-    g.appendChild(el('line', { x1: px, y1: py, x2: gx, y2: gy, class: 'globo-guia' }));
-    g.appendChild(el('circle', { cx: px, cy: py, r: 0.5, class: 'globo-punto' }));
-    globos.push(g);
-    gGuias.appendChild(g);
-  });
+    gGuias.appendChild(el('line', { x1: px, y1: py, x2: gx, y2: py, class: 'globo-guia' }));
+    gGuias.appendChild(el('circle', { cx: px, cy: py, r: 4, class: 'globo-punto' }));
 
-  raiz.appendChild(svg);
-
-  /* Capa que SÍ conserva proporción: aquí van los globos redondos y sus
-     números, que en el SVG estirado saldrían ovalados. */
-  const svg2 = el('svg', { viewBox: '0 0 100 100', class: 'plano plano-fijo', 'aria-hidden': 'true' });
-  scheda.legenda.forEach((v) => {
-    const py = CAJA.arr + ((CAJA.aba - CAJA.arr) * v.y) / 100;
-    const haciaIzq = v.x < 50;
-    const gx = haciaIzq ? CAJA.izq - 11 : CAJA.der + 11;
     const g = el('g', { class: 'globo-marca' });
-    g.appendChild(el('circle', { cx: gx, cy: py, r: 2.6, class: 'globo-circulo' }));
+    // El radio va en el atributo y no en CSS: `r` como propiedad de hoja de
+    // estilos es reciente y no la aplican todos los navegadores en uso.
+    g.appendChild(el('circle', { cx: gx, cy: py, r: compacto ? 26 : 17, class: 'globo-circulo' }));
     const t = el('text', {
       x: gx,
       y: py,
@@ -181,15 +175,17 @@ export function dibujarCotas(raiz: HTMLElement, scheda: Scheda) {
     });
     t.textContent = String(v.numero);
     g.appendChild(t);
-    svg2.appendChild(g);
+    marcas.push(g);
+    svg.appendChild(g);
   });
-  raiz.appendChild(svg2);
+
+  raiz.appendChild(svg);
 
   return {
     lineas: Array.from(svg.querySelectorAll<SVGLineElement>('line')),
-    textos: Array.from(svg.querySelectorAll<SVGTextElement>('text')),
-    marcas: Array.from(svg2.querySelectorAll<SVGGElement>('.globo-marca')),
-    globos,
+    textos: Array.from(gCotas.querySelectorAll<SVGTextElement>('text')),
+    marcas,
+    puntos: Array.from(svg.querySelectorAll<SVGCircleElement>('.globo-punto')),
   };
 }
 
