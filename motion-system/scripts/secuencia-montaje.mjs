@@ -61,7 +61,55 @@ function clavar(ruta) {
     }
   }
   desmotar(png);
+  quitarGrumos(png, 420);
   return png;
+}
+
+/**
+ * Borra las manchas sueltas por debajo de cierta área.
+ *
+ * `desmotar` quita el píxel aislado, pero el reflejo del hormigón no deja
+ * píxeles sueltos: deja grumos de veinte o treinta juntos, que se sostienen
+ * entre ellos y pasan el filtro de vecinos. En una imagen fija son serrín; en
+ * la secuencia van cambiando de sitio en cada fotograma y el ojo los sigue.
+ *
+ * Se etiquetan las regiones conectadas y se tira lo que no llegue al umbral.
+ * El umbral está por debajo de la pieza más pequeña que vuela por el aire —los
+ * listones del fondo rondan las 3.000— así que no se lleva nada real por
+ * delante.
+ *
+ * La cola es un Int32Array y no un array normal a propósito: son 830.000
+ * píxeles por fotograma y 42 fotogramas, y con push/shift esto tarda minutos.
+ */
+function quitarGrumos(png, minArea) {
+  const { width: W, height: H, data } = png;
+  const visto = new Uint8Array(W * H);
+  const cola = new Int32Array(W * H);
+  const region = new Int32Array(W * H);
+
+  const solido = (p) => data[p * 4 + 3] > 110;
+
+  for (let inicio = 0; inicio < W * H; inicio++) {
+    if (visto[inicio] || !solido(inicio)) continue;
+
+    let cabeza = 0, fin = 0, n = 0;
+    cola[fin++] = inicio;
+    visto[inicio] = 1;
+
+    while (cabeza < fin) {
+      const p = cola[cabeza++];
+      region[n++] = p;
+      const x = p % W, y = (p / W) | 0;
+      // Cuatro vecinos, no ocho: con ocho, dos grumos que solo se tocan por una
+      // esquina cuentan como uno y entre los dos superan el umbral.
+      if (x > 0 && !visto[p - 1] && solido(p - 1)) { visto[p - 1] = 1; cola[fin++] = p - 1; }
+      if (x < W - 1 && !visto[p + 1] && solido(p + 1)) { visto[p + 1] = 1; cola[fin++] = p + 1; }
+      if (y > 0 && !visto[p - W] && solido(p - W)) { visto[p - W] = 1; cola[fin++] = p - W; }
+      if (y < H - 1 && !visto[p + W] && solido(p + W)) { visto[p + W] = 1; cola[fin++] = p + W; }
+    }
+
+    if (n < minArea) for (let i = 0; i < n; i++) data[region[i] * 4 + 3] = 0;
+  }
 }
 
 /**

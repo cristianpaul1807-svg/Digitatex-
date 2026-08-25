@@ -304,15 +304,24 @@ section {
   align-items: center;
   justify-content: center;
 }
+/* El objeto tiene que MANDAR en la pantalla, no posar dentro de ella.
+   La caja ocupa el 45% del ancho del fotograma y el 71% de su alto: para que
+   llene medio alto de ventana, el lienzo tiene que ser más ancho que la propia
+   ventana. Se sale, y está bien que se salga — eso es lo que hace que se lea
+   como un objeto que cae por delante de la web y no como una foto centrada. */
 .montaje-escena {
   position: relative;
-  width: min(92vw, 1100px);
+  width: min(155vw, 1400px);
   /* La proporción es la del lienzo de la secuencia (1280×650). Fijarla aquí
      evita que la caja dé un salto de altura cuando entra el primer fotograma. */
   aspect-ratio: 1280 / 650;
   will-change: transform;
 }
 .montaje-lienzo, .montaje-plano, .montaje-sombra { position: absolute; inset: 0; }
+/* El giro va en el lienzo y no en la escena: la escena lleva la caída, y el
+   plano acotado que hay dentro NO puede girar con la caja — una cota inclinada
+   no es una cota. */
+.montaje-lienzo { will-change: transform; }
 .montaje-lienzo canvas { width: 100%; height: 100%; display: block; }
 
 /* La sombra de contacto. Aparece solo al aterrizar: mientras la caja está en
@@ -350,6 +359,50 @@ section {
 }
 .nota-der { margin-left: auto; text-align: right; }
 .nota-der .cuerpo { margin-left: auto; }
+
+/* El rótulo a sangre. Es el mismo recurso de la referencia: una línea de
+   display tan grande que se sale del ancho útil, puesta DETRÁS del producto
+   para que este la tape a medias al pasar.
+
+   La segunda palabra va en hueco —solo contorno— porque tres líneas macizas
+   del mismo tamaño se leen como un muro. Con una vaciada, el bloque respira y
+   además deja ver la caja a través. */
+/* A sangre de verdad: se sale del ancho máximo de la columna con márgenes
+   negativos calculados sobre el propio margen, para que el rótulo llegue a los
+   bordes de la ventana aunque el resto del texto siga alineado. */
+.nota-ancha {
+  max-width: none;
+  width: auto;
+  margin-inline: calc(var(--margen) * -1);
+  align-items: center;
+}
+.rotulo {
+  font-family: var(--display);
+  /* Más grande que el cartel del hero: aquí no compite con otro texto, compite
+     con un objeto que ocupa media pantalla. */
+  font-size: clamp(64px, 15vw, 210px);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  /* En el acento, no en hueso. Un rótulo blanco de este tamaño pelea con la
+     caja por ser lo primero que se mira, y la caja tiene que ganar: el rótulo
+     es el fondo por el que pasa. En dorado sobre el campo azul se lee entero
+     pero se queda un paso por detrás. */
+  color: var(--legno);
+}
+.rotulo span { display: block; }
+/* La línea vaciada. Tres líneas macizas del mismo tamaño se leen como un muro;
+   con una en hueco el bloque respira y además se ve la caja a través de ella. */
+.rotulo-hueco {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--legno);
+  /* -webkit-text-stroke sigue siendo la única forma con soporte real de vaciar
+     un tipo. `paint-order` deja el trazo por fuera del relleno, que aquí es
+     transparente, así que el contorno queda limpio. */
+  paint-order: stroke fill;
+}
 
 /* Reposo tras el aterrizaje: alto puro, sin contenido. Es el tiempo que el
    plano necesita para dibujarse y poder leerse antes de que la caja se vaya. */
@@ -604,7 +657,18 @@ footer {
      compensar. Los brazos de los globos ya vienen cortos desde cotas.ts. */
   .plano-compacto .cota-texto { font-size: 34px; }
   .plano-compacto .globo-num { font-size: 27px; }
-  .nota { min-height: 88svh; max-width: 100%; }
+  /* Las notas se van arriba del todo. En horizontal caen a los lados de la
+     caja y no se estorban; en vertical comparten el centro con ella, y un
+     párrafo leído a través de una tabla de OSB no se lee. La caja sigue
+     centrada, así que arriba queda sitio libre. */
+  .nota {
+    min-height: 88svh;
+    max-width: 100%;
+    justify-content: flex-start;
+    padding-top: 11svh;
+  }
+  /* El rótulo no: ese SÍ tiene que cruzarse con la caja, es su función. */
+  .nota-ancha { justify-content: center; padding-top: 0; }
   .montaje-reposo { height: 90svh; }
 
   .scheda-cabecera { padding: 20px; }

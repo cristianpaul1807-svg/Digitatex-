@@ -11,10 +11,10 @@
          dominio. Ver src/viaje/fuentes.css. -->
     <link rel="preload" as="font" type="font/woff2" href="./fuentes/f0.woff2" crossorigin />
     <link rel="preload" as="image" href="./fidenza/caja.webp" fetchpriority="high" />
-    <script type="module" crossorigin src="./assets/viaje-CiMPR6Rk.js"></script>
+    <script type="module" crossorigin src="./assets/viaje-Cr2DgnTw.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/gsap-BaSAgaHw.js">
     <link rel="modulepreload" crossorigin href="./assets/useReducedMotion-CVk2nK-F.js">
-    <link rel="stylesheet" crossorigin href="./assets/viaje-B6baGEVN.css">
+    <link rel="stylesheet" crossorigin href="./assets/viaje-hIt_UZWz.css">
   </head>
   <body>
     <div class="trama" aria-hidden="true"></div>
@@ -116,26 +116,43 @@
 
         <!-- Estas notas pasan POR DETRÁS de la caja. Es el efecto entero: el
              objeto se queda montándose y la web le corre por detrás. -->
-        <div class="montaje-notas" aria-hidden="false">
+        <div class="montaje-notas">
           <div class="nota">
             <p class="etiqueta" data-sube>02 — Montaggio</p>
-            <h2 class="titulo" data-sube style="margin-top:16px">Si monta<br /><em>attorno</em><br />al pezzo.</h2>
-          </div>
-          <div class="nota nota-der">
-            <p class="etiqueta" data-sube>Telaio</p>
             <p class="cuerpo" data-sube style="margin-top:12px">
               Quattro montanti e un pallet a quattro vie. Da lì in poi tutto si taglia sulla misura
               del pezzo che deve entrare.
             </p>
           </div>
-          <div class="nota">
+
+          <!-- El titular a sangre. Va DETRÁS de la caja y se corta con ella al
+               pasar: es lo que ata el objeto a la página en vez de dejarlo
+               flotando encima como una calcomanía. -->
+          <div class="nota nota-ancha">
+            <p class="rotulo" aria-label="Si monta attorno al pezzo">
+              <span>Si monta</span>
+              <span class="rotulo-hueco">attorno</span>
+              <span>al pezzo</span>
+            </p>
+          </div>
+
+          <div class="nota nota-der">
             <p class="etiqueta" data-sube>Pannelli</p>
             <p class="cuerpo" data-sube style="margin-top:12px">
               OSB-3 da 15 mm, avvitato al telaio. Non incollato: una cassa che si apre senza
               distruggersi si può riutilizzare.
             </p>
           </div>
-          <div class="nota nota-der">
+
+          <div class="nota nota-ancha">
+            <p class="rotulo" aria-label="E non si apre più">
+              <span>E non</span>
+              <span class="rotulo-hueco">si apre</span>
+              <span>più</span>
+            </p>
+          </div>
+
+          <div class="nota">
             <p class="etiqueta" data-sube>Chiusura</p>
             <p class="cuerpo" data-sube style="margin-top:12px">
               Il coperchio entra per ultimo. Da qui la cassa non si apre più fino a destinazione.

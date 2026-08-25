@@ -69,6 +69,7 @@ function iniciarMontaje() {
   const scheda = leerScheda();
   rellenarLeyenda(ficha, scheda);
 
+  const lienzo = hueco;
   const seq = cargarSecuencia(URL_SECUENCIA, TOTAL);
   hueco.appendChild(seq.canvas);
   // Se decide una vez, al cargar. El plano se redibujaría en cada resize si se
@@ -124,11 +125,31 @@ function iniciarMontaje() {
     onUpdate: () => seq.dibujar(estado.p),
   }, 0);
 
-  // La caída.
-  linea.fromTo(escena, { yPercent: -16 }, { yPercent: 6, duration: 0.72, ease: 'none' }, 0);
+  /* La caída.
+   *
+   * No es una bajada recta. Un objeto que solo baja por el eje Y se lee como un
+   * ascensor; lo que hace que parezca que CAE es que además cruce y voltee. Así
+   * que van tres cosas a la vez y con recorridos distintos:
+   *
+   *   - baja, con la ventana pasándole por detrás,
+   *   - cruza de derecha a izquierda y vuelve a centrarse,
+   *   - y voltea, con dos vaivenes, hasta quedarse recta.
+   *
+   * Que los tres recorridos no acaben a la vez es lo que lo salva de parecer
+   * una animación: si todo llega junto al final, se nota el guion. */
+  linea.fromTo(escena, { yPercent: -22 }, { yPercent: 7, duration: 0.72, ease: 'none' }, 0);
+  linea.fromTo(escena, { xPercent: 13 }, { xPercent: -9, duration: 0.42, ease: 'sine.inOut' }, 0);
+  linea.to(escena, { xPercent: 0, duration: 0.3, ease: 'sine.inOut' }, 0.42);
+
+  // El volteo. Termina en 0 antes de tocar suelo: una caja que aterriza
+  // torcida no se apoya, se cae.
+  linea.fromTo(lienzo, { rotate: -19 }, { rotate: 13, duration: 0.34, ease: 'sine.inOut' }, 0);
+  linea.to(lienzo, { rotate: -7, duration: 0.24, ease: 'sine.inOut' }, 0.34);
+  linea.to(lienzo, { rotate: 0, duration: 0.14, ease: 'power2.out' }, 0.58);
+
   // Rebote corto al tocar suelo.
-  linea.to(escena, { yPercent: 3.2, duration: 0.04, ease: 'power2.out' }, 0.72);
-  linea.to(escena, { yPercent: 6, duration: 0.04, ease: 'power2.in' }, 0.76);
+  linea.to(escena, { yPercent: 4.2, duration: 0.04, ease: 'power2.out' }, 0.72);
+  linea.to(escena, { yPercent: 7, duration: 0.04, ease: 'power2.in' }, 0.76);
 
   linea.fromTo(sombra, { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.08 }, 0.7);
 
