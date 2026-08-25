@@ -277,32 +277,214 @@ section {
   .dos.invertido > *:last-child { grid-column: 1; grid-row: 1; }
 }
 
-/* ---- el vídeo, recorrido por scroll ---------------------------------------
-   Aquí sí va el render entero con su fondo de estudio: en una banda a sangre
-   ese fondo oscuro deja de ser un problema y pasa a ser el escenario.        */
-.banda { position: relative; z-index: 2; height: 320svh; background: #0b0d10; }
-.banda-fija {
+/* ---- el montaje ------------------------------------------------------------
+   La caja se queda pegada en el centro montándose sola, y la página le pasa
+   por detrás. Al final aterriza sobre el suelo y se dibuja el plano.
+
+   Está hecho con `position: sticky` y NO con el `pin` de ScrollTrigger, a
+   propósito: pin resuelve la fijación metiendo transformaciones, y una
+   transformación en un ancestro se convierte en el bloque contenedor de todo
+   `position: fixed` que tenga dentro. Aquí no hace falta pagar ese precio —
+   sticky basta y no toca el árbol.                                           */
+.montaje {
+  position: relative;
+  z-index: 2;
+  /* Cuatro pantallas: una por cada nota que pasa por detrás, más el tramo del
+     aterrizaje. Menos que esto y el montaje va tan rápido que no se lee. */
+  padding-bottom: 0;
+}
+.montaje-fijo {
   position: sticky;
   top: 0;
   height: 100svh;
-  overflow: hidden;
+  /* Encima de las notas: el objeto va delante y el texto por detrás. */
+  z-index: 3;
+  pointer-events: none;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
-.banda video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.banda-velo {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(11, 13, 16, 0.93) 0%, rgba(11, 13, 16, 0.6) 38%, rgba(11, 13, 16, 0) 68%);
-}
-.banda-tipo {
+.montaje-escena {
   position: relative;
+  width: min(92vw, 1100px);
+  /* La proporción es la del lienzo de la secuencia (1280×650). Fijarla aquí
+     evita que la caja dé un salto de altura cuando entra el primer fotograma. */
+  aspect-ratio: 1280 / 650;
+  will-change: transform;
+}
+.montaje-lienzo, .montaje-plano, .montaje-sombra { position: absolute; inset: 0; }
+.montaje-lienzo canvas { width: 100%; height: 100%; display: block; }
+
+/* La sombra de contacto. Aparece solo al aterrizar: mientras la caja está en
+   el aire no tiene por qué haber sombra debajo, y una sombra constante es lo
+   que delata que un objeto está pegado en vez de apoyado. */
+.montaje-sombra {
+  top: auto;
+  bottom: -1.5%;
+  height: 9%;
+  left: 26%;
+  right: 25%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(2, 11, 21, 0.92) 0%, rgba(2, 11, 21, 0.5) 42%, rgba(3, 14, 26, 0) 74%);
+  opacity: 0;
+  transform: scaleX(0.7);
+}
+
+/* ---- las notas que pasan por detrás ---------------------------------------- */
+.montaje-notas {
+  position: relative;
+  z-index: 1;
+  /* Tiran hacia arriba para solaparse con el tramo pegajoso: si empezaran
+     debajo, la caja se quedaría sola en pantalla la primera pantalla entera. */
+  margin-top: -100svh;
   padding: 0 var(--margen);
   max-width: var(--ancho);
-  margin: 0 auto;
-  width: 100%;
+  margin-inline: auto;
 }
-.banda-tipo .titulo { max-width: 12ch; }
+.nota {
+  min-height: 92svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 34ch;
+}
+.nota-der { margin-left: auto; text-align: right; }
+.nota-der .cuerpo { margin-left: auto; }
+
+/* Reposo tras el aterrizaje: alto puro, sin contenido. Es el tiempo que el
+   plano necesita para dibujarse y poder leerse antes de que la caja se vaya. */
+.montaje-reposo { height: 120svh; }
+
+/* ---- el plano técnico ------------------------------------------------------
+   Un solo SVG, en las coordenadas del lienzo de la secuencia (1280×650), con
+   la proporción conservada. El contenedor lleva ese mismo `aspect-ratio`, así
+   que el dibujo y el fotograma comparten caja exacta a cualquier tamaño.
+
+   `overflow: visible` porque las cotas y los globos viven FUERA del rectángulo
+   del producto, que es donde tienen que estar en un plano.                    */
+.plano { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* vector-effect: non-scaling-stroke en todo lo que es línea. El SVG se escala
+   de 1280 a lo que mida la pantalla, y sin esto el grosor escala con él: el
+   plano sale de trazo grueso en un monitor grande y capilar en un portátil. */
+.cota-linea, .cota-tope { stroke: var(--legno); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+/* El suelo va más tenue que las cotas: es el escenario, no una medida. */
+.cota-suelo { stroke: var(--osso-tenue); stroke-width: 1; opacity: 0.55; vector-effect: non-scaling-stroke; }
+.cota-ref {
+  stroke: var(--legno);
+  stroke-width: 1;
+  stroke-dasharray: 5 5;
+  opacity: 0.45;
+  vector-effect: non-scaling-stroke;
+}
+.cota-texto {
+  fill: var(--legno-fuerte);
+  font-family: var(--texto);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.globo-guia {
+  stroke: var(--osso-tenue);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  opacity: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+.globo-punto { fill: var(--legno-fuerte); }
+.globo-circulo { fill: var(--campo-fondo); stroke: var(--legno); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.globo-num {
+  fill: var(--legno-fuerte);
+  font-family: var(--texto);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* ---- la ficha del aterrizaje ----------------------------------------------- */
+.montaje-suelo {
+  position: relative;
+  z-index: 4;
+  padding: var(--aire) var(--margen);
+  max-width: var(--ancho);
+  margin: 0 auto;
+}
+.scheda-caja {
+  border: 1px solid var(--linea);
+  border-radius: var(--r-tarjeta);
+  background: rgba(8, 39, 66, 0.82);
+  /* La ficha se apoya sobre el campo pero deja ver la retícula: es una hoja
+     de plano encima de la mesa, no una tarjeta flotando. */
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+}
+.scheda-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  justify-content: space-between;
+  padding: 26px;
+  border-bottom: 1px solid var(--linea);
+}
+.scheda-ref {
+  font-family: var(--display);
+  font-size: 30px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.scheda-ref i {
+  font-style: normal;
+  font-family: var(--texto);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--osso-tenue);
+  margin-left: 12px;
+}
+.scheda-materiali { list-style: none; display: grid; gap: 9px; font-size: 13px; }
+.scheda-materiali li { display: grid; grid-template-columns: 22px auto; column-gap: 12px; }
+.scheda-materiali b {
+  grid-row: span 2;
+  align-self: start;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--legno);
+  border-radius: 50%;
+  color: var(--legno);
+  font-size: 11px;
+  font-weight: 600;
+}
+.scheda-materiali span { color: var(--osso); }
+.scheda-materiali i { font-style: normal; color: var(--osso-tenue); font-size: 12px; }
+
+.scheda-tabla { width: 100%; border-collapse: collapse; font-size: 13px; }
+.scheda-tabla caption {
+  text-align: left;
+  padding: 18px 26px 10px;
+  font-size: var(--t-etiqueta);
+  letter-spacing: var(--i-etiqueta);
+  text-transform: uppercase;
+  color: var(--legno);
+}
+.scheda-tabla th, .scheda-tabla td { padding: 11px 26px; text-align: left; }
+.scheda-tabla th {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--osso-tenue);
+  border-bottom: 1px solid var(--linea);
+}
+.scheda-tabla td { color: var(--osso-medio); border-bottom: 1px solid rgba(27, 83, 132, 0.45); }
+.scheda-tabla tbody tr:last-child td { border-bottom: 0; }
+/* Los números y códigos en tabular: sin esto las cifras de la columna no
+   alinean y la tabla deja de parecer una distinta de materiales. */
+.scheda-tabla td:nth-child(1), .scheda-tabla td:nth-child(2), .scheda-tabla td:nth-child(3) {
+  font-variant-numeric: tabular-nums;
+  color: var(--osso);
+  white-space: nowrap;
+}
 
 /* ---- cifras --------------------------------------------------------------- */
 .cifras {
@@ -412,18 +594,25 @@ footer {
     filter: drop-shadow(0 22px 26px rgba(4, 18, 32, 0.58));
   }
 
-  .banda { height: 250svh; }
-  /* contain y no cover. En vertical, `cover` de un vídeo 16:9 tira el 74% del
-     ancho y lo que queda en pantalla es un primer plano de la veta de la
-     madera: se pierde justo lo único que este plano tiene que contar, que es
-     la caja montándose. Contenido queda una banda arriba y debajo el texto, y
-     como el fondo de la sección ya es del color del estudio no salen franjas
-     negras: sale sala. */
-  .banda video { object-fit: contain; object-position: center 22%; }
-  .banda-velo {
-    background: linear-gradient(to bottom, rgba(11, 13, 16, 0.18) 0%, rgba(11, 13, 16, 0.32) 34%, rgba(11, 13, 16, 0.94) 66%, rgba(11, 13, 16, 0.97) 100%);
-  }
-  .banda-fija { align-items: flex-end; padding-bottom: 7svh; }
+  /* La escena se sale por los lados a propósito. La caja solo ocupa el 45% del
+     ancho del fotograma —el resto es el aire por donde entran las piezas—, así
+     que encajada en la pantalla se queda diminuta. Ampliada y sangrada, la
+     caja llega al tamaño al que se ve, y lo que se pierde por los bordes es
+     hueco vacío. */
+  .montaje-escena { width: 152vw; margin-inline: -26vw; }
+  /* El plano, en cambio, no puede escalar con ella: se agrandan los tipos para
+     compensar. Los brazos de los globos ya vienen cortos desde cotas.ts. */
+  .plano-compacto .cota-texto { font-size: 34px; }
+  .plano-compacto .globo-num { font-size: 27px; }
+  .nota { min-height: 88svh; max-width: 100%; }
+  .montaje-reposo { height: 90svh; }
+
+  .scheda-cabecera { padding: 20px; }
+  .scheda-tabla caption, .scheda-tabla th, .scheda-tabla td { padding-inline: 20px; }
+  /* La columna del código se cae en vertical: es dato de almacén, y en 390 px
+     compite con la descripción, que es lo único que el cliente lee aquí. */
+  .scheda-tabla th:nth-child(2), .scheda-tabla td:nth-child(2) { display: none; }
+
   .cierre .producto { width: 112%; margin: 26px -6% -3vh; }
 }
 

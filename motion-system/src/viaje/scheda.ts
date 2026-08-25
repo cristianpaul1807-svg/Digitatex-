@@ -56,6 +56,12 @@ export interface Voce {
   /** Dónde apunta el globo, en % de la caja del producto. Ver cotas.ts. */
   x: number;
   y: number;
+  /**
+   * A qué margen sale el globo. Se elige a mano y no por la posición porque
+   * dos piezas cercanas mandan sus globos al mismo sitio y se solapan; en un
+   * plano eso se resuelve repartiéndolos, no calculándolos.
+   */
+  lato: 'sx' | 'dx';
 }
 
 export interface Scheda {
@@ -83,11 +89,11 @@ export const SCHEDA_BASE: Scheda = {
     { sigla: 'C', nome: 'Pallet EPAL',    dettaglio: 'Quattro vie, marchiato e certificato' },
   ],
   legenda: [
-    { numero: 1, codice: '091-00006', qta: 1, descrizione: 'Pallet base quattro vie',      x: 50, y: 94 },
-    { numero: 2, codice: '134-00048', qta: 4, descrizione: 'Montante angolare 80×80',      x: 30, y: 58 },
-    { numero: 3, codice: '215-01118', qta: 2, descrizione: 'Pannello laterale OSB-3 15 mm', x: 78, y: 52 },
-    { numero: 4, codice: '311-00114', qta: 1, descrizione: 'Coperchio con traversa',       x: 55, y: 20 },
-    { numero: 5, codice: '404-00071', qta: 8, descrizione: 'Angolare metallico rinforzo',  x: 24, y: 88 },
+    { numero: 1, codice: '091-00006', qta: 1, descrizione: 'Pallet base quattro vie',       x: 62, y: 95, lato: 'dx' },
+    { numero: 2, codice: '134-00048', qta: 4, descrizione: 'Montante angolare 80×80',       x: 14, y: 46, lato: 'sx' },
+    { numero: 3, codice: '215-01118', qta: 2, descrizione: 'Pannello laterale OSB-3 15 mm', x: 80, y: 56, lato: 'dx' },
+    { numero: 4, codice: '311-00114', qta: 1, descrizione: 'Coperchio con traversa',        x: 66, y: 10, lato: 'dx' },
+    { numero: 5, codice: '404-00071', qta: 8, descrizione: 'Angolare metallico rinforzo',   x: 10, y: 86, lato: 'sx' },
   ],
 };
 

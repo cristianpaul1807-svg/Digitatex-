@@ -95,34 +95,88 @@
 
       <div class="filete"></div>
 
-      <!-- BANDA · el render completo, recorrido por scroll.
-           El vídeo NO lleva src en el HTML: se asigna desde JS. Vive en
-           /prototipi/fidenza/, que es donde ya está para el otro prototipo del
-           mismo cliente, y esa ruta es absoluta desde la raíz del sitio — no
-           desde /motion/. Si estuviera en el atributo, Vite la reescribiría con
-           el `base` de la aplicación y apuntaría a un sitio que no existe.
-           Copiarlo aquí tampoco: son 1,5 MB y el repositorio no es un almacén
-           de vídeo. -->
-      <div class="banda" id="montaggio">
-        <div class="banda-fija">
-          <video
-            id="film"
-            muted
-            playsinline
-            preload="auto"
-            aria-hidden="true"
-            poster="/fidenza/montaggio-poster.jpg"
-          ></video>
-          <div class="banda-velo" aria-hidden="true"></div>
-          <div class="banda-tipo">
-            <p class="etiqueta">02 — Montaggio</p>
-            <h2 class="titulo" style="margin-top:18px">Si chiude<br /><em>attorno.</em></h2>
-            <p class="cuerpo" style="margin-top:22px">
-              Scorri. Il montaggio non è un video che parte da solo: ogni fotogramma lo scegli tu.
+      <!-- MONTAGGIO · la caja se monta sola encima de la página mientras el
+           texto le pasa por detrás, y al final aterriza sobre el suelo.
+
+           El lienzo y el plano los construye JS: son 42 fotogramas y un dibujo
+           de cotas entero, y ponerlos a mano en el marcado sería copiar aquí
+           lo que ya está en scheda.ts. -->
+      <section class="montaje" id="montaggio">
+        <div class="montaje-fijo">
+          <div class="montaje-escena" data-escena>
+            <div class="montaje-sombra" data-sombra aria-hidden="true"></div>
+            <div class="montaje-lienzo" data-lienzo></div>
+            <div class="montaje-plano" data-plano></div>
+          </div>
+        </div>
+
+        <!-- Estas notas pasan POR DETRÁS de la caja. Es el efecto entero: el
+             objeto se queda montándose y la web le corre por detrás. -->
+        <div class="montaje-notas" aria-hidden="false">
+          <div class="nota">
+            <p class="etiqueta" data-sube>02 — Montaggio</p>
+            <h2 class="titulo" data-sube style="margin-top:16px">Si monta<br /><em>attorno</em><br />al pezzo.</h2>
+          </div>
+          <div class="nota nota-der">
+            <p class="etiqueta" data-sube>Telaio</p>
+            <p class="cuerpo" data-sube style="margin-top:12px">
+              Quattro montanti e un pallet a quattro vie. Da lì in poi tutto si taglia sulla misura
+              del pezzo che deve entrare.
+            </p>
+          </div>
+          <div class="nota">
+            <p class="etiqueta" data-sube>Pannelli</p>
+            <p class="cuerpo" data-sube style="margin-top:12px">
+              OSB-3 da 15 mm, avvitato al telaio. Non incollato: una cassa che si apre senza
+              distruggersi si può riutilizzare.
+            </p>
+          </div>
+          <div class="nota nota-der">
+            <p class="etiqueta" data-sube>Chiusura</p>
+            <p class="cuerpo" data-sube style="margin-top:12px">
+              Il coperchio entra per ultimo. Da qui la cassa non si apre più fino a destinazione.
             </p>
           </div>
         </div>
-      </div>
+
+        <!-- Tramo de reposo: sin él, la caja aterriza y se va de pantalla en el
+             mismo gesto, y el plano no llega ni a leerse. Aquí el objeto ya no
+             se mueve y lo único que pasa es que se dibujan las cotas. -->
+        <div class="montaje-reposo" aria-hidden="true"></div>
+      </section>
+
+      <!-- La ficha va FUERA de la sección pegajosa. Dentro, el tramo sticky
+           dura toda la altura de su padre, así que la caja se quedaba clavada
+           en el centro de la pantalla mientras la tabla le pasaba por encima.
+           Aquí la caja aterriza, se dibuja el plano, y solo entonces sube y
+           deja sitio a la ficha. -->
+      <section class="montaje-suelo" id="scheda">
+        <div class="scheda-caja" data-ficha data-sube>
+          <div class="scheda-cabecera">
+            <div>
+              <p class="etiqueta">Scheda tecnica</p>
+              <p class="scheda-ref">
+                <span data-campo="riferimento"></span>
+                <i>Dis. <span data-campo="disegno"></span></i>
+              </p>
+            </div>
+            <ul class="scheda-materiali" data-materiali></ul>
+          </div>
+
+          <table class="scheda-tabla">
+            <caption>Distinta dei componenti</caption>
+            <thead>
+              <tr>
+                <th scope="col">N.</th>
+                <th scope="col">Codice</th>
+                <th scope="col">Q.tà</th>
+                <th scope="col">Descrizione</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
 
       <section>
         <div class="dos invertido">

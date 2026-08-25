@@ -1,8 +1,21 @@
 import { gsap, ScrollTrigger } from '@/motion/core/gsap';
 import { prefersReducedMotion } from '@/motion/accessibility/useReducedMotion';
+import { leerScheda } from './scheda';
+import { dibujarCotas, rellenarLeyenda } from './cotas';
+import { cargarSecuencia } from './secuencia';
 import './fuentes.css';
 import './tokens.css';
 import './viaje.css';
+
+/**
+ * Carpeta de la secuencia.
+ *
+ * `import.meta.env.BASE_URL` y no una ruta absoluta: la página se publica en
+ * /motion/, así que "/fidenza/..." apuntaría a la raíz del dominio. Vite
+ * reescribe las rutas de los atributos del HTML, pero no las cadenas que se
+ * construyen en JavaScript — eso hay que hacerlo a mano.
+ */
+const URL_SECUENCIA = `${import.meta.env.BASE_URL}fidenza/montaggio`.replace(/\/{2,}/g, '/');
 
 /**
  * Fidenza — página de cartel.
@@ -14,75 +27,114 @@ import './viaje.css';
  * animación arregla un producto que parece un marcador de posición.
  *
  * Ahora el producto es el render real del cliente, recortado sobre
- * transparencia y apoyado sobre el campo. Y el montaje —que es lo que merecía
- * la pena de la idea original— sigue estando, pero recorrido sobre el vídeo
- * real en una banda a sangre, donde su fondo de estudio deja de ser un estorbo
- * y pasa a ser el escenario.
+ * transparencia. En el cartel de arriba está quieto; en el montaje son 42
+ * fotogramas recortados uno a uno, así que la caja se arma ENCIMA de la
+ * página, con las secciones pasando por detrás, y acaba aterrizando sobre una
+ * línea de suelo con su plano acotado alrededor.
  *
- * Queda muy poco JavaScript, y es justo lo que debe ser: casi todo el peso de
- * esta página está en la composición, no en el movimiento.
+ * Las medidas, los materiales y la lista de piezas no están escritos aquí:
+ * salen de scheda.ts, que es el fichero que el panel del cliente va a editar.
  */
 
 const reducido = prefersReducedMotion();
 
-/* ── el vídeo, recorrido por scroll ────────────────────────────────────── */
+/* ── el montaje, recorrido por scroll ──────────────────────────────────── */
+
+/** Fotogramas de la secuencia. Los genera scripts/secuencia-montaje.mjs. */
+const TOTAL = 42;
 
 /**
- * El render del montaje se sirve desde la raíz del sitio, no desde /motion/.
- * Ya está publicado ahí para el otro prototipo del mismo cliente y pesa 1,5 MB:
- * no hay ninguna razón para tener dos copias en el repositorio.
+ * El montaje: la caja se arma sola en el centro mientras la página le pasa por
+ * detrás, y al final aterriza y se dibuja el plano alrededor.
  *
- * Va aquí y no en el atributo `src` del HTML porque Vite reescribe las rutas de
- * los atributos con el `base` de la aplicación, y esta ruta tiene que quedarse
- * tal cual.
+ * El reparto del recorrido, y por qué así:
+ *
+ *   0.00 – 0.62   se monta. Ocupa casi dos tercios porque es lo que hay que
+ *                 mirar; el resto son consecuencias.
+ *   0.00 – 0.72   baja. Sigue bajando un poco después de montarse, para que el
+ *                 aterrizaje no coincida con el último tornillo.
+ *   0.72 – 0.80   toca suelo: se para, aparece la sombra, y da un rebote
+ *                 mínimo. El rebote es lo que convierte "se detuvo" en "cayó".
+ *   0.80 – 1.00   se dibuja el plano y entra la ficha.
  */
-const RENDER = '/prototipi/fidenza/hero-imballaggio.mp4';
-
 function iniciarMontaje() {
-  const banda = document.getElementById('montaggio');
-  const video = document.getElementById('film') as HTMLVideoElement | null;
-  if (!banda || !video) return;
+  const seccion = document.getElementById('montaggio');
+  const escena = document.querySelector<HTMLElement>('[data-escena]');
+  const hueco = document.querySelector<HTMLElement>('[data-lienzo]');
+  const sombra = document.querySelector<HTMLElement>('[data-sombra]');
+  const planoRaiz = document.querySelector<HTMLElement>('[data-plano]');
+  const ficha = document.querySelector<HTMLElement>('[data-ficha]');
+  if (!seccion || !escena || !hueco || !sombra || !planoRaiz || !ficha) return;
 
-  video.src = RENDER;
+  const scheda = leerScheda();
+  rellenarLeyenda(ficha, scheda);
 
-  // NUNCA .pause(). Safari dibuja su propio botón de play encima de cualquier
-  // vídeo pausado, llegue como llegue a ese estado, y no hay CSS que lo quite.
-  // Se mantiene "reproduciendo" a velocidad 0.
-  const cebar = () => {
-    const p = video.play();
-    if (p && typeof p.catch === 'function') p.catch(() => {});
-    video.playbackRate = 0;
+  const seq = cargarSecuencia(URL_SECUENCIA, TOTAL);
+  hueco.appendChild(seq.canvas);
+  // Se decide una vez, al cargar. El plano se redibujaría en cada resize si se
+  // recalculara, y eso obligaría a rehacer la línea de tiempo entera; girar el
+  // teléfono deja las guías un poco largas, que es un precio muy pequeño.
+  const compacto = window.matchMedia('(max-width: 899px)').matches;
+  const plano = dibujarCotas(planoRaiz, scheda, compacto);
+
+  // El plano arranca sin dibujar. Se le da a cada trazo su propia longitud como
+  // guion para poder "dibujarlo" moviendo el desfase — es la única forma de
+  // animar un trazo de SVG sin recalcular la geometría en cada fotograma.
+  const preparar = () => {
+    plano.lineas.forEach((l) => {
+      const largo = l.getTotalLength() || 1;
+      l.style.strokeDasharray = `${largo}`;
+      l.style.strokeDashoffset = `${largo}`;
+    });
+    gsap.set([...plano.textos, ...plano.marcas, ...plano.puntos], { opacity: 0 });
   };
-  cebar();
-  video.addEventListener('pause', cebar);
 
-  if (reducido) return;
+  if (reducido) {
+    // Sin movimiento: la caja ya montada, el plano dibujado y la ficha visible.
+    seq.lista.then(() => seq.dibujar(1));
+    gsap.set(sombra, { opacity: 1, scaleX: 1 });
+    return;
+  }
 
-  let frame = 0;
-  let objetivo = 0;
+  preparar();
+  seq.lista.then(() => {
+    seq.dibujar(0);
+    // La secuencia cambia la altura del documento en cuanto entra la primera
+    // imagen, y la altura del documento es el denominador de todo disparador.
+    ScrollTrigger.refresh();
+  });
 
-  const aplicar = () => {
-    frame = 0;
-    // readyState >= 2, no loadedmetadata: los metadatos dan duración y un
-    // fotograma negro; HAVE_CURRENT_DATA es el primer momento en que hay imagen.
-    if (video.readyState < 2 || !Number.isFinite(video.duration)) return;
-    const t = objetivo * video.duration;
-    if (Math.abs(video.currentTime - t) > 1 / 60) video.currentTime = t;
-  };
-
-  ScrollTrigger.create({
-    trigger: banda,
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    invalidateOnRefresh: true,
-    onUpdate: (self) => {
-      objetivo = self.progress;
-      // El seek va dentro de requestAnimationFrame: escribirlo directamente
-      // desde el listener pide más saltos de los que el decodificador entrega.
-      if (!frame) frame = requestAnimationFrame(aplicar);
+  const linea = gsap.timeline({
+    scrollTrigger: {
+      trigger: seccion,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      invalidateOnRefresh: true,
     },
   });
+
+  // El montaje. Va por un objeto intermedio y no directamente sobre el canvas
+  // porque lo que se interpola es un progreso, no una propiedad de estilo.
+  const estado = { p: 0 };
+  linea.to(estado, {
+    p: 1,
+    duration: 0.62,
+    ease: 'none',
+    onUpdate: () => seq.dibujar(estado.p),
+  }, 0);
+
+  // La caída.
+  linea.fromTo(escena, { yPercent: -16 }, { yPercent: 6, duration: 0.72, ease: 'none' }, 0);
+  // Rebote corto al tocar suelo.
+  linea.to(escena, { yPercent: 3.2, duration: 0.04, ease: 'power2.out' }, 0.72);
+  linea.to(escena, { yPercent: 6, duration: 0.04, ease: 'power2.in' }, 0.76);
+
+  linea.fromTo(sombra, { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.08 }, 0.7);
+
+  // El plano se dibuja: primero los trazos, luego los números y las medidas.
+  linea.to(plano.lineas, { strokeDashoffset: 0, duration: 0.12, stagger: 0.004, ease: 'none' }, 0.79);
+  linea.to([...plano.textos, ...plano.marcas, ...plano.puntos], { opacity: 1, duration: 0.07, stagger: 0.006 }, 0.88);
 }
 
 /* ── entradas del texto ────────────────────────────────────────────────── */
