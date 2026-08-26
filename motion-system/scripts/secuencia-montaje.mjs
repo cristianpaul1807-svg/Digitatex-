@@ -35,8 +35,26 @@ mkdirSync(salida, { recursive: true });
 const ficheros = readdirSync(entrada).filter((f) => f.endsWith('.png')).sort();
 if (!ficheros.length) throw new Error('no hay PNG en ' + entrada);
 
-const SAT_BAJO = 0.13;
-const SAT_ALTO = 0.27;
+/* Umbrales MEDIDOS sobre el render, no elegidos a ojo. Muestreando regiones
+   del último fotograma salió esto:
+
+     madera            saturación 0.33–0.43   brillo 0.56–0.61
+     lona azul         saturación 0.54–0.79   brillo 0.59
+     suelo limpio      saturación 0.02        brillo 0.39
+     reflejo del suelo saturación 0.15–0.37   brillo 0.30
+
+   El reflejo es el problema: por saturación se solapa con la madera —llega a
+   0.37— y por eso una clave de un solo factor lo dejaba pasar, y bajo el
+   pallet quedaba un amasijo de grumos grises. Por BRILLO, en cambio, están
+   bien separados: 0.30 contra 0.56.
+
+   Así que la clave va por los dos y se multiplican. Un píxel tiene que ser
+   saturado Y estar iluminado para contar como producto; el reflejo es
+   saturado pero oscuro, y se cae. */
+const SAT_BAJO = 0.22;
+const SAT_ALTO = 0.32;
+const VAL_BAJO = 0.26;
+const VAL_ALTO = 0.40;
 
 /** Clave por saturación + corte de suelo fijo. Devuelve el PNG ya con alfa. */
 function clavar(ruta) {
@@ -49,9 +67,12 @@ function clavar(ruta) {
       const r = data[i], g = data[i + 1], b = data[i + 2];
       const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
       const sat = mx === 0 ? 0 : (mx - mn) / mx;
-      let a = (sat - SAT_BAJO) / (SAT_ALTO - SAT_BAJO);
-      a = Math.max(0, Math.min(1, a));
-      if (mx / 255 < 0.08) a = 0;           // sombra, no producto
+      const val = mx / 255;
+      const aSat = Math.max(0, Math.min(1, (sat - SAT_BAJO) / (SAT_ALTO - SAT_BAJO)));
+      const aVal = Math.max(0, Math.min(1, (val - VAL_BAJO) / (VAL_ALTO - VAL_BAJO)));
+      // Rampa suave en los dos ejes, nunca un umbral duro: un recorte con
+      // borde de escalera es la señal más rápida de que algo está pegado.
+      let a = aSat * aVal;
       if (y > suelo) {
         // Desvanecido corto por debajo de la línea de apoyo en vez de un corte
         // seco: un borde recto ahí abajo se lee como una etiqueta pegada.
