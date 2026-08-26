@@ -393,6 +393,165 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
 .demo-flag{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--brass);color:var(--ink);
   font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;padding:7px 16px;font-weight:600;}
 @media (max-width:760px){ .demo-flag{font-size:9.5px;padding:6px 10px;} }
+
+/* ============================================================================
+   MONTAGGIO — la cassa si monta e atterra sulle sue quote.
+   ----------------------------------------------------------------------------
+   AÑADIDO SOBRE LA BASE FIJA. La skill scroll-scrub-site fija el orden de las
+   secciones y esta no está en esa lista: va entre el manifiesto y los
+   servicios. Se avisa aquí en vez de romper el contrato en silencio.
+
+   Qué hace: la caja se monta sola por encima de la página mientras el texto le
+   pasa por detrás, cae girando, y aterriza sobre la línea de suelo con sus
+   tres cotas dibujadas alrededor. Las cotas son lo que el cliente pidió.
+
+   Se sostiene con `position: sticky`, no con posicionamiento fijo ni con
+   librerías: la página no carga ninguna.
+   ========================================================================== */
+
+.mont{ position:relative; z-index:2; }
+
+.mont-fijo{
+  position:sticky; top:0; height:100svh; z-index:3;
+  /* La escena se sale por los lados a propósito, y sin recortarla ensancha el
+     documento entero: la página se podía arrastrar 400px en horizontal.
+     `clip` y NO `hidden`: hidden convertiría esto en un contenedor de scroll y
+     además recortaría también en vertical, que es por donde salen las cotas de
+     la base. clip recorta solo en X y no crea contenedor de scroll, así que la
+     propia posición pegajosa de este elemento sigue funcionando. */
+  overflow-x:clip; overflow-y:visible;
+  /* pointer-events:none para que el objeto no robe los clics del texto que
+     tiene detrás — ocupa media pantalla y taparía los enlaces. */
+  pointer-events:none;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* La escena es MÁS ANCHA que la ventana a propósito. La caja ocupa el 45% del
+   ancho del fotograma y el resto es el aire por donde entran las piezas; metida
+   entera en pantalla se queda diminuta. Se sale por los lados, y lo que se
+   pierde es hueco vacío. */
+.mont-escena{
+  /* 1320 y no más: la escena se centra en la ventana y las cotas de la base
+     se dibujan POR DEBAJO del pallet. Con la escena más grande, esas dos cotas
+     y sus cifras caen fuera de la pantalla justo cuando toca leerlas. */
+  /* flex:none es obligatorio, no cosmético. La escena es un ítem flex dentro
+     de .mont-fijo, y un ítem flex se ENCOGE por defecto para caber en su
+     contenedor: en un teléfono, los 150vw se quedaban en 100vw y la caja salía
+     a la mitad de tamaño, justo donde más falta hace que se vea. */
+  flex:none;
+  position:relative; width:min(150vw,1320px);
+  /* La proporción del lienzo de la secuencia. Fijada aquí para que la caja no
+     dé un salto de altura cuando entra el primer fotograma. */
+  aspect-ratio:1280/650;
+  will-change:transform;
+}
+.mont-lienzo,.mont-plano,.mont-sombra{ position:absolute; inset:0; }
+/* El giro va en el lienzo y no en la escena: la escena lleva la caída, y el
+   plano acotado que hay dentro NO puede girar con la caja — una cota inclinada
+   deja de ser una cota. */
+.mont-lienzo{ will-change:transform; }
+.mont-lienzo canvas{ width:100%; height:100%; display:block; }
+
+/* Sombra de contacto. Aparece solo al aterrizar: mientras la caja está en el
+   aire no hay razón para que haya sombra debajo, y una sombra constante es lo
+   que delata que un objeto está pegado en vez de apoyado. */
+.mont-sombra{
+  top:auto; bottom:-1.5%; height:9%; left:26%; right:25%;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,rgba(0,0,0,0) 74%);
+  opacity:0; transform:scaleX(.7);
+}
+
+/* --- el texto que pasa por detrás ---------------------------------------- */
+.mont-note{ position:relative; z-index:1; margin-top:-100svh; }
+.mont-note .wrap{ display:flex; flex-direction:column; }
+.mont-nota{ min-height:92svh; display:flex; flex-direction:column; justify-content:center; max-width:34ch; }
+.mont-nota.dx{ margin-left:auto; text-align:right; }
+.mont-nota p{ margin:0; }
+.mont-nota .eyebrow{ margin-bottom:14px; }
+.mont-nota .txt{ color:var(--bone-dim); font-size:clamp(16px,1.6vw,19px); line-height:1.6; }
+
+/* Reposo tras el aterrizaje: alto puro, sin contenido. Es el tiempo que el
+   plano necesita para dibujarse y poder leerse antes de que la caja se vaya. */
+.mont-reposo{ height:120svh; }
+
+/* --- el plano técnico ------------------------------------------------------
+   Un solo SVG en las coordenadas del lienzo (1280×650), con la proporción
+   conservada. Como el contenedor lleva ese mismo aspect-ratio, el dibujo y el
+   fotograma comparten caja exacta a cualquier tamaño.
+
+   overflow:visible porque las cotas viven FUERA del contorno del producto, que
+   es donde tienen que estar en un plano. */
+.mont-plano svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+
+/* vector-effect:non-scaling-stroke en todo lo que es línea: el SVG se escala
+   de 1280 a lo que mida la pantalla, y sin esto el grosor escala con él — el
+   plano sale de trazo gordo en un monitor grande y capilar en un portátil. */
+.q-linea,.q-tope{ stroke:var(--brass-2); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+.q-ref{ stroke:var(--brass-2); stroke-width:1; stroke-dasharray:5 5; opacity:.45; vector-effect:non-scaling-stroke; }
+.q-suelo{ stroke:var(--stone); stroke-width:1; opacity:.5; vector-effect:non-scaling-stroke; }
+.q-texto{
+  fill:var(--brass-2); font-family:'Inter',system-ui,sans-serif;
+  font-size:21px; font-weight:500; letter-spacing:.06em;
+  /* Las cotas se cruzan con la madera. Un contorno del color del fondo por
+     debajo del relleno las despega sin meterles una caja detrás. */
+  paint-order:stroke fill; stroke:var(--ink); stroke-width:4px; stroke-linejoin:round;
+}
+.q-dato{ fill:var(--stone); font-size:17px; letter-spacing:.14em; text-transform:uppercase; }
+.q-guia{ stroke:var(--stone); stroke-width:1; stroke-dasharray:4 4; opacity:.7; vector-effect:non-scaling-stroke; }
+.q-punto{ fill:var(--brass-2); }
+.q-circulo{ fill:var(--ink); stroke:var(--brass); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+.q-num{ fill:var(--brass-2); font-family:'Inter',system-ui,sans-serif; font-size:17px; font-weight:600; }
+
+/* --- la ficha del aterrizaje ---------------------------------------------- */
+.mont-scheda{
+  position:relative; z-index:4;
+  border:1px solid var(--line); border-radius:4px;
+  background:rgba(21,21,19,.72); backdrop-filter:blur(3px); overflow:hidden;
+}
+.scheda-top{ display:flex; flex-wrap:wrap; gap:26px; justify-content:space-between; padding:26px; border-bottom:1px solid var(--line); }
+.scheda-ref{ font-family:'Fraunces',Georgia,serif; font-size:clamp(26px,3vw,36px); line-height:1.1; margin:10px 0 0; }
+.scheda-ref i{ font-style:normal; font-family:'Inter',system-ui,sans-serif; font-size:12px; letter-spacing:.14em; color:var(--stone); margin-left:12px; }
+.scheda-misure{ list-style:none; margin:0; padding:0; display:grid; gap:7px; min-width:220px; }
+.scheda-misure li{ display:flex; justify-content:space-between; gap:20px; font-size:14px; border-bottom:1px dotted var(--line); padding-bottom:6px; }
+.scheda-misure span{ color:var(--stone); }
+.scheda-misure b{ color:var(--bone); font-weight:500; font-variant-numeric:tabular-nums; }
+.scheda-mat{ list-style:none; margin:0; padding:0; display:grid; gap:9px; font-size:13px; }
+.scheda-mat li{ display:grid; grid-template-columns:22px auto; column-gap:12px; }
+.scheda-mat b{
+  grid-row:span 2; align-self:start; display:grid; place-items:center;
+  width:22px; height:22px; border:1px solid var(--brass); border-radius:50%;
+  color:var(--brass-2); font-size:11px; font-weight:600;
+}
+.scheda-mat span{ color:var(--bone); }
+.scheda-mat i{ font-style:normal; color:var(--stone); font-size:12px; }
+
+.scheda-tabla{ width:100%; border-collapse:collapse; font-size:13px; }
+.scheda-tabla caption{ text-align:left; padding:18px 26px 10px; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--brass-2); }
+.scheda-tabla th,.scheda-tabla td{ padding:11px 26px; text-align:left; }
+.scheda-tabla th{ font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--stone); border-bottom:1px solid var(--line); }
+.scheda-tabla td{ color:var(--bone-dim); border-bottom:1px solid var(--line); }
+.scheda-tabla tbody tr:last-child td{ border-bottom:0; }
+/* Números y códigos en tabular: sin esto las cifras no alinean y la tabla deja
+   de parecer una distinta de materiales. */
+.scheda-tabla td:nth-child(1),.scheda-tabla td:nth-child(2),.scheda-tabla td:nth-child(3){
+  font-variant-numeric:tabular-nums; color:var(--bone); white-space:nowrap;
+}
+
+@media (max-width:760px){
+  /* Las notas se van arriba del todo: en vertical comparten el centro con la
+     caja, y un párrafo leído a través de una tabla de OSB no se lee. */
+  .mont-nota{ min-height:88svh; max-width:100%; justify-content:flex-start; padding-top:11svh; }
+  .mont-nota.dx{ text-align:right; }
+  .mont-reposo{ height:90svh; }
+  .q-texto{ font-size:34px; }
+  .q-num{ font-size:27px; }
+  .scheda-top{ padding:20px; }
+  .scheda-tabla caption,.scheda-tabla th,.scheda-tabla td{ padding-inline:20px; }
+  /* La columna del código se cae en vertical: es dato de almacén y en 390px
+     compite con la descripción, que es lo único que se lee aquí. */
+  .scheda-tabla th:nth-child(2),.scheda-tabla td:nth-child(2){ display:none; }
+}
 </style>
 </head>
 <body>
@@ -461,6 +620,68 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
     <div class="reveal d1">
       <p class="manifesto-lead">L'imballaggio si nota solo <span class="accent">quando qualcosa è andato storto.</span></p>
       <p class="manifesto-body">Un pezzo che arriva ossidato, un angolo schiacciato, una cassa respinta in dogana perché il legno non è trattato. Sono tutti costi che non compaiono nel preventivo del trasporto, e che paga sempre chi spedisce. Per questo misuriamo il pezzo prima di tagliare il primo listello: la cassa nasce intorno alla merce, non il contrario.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================================
+     MONTAGGIO — AÑADIDO SOBRE LA BASE FIJA de scroll-scrub-site.
+     La caja se monta encima de la página, cae girando y aterriza acotada.
+     El lienzo y el plano los construye JS a partir de SCHEDA: son 42 fotogramas
+     y un dibujo entero de cotas, y ponerlos a mano en el marcado sería copiar
+     aquí lo que ya está en los datos.
+     ============================================================================ -->
+<section class="mont" id="montaggio">
+  <div class="mont-fijo">
+    <div class="mont-escena">
+      <div class="mont-sombra" aria-hidden="true"></div>
+      <div class="mont-lienzo"></div>
+      <div class="mont-plano"></div>
+    </div>
+  </div>
+
+  <div class="mont-note">
+    <div class="wrap">
+      <div class="mont-nota">
+        <p class="eyebrow">02 — Montaggio</p>
+        <p class="txt">Quattro montanti e un pallet a quattro vie. Da lì in poi tutto si taglia sulla misura del pezzo che deve entrare.</p>
+      </div>
+      <div class="mont-nota dx">
+        <p class="eyebrow">Pannelli</p>
+        <p class="txt">OSB-3 da 15 mm, avvitato al telaio. Non incollato: una cassa che si apre senza distruggersi si può riutilizzare.</p>
+      </div>
+      <div class="mont-nota">
+        <p class="eyebrow">Chiusura</p>
+        <p class="txt">Il coperchio entra per ultimo. Da qui la cassa non si apre più fino a destinazione.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mont-reposo" aria-hidden="true"></div>
+</section>
+
+<!-- La ficha va FUERA de la sección pegajosa: dentro, el tramo sticky dura toda
+     la altura de su padre y la caja se quedaría clavada en el centro de la
+     pantalla mientras la tabla le pasa por encima. -->
+<section id="scheda">
+  <div class="wrap">
+    <div class="mont-scheda reveal">
+      <div class="scheda-top">
+        <div>
+          <p class="eyebrow">Scheda tecnica</p>
+          <p class="scheda-ref"><span data-campo="riferimento"></span><i>Dis. <span data-campo="disegno"></span></i></p>
+          <ul class="scheda-misure" data-misure></ul>
+        </div>
+        <ul class="scheda-mat" data-materiali></ul>
+      </div>
+      <table class="scheda-tabla">
+        <caption>Distinta dei componenti</caption>
+        <thead>
+          <tr><th scope="col">N.</th><th scope="col">Codice</th><th scope="col">Q.tà</th><th scope="col">Descrizione</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -786,9 +1007,419 @@ function initContactForm() {
   });
 }
 
+
+/* ============================================================================
+   MONTAGGIO — AÑADIDO SOBRE LA BASE FIJA.
+   ----------------------------------------------------------------------------
+   La caja montándose por scroll, la caída, el aterrizaje y el plano acotado.
+
+   Sin librerías: el resto de la página no carga ninguna y no se va a empezar
+   por aquí. Todo el movimiento sale de interpolar tramos de un progreso, que
+   es exactamente lo que ya hace initScrubChapters con el video del hero.
+
+   ── Por qué imágenes y no el video ──────────────────────────────────────────
+
+   El video del hero trae su fondo de estudio pegado. Aquí la caja tiene que
+   flotar SOBRE la página con el texto pasando por detrás, y eso pide canal
+   alfa. El video con alfa existe (VP9 en WebM) pero Safari no lo reproduce:
+   medio visitante vería la caja dentro de un rectángulo negro. Una secuencia
+   de WebP con alfa la pinta cualquier navegador, y salta a cualquier fotograma
+   sin decodificar los anteriores — que es justo lo que un recorrido por scroll
+   necesita. 960 KB en 42 fotogramas, recortados del render del cliente.
+   ========================================================================== */
+
+/* TODO lo que el panel del cliente podrá editar vive aquí, y en ningún otro
+   sitio: las cotas del dibujo, los materiales y la distinta salen de este
+   objeto. Cambiar un número aquí cambia el plano.
+
+   Cuando exista el panel, el servidor solo tiene que dejar el JSON en la
+   página, dentro de una etiqueta de script y ANTES de esta:
+
+       window.__SCHEDA__ = { ...lo que haya en la base de datos... }
+
+   Lo que el panel no mande se queda con el valor de fábrica.
+
+   (Y ojo al escribir esta documentación: el analizador de HTML sale del modo
+   script en cuanto ve la etiqueta de cierre, aunque esté dentro de un
+   comentario. Por eso aquí no se escribe la etiqueta entera.)
+
+   Forma de las tablas, para cuando toque crearlas:
+     scheda            id, aggiornato_il
+     scheda_misura     scheda_id, chiave, valore, unita, ordine
+     scheda_materiale  scheda_id, sigla, nome, dettaglio, ordine
+     scheda_voce       scheda_id, numero, codice, qta, descrizione, lato, x, y
+
+   PENDIENTE: estas cifras son de ejemplo. Sustituir por las del cliente. */
+var SCHEDA_BASE = {
+  riferimento:'CS-1208-EXP',
+  disegno:'732-A0295',
+  misure:[
+    {chiave:'larghezza', etichetta:'Larghezza', valore:'1200', unita:'mm'},
+    {chiave:'profondita',etichetta:'Profondità',valore:'800',  unita:'mm'},
+    {chiave:'altezza',   etichetta:'Altezza',   valore:'900',  unita:'mm'},
+    {chiave:'peso',      etichetta:'Portata',   valore:'1200', unita:'kg'}
+  ],
+  materiali:[
+    {sigla:'A',nome:'Pannello OSB-3',dettaglio:'15 mm, uso strutturale in ambiente umido'},
+    {sigla:'B',nome:'Telaio in pino',dettaglio:'Trattato a caldo secondo ISPM-15'},
+    {sigla:'C',nome:'Pallet EPAL',   dettaglio:'Quattro vie, marchiato e certificato'}
+  ],
+  legenda:[
+    {numero:1,codice:'091-00006',qta:1,descrizione:'Pallet base quattro vie',       x:62,y:95,lato:'dx'},
+    {numero:2,codice:'134-00048',qta:4,descrizione:'Montante angolare 80×80',       x:14,y:46,lato:'sx'},
+    {numero:3,codice:'215-01118',qta:2,descrizione:'Pannello laterale OSB-3 15 mm', x:80,y:56,lato:'dx'},
+    {numero:4,codice:'311-00114',qta:1,descrizione:'Coperchio con traversa',        x:66,y:10,lato:'dx'},
+    {numero:5,codice:'404-00071',qta:8,descrizione:'Angolare metallico rinforzo',   x:10,y:86,lato:'sx'}
+  ]
+};
+
+function leerScheda() {
+  var d = window.__SCHEDA__;
+  if (!d || typeof d !== 'object') return SCHEDA_BASE;
+  return {
+    riferimento: d.riferimento || SCHEDA_BASE.riferimento,
+    disegno:     d.disegno     || SCHEDA_BASE.disegno,
+    // Una lista vacía es un fallo del panel, no una decisión: un plano sin
+    // cotas no es un plano. Se cae al valor de fábrica.
+    misure:    (d.misure    && d.misure.length)    ? d.misure    : SCHEDA_BASE.misure,
+    materiali: (d.materiali && d.materiali.length) ? d.materiali : SCHEDA_BASE.materiali,
+    legenda:   (d.legenda   && d.legenda.length)   ? d.legenda   : SCHEDA_BASE.legenda
+  };
+}
+
+/* Vértices del producto, en coordenadas del lienzo de la secuencia. Medidos
+   sobre el último fotograma, no puestos a ojo.
+
+   Las tres cotas van INCLINADAS porque la caja está fotografiada en tres
+   cuartos: la altura sí es vertical en la imagen, pero el ancho y el fondo se
+   van cada uno por su fuga. Una cota horizontal debajo de la caja mide la
+   sombra proyectada, no el mueble. */
+var LIENZO = {w:1280,h:650};
+var CAJA = {
+  frenteX:640, tapaY:176, izqX:356, derX:922,
+  pieIzq:{x:372,y:588}, pieFrente:{x:640,y:634}, pieDer:{x:902,y:580}
+};
+
+function initMontaggio() {
+  var sec = document.getElementById('montaggio');
+  var fichaSec = document.getElementById('scheda');
+  if (!sec || !fichaSec) return;
+
+  var escena = sec.querySelector('.mont-escena');
+  var lienzo = sec.querySelector('.mont-lienzo');
+  var sombra = sec.querySelector('.mont-sombra');
+  var planoBox = sec.querySelector('.mont-plano');
+  var ficha = fichaSec.querySelector('.mont-scheda');
+
+  var scheda = leerScheda();
+  rellenarScheda(ficha, scheda);
+
+  // Se decide una vez, al cargar. Recalcular el plano en cada resize obligaría
+  // a rehacerlo entero; girar el teléfono deja las guías un poco largas, que es
+  // un precio muy pequeño.
+  var compacto = window.matchMedia('(max-width:760px)').matches;
+  var plano = dibujarPlano(planoBox, scheda, compacto);
+
+  var TOTAL = 42;
+  var imgs = new Array(TOTAL);
+  var canvas = document.createElement('canvas');
+  var ctx = canvas.getContext('2d');
+  lienzo.appendChild(canvas);
+  var ancho = 0, alto = 0, ultimo = -1;
+
+  function cargar(i, cb) {
+    var img = new Image();
+    img.decoding = 'async';
+    img.src = 'montaggio/f' + String(i).padStart(3, '0') + '.webp';
+    img.onload = function () {
+      if (!ancho) { ancho = img.naturalWidth; alto = img.naturalHeight; }
+      imgs[i] = img;
+      if (cb) cb();
+    };
+    // Un fotograma que no carga no puede bloquear la secuencia: se ignora y
+    // pintarFrame busca el más cercano que sí esté.
+    img.onerror = function () { if (cb) cb(); };
+  }
+
+  function pintarFrame(p) {
+    if (!ctx) return;
+    var objetivo = Math.max(0, Math.min(TOTAL - 1, Math.round(p * (TOTAL - 1))));
+    var i = objetivo;
+    if (!imgs[i]) {
+      for (var d = 1; d < TOTAL; d++) {
+        if (imgs[objetivo - d]) { i = objetivo - d; break; }
+        if (imgs[objetivo + d]) { i = objetivo + d; break; }
+      }
+    }
+    var img = imgs[i];
+    if (!img || i === ultimo) return;
+    ultimo = i;
+    if (canvas.width !== ancho) { canvas.width = ancho; canvas.height = alto; }
+    ctx.clearRect(0, 0, ancho, alto);
+    ctx.drawImage(img, 0, 0, ancho, alto);
+  }
+
+  // El primero y el último van antes que nada: son los dos que se ven fijos, y
+  // los únicos cuya ausencia se notaría como un hueco.
+  cargar(0, function () { pintarFrame(0); });
+  cargar(TOTAL - 1);
+  for (var k = 1; k < TOTAL - 1; k++) cargar(k);
+
+  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (quieto) {
+    // Sin movimiento: la caja ya montada, el plano dibujado y la sombra puesta.
+    cargar(TOTAL - 1, function () { pintarFrame(1); });
+    sombra.style.opacity = 1;
+    sombra.style.transform = 'scaleX(1)';
+    return;
+  }
+
+  /* El plano arranca sin dibujar. A cada trazo se le da su propia longitud como
+     guion, para poder "dibujarlo" moviendo el desfase — es la única forma de
+     animar un trazo de SVG sin recalcular la geometría en cada fotograma. */
+  var largos = plano.lineas.map(function (l) {
+    var n = l.getTotalLength() || 1;
+    l.style.strokeDasharray = n;
+    l.style.strokeDashoffset = n;
+    return n;
+  });
+  plano.marcas.forEach(function (m) { m.style.opacity = 0; });
+  plano.textos.forEach(function (t) { t.style.opacity = 0; });
+  plano.puntos.forEach(function (t) { t.style.opacity = 0; });
+
+  function lim(v, a, b) { return v < a ? a : v > b ? b : v; }
+  /* Interpola dentro de un tramo del recorrido y se queda quieta fuera de él.
+     Es todo lo que hace falta para encadenar movimientos sin una librería. */
+  function tramo(p, p0, p1, v0, v1, suave) {
+    var t = lim((p - p0) / (p1 - p0), 0, 1);
+    if (suave) t = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    return v0 + (v1 - v0) * t;
+  }
+
+  /* El reparto del recorrido:
+       0.00–0.62  se monta. Ocupa casi dos tercios porque es lo que hay que
+                  mirar; el resto son consecuencias.
+       0.00–0.72  cae, y cruza de derecha a izquierda mientras cae.
+       0.00–0.70  voltea, con dos vaivenes, hasta quedarse recta. Termina antes
+                  de tocar suelo: una caja que aterriza torcida no se apoya.
+       0.70–0.78  toca suelo: sombra y un rebote mínimo. El rebote es lo que
+                  convierte "se detuvo" en "cayó".
+       0.79–0.97  se dibuja el plano y entran las cifras. */
+  function update() {
+    var total = sec.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+    var rect = sec.getBoundingClientRect();
+    var p = lim(-rect.top / total, 0, 1);
+
+    pintarFrame(lim(p / 0.62, 0, 1));
+
+    var y = tramo(p, 0, 0.72, -26, -3);
+    // Rebote: sube un punto y vuelve, en un tramo muy corto.
+    if (p > 0.72) y = p < 0.75 ? tramo(p, 0.72, 0.75, -3, -5.6) : tramo(p, 0.75, 0.78, -5.6, -3);
+    var x = p < 0.42 ? tramo(p, 0, 0.42, 13, -9, true) : tramo(p, 0.42, 0.72, -9, 0, true);
+    escena.style.transform = 'translate(' + x + '%,' + y + '%)';
+
+    var g = p < 0.34 ? tramo(p, 0, 0.34, -19, 13, true)
+          : p < 0.58 ? tramo(p, 0.34, 0.58, 13, -7, true)
+                     : tramo(p, 0.58, 0.70, -7, 0, true);
+    lienzo.style.transform = 'rotate(' + g + 'deg)';
+
+    sombra.style.opacity = tramo(p, 0.70, 0.78, 0, 1);
+    sombra.style.transform = 'scaleX(' + tramo(p, 0.70, 0.78, 0.7, 1) + ')';
+
+    // Los trazos se dibujan escalonados: cada uno arranca un poco después que
+    // el anterior, para que se lea como un dibujo hecho y no como un telón.
+    var n = plano.lineas.length;
+    for (var i = 0; i < n; i++) {
+      var a = 0.79 + (i / n) * 0.06;
+      plano.lineas[i].style.strokeDashoffset = tramo(p, a, a + 0.07, largos[i], 0);
+    }
+    var op = tramo(p, 0.88, 0.97, 0, 1);
+    plano.textos.forEach(function (t) { t.style.opacity = op; });
+    plano.marcas.forEach(function (m) { m.style.opacity = op; });
+    plano.puntos.forEach(function (t) { t.style.opacity = op; });
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(function () { update(); ticking = false; });
+      ticking = true;
+    }
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+}
+
+/* --- el dibujo ------------------------------------------------------------ */
+
+var NS = 'http://www.w3.org/2000/svg';
+function svgEl(nombre, attrs) {
+  var n = document.createElementNS(NS, nombre);
+  for (var k in attrs) n.setAttribute(k, attrs[k]);
+  return n;
+}
+
+/* Una cota entre dos vértices, desplazada `fuera` píxeles hacia el lado que
+   indica el signo, con sus líneas de referencia, sus topes y su etiqueta.
+   Funciona en cualquier ángulo: los topes se calculan perpendiculares a la
+   propia cota y el texto se gira con ella. */
+function cota(g, a, b, fuera, texto) {
+  var dx = b.x - a.x, dy = b.y - a.y;
+  var m = Math.sqrt(dx * dx + dy * dy) || 1;
+  dx /= m; dy /= m;
+  var nx = -dy * fuera, ny = dx * fuera;
+  var A = {x: a.x + nx, y: a.y + ny}, B = {x: b.x + nx, y: b.y + ny};
+
+  // Líneas de referencia: llevan la medida desde la pieza hasta la cota, y se
+  // pasan un poco de largo como en un plano de verdad.
+  var s = fuera + (fuera < 0 ? -12 : 12);
+  var sx = -dy * s, sy = dx * s;
+  g.appendChild(svgEl('line', {x1:a.x, y1:a.y, x2:a.x + sx, y2:a.y + sy, class:'q-ref'}));
+  g.appendChild(svgEl('line', {x1:b.x, y1:b.y, x2:b.x + sx, y2:b.y + sy, class:'q-ref'}));
+  g.appendChild(svgEl('line', {x1:A.x, y1:A.y, x2:B.x, y2:B.y, class:'q-linea'}));
+
+  // Topes perpendiculares a la cota, no a la pantalla.
+  var tx = -dy * 9, ty = dx * 9;
+  [A, B].forEach(function (p) {
+    g.appendChild(svgEl('line', {x1:p.x - tx, y1:p.y - ty, x2:p.x + tx, y2:p.y + ty, class:'q-tope'}));
+  });
+
+  // La etiqueta se gira con la cota. El ángulo se normaliza para que nunca
+  // salga escrita boca abajo.
+  var ang = Math.atan2(dy, dx) * 180 / Math.PI;
+  if (ang > 90) ang -= 180;
+  if (ang < -90) ang += 180;
+  var sig = fuera < 0 ? -1 : 1;
+  var cx = (A.x + B.x) / 2 + (-dy * 15 * sig);
+  var cy = (A.y + B.y) / 2 + (dx * 15 * sig);
+  var t = svgEl('text', {
+    x: cx, y: cy, 'text-anchor':'middle', 'dominant-baseline':'middle',
+    transform:'rotate(' + ang.toFixed(2) + ' ' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ')',
+    class:'q-texto'
+  });
+  t.textContent = texto;
+  g.appendChild(t);
+}
+
+function dibujarPlano(raiz, scheda, compacto) {
+  raiz.textContent = '';
+  var svg = svgEl('svg', {viewBox:'0 0 ' + LIENZO.w + ' ' + LIENZO.h, 'aria-hidden':'true'});
+  var gGuias = svgEl('g', {}), gCotas = svgEl('g', {});
+  svg.appendChild(gGuias); svg.appendChild(gCotas);
+
+  /* La línea de suelo: es lo que convierte "la caja se paró ahí" en "la caja
+     aterrizó". Sin una referencia horizontal, un objeto recortado flota por
+     mucha sombra que se le ponga debajo. */
+  gCotas.appendChild(svgEl('line', {x1:-80, y1:CAJA.pieFrente.y + 3, x2:LIENZO.w + 80, y2:CAJA.pieFrente.y + 3, class:'q-suelo'}));
+
+  function mis(c) { for (var i = 0; i < scheda.misure.length; i++) if (scheda.misure[i].chiave === c) return scheda.misure[i]; return null; }
+  function val(c) { var v = mis(c); return v ? v.valore + ' ' + v.unita : ''; }
+
+  var fuera = compacto ? 34 : 52;
+
+  // ANCHURA — sigue la arista inferior de la cara izquierda, hacia abajo.
+  if (mis('larghezza')) cota(gCotas, CAJA.pieIzq, CAJA.pieFrente, fuera, val('larghezza'));
+  // FONDO — sigue la arista inferior de la cara derecha, hacia abajo. Va del
+  // frente hacia el pie derecho, así el desplazamiento cae solo al otro lado.
+  if (mis('profondita')) cota(gCotas, CAJA.pieFrente, CAJA.pieDer, fuera, val('profondita'));
+  // ALTURA — vertical, por fuera del canto derecho. De la tapa al suelo: es la
+  // altura que ocupa en el camión, que es la que importa. La cota va de abajo
+  // hacia arriba, así que su normal apunta a la derecha y el desplazamiento
+  // POSITIVO la saca fuera; con el signo cambiado se dibuja sobre la madera.
+  if (mis('altezza')) {
+    cota(gCotas, {x:CAJA.derX, y:CAJA.pieDer.y}, {x:CAJA.derX, y:CAJA.tapaY}, compacto ? 66 : 74, val('altezza'));
+  }
+  // El peso no es una cota, es un dato: va como etiqueta suelta sobre la tapa.
+  var peso = mis('peso');
+  if (peso && !compacto) {
+    var td = svgEl('text', {x:CAJA.frenteX, y:CAJA.tapaY - 34, 'text-anchor':'middle', class:'q-texto q-dato'});
+    td.textContent = peso.etichetta + ' ' + peso.valore + ' ' + peso.unita;
+    gCotas.appendChild(td);
+  }
+
+  // Globos numerados con su línea guía, uno por pieza de la distinta.
+  var marcas = [], brazo = compacto ? 42 : 118;
+  scheda.legenda.forEach(function (v) {
+    // El punto señalado va en % del cuerpo de la caja, no del lienzo.
+    var px = CAJA.izqX + (CAJA.derX - CAJA.izqX) * v.x / 100;
+    var py = CAJA.tapaY + (CAJA.pieFrente.y - CAJA.tapaY) * v.y / 100;
+    var gx = v.lato === 'sx' ? CAJA.izqX - brazo : CAJA.derX + brazo;
+    gGuias.appendChild(svgEl('line', {x1:px, y1:py, x2:gx, y2:py, class:'q-guia'}));
+    gGuias.appendChild(svgEl('circle', {cx:px, cy:py, r:4, class:'q-punto'}));
+
+    var g = svgEl('g', {});
+    // El radio va en el atributo y no en CSS: `r` como propiedad de hoja de
+    // estilos es reciente y no la aplican todos los navegadores en uso.
+    g.appendChild(svgEl('circle', {cx:gx, cy:py, r:compacto ? 26 : 17, class:'q-circulo'}));
+    var t = svgEl('text', {x:gx, y:py, 'text-anchor':'middle', 'dominant-baseline':'central', class:'q-num'});
+    t.textContent = v.numero;
+    g.appendChild(t);
+    marcas.push(g);
+    svg.appendChild(g);
+  });
+
+  raiz.appendChild(svg);
+  return {
+    lineas: Array.prototype.slice.call(svg.querySelectorAll('line')),
+    textos: Array.prototype.slice.call(gCotas.querySelectorAll('text')),
+    puntos: Array.prototype.slice.call(svg.querySelectorAll('.q-punto')),
+    marcas: marcas
+  };
+}
+
+/* Rellena la ficha. Todo por textContent: estos textos los va a escribir el
+   cliente desde el panel, y un campo de texto de un panel no es una plantilla.
+   Si alguien pega ahí una etiqueta HTML tiene que salir escrita, no ejecutada. */
+function rellenarScheda(raiz, scheda) {
+  var tb = raiz.querySelector('tbody');
+  if (tb) {
+    tb.textContent = '';
+    scheda.legenda.forEach(function (v) {
+      var tr = document.createElement('tr');
+      [v.numero, v.codice, v.qta, v.descrizione].forEach(function (c) {
+        var td = document.createElement('td');
+        td.textContent = c;
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  }
+  var mats = raiz.querySelector('[data-materiali]');
+  if (mats) {
+    mats.textContent = '';
+    scheda.materiali.forEach(function (m) {
+      var li = document.createElement('li');
+      var b = document.createElement('b'); b.textContent = m.sigla;
+      var s = document.createElement('span'); s.textContent = m.nome;
+      var i = document.createElement('i'); i.textContent = m.dettaglio;
+      li.appendChild(b); li.appendChild(s); li.appendChild(i);
+      mats.appendChild(li);
+    });
+  }
+  var mm = raiz.querySelector('[data-misure]');
+  if (mm) {
+    mm.textContent = '';
+    scheda.misure.forEach(function (x) {
+      var li = document.createElement('li');
+      var s = document.createElement('span'); s.textContent = x.etichetta;
+      var b = document.createElement('b'); b.textContent = x.valore + ' ' + x.unita;
+      li.appendChild(s); li.appendChild(b);
+      mm.appendChild(li);
+    });
+  }
+  Array.prototype.forEach.call(raiz.querySelectorAll('[data-campo]'), function (n) {
+    var c = n.getAttribute('data-campo');
+    if (c === 'riferimento') n.textContent = scheda.riferimento;
+    if (c === 'disegno') n.textContent = scheda.disegno;
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   mountMobileNav();
   initScrubChapters();
+  initMontaggio();
   initProgressIndicators();
   initReveal();
   initContactForm();

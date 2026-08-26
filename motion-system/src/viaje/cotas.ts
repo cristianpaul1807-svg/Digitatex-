@@ -3,32 +3,45 @@ import type { Scheda } from './scheda';
 /**
  * Dibuja el plano encima de la caja: cotas, globos numerados y líneas guía.
  *
- * Va en SVG y no en divs con bordes porque un plano es geometría: flechas que
- * tienen que tocar exactamente el borde de la pieza, líneas que se cruzan sin
- * pisarse, y trazos que se dibujan solos al entrar. Con divs sale un dibujo
- * aproximado; con SVG sale el dibujo.
+ * Va en SVG y no en divs con bordes porque un plano es geometría: líneas que
+ * tienen que tocar exactamente la arista de la pieza, topes perpendiculares a
+ * cada una, y trazos que se dibujan solos al entrar.
  *
  * ── El sistema de coordenadas ──────────────────────────────────────────────
  *
  * El viewBox son los píxeles reales del lienzo de la secuencia, 1280×650, con
  * el `preserveAspectRatio` de siempre. Y el contenedor lleva `aspect-ratio:
- * 1280/650`, así que la caja del SVG y la del canvas son exactamente la misma
- * a cualquier tamaño de pantalla: lo que se dibuja en la coordenada 354,178
- * cae sobre el píxel 354,178 del fotograma, se vea la página donde se vea.
+ * 1280/650`, así que la caja del SVG y la del fotograma son exactamente la
+ * misma a cualquier tamaño de pantalla.
  *
- * El primer intento fue con dos SVG —uno estirado para las líneas y otro
- * proporcional para los círculos— y estaba mal: al conservar la proporción, el
- * segundo encajaba sus 100 unidades contra el lado corto y las centraba
- * respecto al otro, así que las dos capas dejaban de coincidir. Con un único
- * sistema en píxeles del lienzo el problema no existe: los círculos salen
- * redondos y los textos sin deformar porque nada se estira.
+ * ── Por qué las cotas van inclinadas ───────────────────────────────────────
  *
- * ── Dónde está la caja ─────────────────────────────────────────────────────
+ * La caja está fotografiada en tres cuartos. Sus tres dimensiones NO son dos
+ * horizontales y una vertical en la imagen: la altura sí es vertical, pero el
+ * ancho y el fondo se van cada uno por su fuga. Una cota horizontal debajo de
+ * la caja mide la sombra proyectada, no el mueble.
  *
- * Medido sobre el último fotograma de la secuencia, no puesto a ojo.
+ * Así que las tres cotas salen de la esquina inferior cercana y siguen cada
+ * una su arista, desplazadas hacia fuera. Es como se acota una pieza en un
+ * plano de taller, y es lo que hace que se lea qué lado mide qué.
+ *
+ * Las esquinas están medidas sobre el último fotograma, no puestas a ojo.
  */
 export const LIENZO = { w: 1280, h: 650 };
-export const CAJA = { izq: 354, der: 935, arr: 178, aba: 639 };
+
+/** Vértices del producto, en coordenadas del lienzo. */
+export const CAJA = {
+  /** La arista vertical cercana: la que está más próxima a la cámara. */
+  frenteX: 640,
+  /** Canto superior (es casi horizontal: la cámara está a la altura de la tapa). */
+  tapaY: 176,
+  izqX: 356,
+  derX: 922,
+  /** Apoyos del pallet en el suelo. */
+  pieIzq: { x: 372, y: 588 },
+  pieFrente: { x: 640, y: 634 },
+  pieDer: { x: 902, y: 580 },
+};
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -41,52 +54,68 @@ function el<K extends keyof SVGElementTagNameMap>(
   return n;
 }
 
-/** Línea de cota: el trazo, los dos topes y la etiqueta. */
-function cota(
-  grupo: SVGGElement,
-  a: { x: number; y: number },
-  b: { x: number; y: number },
-  texto: string,
-) {
-  grupo.appendChild(el('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, class: 'cota-linea' }));
+type P = { x: number; y: number };
 
-  // Topes perpendiculares en los extremos. En un plano de verdad son lo que
-  // dice hasta dónde llega la medida; sin ellos la línea es solo una raya.
-  const vertical = Math.abs(b.x - a.x) < Math.abs(b.y - a.y);
-  const t = 9;
-  for (const p of [a, b]) {
-    grupo.appendChild(
-      el('line', {
-        x1: vertical ? p.x - t : p.x,
-        y1: vertical ? p.y : p.y - t,
-        x2: vertical ? p.x + t : p.x,
-        y2: vertical ? p.y : p.y + t,
-        class: 'cota-tope',
-      }),
-    );
+const menos = (a: P, b: P): P => ({ x: a.x - b.x, y: a.y - b.y });
+const mas = (a: P, b: P): P => ({ x: a.x + b.x, y: a.y + b.y });
+const por = (a: P, k: number): P => ({ x: a.x * k, y: a.y * k });
+const unidad = (a: P): P => {
+  const m = Math.hypot(a.x, a.y) || 1;
+  return { x: a.x / m, y: a.y / m };
+};
+/** Normal a la izquierda del sentido de avance. */
+const normal = (d: P): P => ({ x: -d.y, y: d.x });
+
+/**
+ * Una cota entre dos vértices, desplazada `fuera` píxeles hacia el lado que
+ * indica el signo, con sus dos líneas de referencia, sus topes y su etiqueta.
+ *
+ * Funciona en cualquier ángulo: los topes se calculan perpendiculares a la
+ * propia cota y el texto se gira con ella. La versión anterior solo sabía de
+ * vertical y horizontal, que es justo lo que no sirve en un tres cuartos.
+ */
+function cota(g: SVGGElement, a: P, b: P, fuera: number, texto: string) {
+  const d = unidad(menos(b, a));
+  const n = por(normal(d), fuera);
+  const A = mas(a, n);
+  const B = mas(b, n);
+
+  // Líneas de referencia: llevan la medida desde la pieza hasta la cota. Se
+  // pasan un poco de largo, como en un plano de verdad.
+  const sobra = por(normal(d), fuera + Math.sign(fuera) * 12);
+  g.appendChild(el('line', { x1: a.x, y1: a.y, x2: a.x + sobra.x, y2: a.y + sobra.y, class: 'cota-ref' }));
+  g.appendChild(el('line', { x1: b.x, y1: b.y, x2: b.x + sobra.x, y2: b.y + sobra.y, class: 'cota-ref' }));
+
+  g.appendChild(el('line', { x1: A.x, y1: A.y, x2: B.x, y2: B.y, class: 'cota-linea' }));
+
+  // Topes: perpendiculares a la cota, no a la pantalla.
+  const t = por(normal(d), 9);
+  for (const p of [A, B]) {
+    g.appendChild(el('line', { x1: p.x - t.x, y1: p.y - t.y, x2: p.x + t.x, y2: p.y + t.y, class: 'cota-tope' }));
   }
 
-  const mx = (a.x + b.x) / 2;
-  const my = (a.y + b.y) / 2;
-
+  // La etiqueta se gira con la cota y se levanta un poco sobre ella. El ángulo
+  // se normaliza para que nunca salga escrita boca abajo.
+  let ang = (Math.atan2(d.y, d.x) * 180) / Math.PI;
+  if (ang > 90) ang -= 180;
+  if (ang < -90) ang += 180;
+  const medio = por(mas(A, B), 0.5);
+  const alza = por(normal(unidad(menos(B, A))), Math.sign(fuera) * 15);
   const t2 = el('text', {
-    x: vertical ? mx - 8 : mx,
-    y: vertical ? my : my + 26,
+    x: medio.x + alza.x,
+    y: medio.y + alza.y,
     'text-anchor': 'middle',
-    'dominant-baseline': vertical ? 'auto' : 'auto',
+    'dominant-baseline': 'middle',
+    transform: `rotate(${ang.toFixed(2)} ${(medio.x + alza.x).toFixed(1)} ${(medio.y + alza.y).toFixed(1)})`,
     class: 'cota-texto',
   });
-  // La cota vertical va girada, como en cualquier plano de taller. No es un
-  // guiño: escrita en horizontal ocupa a lo ancho lo que mide la palabra, y
-  // ahí al lado están los globos numerados. Girada ocupa el alto de una línea.
-  if (vertical) t2.setAttribute('transform', `rotate(-90 ${mx - 8} ${my})`);
   t2.textContent = texto;
-  grupo.appendChild(t2);
+  g.appendChild(t2);
 }
 
 /**
  * Construye el plano dentro de `raiz`.
- * Devuelve los elementos que main.ts tiene que animar.
+ * Devuelve los elementos que el guion tiene que animar.
  */
 export function dibujarCotas(raiz: HTMLElement, scheda: Scheda, compacto = false) {
   raiz.textContent = '';
@@ -97,23 +126,15 @@ export function dibujarCotas(raiz: HTMLElement, scheda: Scheda, compacto = false
     'aria-hidden': 'true',
   });
 
-  /* En vertical el plano se aprieta contra el producto y pierde la cota de
-     profundidad. No es una versión recortada por pereza: el dibujo se escala
-     con el ancho de la pantalla, y en 390 px las guías largas dejan los globos
-     fuera del recuadro y los números a 6 px. Un plano que no se lee no es un
-     plano. La profundidad sigue estando escrita en la ficha de abajo. */
-  const brazo = compacto ? 46 : 120;
-
   const gGuias = el('g', { class: 'plano-guias' });
   const gCotas = el('g', { class: 'plano-cotas' });
   svg.append(gGuias, gCotas);
 
   /* La línea de suelo. Es lo que convierte "la caja se paró ahí" en "la caja
      aterrizó": sin una referencia horizontal, un objeto recortado sobre un
-     campo plano flota, por mucha sombra que se le ponga debajo. Se dibuja a la
-     altura exacta de la base del pallet y se sale por los dos lados. */
+     campo plano flota, por mucha sombra que se le ponga debajo. */
   gCotas.appendChild(
-    el('line', { x1: -60, y1: CAJA.aba + 2, x2: LIENZO.w + 60, y2: CAJA.aba + 2, class: 'cota-suelo' }),
+    el('line', { x1: -80, y1: CAJA.pieFrente.y + 3, x2: LIENZO.w + 80, y2: CAJA.pieFrente.y + 3, class: 'cota-suelo' }),
   );
 
   const m = (clave: string) => scheda.misure.find((x) => x.chiave === clave);
@@ -122,42 +143,58 @@ export function dibujarCotas(raiz: HTMLElement, scheda: Scheda, compacto = false
     return v ? `${v.valore} ${v.unita}` : '';
   };
 
-  /* Altura: a la izquierda, en vertical. */
-  const xAlt = CAJA.izq - (compacto ? 96 : 62);
-  if (m('altezza')) {
-    cota(gCotas, { x: xAlt, y: CAJA.arr }, { x: xAlt, y: CAJA.aba }, valor('altezza'));
-    // Líneas de referencia que llevan la cota hasta la pieza. Punteadas y más
-    // tenues: no son la medida, solo dicen de dónde sale.
-    gCotas.appendChild(el('line', { x1: xAlt, y1: CAJA.arr, x2: CAJA.izq, y2: CAJA.arr, class: 'cota-ref' }));
-    gCotas.appendChild(el('line', { x1: xAlt, y1: CAJA.aba, x2: CAJA.izq, y2: CAJA.aba, class: 'cota-ref' }));
-  }
+  const fuera = compacto ? 34 : 52;
 
-  /* Anchura: debajo, en horizontal. */
-  const yAnc = CAJA.aba - 4;
+  /* ANCHURA — sigue la arista inferior de la cara izquierda, hacia abajo. */
   if (m('larghezza')) {
-    cota(gCotas, { x: CAJA.izq, y: yAnc }, { x: CAJA.der, y: yAnc }, valor('larghezza'));
+    cota(gCotas, CAJA.pieIzq, CAJA.pieFrente, fuera, valor('larghezza'));
   }
 
-  /* Profundidad: arriba a la derecha, siguiendo la fuga. La caja está en tres
-     cuartos, así que la cota del fondo va paralela a esa arista y no recta. */
-  if (m('profondita') && !compacto) {
+  /* FONDO — sigue la arista inferior de la cara derecha, hacia abajo.
+     Va de frente hacia el pie derecho, así el desplazamiento cae al otro lado
+     sin tener que invertir el signo a mano. */
+  if (m('profondita')) {
+    cota(gCotas, CAJA.pieFrente, CAJA.pieDer, fuera, valor('profondita'));
+  }
+
+  /* ALTURA — vertical, por fuera del canto derecho. De la tapa al suelo:
+     es la altura que ocupa en el camión, que es la que importa.
+
+     El sentido de la línea decide de qué lado cae la cota. Va de abajo hacia
+     arriba, así que su normal apunta a la derecha y el desplazamiento POSITIVO
+     la saca fuera de la caja. Con el signo cambiado se dibuja por dentro,
+     encima de la madera. */
+  if (m('altezza')) {
     cota(
       gCotas,
-      { x: CAJA.der - 150, y: CAJA.arr - 42 },
-      { x: CAJA.der + 26, y: CAJA.arr - 42 },
-      valor('profondita'),
+      { x: CAJA.derX, y: CAJA.pieDer.y },
+      { x: CAJA.derX, y: CAJA.tapaY },
+      compacto ? 48 : 74,
+      valor('altezza'),
     );
-    gCotas.appendChild(el('line', { x1: CAJA.der + 26, y1: CAJA.arr - 42, x2: CAJA.der, y2: CAJA.arr + 6, class: 'cota-ref' }));
+  }
+
+  /* PESO — no es una cota, es un dato: va como etiqueta suelta sobre la tapa. */
+  const peso = m('peso');
+  if (peso && !compacto) {
+    const t = el('text', {
+      x: CAJA.frenteX,
+      y: CAJA.tapaY - 34,
+      'text-anchor': 'middle',
+      class: 'cota-texto cota-dato',
+    });
+    t.textContent = `${peso.etichetta} ${peso.valore} ${peso.unita}`;
+    gCotas.appendChild(t);
   }
 
   /* Globos numerados con su línea guía, uno por pieza de la leyenda. */
   const marcas: SVGGElement[] = [];
+  const brazo = compacto ? 42 : 118;
   scheda.legenda.forEach((v) => {
-    // El punto señalado va en % de la CAJA, no del lienzo: así una pieza
-    // apuntada al 50/50 cae en el centro del producto y no en el del hueco.
-    const px = CAJA.izq + ((CAJA.der - CAJA.izq) * v.x) / 100;
-    const py = CAJA.arr + ((CAJA.aba - CAJA.arr) * v.y) / 100;
-    const gx = v.lato === 'sx' ? CAJA.izq - brazo : CAJA.der + brazo;
+    // El punto señalado va en % del cuerpo de la caja, no del lienzo.
+    const px = CAJA.izqX + ((CAJA.derX - CAJA.izqX) * v.x) / 100;
+    const py = CAJA.tapaY + ((CAJA.pieFrente.y - CAJA.tapaY) * v.y) / 100;
+    const gx = v.lato === 'sx' ? CAJA.izqX - brazo : CAJA.derX + brazo;
 
     gGuias.appendChild(el('line', { x1: px, y1: py, x2: gx, y2: py, class: 'globo-guia' }));
     gGuias.appendChild(el('circle', { cx: px, cy: py, r: 4, class: 'globo-punto' }));
@@ -224,6 +261,20 @@ export function rellenarLeyenda(raiz: HTMLElement, scheda: Scheda) {
       d.textContent = mat.dettaglio;
       li.append(s, n, d);
       mats.appendChild(li);
+    });
+  }
+
+  const mis = raiz.querySelector('[data-misure]');
+  if (mis) {
+    mis.textContent = '';
+    scheda.misure.forEach((x) => {
+      const li = document.createElement('li');
+      const n = document.createElement('span');
+      n.textContent = x.etichetta;
+      const v = document.createElement('b');
+      v.textContent = `${x.valore} ${x.unita}`;
+      li.append(n, v);
+      mis.appendChild(li);
     });
   }
 

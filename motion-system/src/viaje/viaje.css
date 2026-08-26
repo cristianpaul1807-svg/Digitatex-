@@ -436,7 +436,16 @@ section {
   font-size: 21px;
   font-weight: 500;
   letter-spacing: 0.06em;
+  /* Las cotas se cruzan con la madera. Un contorno del color del fondo por
+     debajo del relleno las despega sin tener que meterles una caja detrás. */
+  paint-order: stroke fill;
+  stroke: var(--campo);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
+/* El peso no es una cota, es un dato: se escribe más tenue para que no compita
+   con las tres medidas. */
+.cota-dato { fill: var(--osso-medio); font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; }
 .globo-guia {
   stroke: var(--osso-tenue);
   stroke-width: 1;
