@@ -439,10 +439,10 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
      contenedor: en un teléfono, los 150vw se quedaban en 100vw y la caja salía
      a la mitad de tamaño, justo donde más falta hace que se vea. */
   flex:none;
-  position:relative; width:min(150vw,1320px);
+  position:relative; width:min(146vw,1180px);
   /* La proporción del lienzo de la secuencia. Fijada aquí para que la caja no
      dé un salto de altura cuando entra el primer fotograma. */
-  aspect-ratio:1280/650;
+  aspect-ratio:1126/690;
   will-change:transform;
 }
 .mont-lienzo,.mont-plano,.mont-sombra{ position:absolute; inset:0; }
@@ -541,6 +541,11 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
 @media (max-width:760px){
   /* Las notas se van arriba del todo: en vertical comparten el centro con la
      caja, y un párrafo leído a través de una tabla de OSB no se lee. */
+  /* Más pequeña que en horizontal, no más grande. La cota de la altura vive
+     a la derecha de la caja y la del fondo se va en diagonal: con la escena a
+     146vw las dos caen fuera de una pantalla de 390 px y el recorte se las
+     come. Vale más una caja algo menor y las tres medidas dentro. */
+  .mont-escena{ width:122vw; }
   .mont-nota{ min-height:88svh; max-width:100%; justify-content:flex-start; padding-top:11svh; }
   .mont-nota.dx{ text-align:right; }
   .mont-reposo{ height:90svh; }
@@ -603,29 +608,6 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
 </div>
 
 <!-- ============================================================================
-     MANIFIESTO
-     ============================================================================ -->
-<section id="manifesto">
-  <div class="wrap manifesto-grid">
-    <div class="reveal">
-      <p class="eyebrow">Come lavoriamo</p>
-      <!-- PENDIENTE: estas dos cifras describen el metodo, no la empresa, porque
-           no se han verificado datos suyos. Sustituir por las reales (anni di
-           attivita, pezzi imballati, ecc.) cuando el cliente las confirme. -->
-      <div class="manifesto-stat">
-        <div><div class="stat-num">1:1</div><div class="stat-label">ogni cassa costruita sulla misura esatta del pezzo</div></div>
-        <div><div class="stat-num">ISPM-15</div><div class="stat-label">standard fitosanitario richiesto fuori dall'Unione Europea</div></div>
-      </div>
-    </div>
-    <div class="reveal d1">
-      <p class="manifesto-lead">L'imballaggio si nota solo <span class="accent">quando qualcosa è andato storto.</span></p>
-      <p class="manifesto-body">Un pezzo che arriva ossidato, un angolo schiacciato, una cassa respinta in dogana perché il legno non è trattato. Sono tutti costi che non compaiono nel preventivo del trasporto, e che paga sempre chi spedisce. Per questo misuriamo il pezzo prima di tagliare il primo listello: la cassa nasce intorno alla merce, non il contrario.</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================================
      MONTAGGIO — AÑADIDO SOBRE LA BASE FIJA de scroll-scrub-site.
      La caja se monta encima de la página, cae girando y aterriza acotada.
      El lienzo y el plano los construye JS a partir de SCHEDA: son 42 fotogramas
@@ -685,6 +667,29 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
     </div>
   </div>
 </section>
+
+<!-- ============================================================================
+     MANIFIESTO
+     ============================================================================ -->
+<section id="manifesto">
+  <div class="wrap manifesto-grid">
+    <div class="reveal">
+      <p class="eyebrow">Come lavoriamo</p>
+      <!-- PENDIENTE: estas dos cifras describen el metodo, no la empresa, porque
+           no se han verificado datos suyos. Sustituir por las reales (anni di
+           attivita, pezzi imballati, ecc.) cuando el cliente las confirme. -->
+      <div class="manifesto-stat">
+        <div><div class="stat-num">1:1</div><div class="stat-label">ogni cassa costruita sulla misura esatta del pezzo</div></div>
+        <div><div class="stat-num">ISPM-15</div><div class="stat-label">standard fitosanitario richiesto fuori dall'Unione Europea</div></div>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <p class="manifesto-lead">L'imballaggio si nota solo <span class="accent">quando qualcosa è andato storto.</span></p>
+      <p class="manifesto-body">Un pezzo che arriva ossidato, un angolo schiacciato, una cassa respinta in dogana perché il legno non è trattato. Sono tutti costi che non compaiono nel preventivo del trasporto, e che paga sempre chi spedisce. Per questo misuriamo il pezzo prima di tagliare il primo listello: la cassa nasce intorno alla merce, non il contrario.</p>
+    </div>
+  </div>
+</section>
+
 
 <!-- ============================================================================
      SERVIZI
@@ -1094,10 +1099,19 @@ function leerScheda() {
    cuartos: la altura sí es vertical en la imagen, pero el ancho y el fondo se
    van cada uno por su fuga. Una cota horizontal debajo de la caja mide la
    sombra proyectada, no el mueble. */
-var LIENZO = {w:1280,h:650};
+var LIENZO = {w:1126,h:690};
+/* Medidos sobre el último fotograma recorriendo la silueta, no a ojo: a ojo
+   salieron mal y las cotas quedaron flotando al lado de la caja en vez de
+   sobre sus aristas. Ojo con dos trampas al medirlo:
+     · los extremos del fotograma NO son la caja, son las esquinas voladas de
+       la lona, que sobresale por los cuatro lados;
+     · el borde inferior es dentado (los pies del pallet tienen huecos), así
+       que una sola columna miente — hay que leer el perfil entero.
+   La cámara está casi de frente a la cara izquierda, por eso la esquina
+   cercana cae en x=757 y no en el centro. */
 var CAJA = {
-  frenteX:640, tapaY:176, izqX:356, derX:922,
-  pieIzq:{x:372,y:588}, pieFrente:{x:640,y:634}, pieDer:{x:902,y:580}
+  frenteX:757, tapaY:128, izqX:334, derX:953,
+  pieIzq:{x:378,y:630}, pieFrente:{x:757,y:657}, pieDer:{x:905,y:575}
 };
 
 function initMontaggio() {
@@ -1120,7 +1134,7 @@ function initMontaggio() {
   var compacto = window.matchMedia('(max-width:760px)').matches;
   var plano = dibujarPlano(planoBox, scheda, compacto);
 
-  var TOTAL = 42;
+  var TOTAL = 46;
   var imgs = new Array(TOTAL);
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
@@ -1197,13 +1211,10 @@ function initMontaggio() {
   }
 
   /* El reparto del recorrido:
-       0.00–0.62  se monta. Ocupa casi dos tercios porque es lo que hay que
-                  mirar; el resto son consecuencias.
-       0.00–0.72  cae, y cruza de derecha a izquierda mientras cae.
-       0.00–0.70  voltea, con dos vaivenes, hasta quedarse recta. Termina antes
-                  de tocar suelo: una caja que aterriza torcida no se apoya.
-       0.70–0.78  toca suelo: sombra y un rebote mínimo. El rebote es lo que
-                  convierte "se detuvo" en "cayó".
+       0.00–0.68  cae y se monta: el pallet entra desde arriba, las piezas
+                  llueven y se colocan. Ocupa dos tercios porque es lo que hay
+                  que mirar; el resto son consecuencias.
+       0.68–0.76  toca suelo: sombra y un rebote mínimo.
        0.79–0.97  se dibuja el plano y entran las cifras. */
   function update() {
     var total = sec.offsetHeight - window.innerHeight;
@@ -1211,21 +1222,33 @@ function initMontaggio() {
     var rect = sec.getBoundingClientRect();
     var p = lim(-rect.top / total, 0, 1);
 
-    pintarFrame(lim(p / 0.62, 0, 1));
+    pintarFrame(lim(p / 0.68, 0, 1));
 
-    var y = tramo(p, 0, 0.72, -26, -3);
-    // Rebote: sube un punto y vuelve, en un tramo muy corto.
-    if (p > 0.72) y = p < 0.75 ? tramo(p, 0.72, 0.75, -3, -5.6) : tramo(p, 0.75, 0.78, -5.6, -3);
-    var x = p < 0.42 ? tramo(p, 0, 0.42, 13, -9, true) : tramo(p, 0.42, 0.72, -9, 0, true);
+    /* Arranca MUY arriba —fuera de pantalla, justo debajo del vídeo de
+       portada— para que el pallet parezca salir de debajo de él y caer con la
+       página. Termina a -3%, apoyado. */
+    var y = tramo(p, 0, 0.70, -62, -3);
+    // Rebote: sube un punto y vuelve, en un tramo muy corto. Es lo que
+    // convierte "se detuvo" en "cayó".
+    if (p > 0.70) y = p < 0.73 ? tramo(p, 0.70, 0.73, -3, -5.4) : tramo(p, 0.73, 0.76, -5.4, -3);
+    // Una deriva mínima. Antes cruzaba la pantalla entera, pero eso era para
+    // dar sensación de caída cuando el objeto no se movía por sí solo; aquí el
+    // propio vídeo tiene su caída y su rebote, y una deriva grande pelea con
+    // ella en vez de sumar.
+    /* -6% fijo: el lienzo se centra en la ventana, pero la caja NO está
+       centrada en el lienzo — su esquina cercana cae en el 67% del ancho, así
+       que el objeto se va a la derecha y la cota del fondo se sale por ese
+       lado. Este desplazamiento centra la CAJA, que es lo que se mira. */
+    var x = -6 + tramo(p, 0, 0.70, 5, 0, true);
     escena.style.transform = 'translate(' + x + '%,' + y + '%)';
 
-    var g = p < 0.34 ? tramo(p, 0, 0.34, -19, 13, true)
-          : p < 0.58 ? tramo(p, 0.34, 0.58, 13, -7, true)
-                     : tramo(p, 0.58, 0.70, -7, 0, true);
-    lienzo.style.transform = 'rotate(' + g + 'deg)';
+    /* Sin volteo. El giro se metió cuando la secuencia anterior tenía la caja
+       ya montada y quieta: había que fingir la caída desde fuera. Esta rueda
+       sola —el pallet cae, las piezas llueven y se colocan— y rotarla encima
+       la hace parecer un objeto tirado, no montado. */
 
-    sombra.style.opacity = tramo(p, 0.70, 0.78, 0, 1);
-    sombra.style.transform = 'scaleX(' + tramo(p, 0.70, 0.78, 0.7, 1) + ')';
+    sombra.style.opacity = tramo(p, 0.68, 0.76, 0, 1);
+    sombra.style.transform = 'scaleX(' + tramo(p, 0.68, 0.76, 0.7, 1) + ')';
 
     // Los trazos se dibujan escalonados: cada uno arranca un poco después que
     // el anterior, para que se lea como un dibujo hecho y no como un telón.
