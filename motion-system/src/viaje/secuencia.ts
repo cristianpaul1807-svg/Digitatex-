@@ -38,6 +38,20 @@ export function cargarSecuencia(base: string, total: number): Secuencia {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
+  /**
+   * Fotogramas incrustados, si los hay.
+   *
+   * La versión de archivo único —la que se manda para revisar sin servidor—
+   * lleva los 42 dentro del propio HTML como data URI, porque abriendo un
+   * fichero con file:// no hay de dónde pedirlos. Cuando existe esa lista,
+   * manda; si no, se piden a la carpeta como siempre.
+   */
+  const incrustados = (globalThis as Record<string, unknown>).__MONTAGGIO__;
+  const fuente = (i: number) =>
+    Array.isArray(incrustados) && incrustados[i]
+      ? (incrustados[i] as string)
+      : `${base}/f${String(i).padStart(3, '0')}.webp`;
+
   let ancho = 0;
   let alto = 0;
   let ultimo = -1;
@@ -48,7 +62,7 @@ export function cargarSecuencia(base: string, total: number): Secuencia {
       // decoding async: si no, la primera pintada bloquea el hilo principal
       // mientras descomprime, y se nota como un tirón justo al llegar.
       img.decoding = 'async';
-      img.src = `${base}/f${String(i).padStart(3, '0')}.webp`;
+      img.src = fuente(i);
       img.onload = () => {
         if (!ancho) { ancho = img.naturalWidth; alto = img.naturalHeight; }
         imagenes[i] = img;
