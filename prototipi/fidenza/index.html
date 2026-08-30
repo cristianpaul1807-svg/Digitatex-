@@ -442,7 +442,7 @@ footer .tagline{font-size:11px;color:var(--stone);text-align:center;}
   position:relative; width:min(146vw,1180px);
   /* La proporción del lienzo de la secuencia. Fijada aquí para que la caja no
      dé un salto de altura cuando entra el primer fotograma. */
-  aspect-ratio:1126/664;
+  aspect-ratio:1126/690;
   will-change:transform;
 }
 .mont-lienzo,.mont-plano,.mont-sombra{ position:absolute; inset:0; }
@@ -1099,7 +1099,7 @@ function leerScheda() {
    cuartos: la altura sí es vertical en la imagen, pero el ancho y el fondo se
    van cada uno por su fuga. Una cota horizontal debajo de la caja mide la
    sombra proyectada, no el mueble. */
-var LIENZO = {w:1126,h:664};
+var LIENZO = {w:1126,h:690};
 /* Medidos sobre el último fotograma recorriendo la silueta, no a ojo: a ojo
    salieron mal y las cotas quedaron flotando al lado de la caja en vez de
    sobre sus aristas. Ojo con dos trampas al medirlo:
@@ -1110,8 +1110,8 @@ var LIENZO = {w:1126,h:664};
    La cámara está casi de frente a la cara izquierda, por eso la esquina
    cercana cae en x=757 y no en el centro. */
 var CAJA = {
-  frenteX:622, tapaY:128, izqX:338, derX:949,
-  pieIzq:{x:362,y:532}, pieFrente:{x:622,y:651}, pieDer:{x:932,y:530}
+  frenteX:757, tapaY:128, izqX:334, derX:953,
+  pieIzq:{x:378,y:630}, pieFrente:{x:757,y:657}, pieDer:{x:905,y:575}
 };
 
 function initMontaggio() {
@@ -1134,7 +1134,7 @@ function initMontaggio() {
   var compacto = window.matchMedia('(max-width:760px)').matches;
   var plano = dibujarPlano(planoBox, scheda, compacto);
 
-  var TOTAL = 72;
+  var TOTAL = 46;
   var imgs = new Array(TOTAL);
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
@@ -1239,7 +1239,7 @@ function initMontaggio() {
        centrada en el lienzo — su esquina cercana cae en el 67% del ancho, así
        que el objeto se va a la derecha y la cota del fondo se sale por ese
        lado. Este desplazamiento centra la CAJA, que es lo que se mira. */
-    var x = -7 + tramo(p, 0, 0.70, 5, 0, true);
+    var x = -6 + tramo(p, 0, 0.70, 5, 0, true);
     escena.style.transform = 'translate(' + x + '%,' + y + '%)';
 
     /* Sin volteo. El giro se metió cuando la secuencia anterior tenía la caja

@@ -35,26 +35,31 @@ mkdirSync(salida, { recursive: true });
 const ficheros = readdirSync(entrada).filter((f) => f.endsWith('.png')).sort();
 if (!ficheros.length) throw new Error('no hay PNG en ' + entrada);
 
-/* Umbrales MEDIDOS sobre el render, no elegidos a ojo. Muestreando regiones
-   del último fotograma salió esto:
+/* Clave por SATURACIÓN. El fondo es hormigón gris —casi sin saturación— y el
+   producto es madera cálida o lona azul, los dos saturados.
 
-     madera            saturación 0.33–0.43   brillo 0.56–0.61
-     lona azul         saturación 0.54–0.79   brillo 0.59
-     suelo limpio      saturación 0.02        brillo 0.39
-     reflejo del suelo saturación 0.15–0.37   brillo 0.30
+   ── Un intento fallido, anotado para no repetirlo ──────────────────────────
 
-   El reflejo es el problema: por saturación se solapa con la madera —llega a
-   0.37— y por eso una clave de un solo factor lo dejaba pasar, y bajo el
-   pallet quedaba un amasijo de grumos grises. Por BRILLO, en cambio, están
-   bien separados: 0.30 contra 0.56.
+   Bajo el pallet quedaban grumos del reflejo del suelo. Muestreando el ÚLTIMO
+   fotograma salía que el reflejo (brillo 0.30) y la madera (brillo 0.56) se
+   separan muy bien por brillo, así que se añadió un segundo factor: saturado
+   Y iluminado. En el último fotograma funcionaba.
 
-   Así que la clave va por los dos y se multiplican. Un píxel tiene que ser
-   saturado Y estar iluminado para contar como producto; el reflejo es
-   saturado pero oscuro, y se cae. */
-const SAT_BAJO = 0.22;
-const SAT_ALTO = 0.32;
-const VAL_BAJO = 0.26;
-const VAL_ALTO = 0.40;
+   Y destrozaba los primeros. Ahí el pallet cae solo, iluminado desde arriba y
+   sin nada alrededor que lo sombree: su cara superior es pálida y poco
+   saturada, justo lo que ese filtro descarta. El resultado eran tablas con
+   agujeros negros y bordes dentados — mucho peor que los grumos que se querían
+   quitar.
+
+   La lección no es "el brillo no sirve": es que un umbral medido en UN
+   fotograma no vale para una secuencia donde cambia la iluminación. Si se
+   vuelve a intentar, tiene que ser adaptativo por fotograma, y hay que mirar
+   los fotogramas del PRINCIPIO, no solo el final.
+
+   Mientras tanto, el reflejo se controla con la línea de suelo, que es
+   geométrica y no depende de la luz. */
+const SAT_BAJO = 0.13;
+const SAT_ALTO = 0.27;
 
 /** Clave por saturación + corte de suelo fijo. Devuelve el PNG ya con alfa. */
 function clavar(ruta) {
@@ -67,12 +72,10 @@ function clavar(ruta) {
       const r = data[i], g = data[i + 1], b = data[i + 2];
       const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
       const sat = mx === 0 ? 0 : (mx - mn) / mx;
-      const val = mx / 255;
-      const aSat = Math.max(0, Math.min(1, (sat - SAT_BAJO) / (SAT_ALTO - SAT_BAJO)));
-      const aVal = Math.max(0, Math.min(1, (val - VAL_BAJO) / (VAL_ALTO - VAL_BAJO)));
-      // Rampa suave en los dos ejes, nunca un umbral duro: un recorte con
-      // borde de escalera es la señal más rápida de que algo está pegado.
-      let a = aSat * aVal;
+      // Rampa suave, nunca un umbral duro: un recorte con borde de escalera es
+      // la señal más rápida de que una imagen está pegada.
+      let a = Math.max(0, Math.min(1, (sat - SAT_BAJO) / (SAT_ALTO - SAT_BAJO)));
+      if (mx / 255 < 0.08) a = 0;           // sombra, no producto
       if (y > suelo) {
         // Desvanecido corto por debajo de la línea de apoyo en vez de un corte
         // seco: un borde recto ahí abajo se lee como una etiqueta pegada.
@@ -170,9 +173,13 @@ function desmotar(png) {
 const clavados = [];
 let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
 
+const areas = [];
 for (const f of ficheros) {
   const png = clavar(join(entrada, f));
   clavados.push(png);
+  let opacos = 0;
+  for (let i = 3; i < png.data.length; i += 4) if (png.data[i] > 140) opacos++;
+  areas.push(opacos);
   const { width: W, height: H, data } = png;
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
@@ -209,3 +216,28 @@ clavados.forEach((png, i) => {
 });
 
 console.log(`${clavados.length} fotogramas  ${w}x${h}  (ventana común ${x0},${y0})`);
+
+/* GUARDARRAÍL.
+   Una clave mal ajustada no falla: se come parte del producto y sigue
+   escribiendo ficheros con buena pinta. Ya pasó una vez —las tablas del pallet
+   salieron agujereadas en los primeros fotogramas y no se vio hasta tenerlo
+   publicado— así que aquí se compara cada fotograma con sus vecinos.
+
+   El área conservada cambia poco a poco a lo largo de una secuencia de
+   montaje: crece según se añaden piezas. Un bajón brusco respecto a la
+   mediana local no es la animación, es la clave comiéndose algo. */
+const mediana = (a) => { const b = [...a].sort((x, y) => x - y); return b[b.length >> 1]; };
+const sospechosos = [];
+for (let i = 0; i < areas.length; i++) {
+  const ventana = areas.slice(Math.max(0, i - 3), i + 4);
+  const m = mediana(ventana);
+  if (m > 0 && areas[i] < m * 0.72) {
+    sospechosos.push(`f${String(i).padStart(3, '0')} (${Math.round(areas[i] / m * 100)}% de sus vecinos)`);
+  }
+}
+if (sospechosos.length) {
+  console.warn(`\n  AVISO: ${sospechosos.length} fotograma(s) conservan mucho menos que los de al lado.`);
+  console.warn('  Suele significar que la clave se está comiendo parte del producto.');
+  console.warn('  Míralos compuestos sobre el fondo oscuro antes de publicar:');
+  console.warn('    ' + sospechosos.join('\n    '));
+}
