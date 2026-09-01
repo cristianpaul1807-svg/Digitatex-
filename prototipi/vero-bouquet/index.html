@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- SEO. El negocio no tiene web: hoy 703 publicaciones de trabajo suyo no las
+     encuentra nadie buscando en Google. El titulo y la descripcion van escritos
+     para las busquedas que hace de verdad una madre organizando un 18esimo. -->
+<title>Allestimenti con palloncini e fiori a Sant'Ilario d'Enza e Reggio Emilia — Vero Bouquet</title>
+<meta name="description" content="Archi di palloncini, pareti scintillanti, lettere luminose, insegne al neon e fiori per compleanni, 18 anni, battesimi, nascite e matrimoni. Allestimenti su misura a Sant'Ilario d'Enza, Reggio Emilia e Parma.">
+<meta name="theme-color" content="#faf6f0">
+
+<!-- Alojado en digitatex.com como prototipo para ensenar a la clienta, asi que
+     NO tiene que indexarse mientras viva aqui. Se quita al pasarlo a su
+     dominio. -->
+<meta name="robots" content="noindex, nofollow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vero Bouquet — Allestimenti con palloncini e fiori">
+<meta property="og:description" content="Eventi su misura a Sant'Ilario d'Enza (RE). Palloncini a elio, archi, pareti, lettere luminose e fiori.">
+<meta property="og:locale" content="it_IT">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Datos estructurados. El tipo correcto no es LocalBusiness generico: Google
+     tiene una categoria para esto y la usa para las busquedas de eventos.
+     PENDIENTE: horarios reales y P.IVA cuando la clienta los confirme. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PartyDecorationService",
+  "name": "Vero Bouquet",
+  "legalName": "Vero Bouquet di Kurylo Veronika",
+  "description": "Allestimenti con palloncini e fiori per feste ed eventi su misura.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Giacomo Matteotti 10/C",
+    "addressLocality": "Sant'Ilario d'Enza",
+    "addressRegion": "RE",
+    "postalCode": "42049",
+    "addressCountry": "IT"
+  },
+  "telephone": "+39 328 791 1076",
+  "areaServed": [
+    { "@type": "City", "name": "Sant'Ilario d'Enza" },
+    { "@type": "City", "name": "Reggio Emilia" },
+    { "@type": "City", "name": "Parma" }
+  ],
+  "sameAs": ["https://www.instagram.com/vero_bouquet/"]
+}
+</script>
+
+<style>
+/* ============================================================================
+   VERO BOUQUET — hoja de estilo
+   ----------------------------------------------------------------------------
+   COLOR. Los tonos no estan elegidos: estan sacados de trabajos suyos reales
+   —el azul y el cromo del 18esimo, el rosa y el turchese de la festa flamingo,
+   el cipria del compleanno con le farfalle, il crema del battesimo—. Por eso
+   la pagina parece suya y no una plantilla de fiestas.
+
+   La disciplina: el ROSA es el unico acento de la interfaz. Los demas colores
+   solo aparecen DENTRO del trabajo (las guirnaldas, las paletas de cada
+   ocasion). Si el azul y el turchese se usaran tambien en botones y enlaces, la
+   pagina competiria con las fotos que tiene que enseñar.
+
+   FONDO. Crema y no blanco: sus arcos y sus paneles son de ese color, y un
+   blanco puro deja los globos pastel flotando sin apoyo.
+   ========================================================================== */
+
+:root{
+  /* Superficies: tres pasos, no mas. */
+  --panna:#faf6f0;
+  --panna-2:#f2ebe2;
+  --panna-3:#e8ded1;
+
+  /* Tinta calida, no negro puro: en una pagina de fiestas el negro puro corta. */
+  --inchiostro:#241c26;
+  --inchiostro-2:#4a4050;
+  --tenue:#8a8090;
+
+  /* El acento, y el unico de la interfaz. */
+  --rosa:#d92d6f;
+  --rosa-scuro:#a81f54;
+
+  /* Colores del TRABAJO. No se usan en botones ni en texto de interfaz. */
+  --blu:#1b34b0;
+  --argento:#c2c7d1;
+  --acqua:#3fbdcb;
+  --cipria:#e3b6a3;
+  --oro:#c9a24b;
+  --verde:#7fa88b;
+
+  --linea:rgba(36,28,38,.12);
+  --linea-forte:rgba(36,28,38,.22);
+
+  --margine:clamp(20px,5vw,64px);
+  --largo:1240px;
+  --aria:clamp(72px,10vw,132px);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{
+  /* clip y no hidden: hidden convierte el documento en contenedor de scroll y
+     rompe cualquier position:sticky que haya dentro. */
+  overflow-x:clip;
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+
+body{
+  background:var(--panna);
+  color:var(--inchiostro);
+  font-family:'Figtree',system-ui,-apple-system,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{display:block;max-width:100%;height:auto}
+::selection{background:var(--rosa);color:#fff}
+:focus-visible{outline:2px solid var(--rosa);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--largo);margin:0 auto;padding-inline:var(--margine)}
+
+/* ---- tipografia ---------------------------------------------------------- */
+h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.01em;line-height:1.06;text-wrap:balance}
+/* El tope de 78px está medido: con cuatro líneas y el párrafo debajo, más
+   grande no cabe en 900px de alto y el texto de apoyo queda cortado. */
+h1{font-size:clamp(40px,5.6vw,78px)}
+h2{font-size:clamp(34px,4.6vw,62px)}
+h3{font-size:clamp(21px,2.2vw,27px);line-height:1.2}
+em{font-style:italic;color:var(--rosa)}
+
+.occhiello{
+  font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rosa);display:flex;align-items:center;gap:12px;
+}
+.occhiello::before{content:'';width:26px;height:1px;background:currentColor;flex:none}
+.guida{font-size:clamp(17px,1.7vw,20px);line-height:1.6;color:var(--inchiostro-2);max-width:56ch}
+
+/* ---- botones ------------------------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 26px;border-radius:999px;border:1px solid transparent;
+  font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:none;
+  cursor:pointer;transition:transform .18s ease,background-color .18s ease,color .18s ease;
+}
+.btn-pieno{background:var(--rosa);color:#fff}
+.btn-pieno:hover{background:var(--rosa-scuro);transform:translateY(-2px)}
+.btn-vuoto{border-color:var(--linea-forte);color:var(--inchiostro)}
+.btn-vuoto:hover{border-color:var(--inchiostro);transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){ .btn:hover{transform:none} }
+
+/* ---- barra --------------------------------------------------------------- */
+.barra{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:14px var(--margine);
+  background:rgba(250,246,240,.86);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease;
+}
+.barra.giu{border-bottom-color:var(--linea)}
+.marchio{font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1;text-decoration:none;color:var(--inchiostro)}
+.marchio i{font-style:italic;color:var(--rosa)}
+.menu{display:flex;align-items:center;gap:28px}
+.menu a{font-size:14px;font-weight:500;color:var(--inchiostro-2);text-decoration:none}
+.menu a:hover{color:var(--rosa)}
+.barra .btn{padding:11px 20px}
+/* El CTA está dos veces en el marcado a propósito: dentro del menú para el
+   móvil, y suelto en la barra para el escritorio. Cada uno se oculta donde
+   sobra — si no, en pantalla ancha salen los dos seguidos. */
+@media (min-width:901px){ .menu .btn{display:none} }
+.apri-menu{display:none;background:none;border:0;padding:8px;cursor:pointer;color:var(--inchiostro)}
+
+@media (max-width:900px){
+  .menu{
+    position:fixed;inset:0 0 auto;top:60px;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--panna);border-bottom:1px solid var(--linea);
+    padding:8px var(--margine) 20px;
+    /* Cerrado con visibility y no con display:none, para que la transicion
+       exista y el lector de pantalla no lo encuentre mientras esta cerrado. */
+    visibility:hidden;opacity:0;transform:translateY(-8px);
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+  }
+  .menu.aperto{visibility:visible;opacity:1;transform:none}
+  .menu a{padding:14px 0;border-bottom:1px solid var(--linea);font-size:17px}
+  .menu .btn{margin-top:16px;justify-content:center}
+  .apri-menu{display:block}
+  .barra > .btn{display:none}
+}
+
+/* ---- hero ---------------------------------------------------------------- */
+.hero{position:relative;padding:calc(84px + var(--aria)) 0 var(--aria);overflow:clip}
+.hero-griglia{display:grid;gap:clamp(32px,5vw,64px);align-items:center}
+@media (min-width:1000px){ .hero-griglia{grid-template-columns:1.05fr .95fr} }
+.hero h1{margin:20px 0 0}
+.hero .guida{margin-top:22px}
+.hero-azioni{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+/* Dato pequeño bajo el hero: los numeros reales de su Instagram. Es la prueba
+   social que ya tiene, y hoy no la usa en ningun sitio fuera de la app. */
+.hero-prova{display:flex;flex-wrap:wrap;gap:28px;margin-top:40px;padding-top:26px;border-top:1px solid var(--linea)}
+.hero-prova div{display:flex;flex-direction:column}
+.hero-prova b{font-family:'Instrument Serif',Georgia,serif;font-size:32px;line-height:1;font-weight:400}
+.hero-prova span{font-size:12.5px;color:var(--tenue);margin-top:6px;letter-spacing:.04em}
+
+/* La guirnalda dibujada. Ver el guion: se genera en SVG a partir de una curva,
+   con los colores reales de sus montajes. No es una foto suya —no tengo sus
+   fotos en alta— pero tampoco es un dibujo generico: son sus paletas. */
+.ghirlanda{position:relative;min-height:340px}
+.ghirlanda svg{width:100%;height:auto;overflow:visible;display:block}
+
+/* ---- secciones ----------------------------------------------------------- */
+section{padding-block:var(--aria)}
+.testa{max-width:64ch}
+.testa h2{margin-top:18px}
+.testa .guida{margin-top:18px}
+
+/* ---- ocasiones ----------------------------------------------------------- */
+/* La rejilla va por OCASION y no por fecha. En Instagram el trabajo esta en
+   orden cronologico, que es el orden util para ella y el inutil para quien
+   busca: nadie quiere "lo ultimo", quiere "un 18esimo". */
+.occasioni{display:grid;gap:18px;margin-top:52px}
+@media (min-width:640px){ .occasioni{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1000px){ .occasioni{grid-template-columns:repeat(3,1fr)} }
+
+.occ{
+  position:relative;display:flex;flex-direction:column;
+  padding:26px;border-radius:18px;background:var(--panna-2);
+  border:1px solid var(--linea);overflow:hidden;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.occ:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(36,28,38,.09)}
+@media (prefers-reduced-motion:reduce){ .occ:hover{transform:none} }
+.occ h3{margin-bottom:10px}
+.occ p{font-size:15px;color:var(--inchiostro-2);line-height:1.55}
+/* La paleta de cada ocasion, tomada de un montaje suyo concreto. Es lo que
+   convierte una tarjeta de texto en una muestra de trabajo. */
+.paletta{display:flex;gap:7px;margin-top:auto;padding-top:22px}
+.paletta span{width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)}
+
+/* ---- elementos ----------------------------------------------------------- */
+.elementi{display:grid;gap:0;margin-top:52px;border-top:1px solid var(--linea)}
+.el{
+  display:grid;gap:6px 26px;align-items:baseline;
+  padding:26px 0;border-bottom:1px solid var(--linea);
+}
+@media (min-width:820px){ .el{grid-template-columns:52px 1fr 1.1fr} }
+.el b{font-family:'Instrument Serif',Georgia,serif;font-size:20px;font-weight:400;color:var(--rosa)}
+.el h3{font-size:clamp(20px,2vw,25px)}
+.el p{font-size:15.5px;color:var(--inchiostro-2)}
+
+/* ---- galeria ------------------------------------------------------------- */
+/* Huecos MARCADOS, no fotos de banco. Poner imagenes de stock en el prototipo
+   de una decoradora es enseñarle el trabajo de otra persona; el hueco vacio y
+   rotulado dice la verdad y ademas le pide exactamente lo que hace falta. */
+.galleria{display:grid;gap:14px;margin-top:52px}
+@media (min-width:700px){ .galleria{grid-template-columns:repeat(3,1fr)} }
+.foto{
+  aspect-ratio:4/5;border-radius:16px;border:1px dashed var(--linea-forte);
+  background:var(--panna-2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;text-align:center;padding:22px;
+}
+.foto span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rosa);font-weight:600}
+.foto small{font-size:13.5px;color:var(--tenue);line-height:1.45;max-width:26ch}
+@media (min-width:700px){ .foto:first-child{grid-column:span 2;aspect-ratio:auto} }
+
+/* ---- como funciona ------------------------------------------------------- */
+.passi{display:grid;gap:26px;margin-top:52px;counter-reset:passo}
+@media (min-width:820px){ .passi{grid-template-columns:repeat(3,1fr);gap:38px} }
+.passo{position:relative;padding-top:26px;border-top:2px solid var(--rosa);counter-increment:passo}
+.passo::before{
+  content:counter(passo,decimal-leading-zero);
+  font-family:'Instrument Serif',Georgia,serif;font-size:14px;color:var(--rosa);
+  position:absolute;top:-24px;left:0;
+}
+.passo h3{margin-bottom:10px}
+.passo p{font-size:15.5px;color:var(--inchiostro-2)}
+
+/* ---- franja de cierre + modulo ------------------------------------------- */
+.chiusura{background:var(--inchiostro);color:var(--panna);border-radius:26px;padding:clamp(30px,5vw,64px);position:relative;overflow:hidden}
+.chiusura h2{color:var(--panna)}
+.chiusura em{color:#ff8fb4}
+.chiusura .guida{color:rgba(250,246,240,.72)}
+.chiusura-griglia{display:grid;gap:clamp(30px,4vw,56px)}
+@media (min-width:960px){ .chiusura-griglia{grid-template-columns:.85fr 1.15fr} }
+
+.contatti{display:grid;gap:18px;margin-top:34px}
+.contatto{display:flex;gap:14px;align-items:flex-start}
+.contatto svg{flex:none;margin-top:3px;color:#ff8fb4}
+.contatto b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,246,240,.5);font-weight:600;margin-bottom:3px}
+.contatto a,.contatto span{color:var(--panna);text-decoration:none;font-size:16px}
+.contatto a:hover{color:#ff8fb4}
+
+/* El modulo. Va sobre fondo claro dentro de la franja oscura: un formulario
+   largo en oscuro cansa, y este pide bastantes datos a proposito. */
+.modulo{background:var(--panna);border-radius:18px;padding:clamp(22px,3vw,34px);color:var(--inchiostro)}
+.campi{display:grid;gap:16px}
+@media (min-width:620px){ .campi{grid-template-columns:1fr 1fr} .lungo{grid-column:1/-1} }
+.campo{display:flex;flex-direction:column;gap:7px}
+.campo label{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--inchiostro-2)}
+.campo input,.campo select,.campo textarea{
+  font-family:inherit;font-size:16px;color:var(--inchiostro);
+  background:#fff;border:1px solid var(--linea-forte);border-radius:10px;
+  padding:13px 14px;width:100%;
+}
+.campo textarea{min-height:104px;resize:vertical}
+.campo input:focus,.campo select:focus,.campo textarea:focus{border-color:var(--rosa);outline:none;box-shadow:0 0 0 3px rgba(217,45,111,.14)}
+
+/* Casillas de "cosa ti serve". En pastillas y no en lista: son ocho y en lista
+   ocupan media pantalla del movil. */
+fieldset{border:0;grid-column:1/-1}
+legend{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--inchiostro-2);margin-bottom:11px}
+.pillole{display:flex;flex-wrap:wrap;gap:9px}
+.pillole label{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  padding:10px 15px;border:1px solid var(--linea-forte);border-radius:999px;
+  font-size:14px;background:#fff;transition:border-color .15s ease,background-color .15s ease;
+}
+.pillole input{accent-color:var(--rosa);width:16px;height:16px}
+.pillole label:has(input:checked){border-color:var(--rosa);background:rgba(217,45,111,.07)}
+.pillole label:focus-within{outline:2px solid var(--rosa);outline-offset:2px}
+
+.invio{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:6px}
+.stato{font-size:14px;color:var(--tenue)}
+.stato.ok{color:#1f7a4d}
+.stato.err{color:var(--rosa-scuro)}
+.nota-privacy{grid-column:1/-1;font-size:12.5px;color:var(--tenue);line-height:1.5}
+
+/* ---- pie ----------------------------------------------------------------- */
+footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--aria)}
+.pie{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--tenue)}
+.pie a{color:var(--inchiostro-2);text-decoration:none}
+.pie a:hover{color:var(--rosa)}
+
+/* Aviso de prototipo. Fijo abajo para que no se confunda con la web publicada. */
+.avviso{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:var(--inchiostro);color:var(--panna);
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  text-align:center;padding:9px 16px;
+}
+body{padding-bottom:38px}
+
+/* ---- entradas ------------------------------------------------------------ */
+.rivela{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.rivela.dentro{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rivela{opacity:1;transform:none;transition:none}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<header class="barra" id="barra">
+  <a class="marchio" href="#top">Vero <i>Bouquet</i></a>
+  <nav class="menu" id="menu">
+    <a href="#occasioni">Occasioni</a>
+    <a href="#allestimenti">Allestimenti</a>
+    <a href="#lavori">Lavori</a>
+    <a href="#come">Come funziona</a>
+    <a class="btn btn-pieno" href="#preventivo">Chiedi un preventivo</a>
+  </nav>
+  <a class="btn btn-pieno" href="#preventivo">Chiedi un preventivo</a>
+  <button class="apri-menu" id="apri-menu" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+</header>
+
+<main id="top">
+
+  <!-- ======================================================================
+       HERO
+       ====================================================================== -->
+  <section class="hero">
+    <div class="wrap hero-griglia">
+      <div>
+        <p class="occhiello">Sant'Ilario d'Enza · Reggio Emilia · Parma</p>
+        <h1>La festa si ricorda<br>per <em>come era</em><br>quando sei entrato.</h1>
+        <p class="guida">
+          Archi di palloncini, pareti scintillanti, lettere luminose e fiori.
+          Allestimenti su misura per compleanni, 18 anni, battesimi, nascite e matrimoni —
+          montati da noi, dove serve a te.
+        </p>
+        <div class="hero-azioni">
+          <a class="btn btn-pieno" href="#preventivo">
+            Chiedi un preventivo
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-vuoto" href="#occasioni">Guarda le occasioni</a>
+        </div>
+
+        <!-- PENDIENTE: cifras tomadas del perfil de Instagram el 26/08.
+             Confirmar con la clienta y actualizar, o sustituir por anni di
+             attivita ed eventi allestiti, que dicen mas. -->
+        <div class="hero-prova">
+          <div><b>703</b><span>allestimenti pubblicati</span></div>
+          <div><b>3.554</b><span>persone ci seguono</span></div>
+          <div><b>1 giorno</b><span>montaggio e ritiro inclusi</span></div>
+        </div>
+      </div>
+
+      <div class="ghirlanda" id="ghirlanda" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       OCASIONES
+       ====================================================================== -->
+  <section id="occasioni">
+    <div class="wrap">
+      <div class="testa rivela">
+        <p class="occhiello">Occasioni</p>
+        <h2>Ogni festa ha il suo colore.</h2>
+        <p class="guida">
+          Non partiamo da un catalogo. Partiamo dal motivo per cui state festeggiando,
+          e da lì scegliamo i colori, l'altezza dell'arco e cosa deve stare al centro
+          delle fotografie.
+        </p>
+      </div>
+
+      <div class="occasioni">
+        <article class="occ rivela">
+          <h3>Compleanni</h3>
+          <p>Dall'arco sul tavolo della torta all'allestimento che prende tutta la parete. Con numero luminoso, se il numero conta.</p>
+          <div class="paletta" title="Blu e argento cromato">
+            <span style="background:#1b34b0"></span><span style="background:#c2c7d1"></span>
+            <span style="background:#e8eaf0"></span><span style="background:#8f96b8"></span>
+          </div>
+        </article>
+
+        <article class="occ rivela">
+          <h3>18 anni</h3>
+          <p>La festa più fotografata di tutte. Parete scintillante, insegna al neon, numero luminoso alto un metro: fatta per stare dentro un ritratto.</p>
+          <div class="paletta" title="Cipria, cromo e nero">
+            <span style="background:#e3b6a3"></span><span style="background:#c2c7d1"></span>
+            <span style="background:#241c26"></span><span style="background:#f2ebe2"></span>
+          </div>
+        </article>
+
+        <article class="occ rivela">
+          <h3>Battesimi e nascite</h3>
+          <p>Toni delicati, nome del bambino ritagliato su misura, composizioni basse che non coprono i tavoli. Anche per baby shower e primo compleanno.</p>
+          <div class="paletta" title="Crema, beige e oro">
+            <span style="background:#f2ebe2"></span><span style="background:#d9c4ad"></span>
+            <span style="background:#a98d6d"></span><span style="background:#c9a24b"></span>
+          </div>
+        </article>
+
+        <article class="occ rivela">
+          <h3>Matrimoni</h3>
+          <p>Bouquet, centrotavola, arco della cerimonia e tableau. La parte floreale e quella dei palloncini pensate insieme, non sommate.</p>
+          <div class="paletta" title="Bianco, verde e avorio">
+            <span style="background:#ffffff"></span><span style="background:#f2ebe2"></span>
+            <span style="background:#7fa88b"></span><span style="background:#d9c4ad"></span>
+          </div>
+        </article>
+
+        <article class="occ rivela">
+          <h3>Feste a tema</h3>
+          <p>Tropicale, Stranger Things, supereroi, unicorni. Il tema lo scegliete voi; noi lo teniamo elegante anche quando è scatenato.</p>
+          <div class="paletta" title="Rosa shocking e turchese">
+            <span style="background:#e8407f"></span><span style="background:#3fbdcb"></span>
+            <span style="background:#9fd8c0"></span><span style="background:#ff9ec4"></span>
+          </div>
+        </article>
+
+        <article class="occ rivela">
+          <h3>Aziende e negozi</h3>
+          <p>Inaugurazioni, anniversari, vetrine e stand. Allestimenti nei colori del vostro marchio, montati fuori orario di apertura.</p>
+          <div class="paletta" title="Su misura del marchio">
+            <span style="background:#241c26"></span><span style="background:#d92d6f"></span>
+            <span style="background:#c9a24b"></span><span style="background:#f2ebe2"></span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       ELEMENTOS
+       ====================================================================== -->
+  <section id="allestimenti">
+    <div class="wrap">
+      <div class="testa rivela">
+        <p class="occhiello">Cosa portiamo</p>
+        <h2>Tutto quello che serve<br>arriva già montato.</h2>
+        <p class="guida">
+          Non è una lista da ordinare a pezzi: si sceglie insieme cosa serve davvero
+          per quello spazio e per quel numero di invitati.
+        </p>
+      </div>
+
+      <div class="elementi">
+        <div class="el rivela">
+          <b>01</b>
+          <h3>Archi e colonne di palloncini</h3>
+          <p>Organici o a colonna, dal metro all'allestimento che gira intorno a una porta. Palloncini opachi, cromati e trasparenti nello stesso disegno.</p>
+        </div>
+        <div class="el rivela">
+          <b>02</b>
+          <h3>Pareti e fondali</h3>
+          <p>Parete a paillettes, pannelli ad arco tinta unita, fondali su misura. È lo sfondo di tutte le foto della serata: si sceglie per primo.</p>
+        </div>
+        <div class="el rivela">
+          <b>03</b>
+          <h3>Lettere e numeri luminosi</h3>
+          <p>Alti circa un metro, a lampadine. Il numero degli anni, le iniziali, la parola che conta. A noleggio per la giornata.</p>
+        </div>
+        <div class="el rivela">
+          <b>04</b>
+          <h3>Insegne al neon</h3>
+          <p>«Happy Birthday» e frasi personalizzate. Accese fanno da luce d'ambiente quando cala il sole.</p>
+        </div>
+        <div class="el rivela">
+          <b>05</b>
+          <h3>Nomi e scritte su misura</h3>
+          <p>Il nome ritagliato e applicato sul fondale, nel carattere che scegliete. Resta come ricordo dopo la festa.</p>
+        </div>
+        <div class="el rivela">
+          <b>06</b>
+          <h3>Fiori, bouquet e centrotavola</h3>
+          <p>Freschi o stabilizzati, coordinati con i colori dell'allestimento. Compreso il bouquet della sposa e le composizioni per i tavoli.</p>
+        </div>
+        <div class="el rivela">
+          <b>07</b>
+          <h3>Palloncini a elio</h3>
+          <p>Sciolti, in mazzi o con il peso al tavolo. Anche solo questi, se la festa è in casa e serve poco.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       LAVORI — huecos para sus fotos
+       ====================================================================== -->
+  <section id="lavori">
+    <div class="wrap">
+      <div class="testa rivela">
+        <p class="occhiello">Lavori</p>
+        <h2>Feste vere, in case vere.</h2>
+        <p class="guida">
+          Qui vanno le fotografie dei suoi allestimenti. Nel prototipo restano vuote
+          apposta: mettere immagini di repertorio nel sito di una decoratrice
+          significa mostrare il lavoro di qualcun altro.
+        </p>
+      </div>
+
+      <div class="galleria">
+        <div class="foto rivela"><span>Foto 1 — orizzontale</span><small>L'allestimento più rappresentativo, largo. Va per prima e occupa due colonne.</small></div>
+        <div class="foto rivela"><span>Foto 2</span><small>Un 18esimo con parete e numero luminoso.</small></div>
+        <div class="foto rivela"><span>Foto 3</span><small>Un battesimo o una nascita, toni chiari.</small></div>
+        <div class="foto rivela"><span>Foto 4</span><small>Un matrimonio: fiori e palloncini insieme.</small></div>
+        <div class="foto rivela"><span>Foto 5</span><small>Una festa a tema, colori forti.</small></div>
+        <div class="foto rivela"><span>Foto 6</span><small>Un dettaglio ravvicinato: cromati, neon o fiori.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       COMO FUNCIONA
+       ====================================================================== -->
+  <section id="come">
+    <div class="wrap">
+      <div class="testa rivela">
+        <p class="occhiello">Come funziona</p>
+        <h2>Dalla data al montaggio.</h2>
+      </div>
+
+      <div class="passi">
+        <div class="passo rivela">
+          <h3>Si blocca la data</h3>
+          <p>Prima di tutto il resto. Pareti, lettere e insegne sono pezzi fisici e in un giorno stanno in un posto solo: chi prenota prima li ha.</p>
+        </div>
+        <div class="passo rivela">
+          <h3>Si disegna insieme</h3>
+          <p>Colori, misure dello spazio, dove staranno le foto. Ricevete una proposta con il preventivo prima di confermare qualsiasi cosa.</p>
+        </div>
+        <div class="passo rivela">
+          <h3>Montiamo e ritiriamo</h3>
+          <p>Arriviamo prima degli invitati e torniamo a smontare il giorno dopo. Voi la festa la vedete già pronta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       PREVENTIVO
+       ====================================================================== -->
+  <section id="preventivo">
+    <div class="wrap">
+      <div class="chiusura rivela">
+        <div class="chiusura-griglia">
+          <div>
+            <p class="occhiello" style="color:#ff8fb4">Preventivo</p>
+            <h2 style="margin-top:16px">Raccontaci<br>che <em>festa</em> è.</h2>
+            <p class="guida" style="margin-top:20px">
+              Rispondiamo con una proposta e un prezzo. Se la data è ancora libera,
+              ve lo diciamo subito.
+            </p>
+
+            <div class="contatti">
+              <div class="contatto">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+                <div><b>Telefono e WhatsApp</b><a href="tel:+393287911076">328 791 1076</a></div>
+              </div>
+              <div class="contatto">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div><b>Dove siamo</b><span>Via Giacomo Matteotti 10/C<br>42049 Sant'Ilario d'Enza (RE)</span></div>
+              </div>
+              <div class="contatto">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+                <div><b>Instagram</b><a href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener">@vero_bouquet</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VARIABLE: campos pensados para ESTE negocio. La fecha va arriba
+               del todo y es obligatoria porque es lo unico que no se puede
+               negociar despues. -->
+          <form class="modulo" id="modulo" novalidate>
+            <div class="campi">
+              <div class="campo lungo">
+                <label for="data">Data della festa *</label>
+                <input type="date" id="data" name="data" required>
+              </div>
+
+              <div class="campo">
+                <label for="nome">Nome e cognome *</label>
+                <input type="text" id="nome" name="nome" autocomplete="name" required>
+              </div>
+              <div class="campo">
+                <label for="tel">Telefono o WhatsApp *</label>
+                <input type="tel" id="tel" name="telefono" autocomplete="tel" required>
+              </div>
+
+              <div class="campo">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email">
+              </div>
+              <div class="campo">
+                <label for="tipo">Tipo di festa *</label>
+                <select id="tipo" name="tipo" required>
+                  <option value="">Scegli…</option>
+                  <option>Compleanno</option>
+                  <option>18 anni</option>
+                  <option>Battesimo</option>
+                  <option>Nascita o baby shower</option>
+                  <option>Matrimonio</option>
+                  <option>Laurea</option>
+                  <option>Festa a tema</option>
+                  <option>Evento aziendale</option>
+                  <option>Altro</option>
+                </select>
+              </div>
+
+              <div class="campo">
+                <label for="luogo">Dove si fa</label>
+                <input type="text" id="luogo" name="luogo" placeholder="Comune, casa o nome del locale">
+              </div>
+              <div class="campo">
+                <label for="invitati">Quanti invitati</label>
+                <input type="text" id="invitati" name="invitati" inputmode="numeric" placeholder="Anche approssimativo">
+              </div>
+
+              <fieldset>
+                <legend>Cosa ti serve</legend>
+                <div class="pillole">
+                  <label><input type="checkbox" name="serve" value="Arco di palloncini"> Arco di palloncini</label>
+                  <label><input type="checkbox" name="serve" value="Parete o fondale"> Parete o fondale</label>
+                  <label><input type="checkbox" name="serve" value="Lettere o numeri luminosi"> Lettere o numeri luminosi</label>
+                  <label><input type="checkbox" name="serve" value="Insegna al neon"> Insegna al neon</label>
+                  <label><input type="checkbox" name="serve" value="Nome personalizzato"> Nome personalizzato</label>
+                  <label><input type="checkbox" name="serve" value="Fiori e centrotavola"> Fiori e centrotavola</label>
+                  <label><input type="checkbox" name="serve" value="Palloncini a elio"> Palloncini a elio</label>
+                  <label><input type="checkbox" name="serve" value="Non lo so ancora"> Non lo so ancora</label>
+                </div>
+              </fieldset>
+
+              <div class="campo lungo">
+                <label for="colori">Colori o tema</label>
+                <input type="text" id="colori" name="colori" placeholder="Es. blu e argento · rosa e turchese · tema Stranger Things">
+              </div>
+
+              <div class="campo lungo">
+                <label for="note">Qualcos'altro che dobbiamo sapere</label>
+                <textarea id="note" name="note" placeholder="Lo spazio è al chiuso o all'aperto? C'è una parete libera? A che ora possiamo montare?"></textarea>
+              </div>
+
+              <div class="invio">
+                <button class="btn btn-pieno" type="submit">
+                  Invia la richiesta
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+                <span class="stato" id="stato" role="status" aria-live="polite"></span>
+              </div>
+
+              <p class="nota-privacy">
+                I dati servono solo a risponderti con un preventivo. Non li usiamo per altro
+                e non li passiamo a nessuno.
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap pie">
+    <span>Vero Bouquet di Kurylo Veronika · Sant'Ilario d'Enza (RE)</span>
+    <span><a href="tel:+393287911076">328 791 1076</a> · <a href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener">@vero_bouquet</a></span>
+  </div>
+</footer>
+
+<div class="avviso">Prototipo Digitatex · Contenuti, foto e dati aziendali da confermare</div>
+
+<script>
+/* ============================================================================
+   Sin librerías. La página no necesita ninguna.
+   ========================================================================== */
+
+/* ---- la guirnalda --------------------------------------------------------
+   Se genera en SVG en vez de dibujarla a mano: una guirnalda son ciento y pico
+   círculos con tamaño, color y posición irregulares, y escribir eso a mano en
+   el marcado da un fichero enorme e imposible de retocar.
+
+   Se recorre una curva y en cada punto se planta un racimo. Los globos
+   cromados llevan un degradado radial con el reflejo desplazado, que es lo
+   único que distingue un cromado de un color plano.
+
+   La aleatoriedad va con semilla fija: si cambiara en cada carga, cada captura
+   de pantalla sería distinta y no se podría revisar un cambio de diseño. */
+function ghirlanda(host){
+  if(!host) return;
+  const NS='http://www.w3.org/2000/svg';
+  const W=560,H=460;
+
+  // Generador con semilla (xorshift). Math.random no sirve: hace falta que el
+  // dibujo sea el mismo en cada carga.
+  let s=20260826;
+  const rnd=()=>{s^=s<<13;s^=s>>>17;s^=s<<5;return ((s>>>0)/4294967296);};
+  const entre=(a,b)=>a+rnd()*(b-a);
+
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  svg.setAttribute('role','presentation');
+
+  const defs=document.createElementNS(NS,'defs');
+  svg.appendChild(defs);
+
+  /* Paletas reales de sus montajes. Cada racimo toma una, así la guirnalda
+     recorre sus trabajos en vez de ser un arcoíris sin criterio. */
+  const paletas=[
+    {op:['#1b34b0','#2f4ad0','#e8eaf0'], cr:['#c2c7d1','#9aa3b4']},
+    {op:['#e3b6a3','#f2ded3','#c98f79'], cr:['#c2c7d1','#a8aebd']},
+    {op:['#e8407f','#ff9ec4','#3fbdcb'], cr:['#9fd8c0','#c2c7d1']},
+    {op:['#f2ebe2','#d9c4ad','#a98d6d'], cr:['#c9a24b','#dcc07a']}
+  ];
+
+  let idGrad=0;
+  function cromado(color){
+    const id='cr'+(idGrad++);
+    const g=document.createElementNS(NS,'radialGradient');
+    g.setAttribute('id',id);
+    // Foco arriba a la izquierda: es de donde viene la luz en sus fotos.
+    g.setAttribute('cx','34%'); g.setAttribute('cy','30%'); g.setAttribute('r','72%');
+    const paradas=[['0%','#ffffff','.95'],['26%',color,'1'],['74%',color,'1'],['100%','#2a2a33','.55']];
+    for(const [off,col,op] of paradas){
+      const st=document.createElementNS(NS,'stop');
+      st.setAttribute('offset',off); st.setAttribute('stop-color',col); st.setAttribute('stop-opacity',op);
+      g.appendChild(st);
+    }
+    defs.appendChild(g);
+    return 'url(#'+id+')';
+  }
+
+  // La curva sobre la que se apoya el racimo: entra por arriba a la izquierda,
+  // baja abriendo, y sale por abajo a la derecha.
+  const curva=(t)=>{
+    const p0={x:120,y:-30}, p1={x:600,y:110}, p2={x:170,y:300}, p3={x:500,y:480};
+    const u=1-t;
+    return {
+      x:u*u*u*p0.x+3*u*u*t*p1.x+3*u*t*t*p2.x+t*t*t*p3.x,
+      y:u*u*u*p0.y+3*u*u*t*p1.y+3*u*t*t*p2.y+t*t*t*p3.y
+    };
+  };
+
+  const globos=[];
+  const PASOS=40;
+  for(let i=0;i<PASOS;i++){
+    const t=i/(PASOS-1);
+    const c=curva(t);
+    const pal=paletas[Math.floor(t*paletas.length*0.999)];
+    // Racimos más densos en el centro del recorrido, como una guirnalda real.
+    // Más racimo en el centro del recorrido, como una guirnalda montada de
+    // verdad: se abre en el medio y se afina en las puntas.
+    const densidad=5+Math.round(entre(0,3)+Math.sin(t*Math.PI)*5);
+    for(let k=0;k<densidad;k++){
+      const ang=entre(0,Math.PI*2);
+      const dist=entre(0,42)*(0.55+Math.sin(t*Math.PI));
+      const r=entre(11,34)*(0.68+Math.sin(t*Math.PI)*0.52);
+      const esCromo=rnd()<0.3;
+      globos.push({
+        x:c.x+Math.cos(ang)*dist,
+        y:c.y+Math.sin(ang)*dist*0.85,
+        r:r,
+        relleno:esCromo?cromado(pal.cr[Math.floor(rnd()*pal.cr.length)])
+                       :pal.op[Math.floor(rnd()*pal.op.length)],
+        cromo:esCromo
+      });
+    }
+  }
+
+  // Los grandes primero: los pequeños se apoyan encima, que es como se monta.
+  globos.sort((a,b)=>b.r-a.r);
+
+  for(const g of globos){
+    const c=document.createElementNS(NS,'circle');
+    c.setAttribute('cx',g.x.toFixed(1)); c.setAttribute('cy',g.y.toFixed(1));
+    c.setAttribute('r',g.r.toFixed(1)); c.setAttribute('fill',g.relleno);
+    if(!g.cromo){
+      // Un borde apenas visible para que dos globos del mismo color no se
+      // fundan en una mancha.
+      c.setAttribute('stroke','rgba(36,28,38,.07)'); c.setAttribute('stroke-width','1');
+    }
+    svg.appendChild(c);
+
+    if(!g.cromo && g.r>13){
+      // Reflejo. Los opacos también lo tienen, más pequeño y desplazado.
+      const b=document.createElementNS(NS,'ellipse');
+      b.setAttribute('cx',(g.x-g.r*0.3).toFixed(1));
+      b.setAttribute('cy',(g.y-g.r*0.38).toFixed(1));
+      b.setAttribute('rx',(g.r*0.26).toFixed(1));
+      b.setAttribute('ry',(g.r*0.17).toFixed(1));
+      b.setAttribute('fill','rgba(255,255,255,.4)');
+      b.setAttribute('transform','rotate(-28 '+(g.x-g.r*0.3).toFixed(1)+' '+(g.y-g.r*0.38).toFixed(1)+')');
+      svg.appendChild(b);
+    }
+  }
+
+  host.appendChild(svg);
+}
+
+/* ---- barra: sombra al bajar ---------------------------------------------- */
+function barraAlScroll(){
+  const b=document.getElementById('barra');
+  if(!b) return;
+  let tic=false;
+  const upd=()=>{ b.classList.toggle('giu', window.scrollY>10); tic=false; };
+  document.addEventListener('scroll',()=>{ if(!tic){ requestAnimationFrame(upd); tic=true; } },{passive:true});
+  upd();
+}
+
+/* ---- menú del móvil ------------------------------------------------------- */
+function menuMobile(){
+  const bt=document.getElementById('apri-menu'), m=document.getElementById('menu');
+  if(!bt||!m) return;
+  const cerrar=()=>{ m.classList.remove('aperto'); bt.setAttribute('aria-expanded','false'); };
+  bt.addEventListener('click',()=>{
+    const ab=m.classList.toggle('aperto');
+    bt.setAttribute('aria-expanded',ab?'true':'false');
+  });
+  m.querySelectorAll('a').forEach(a=>a.addEventListener('click',cerrar));
+  // Escape cierra: si no, en un teclado hay que tabular por todo el menú para
+  // salir de él.
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
+}
+
+/* ---- entradas al hacer scroll -------------------------------------------- */
+function rivelare(){
+  const items=document.querySelectorAll('.rivela');
+  if(!items.length) return;
+  if(!('IntersectionObserver' in window)){
+    items.forEach(el=>el.classList.add('dentro'));
+    return;
+  }
+  const io=new IntersectionObserver((entradas)=>{
+    entradas.forEach(e=>{
+      if(!e.isIntersecting) return;
+      // Escalonado por posición dentro de su grupo, no por índice global: así
+      // una rejilla entra en cascada y un párrafo suelto entra al momento.
+      const hermanos=[...e.target.parentElement.children].filter(n=>n.classList.contains('rivela'));
+      const i=Math.max(0,hermanos.indexOf(e.target));
+      e.target.style.transitionDelay=Math.min(i*70,350)+'ms';
+      e.target.classList.add('dentro');
+      io.unobserve(e.target);
+    });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.12});
+  items.forEach(el=>io.observe(el));
+}
+
+/* ---- el formulario -------------------------------------------------------
+   VARIABLE: endpoint de envío. Vacío a propósito en el prototipo — las
+   solicitudes tienen que llegar al correo de la clienta, no al nuestro. */
+const FORM_ENDPOINT='';
+
+function modulo(){
+  const f=document.getElementById('modulo');
+  if(!f) return;
+  const st=document.getElementById('stato');
+
+  f.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+
+    // Validación propia y no la nativa: el mensaje del navegador sale en el
+    // idioma del sistema, que en un móvil italiano puede no ser italiano, y
+    // señala un campo cada vez.
+    const faltan=[...f.querySelectorAll('[required]')].filter(c=>!c.value.trim());
+    if(faltan.length){
+      st.textContent='Compila i campi obbligatori: '+faltan.map(c=>f.querySelector('label[for="'+c.id+'"]').textContent.replace(' *','')).join(', ')+'.';
+      st.className='stato err';
+      faltan[0].focus();
+      return;
+    }
+
+    if(!FORM_ENDPOINT){
+      st.textContent='Prototipo: il modulo non è ancora collegato a un servizio di invio.';
+      st.className='stato err';
+      return;
+    }
+
+    st.textContent='Invio in corso…'; st.className='stato';
+    try{
+      const r=await fetch(FORM_ENDPOINT,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}});
+      if(r.ok){ st.textContent='Grazie! Ti rispondiamo entro poche ore.'; st.className='stato ok'; f.reset(); }
+      else{ st.textContent='Invio non riuscito. Riprova o scrivici su WhatsApp.'; st.className='stato err'; }
+    }catch(err){
+      st.textContent='Invio non riuscito. Riprova o scrivici su WhatsApp.'; st.className='stato err';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  ghirlanda(document.getElementById('ghirlanda'));
+  barraAlScroll();
+  menuMobile();
+  rivelare();
+  modulo();
+});
+</script>
+</body>
+</html>
