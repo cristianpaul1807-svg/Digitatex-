@@ -131,9 +131,13 @@ img{display:block;max-width:100%;height:auto}
 
 /* ---- tipografia ---------------------------------------------------------- */
 h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.01em;line-height:1.06;text-wrap:balance}
-/* El tope de 78px está medido: con cuatro líneas y el párrafo debajo, más
-   grande no cabe en 900px de alto y el texto de apoyo queda cortado. */
-h1{font-size:clamp(40px,5.6vw,78px)}
+/* El H1 ahora lleva la ciudad dentro, así que es una frase larga: a 78px se
+   iba a cinco líneas y dejaba el botón fuera de pantalla. Este es el tamaño al
+   que la frase entera y el botón caben juntos en 900px de alto.
+
+   Es el precio de escribir el H1 para Google en vez de para el ojo, y se paga
+   con gusto: un titular precioso que no encuentra nadie no sirve de nada. */
+h1{font-size:clamp(34px,4.4vw,58px);line-height:1.1}
 h2{font-size:clamp(34px,4.6vw,62px)}
 h3{font-size:clamp(21px,2.2vw,27px);line-height:1.2}
 em{font-style:italic;color:var(--rosa)}
@@ -337,6 +341,53 @@ legend{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppe
 .stato.err{color:var(--rosa-scuro)}
 .nota-privacy{grid-column:1/-1;font-size:12.5px;color:var(--tenue);line-height:1.5}
 
+/* ---- chi sono ------------------------------------------------------------ */
+.dossier{display:grid;gap:clamp(28px,4vw,60px);align-items:center}
+@media (min-width:860px){ .dossier{grid-template-columns:.8fr 1.2fr} }
+.ritratto{
+  aspect-ratio:4/5;border-radius:18px;border:1px dashed var(--linea-forte);
+  background:var(--panna-2);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:8px;text-align:center;padding:24px;
+}
+.ritratto span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rosa);font-weight:600}
+.ritratto small{font-size:13.5px;color:var(--tenue);line-height:1.45;max-width:24ch}
+
+/* ---- recensioni ---------------------------------------------------------- */
+.recensioni{display:grid;gap:18px;margin-top:52px}
+@media (min-width:820px){ .recensioni{grid-template-columns:repeat(3,1fr)} }
+.rec{
+  padding:28px;border-radius:18px;background:var(--panna-2);
+  border:1px dashed var(--linea-forte);
+  display:flex;flex-direction:column;justify-content:space-between;gap:22px;min-height:190px;
+}
+.rec p{font-family:'Instrument Serif',Georgia,serif;font-size:22px;line-height:1.3;color:var(--tenue)}
+/* Comillas tipograficas puestas por CSS: si estuvieran en el texto, el lector
+   de pantalla las leeria como palabras. */
+.rec p::before{content:'\201C'}
+.rec p::after{content:'\201D'}
+.rec cite{font-style:normal;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--rosa);font-weight:600}
+.nota-vuoto{margin-top:24px;font-size:14px;color:var(--tenue);max-width:62ch;line-height:1.6}
+
+/* ---- instagram ----------------------------------------------------------- */
+.ig{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:52px}
+@media (min-width:700px){ .ig{grid-template-columns:repeat(6,1fr)} }
+.ig-cella{
+  aspect-ratio:1;border-radius:12px;border:1px dashed var(--linea-forte);
+  background:var(--panna-2);display:grid;place-items:center;text-decoration:none;
+  transition:border-color .18s ease,transform .18s ease;
+}
+.ig-cella:hover{border-color:var(--rosa);transform:translateY(-3px)}
+@media (prefers-reduced-motion:reduce){ .ig-cella:hover{transform:none} }
+.ig-cella span{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--tenue);font-weight:600}
+
+/* Texto de ayuda bajo un campo. */
+.aiuto{font-size:13px;color:var(--tenue);line-height:1.45}
+.campo input[type=file]{padding:11px 13px;font-size:14px;background:var(--panna-2)}
+.campo input[type=file]::file-selector-button{
+  font:inherit;font-weight:600;font-size:13px;margin-right:12px;cursor:pointer;
+  padding:8px 14px;border:0;border-radius:999px;background:var(--inchiostro);color:var(--panna);
+}
+
 /* ---- pie ----------------------------------------------------------------- */
 footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--aria)}
 .pie{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--tenue)}
@@ -369,6 +420,7 @@ body{padding-bottom:38px}
     <a href="#occasioni">Occasioni</a>
     <a href="#allestimenti">Allestimenti</a>
     <a href="#lavori">Lavori</a>
+    <a href="#chi">Chi sono</a>
     <a href="#come">Come funziona</a>
     <a class="btn btn-pieno" href="#preventivo">Chiedi un preventivo</a>
   </nav>
@@ -387,11 +439,24 @@ body{padding-bottom:38px}
     <div class="wrap hero-griglia">
       <div>
         <p class="occhiello">Sant'Ilario d'Enza · Reggio Emilia · Parma</p>
-        <h1>La festa si ricorda<br>per <em>come era</em><br>quando sei entrato.</h1>
+
+        <!-- El H1 lleva el servicio y la ciudad, sin poesia. Es lo que hacen
+             los tres referentes americanos que miramos —«Luxury Balloon Decor
+             & Installations in Los Angeles», «Balloon Arch, Decorations &
+             Event Styling in Atlanta, Ga»— y no es casualidad: es la frase que
+             la gente escribe en Google.
+
+             La version anterior decia «La festa si ricorda per come era quando
+             sei entrato». Mejor frase, y nadie la busca. Para un negocio con
+             CERO presencia en Google eso no es un matiz de estilo, es el error
+             mas caro de la pagina. La frase bonita no se tira: baja a ser la
+             linea de apoyo, donde sigue haciendo su trabajo. -->
+        <h1>Allestimenti con <em>palloncini</em><br>e fiori a Reggio Emilia</h1>
+
         <p class="guida">
-          Archi di palloncini, pareti scintillanti, lettere luminose e fiori.
-          Allestimenti su misura per compleanni, 18 anni, battesimi, nascite e matrimoni —
-          montati da noi, dove serve a te.
+          La festa si ricorda per com'era quando sei entrato. Archi, pareti scintillanti,
+          lettere luminose e fiori: su misura per compleanni, 18 anni, battesimi, nascite
+          e matrimoni — montati da noi, dove serve a te.
         </p>
         <div class="hero-azioni">
           <a class="btn btn-pieno" href="#preventivo">
@@ -596,6 +661,92 @@ body{padding-bottom:38px}
   </section>
 
   <!-- ======================================================================
+       CHI SONO
+       Los tres referentes americanos personalizan con el fundador («Hi, I'm
+       Sean»). Aqui es aun mas facil: no hay un estudio detras, hay Veronika.
+       Contra una empresa anonima eso gana, y contra la competencia local
+       tambien: la clienta sabe quien va a estar en su casa el sabado.
+       ====================================================================== -->
+  <section id="chi">
+    <div class="wrap dossier rivela">
+      <div class="ritratto">
+        <span>Foto — ritratto</span>
+        <small>Veronika al lavoro, mentre monta. Meglio in azione che in posa.</small>
+      </div>
+      <div>
+        <p class="occhiello">Chi sono</p>
+        <h2 style="margin-top:16px">Ciao, sono <em>Veronika</em>.</h2>
+        <p class="guida" style="margin-top:20px">
+          Vero Bouquet è il mio laboratorio a Sant'Ilario d'Enza. Non c'è un'agenzia
+          dietro: ci sono io, che disegno l'allestimento, lo preparo e vengo a montarlo.
+          Per questo posso dire di sì a una festa in casa da trenta persone e a un
+          diciottesimo in sala da duecento.
+        </p>
+        <!-- PENDIENTE: anno di apertura e P.IVA quando la cliente li confermi. -->
+        <p class="guida" style="margin-top:16px">
+          Lavoro su Sant'Ilario d'Enza, Reggio Emilia, Parma e i comuni intorno.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       RECENSIONI
+       Atlanta lidera con «145+ Five Star Reviews» y The Balloon Guy con un
+       carrusel de reseñas de Google. Es la pieza que mas convence en este
+       sector, y es la que aqui esta VACIA: no tengo ninguna resena suya.
+       Se deja el hueco rotulado en vez de inventarlas.
+       ====================================================================== -->
+  <section id="recensioni">
+    <div class="wrap">
+      <div class="testa rivela">
+        <p class="occhiello">Dicono di noi</p>
+        <h2>Le parole di chi<br>ha già festeggiato.</h2>
+      </div>
+      <div class="recensioni">
+        <blockquote class="rec rivela"><p>Qui va una recensione vera.</p><cite>Nome del cliente · tipo di festa</cite></blockquote>
+        <blockquote class="rec rivela"><p>Qui va una recensione vera.</p><cite>Nome del cliente · tipo di festa</cite></blockquote>
+        <blockquote class="rec rivela"><p>Qui va una recensione vera.</p><cite>Nome del cliente · tipo di festa</cite></blockquote>
+      </div>
+      <p class="nota-vuoto rivela">
+        Servono tre recensioni reali — vanno bene quelle già ricevute su Facebook o via
+        messaggio, con il permesso di chi le ha scritte. È la sezione che convince di più
+        e non si può inventare.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       INSTAGRAM
+       703 publicaciones que hoy solo existen dentro de la app. Enlazadas desde
+       la web sirven dos veces: contenido fresco sin trabajo extra, y prueba de
+       que el negocio esta vivo.
+       ====================================================================== -->
+  <section id="instagram">
+    <div class="wrap">
+      <div class="testa rivela">
+        <p class="occhiello">Instagram</p>
+        <h2>Ogni settimana<br>una festa nuova.</h2>
+        <p class="guida">
+          Su <a href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener">@vero_bouquet</a>
+          ci sono 703 allestimenti. Qui sotto gli ultimi.
+        </p>
+      </div>
+      <!-- PENDIENTE: se conecta al feed real, o se eligen seis publicaciones
+           fijas. Seis y no nueve: en movil nueve son tres pantallas de scroll
+           antes de llegar al formulario. -->
+      <div class="ig">
+        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 1</span></a>
+        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 2</span></a>
+        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 3</span></a>
+        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 4</span></a>
+        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 5</span></a>
+        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 6</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
        PREVENTIVO
        ====================================================================== -->
   <section id="preventivo">
@@ -691,6 +842,22 @@ body{padding-bottom:38px}
               <div class="campo lungo">
                 <label for="colori">Colori o tema</label>
                 <input type="text" id="colori" name="colori" placeholder="Es. blu e argento · rosa e turchese · tema Stranger Things">
+              </div>
+
+              <!-- Campo copiado de Atlanta Balloon Designer, donde ademas es
+                   obligatorio. Es el mejor de su formulario: quien organiza una
+                   fiesta llega SIEMPRE con una captura de Pinterest o de
+                   Instagram en el movil. Pedirsela ahorra tres mensajes de ida
+                   y vuelta y evita el malentendido caro — el de descubrir el
+                   dia del montaje que «rosa» no era ese rosa.
+
+                   Aqui va opcional y no obligatorio: obligarlo echa a quien
+                   escribe desde el sofa sin nada guardado, y esa persona
+                   tambien es una clienta. -->
+              <div class="campo lungo">
+                <label for="ispirazione">Una foto che ti piace <span style="text-transform:none;font-weight:400;color:var(--tenue)">— facoltativa, ma aiuta molto</span></label>
+                <input type="file" id="ispirazione" name="ispirazione" accept="image/*">
+                <p class="aiuto">Uno screenshot da Pinterest o Instagram va benissimo. Serve a capire subito i colori e lo stile che hai in mente.</p>
               </div>
 
               <div class="campo lungo">
