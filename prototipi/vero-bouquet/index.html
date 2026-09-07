@@ -191,12 +191,28 @@ em{font-style:italic;color:var(--acc)}
 }
 /* Sobre el vídeo del hero la barra va transparente y en claro; en cuanto entra
    en el crema se invierte. Sin esto, el logo negro desaparece sobre el vídeo. */
-.barra.sopra .marchio,.barra.sopra .menu a{color:#fff}
+.barra.sopra .marchio-nome,.barra.sopra .menu a{color:#fff}
 .barra.sopra .btn-vuoto{border-color:rgba(255,255,255,.45);color:#fff}
 .barra.giu{background:rgba(250,246,240,.88);backdrop-filter:blur(12px);border-bottom-color:var(--linea)}
-.marchio{font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1;text-decoration:none;color:var(--inchiostro);transition:color .4s ease}
-.marchio i{font-style:italic;color:var(--acc)}
-.barra.sopra .marchio i{color:#ffb3cd}
+/* El logotipo real de la clienta, en sello redondo, junto al nombre compuesto.
+   Los dos y no solo uno: a 42px la corona de flores es una mancha bonita pero
+   el nombre de dentro no se lee, así que el sello hace de marca y el texto de
+   al lado dice quién es. Al revés —solo texto— se pierde lo único que la
+   clienta ya tiene hecho y reconoce como suyo.
+
+   El sello NO hereda el color de la barra porque es una imagen, así que sigue
+   viéndose igual sobre el vídeo oscuro y sobre el crema. Por eso el nombre va
+   en su propio <span>: es lo único que tiene que cambiar de color. */
+.marchio{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--inchiostro);transition:color .4s ease}
+.marchio-bollo{
+  flex:none;width:42px;height:42px;border-radius:50%;overflow:hidden;
+  background:#fff;box-shadow:0 1px 3px rgba(36,28,38,.14);
+}
+.marchio-bollo img{width:100%;height:100%;object-fit:cover;display:block}
+.marchio-nome{font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1}
+@media (max-width:520px){ .marchio-bollo{width:36px;height:36px} .marchio-nome{font-size:21px} }
+.marchio-nome i{font-style:italic;color:var(--acc);transition:color .5s ease}
+.barra.sopra .marchio-nome i{color:#ffb3cd}
 .menu{display:flex;align-items:center;gap:28px}
 .menu a{font-size:14px;font-weight:500;color:var(--inchiostro-2);text-decoration:none;transition:color .4s ease}
 .menu a:hover{color:var(--acc)}
@@ -556,8 +572,13 @@ legend{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppe
 .nota-privacy{grid-column:1/-1;font-size:12.5px;color:var(--tenue);line-height:1.5}
 
 /* ---- pie ------------------------------------------------------------------ */
-footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--aria)}
+/* Sin margen propio: la sección de arriba ya cierra con `var(--aria)` de
+   relleno inferior, y sumarle otro tanto abría 280px de vacío entre el
+   formulario y el pie — un agujero, no un respiro. */
+footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 .pie{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--tenue)}
+.pie-marca{display:flex;align-items:center;gap:12px}
+.pie-marca img{flex:none;width:38px;height:38px;border-radius:50%;background:#fff}
 .pie a{color:var(--inchiostro-2);text-decoration:none}
 .pie a:hover{color:var(--acc)}
 
@@ -657,7 +678,10 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
 <canvas id="campo" aria-hidden="true"></canvas>
 
 <header class="barra sopra" id="barra">
-  <a class="marchio" href="#top">Vero <i>Bouquet</i></a>
+  <a class="marchio" href="#top">
+    <span class="marchio-bollo"><img src="media/logo.webp" alt="" width="440" height="440"></span>
+    <span class="marchio-nome">Vero <i>Bouquet</i></span>
+  </a>
   <nav class="menu" id="menu">
     <a href="#occasioni">Occasioni</a>
     <a href="#allestimenti">Allestimenti</a>
@@ -989,7 +1013,7 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
 
 <footer>
   <div class="wrap pie">
-    <span>Vero Bouquet di Kurylo Veronika · Sant'Ilario d'Enza (RE)</span>
+    <span class="pie-marca"><img src="media/logo.webp" alt="Vero Bouquet — Balloons &amp; Flowers Decor" width="440" height="440" loading="lazy">Vero Bouquet di Kurylo Veronika · Sant'Ilario d'Enza (RE)</span>
     <span><a href="tel:+393287911076">328 791 1076</a> · <a href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener">@vero_bouquet</a></span>
   </div>
 </footer>
