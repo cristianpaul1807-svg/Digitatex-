@@ -25,12 +25,23 @@ const dataUri = (p) => {
 let s = readFileSync(aqui('index.html'), 'utf8');
 
 const fuentes = [...s.matchAll(/<link[^>]+fonts\.(?:googleapis|gstatic)\.com[^>]*>/g)].map((m) => m[0]);
-const estilos = /<style>([\s\S]*?)<\/style>/.exec(s)[1];
+// La hoja de estilos vive fuera desde que el sitio tiene varias páginas;
+// aquí se vuelve a meter dentro, que es el sentido de este archivo.
+const estilos = readFileSync(aqui('stile.css'), 'utf8');
 let cuerpo = /<body[^>]*>([\s\S]*?)<\/body>/.exec(s)[1];
 
 const guiones = [...cuerpo.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)];
 const js = guiones[guiones.length - 1][1];
 guiones.forEach((g) => { cuerpo = cuerpo.replace(g[0], () => ''); });
+
+/* comune.js va fuera desde que el sitio tiene varias páginas. Aquí entra
+   ENTERO y ANTES del guion de la portada, porque la portada llama a funciones
+   suyas: si el orden se invierte, el archivo único arranca con
+   «aplicaPaleta is not defined» y no se mueve nada. */
+const comun = readFileSync(aqui('comune.js'), 'utf8');
+const antes = cuerpo;
+cuerpo = cuerpo.replace(/<script[^>]+src="comune\.js"[^>]*><\/script>\s*/g, () => '');
+if (cuerpo === antes) throw new Error('no he encontrado la etiqueta de comune.js: revisa el index antes de empaquetar');
 
 /* El vídeo va por Blob, no como data URI: los navegadores piden el medio por
    rangos y el soporte de <video> con `data:` es irregular. Un `blob:` se
@@ -59,6 +70,7 @@ ${fuentes.join('\n')}
 ${cuerpo}
 <script>window.__VIDEO__=${JSON.stringify(videoB64)}</script>
 <script>${arranque}</script>
+<script>${escapar(comun)}</script>
 <script>${escapar(js)}</script>
 `;
 
