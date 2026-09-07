@@ -93,6 +93,14 @@
   --margine:clamp(20px,5vw,64px);
   --largo:1240px;
   --aria:clamp(76px,10vw,140px);
+
+  /* Alto de la banda de prototipo, que va fija abajo del todo. Media docena
+     de bloques tienen que apartarse de ella —el pie del hero, la sección de
+     ocasiones, el botón de WhatsApp— y hasta ahora cada uno llevaba su número
+     a mano. Al meterle un botón, la banda creció y todos esos números se
+     quedaron cortos a la vez. Con una variable, cambia en un sitio.
+     Al publicar de verdad, sin banda, basta con ponerla a 0. */
+  --banda:56px;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -105,6 +113,7 @@ html{
   -webkit-text-size-adjust:100%;
 }
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+@media (max-width:760px){ :root{--banda:120px} }
 
 body{
   background:var(--panna);
@@ -113,7 +122,7 @@ body{
   font-size:17px;line-height:1.65;
   overflow-x:clip;
   -webkit-font-smoothing:antialiased;
-  padding-bottom:38px;
+  padding-bottom:var(--banda);
 }
 
 img{display:block;max-width:100%;height:auto}
@@ -251,8 +260,12 @@ em{font-style:italic;color:var(--acc)}
 .hero-fisso{position:sticky;top:0;height:100svh;overflow:clip;display:grid;place-items:center}
 /* 50% y no un valor sesgado hacia arriba: la parte de arriba del plano es
    techo vacío, y lo que hay que conservar es el arco y las letras. */
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%;
-  filter:brightness(1.12) saturate(1.08) contrast(1.02)}
+/* Sin filter. La luz y el color se corrigen en el ARCHIVO, con un grado hecho
+   al codificar (brightness/gamma/saturación). Es mejor que un filtro CSS por
+   dos motivos: el navegador no tiene que recalcularlo en cada fotograma, y el
+   ajuste se aplica antes de comprimir, así que no amplifica el ruido de la
+   compresión como sí hace subir el brillo por encima. */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%}
 /* Velo DIRECCIONAL, no plano. El anterior era un degradado vertical uniforme,
    calibrado para el plano de salón oscuro que había antes; sobre este material
    —una instalación al aire libre, a pleno día— apagaba la escena entera y la
@@ -272,7 +285,7 @@ em{font-style:italic;color:var(--acc)}
     linear-gradient(100deg,rgba(16,11,18,.34) 0%,rgba(16,11,18,.14) 30%,rgba(16,11,18,0) 54%,rgba(16,11,18,.05) 100%);
 }
 @media (max-width:760px){
-  .hero-velo{background:linear-gradient(to bottom,rgba(16,11,18,.30) 0%,rgba(16,11,18,.08) 22%,rgba(16,11,18,.22) 60%,rgba(16,11,18,.52) 100%)}
+  .hero-velo{background:linear-gradient(to bottom,rgba(16,11,18,.24) 0%,rgba(16,11,18,.04) 24%,rgba(16,11,18,.16) 62%,rgba(16,11,18,.44) 100%)}
 }
 
 /* SOMBRA LOCAL, detrás del texto y de nada más.
@@ -289,14 +302,14 @@ em{font-style:italic;color:var(--acc)}
   content:'';position:absolute;z-index:-1;pointer-events:none;
   inset:-14% -14% -16% -50vw;
   background:radial-gradient(120% 88% at 26% 50%,
-    rgba(16,11,18,.62) 0%, rgba(16,11,18,.46) 34%, rgba(16,11,18,.18) 58%, rgba(16,11,18,0) 76%);
+    rgba(16,11,18,.46) 0%, rgba(16,11,18,.32) 34%, rgba(16,11,18,.12) 58%, rgba(16,11,18,0) 76%);
 }
 @media (max-width:760px){
   /* En vertical el texto ocupa todo el ancho, así que la mancha se centra y se
      ensancha en vez de colgar de la izquierda. */
   .hero-tipo::before{inset:-10% -30% -14% -30%;
     background:radial-gradient(115% 78% at 50% 50%,
-      rgba(16,11,18,.60) 0%, rgba(16,11,18,.44) 40%, rgba(16,11,18,.16) 64%, rgba(16,11,18,0) 82%)}
+      rgba(16,11,18,.44) 0%, rgba(16,11,18,.30) 40%, rgba(16,11,18,.11) 64%, rgba(16,11,18,0) 82%)}
 }
 
 /* La sombra del texto es lo que PERMITE que el velo sea tan flojo. Sin ella,
@@ -341,10 +354,9 @@ em{font-style:italic;color:var(--acc)}
 .hero-fatti{
   /* Se aparta de la banda de prototipo, que va fija abajo del todo y le comía
      la línea. Al publicar, sin esa banda, `bottom` vuelve a 0. */
-  position:absolute;left:0;right:0;bottom:38px;z-index:2;
+  position:absolute;left:0;right:0;bottom:var(--banda);z-index:2;
   border-top:1px solid rgba(255,255,255,.16);
 }
-@media (max-width:760px){ .hero-fatti{bottom:56px} }
 .hero-fatti ul{
   list-style:none;display:grid;grid-template-columns:1fr;
   max-width:var(--largo);margin:0 auto;padding:0 var(--margine);
@@ -382,7 +394,7 @@ em{font-style:italic;color:var(--acc)}
 
    Solo se aparta el texto de la banda de prototipo. */
 @media (max-width:760px){
-  .hero-tipo{padding-bottom:46px}
+  .hero-tipo{padding-bottom:calc(var(--banda) + 10px)}
 }
 
 /* Máscara de línea: el texto sube desde debajo del borde. overflow:hidden en
@@ -480,7 +492,7 @@ section{padding-block:var(--aria)}
    este ancho, y la banda de prototipo mide 56px — de ahí los 68 de abajo, que
    la despejan con 12 de aire. */
 @media (max-width:919px){
-  .occ-fisso{height:100svh;padding-block:72px 68px;align-items:stretch}
+  .occ-fisso{height:100svh;padding-block:72px calc(var(--banda) + 12px);align-items:stretch}
   .occ-griglia{grid-template-rows:auto minmax(0,1fr);height:100%;gap:20px;align-items:stretch}
   .occ-testo{min-height:232px}
   .occ-guida{margin-top:18px}
@@ -641,7 +653,26 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 .pie a{color:var(--inchiostro-2);text-decoration:none}
 .pie a:hover{color:var(--acc)}
 
-.avviso{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--notte);color:var(--panna);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;text-align:center;padding:9px 16px}
+.avviso{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:var(--notte);color:var(--panna);
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:8px 18px;text-align:center;padding:9px 16px;
+}
+/* El botón deja hueco a la derecha para el globo de WhatsApp, que va fijo en
+   esa esquina y le pasaría por encima. */
+@media (max-width:760px){ .avviso{padding-right:76px} }
+.avviso-btn{
+  display:inline-flex;align-items:center;gap:8px;flex:none;
+  padding:9px 17px;border-radius:999px;
+  background:var(--acc);color:#fff;text-decoration:none;
+  font-size:11.5px;letter-spacing:.08em;font-weight:700;
+  transition:background-color .25s ease,transform .18s ease;
+}
+.avviso-btn:hover{background:var(--acc-scuro);transform:translateY(-1px)}
+.avviso-btn svg{flex:none}
+@media (prefers-reduced-motion:reduce){ .avviso-btn:hover{transform:none} }
 
 
 /* ---- botón flotante de WhatsApp -------------------------------------------
@@ -657,7 +688,7 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
    Sube 54px para no chocar con la banda de prototipo; en producción, sin esa
    banda, baja a 24. */
 .wa{
-  position:fixed;right:20px;bottom:54px;z-index:65;
+  position:fixed;right:20px;bottom:calc(var(--banda) + 14px);z-index:65;
   display:flex;align-items:center;gap:0;
   height:56px;padding:0 16px;border-radius:999px;
   background:#25d366;color:#fff;text-decoration:none;
@@ -677,7 +708,7 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 .wa:hover{box-shadow:0 14px 32px rgba(20,90,50,.42);gap:10px}
 .wa:hover span,.wa:focus-visible span{max-width:190px}
 .wa:focus-visible{outline:2px solid var(--inchiostro);outline-offset:3px}
-@media (max-width:600px){ .wa{right:14px;bottom:50px;height:52px;padding:0 13px} .wa svg{width:26px;height:26px} }
+@media (max-width:600px){ .wa{right:14px;height:52px;padding:0 13px} .wa svg{width:26px;height:26px} }
 @media (prefers-reduced-motion:reduce){ .wa{transform:none;opacity:1} }
 
 /* ---- llegada de imágenes y fondos -----------------------------------------
@@ -1086,7 +1117,13 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
   <span>Scrivici su WhatsApp</span>
 </a>
 
-<div class="avviso">Prototipo Digitatex · Immagini e video di esempio · Dati aziendali da confermare</div>
+<div class="avviso">
+  <span>Prototipo Digitatex · Immagini e video di esempio · Dati aziendali da confermare</span>
+  <a class="avviso-btn" href="https://digitatex.com/?lang=it#quote" target="_blank" rel="noopener">
+    Compila il modulo Digitatex
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
 
 <script>
 /* ============================================================================
@@ -1489,6 +1526,26 @@ function parallasse(){
   paso();
 }
 
+/* El alto de la banda de prototipo se MIDE, no se supone. Depende de cuántas
+   líneas ocupe el texto, y eso cambia con el ancho de la pantalla, con el
+   tamaño de letra que tenga puesto el usuario y con el idioma. Los valores
+   escritos a mano en el CSS son solo el punto de partida: al añadir el botón,
+   la banda pasó a medir 120px en móvil donde yo había declarado 92, y el globo
+   de WhatsApp, la franja de datos y la foto de ocasiones se metieron todos
+   debajo de ella a la vez.
+
+   Un ResizeObserver sobre la propia banda lo resuelve para cualquier caso. */
+function medirBanda(){
+  var el = document.querySelector('.avviso');
+  if(!el) return;
+  function poner(){
+    document.documentElement.style.setProperty('--banda', Math.ceil(el.getBoundingClientRect().height) + 'px');
+  }
+  poner();
+  if('ResizeObserver' in window) new ResizeObserver(poner).observe(el);
+  else window.addEventListener('resize', poner);
+}
+
 /* El botón de WhatsApp entra solo, un poco después de la carga: si aparece a la
    vez que el hero, compite con él en el primer segundo, que es justo cuando el
    hero tiene que trabajar. */
@@ -1543,6 +1600,7 @@ document.addEventListener('DOMContentLoaded', function(){
   menuMobile();
   rivelare();
   parallasse();
+  medirBanda();
   whatsapp();
   modulo();
 });
