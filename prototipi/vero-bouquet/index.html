@@ -202,7 +202,13 @@ em{font-style:italic;color:var(--acc)}
    Tres pantallas de alto con el vídeo pegajoso dentro. El vídeo no se
    reproduce solo: cada fotograma lo elige el scroll. El titular entra por
    líneas desde detrás de una máscara mientras la cámara avanza.              */
-.hero{position:relative;height:300svh;background:var(--notte)}
+/* padding:0 anula el `section{padding-block:var(--aria)}` general. El hero es a
+   sangre y la barra flota por encima, así que ese aire sobraba: metía 76px en
+   móvil y 140 en escritorio POR DENTRO de la caja de 300svh, de modo que el
+   bloque pegado empezaba ahí abajo. Se veía como una franja negra sobre el
+   vídeo, y en el móvil empujaba el segundo botón fuera de la pantalla en la
+   primera vista, antes de que el pegado se enganche. */
+.hero{position:relative;height:300svh;background:var(--notte);padding:0}
 .hero-fisso{position:sticky;top:0;height:100svh;overflow:clip;display:grid;place-items:center}
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%}
 /* Velo doble: uno plano para bajar todo el brillo y otro degradado abajo, que
@@ -217,6 +223,45 @@ em{font-style:italic;color:var(--acc)}
 .hero-azioni{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;justify-content:center}
 .hero .btn-vuoto{border-color:rgba(255,255,255,.4);color:#fff}
 .hero .btn-vuoto:hover{border-color:#fff}
+
+/* ---- el hero en vertical ----------------------------------------------------
+   El clip es una franja de 1280x430: casi 3 a 1. Pedirle con object-fit:cover
+   que llene una pantalla de móvil (390x844) obliga a ampliarlo 6,4 veces y a
+   enseñar solo la quinta parte central del encuadre. De ahí que en el teléfono
+   se viera reventado y «cortado»: no falta nada, es que se estaba mirando un
+   trozo diminuto a mucho aumento.
+
+   Así que en vertical el vídeo deja de ser fondo y pasa a ser una BANDA con una
+   proporción parecida a la suya. En esa banda el navegador lo dibuja al 90% de
+   su tamaño real —reduciendo, nunca ampliando— y se ve nítido. Debajo, el
+   titular sobre el fondo de marca, con el velo cerrando en --notte para que la
+   unión entre banda y fondo no se vea como un corte.
+
+   No arregla el origen del problema: para que el vídeo llene la pantalla del
+   móvil hace falta el clip vertical original, no esta franja recortada. */
+@media (max-width:760px){
+  /* La fila del texto es `auto` y la del vídeo `1fr`: manda el texto, que pide
+     lo que necesita, y la banda se queda con lo que sobre. Al revés —banda fija
+     y texto en 1fr— el bloque medía 514px en un hueco de 456 y el `overflow:clip`
+     del contenedor pegado se comía los botones. El mínimo de 150px evita que en
+     un teléfono muy corto la banda desaparezca del todo. */
+  .hero-fisso{grid-template-columns:1fr;grid-template-rows:minmax(150px,1fr) auto;place-items:stretch;background:var(--notte)}
+  /* Vídeo y velo dejan de ser capas absolutas y pasan a compartir la MISMA
+     celda: así el velo mide exactamente lo que mide la banda, que es variable y
+     no se puede escribir como una altura fija. El velo va después en el HTML,
+     de modo que se pinta encima sin necesidad de z-index. */
+  .hero-video,.hero-velo{position:relative;inset:auto;grid-area:1/1;width:100%;height:100%}
+  .hero-video{object-position:center 46%}
+  .hero-velo{background:linear-gradient(to bottom,rgba(16,11,18,.42) 0%,rgba(16,11,18,.18) 46%,rgba(16,11,18,.70) 86%,var(--notte) 100%)}
+  /* 68 abajo, no 26: la banda de prototipo mide 56px y se comía el botón de
+     «Guarda le occasioni». Al publicar, sin esa banda, basta con 26. */
+  .hero-tipo{grid-area:2/1;align-self:end;padding-block:14px 68px}
+  .hero h1{margin-top:14px}
+  .hero .guida{margin-top:16px}
+  .hero-azioni{margin-top:24px}
+  /* Con el texto abajo, el rótulo de «scorri» le caería encima. */
+  .scorri{display:none}
+}
 
 /* Máscara de línea: el texto sube desde debajo del borde. overflow:hidden en
    la máscara y translate en el interior — es la única forma de que el trazo
@@ -280,6 +325,31 @@ section{padding-block:var(--aria)}
 .occ-guida b{display:block;width:34px;height:2px;background:var(--linea-forte);border-radius:2px;transition:background-color .4s ease}
 .occ-guida b.viva{background:var(--acc)}
 
+/* ---- ocasiones en una columna ----------------------------------------------
+   En móvil el bloque medía 941px dentro de una pantalla de 844, así que la foto
+   se salía 113px por debajo y quedaba cortada por la banda de prototipo. El
+   bloque está PEGADO (sticky): no se puede desplazar para ver el resto, de modo
+   que lo que sobresale no se ve nunca.
+
+   La regla es que aquí la altura manda: el bloque mide exactamente una pantalla
+   y la foto se queda con lo que sobre, en vez de reclamar su proporción 4/5 y
+   empujar. Por eso `height` y no `min-height`, y filas `auto` + `1fr`.
+
+   El minmax(0,1fr) no es adorno: una fila 1fr tiene mínimo `auto`, que es el
+   tamaño del contenido, y una imagen en object-fit:cover lo ignoraría y volvería
+   a desbordar. Con mínimo 0 la fila puede encoger de verdad.
+
+   Números medidos, no supuestos: la ficha más alta de las seis ocupa 232px a
+   este ancho, y la banda de prototipo mide 56px — de ahí los 68 de abajo, que
+   la despejan con 12 de aire. */
+@media (max-width:919px){
+  .occ-fisso{height:100svh;padding-block:72px 68px;align-items:stretch}
+  .occ-griglia{grid-template-rows:auto minmax(0,1fr);height:100%;gap:20px;align-items:stretch}
+  .occ-testo{min-height:232px}
+  .occ-guida{margin-top:18px}
+  .occ-foto{aspect-ratio:auto;height:100%;min-height:0}
+}
+
 /* ---- elementos ------------------------------------------------------------ */
 .elementi{margin-top:52px;border-top:1px solid var(--linea)}
 .el{display:grid;gap:6px 26px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--linea);transition:padding-left .3s ease}
@@ -289,11 +359,19 @@ section{padding-block:var(--aria)}
 
 /* ---- galería -------------------------------------------------------------- */
 .galleria{display:grid;gap:14px;margin-top:52px}
-@media (min-width:700px){ .galleria{grid-template-columns:repeat(3,1fr)} .galleria a:first-child{grid-column:span 2} }
+/* Cuatro fotos en tres columnas: la panorámica ocupa la fila entera y las tres
+   verticales llenan la siguiente. Con la panorámica a dos columnas quedaba un
+   hueco en la esquina, y un hueco en una rejilla de trabajos se lee como una
+   foto que no ha cargado. */
+@media (min-width:700px){ .galleria{grid-template-columns:repeat(3,1fr)} .galleria a:first-child{grid-column:span 3} }
 .galleria a{display:block;border-radius:16px;overflow:hidden;background:var(--panna-2);aspect-ratio:4/5}
 .galleria a:first-child{aspect-ratio:16/9}
-.galleria img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}
-.galleria a:hover img{transform:scale(1.05)}
+@media (min-width:700px){ .galleria a:first-child{aspect-ratio:12/5} }
+.galleria img{width:100%;height:100%;object-fit:cover}
+/* El hover AMPLÍA sobre la escala en reposo, nunca por debajo: la foto ya está
+   al 1.12 para que el paralaje tenga por dónde moverse, así que un scale(1.05)
+   la encogería y asomaría el fondo del marco. */
+.galleria a:hover img{transform:scale(calc(var(--zoom-reposo) + .06))}
 @media (prefers-reduced-motion:reduce){ .galleria a:hover img{transform:none} }
 
 /* ---- chi sono ------------------------------------------------------------- */
@@ -365,8 +443,87 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
 
 .avviso{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--notte);color:var(--panna);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;text-align:center;padding:9px 16px}
 
+
+/* ---- botón flotante de WhatsApp -------------------------------------------
+   Va SIEMPRE, en todos los prototipos, abajo a la derecha. En Italia el primer
+   contacto de una clienta que organiza una fiesta no es un correo: es un
+   mensaje. Pedirle que rellene un formulario a las once de la noche para
+   preguntar «siete liberi il 14?» es perder la consulta.
+
+   En verde de WhatsApp y no en el acento de la página a propósito: el botón
+   funciona porque se reconoce sin leerlo. Teñido de rosa deja de reconocerse y
+   pasa a ser un círculo cualquiera.
+
+   Sube 54px para no chocar con la banda de prototipo; en producción, sin esa
+   banda, baja a 24. */
+.wa{
+  position:fixed;right:20px;bottom:54px;z-index:65;
+  display:flex;align-items:center;gap:0;
+  height:56px;padding:0 16px;border-radius:999px;
+  background:#25d366;color:#fff;text-decoration:none;
+  box-shadow:0 10px 26px rgba(20,90,50,.32);
+  transform:translateY(18px) scale(.9);opacity:0;
+  transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s ease,box-shadow .3s ease,gap .3s ease,padding .3s ease;
+}
+.wa.dentro{transform:none;opacity:1}
+.wa svg{flex:none;width:28px;height:28px}
+/* La etiqueta se abre al pasar por encima. En ancho cero y overflow oculto en
+   vez de display:none, para que la apertura se pueda animar. */
+.wa span{
+  max-width:0;overflow:hidden;white-space:nowrap;
+  font-size:14px;font-weight:600;letter-spacing:.01em;
+  transition:max-width .35s cubic-bezier(.16,1,.3,1);
+}
+.wa:hover{box-shadow:0 14px 32px rgba(20,90,50,.42);gap:10px}
+.wa:hover span,.wa:focus-visible span{max-width:190px}
+.wa:focus-visible{outline:2px solid var(--inchiostro);outline-offset:3px}
+@media (max-width:600px){ .wa{right:14px;bottom:50px;height:52px;padding:0 13px} .wa svg{width:26px;height:26px} }
+@media (prefers-reduced-motion:reduce){ .wa{transform:none;opacity:1} }
+
+/* ---- llegada de imágenes y fondos -----------------------------------------
+   El fundido de toda la vida —opacidad y un empujón— sirve para el texto y se
+   queda corto para una fotografía: una foto que aparece de la nada parece un
+   error de carga.
+
+   Aquí la imagen se DESTAPA. El marco lleva un clip que se abre de abajo
+   arriba, y dentro la foto viene un punto más grande y se asienta. Son dos
+   movimientos con duraciones distintas a propósito: si acaban a la vez el ojo
+   los lee como uno solo y se pierde el efecto de telón.
+
+   `inset(... round 16px)` y no un inset pelado: clip-path sustituye al
+   border-radius, así que si no se le repite el radio la foto pierde las
+   esquinas justo mientras entra. */
+.svela{clip-path:inset(0 0 100% 0 round 16px);transition:clip-path 1.1s cubic-bezier(.16,1,.3,1)}
+.svela.dentro{clip-path:inset(0 0 0 0 round 16px)}
+/* --zoom-reposo lo lee también el paralaje para calcular su tope. Vive aquí,
+   en un solo sitio, para que no haya dos números que puedan separarse. */
+.galleria{--zoom-reposo:1.12}
+.svela > img{transform:scale(1.26);transition:transform 1.5s cubic-bezier(.16,1,.3,1)}
+.svela.dentro > img{transform:scale(var(--zoom-reposo))}
+/* Un segundo y medio es la duración del telón, no la de un hover: al ratón hay
+   que contestarle enseguida. En cuanto la entrada termina, el JS marca el marco
+   y la transición pasa a ser corta. No se puede hacer solo con `.dentro`, que
+   se pone en el mismo instante en que arranca el telón. */
+.svela.asentado > img{transition:transform .55s cubic-bezier(.16,1,.3,1)}
+
+/* El bloque oscuro del preventivo entra igual, pero sin radio propio: el suyo
+   es mayor y hay que repetirlo o se le cuadran las esquinas al entrar. */
+.chiusura{clip-path:inset(0 0 100% 0 round 26px);transition:clip-path 1.1s cubic-bezier(.16,1,.3,1)}
+.chiusura.dentro{clip-path:inset(0 0 0 0 round 26px)}
+
+/* El paralaje mueve la foto DENTRO de su marco. Por eso la escala en reposo se
+   queda en 1.12 y no vuelve a 1: el recorrido es de ±22px, así que hace falta
+   un 6% de holgura por lado o el desplazamiento descubre el borde del marco.
+   Un 1.04 solo aguantaría en las fotos verticales altas; en la panorámica, que
+   se dibuja a unos 400px de alto, la holgura serían 8px y se vería el corte. */
+.galleria a{overflow:hidden}
+@media (prefers-reduced-motion:reduce){
+  .svela,.chiusura{clip-path:none!important;transition:none}
+  .svela > img{transform:none!important;translate:none!important}
+}
+
 /* ---- entradas ------------------------------------------------------------- */
-.rivela{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.rivela{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform 1s cubic-bezier(.16,1,.3,1)}
 .rivela.dentro{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .rivela{opacity:1;transform:none;transition:none}
@@ -528,10 +685,10 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
         <h2>Feste vere,<br>in case vere.</h2>
       </div>
       <div class="galleria">
-        <a class="rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g7.webp" alt="Sala eventi con una grande installazione di palloncini sospesa" width="1600" height="893" loading="lazy"></a>
-        <a class="rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g8.webp" alt="Dettaglio ravvicinato di palloncini cromati e opachi" width="900" height="1117" loading="lazy"></a>
-        <a class="rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g9.webp" alt="Lettere luminose accanto a un arco di palloncini crema e oro" width="900" height="1117" loading="lazy"></a>
-        <a class="rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g10.webp" alt="Centrotavola con fiori, candele e palloncini sullo sfondo" width="900" height="1117" loading="lazy"></a>
+        <a class="svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g7.webp" alt="Sala eventi con una grande installazione di palloncini sospesa" width="1600" height="893" loading="lazy"></a>
+        <a class="svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g8.webp" alt="Dettaglio ravvicinato di palloncini cromati e opachi" width="900" height="1117" loading="lazy"></a>
+        <a class="svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g9.webp" alt="Lettere luminose accanto a un arco di palloncini crema e oro" width="900" height="1117" loading="lazy"></a>
+        <a class="svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><img src="media/g10.webp" alt="Centrotavola con fiori, candele e palloncini sullo sfondo" width="900" height="1117" loading="lazy"></a>
       </div>
       <p class="nota-vuoto rivela">
         Le immagini di questa pagina sono di esempio, generate per far vedere come funziona
@@ -608,7 +765,7 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
        ====================================================================== -->
   <section id="preventivo">
     <div class="wrap">
-      <div class="chiusura rivela">
+      <div class="chiusura">
         <div class="chiusura-griglia">
           <div>
             <p class="occhiello">Preventivo</p>
@@ -703,6 +860,15 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
     <span><a href="tel:+393287911076">328 791 1076</a> · <a href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener">@vero_bouquet</a></span>
   </div>
 </footer>
+
+<!-- El botón de WhatsApp va fuera de <main>: es una ayuda fija de la
+     interfaz, no contenido del documento. -->
+<a class="wa" id="wa" target="_blank" rel="noopener"
+   href="https://wa.me/393287911076?text=Ciao%20Vero%20Bouquet%2C%20vorrei%20un%20preventivo%20per%20una%20festa."
+   aria-label="Scrivici su WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.42 9.42 0 0 1-4.8-1.32l-.34-.2-3.57.93.96-3.47-.23-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.36 9.36 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43zM20.15 3.9A11.32 11.32 0 0 0 12.05.55C5.8.55.72 5.63.72 11.87c0 1.99.52 3.94 1.51 5.65L.63 23.45l6.06-1.59a11.3 11.3 0 0 0 5.36 1.37h.01c6.24 0 11.32-5.08 11.32-11.32 0-3.03-1.18-5.87-3.23-8.01z"/></svg>
+  <span>Scrivici su WhatsApp</span>
+</a>
 
 <div class="avviso">Prototipo Digitatex · Immagini e video di esempio · Dati aziendali da confermare</div>
 
@@ -1028,7 +1194,10 @@ function menuMobile(){
 }
 
 function rivelare(){
-  var items = document.querySelectorAll('.rivela');
+  // Dos formas de entrar, un solo observador. El texto se funde y sube; las
+  // fotografías y los bloques se DESTAPAN con un clip. Una foto que aparece de
+  // la nada parece un fallo de carga; una que se descubre parece una decisión.
+  var items = document.querySelectorAll('.rivela, .svela, .chiusura');
   if(!items.length) return;
   if(!('IntersectionObserver' in window)){
     items.forEach(function(el){ el.classList.add('dentro'); });
@@ -1039,14 +1208,101 @@ function rivelare(){
       if(!e.isIntersecting) return;
       // Escalonado por posición dentro de su grupo, no por índice global: una
       // rejilla entra en cascada y un párrafo suelto entra al momento.
-      var hermanos = Array.prototype.filter.call(e.target.parentElement.children, function(n){ return n.classList.contains('rivela'); });
+      var hermanos = Array.prototype.filter.call(e.target.parentElement.children, function(n){
+        return n.classList.contains('rivela') || n.classList.contains('svela');
+      });
       var i = Math.max(0, hermanos.indexOf(e.target));
-      e.target.style.transitionDelay = Math.min(i*70,350)+'ms';
+      e.target.style.transitionDelay = Math.min(i*90,420)+'ms';
       e.target.classList.add('dentro');
       io.unobserve(e.target);
+      // Terminado el telón, la foto pasa a transición corta para el hover.
+      // Con temporizador y no con transitionend: la transición del clip va en
+      // el marco y la del zoom en la imagen, y si el marco entra fuera de
+      // pantalla el navegador puede no emitir el evento.
+      if(e.target.classList.contains('svela')){
+        setTimeout(function(el){ return function(){ el.classList.add('asentado'); }; }(e.target), 1600 + Math.min(i*90,420));
+      }
     });
-  }, {rootMargin:'0px 0px -8% 0px', threshold:.12});
+  /* Umbral CERO, no una fracción, y esto no es un detalle: los elementos que
+     entran con telón llevan `clip-path` a cero altura, y un elemento recortado
+     declara siempre intersectionRatio 0 por mucho que esté centrado en la
+     pantalla. Con umbral .12 no se revelaban NUNCA: la galería y el bloque del
+     presupuesto se quedaban invisibles. (Comprobado en el navegador: recortado
+     da isIntersecting true con ratio 0; sin recortar, ratio 1.)
+
+     De paso arregla el otro caso clásico, el elemento más alto que la ventana,
+     que tampoco puede alcanzar una fracción alta. El retraso de entrada lo pone
+     el margen de abajo, que es donde debe estar. */
+  }, {rootMargin:'0px 0px -10% 0px', threshold:0});
   items.forEach(function(el){ io.observe(el); });
+}
+
+/* ---------------------------------------------------------------------------
+   PARALAJE
+   La foto se mueve DENTRO de su marco, más despacio que la página. Es lo que
+   le da profundidad a una rejilla de fotos plana.
+
+   El recorrido es corto —±22px— a propósito: un paralaje grande se nota como
+   un efecto y marea; uno corto solo se nota si lo quitas.
+
+   Todo en un único bucle sobre una lista medida una vez. Un ResizeObserver por
+   imagen, o leer offsetTop en cada fotograma, obliga al navegador a recalcular
+   la maquetación sesenta veces por segundo.
+   --------------------------------------------------------------------------- */
+function parallasse(){
+  if(QUIETO) return;
+  var marcos = Array.prototype.slice.call(document.querySelectorAll('[data-par]'));
+  if(!marcos.length) return;
+  var tic = false;
+
+  // La escala en reposo se lee del CSS una sola vez: por fotograma sería una
+  // consulta de estilo calculado, que obliga al navegador a rehacer la
+  // maquetación. Si el valor no está, 1.12 es el que hay en la hoja.
+  var ZOOM = parseFloat(getComputedStyle(marcos[0]).getPropertyValue('--zoom-reposo')) || 1.12;
+
+  function paso(){
+    var vh = window.innerHeight;
+    for(var i=0;i<marcos.length;i++){
+      var m = marcos[i], img = m.querySelector('img');
+      if(!img) continue;
+      var r = m.getBoundingClientRect();
+      if(r.bottom < -100 || r.top > vh + 100) continue;   // fuera: no se toca
+      // -1 arriba del todo, +1 abajo del todo.
+      var d = ((r.top + r.height/2) - vh/2) / (vh/2 + r.height/2);
+
+      /* El recorrido se limita a la holgura REAL de este marco: la mitad de lo
+         que la foto ampliada sobresale por arriba y por abajo. Sin este tope,
+         la panorámica en móvil —marco de 197px— se desplazaría 22px teniendo 12
+         de holgura, y asomaría el fondo por el borde del marco.
+
+         La holgura se calcula con offsetHeight y la escala EN REPOSO, no con el
+         rectángulo medido: getBoundingClientRect incluye la transformación, y
+         durante el segundo y medio que dura el telón la foto todavía está en
+         1.26. Medir ahí da una holgura que no existirá cuando la transición
+         acabe, y el tope se queda flojo justo mientras se mira la foto. */
+      var holgura = Math.max(0, (img.offsetHeight * ZOOM - r.height) / 2);
+      var y = Math.max(-holgura, Math.min(holgura, d * 22));
+
+      /* Se escribe en `translate`, NO en `transform`. Son propiedades distintas
+         y se componen: de `transform` tira el telón de entrada (scale 1.26 →
+         1.12, con transición). Si el paralaje escribiera en `transform` lo
+         pisaría en el primer fotograma y el telón no se vería nunca. */
+      img.style.translate = '0 ' + y.toFixed(2) + 'px';
+    }
+    tic = false;
+  }
+  document.addEventListener('scroll', function(){ if(!tic){ requestAnimationFrame(paso); tic=true; } }, {passive:true});
+  window.addEventListener('resize', paso);
+  paso();
+}
+
+/* El botón de WhatsApp entra solo, un poco después de la carga: si aparece a la
+   vez que el hero, compite con él en el primer segundo, que es justo cuando el
+   hero tiene que trabajar. */
+function whatsapp(){
+  var w = document.getElementById('wa');
+  if(!w) return;
+  setTimeout(function(){ w.classList.add('dentro'); }, 1100);
 }
 
 /* VARIABLE: endpoint de envío. Vacío a propósito en el prototipo — las
@@ -1093,6 +1349,8 @@ document.addEventListener('DOMContentLoaded', function(){
   barra();
   menuMobile();
   rivelare();
+  parallasse();
+  whatsapp();
   modulo();
 });
 </script>
