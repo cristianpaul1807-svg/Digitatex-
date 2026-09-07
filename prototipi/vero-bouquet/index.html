@@ -210,7 +210,9 @@ em{font-style:italic;color:var(--acc)}
    primera vista, antes de que el pegado se enganche. */
 .hero{position:relative;height:300svh;background:var(--notte);padding:0}
 .hero-fisso{position:sticky;top:0;height:100svh;overflow:clip;display:grid;place-items:center}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%}
+/* 50% y no un valor sesgado hacia arriba: la parte de arriba del plano es
+   techo vacío, y lo que hay que conservar es el arco y las letras. */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%}
 /* Velo doble: uno plano para bajar todo el brillo y otro degradado abajo, que
    es donde vive el texto. Con uno solo o el vídeo se apaga entero o el titular
    no se lee. */
@@ -225,42 +227,21 @@ em{font-style:italic;color:var(--acc)}
 .hero .btn-vuoto:hover{border-color:#fff}
 
 /* ---- el hero en vertical ----------------------------------------------------
-   El clip es una franja de 1280x430: casi 3 a 1. Pedirle con object-fit:cover
-   que llene una pantalla de móvil (390x844) obliga a ampliarlo 6,4 veces y a
-   enseñar solo la quinta parte central del encuadre. De ahí que en el teléfono
-   se viera reventado y «cortado»: no falta nada, es que se estaba mirando un
-   trozo diminuto a mucho aumento.
+   El vídeo va a sangre también en el móvil, y puede hacerlo porque el archivo
+   es el fotograma COMPLETO de 1280x720. Cubrir una pantalla de 390x844 con él
+   es un aumento de 1,17: prácticamente su tamaño real.
 
-   Así que en vertical el vídeo deja de ser fondo y pasa a ser una BANDA con una
-   proporción parecida a la suya. En esa banda el navegador lo dibuja al 90% de
-   su tamaño real —reduciendo, nunca ampliando— y se ve nítido. Debajo, el
-   titular sobre el fondo de marca, con el velo cerrando en --notte para que la
-   unión entre banda y fondo no se vea como un corte.
+   Esto estuvo mal y merece quedar escrito. El archivo era antes un recorte de
+   1280x430 —una franja de casi 3 a 1— que le cortaba la parte de arriba al arco
+   de globos y dejaba fuera las letras luminosas del fondo. Además, para llenar
+   una pantalla vertical había que ampliar esa franja 6,4 veces y solo se veía
+   la quinta parte central. Recortar el material en el disco para «ahorrar peso»
+   fue el error: el encuadre lo decide `object-fit` en cada pantalla, y para eso
+   necesita el fotograma entero.
 
-   No arregla el origen del problema: para que el vídeo llene la pantalla del
-   móvil hace falta el clip vertical original, no esta franja recortada. */
+   Solo se aparta el texto de la banda de prototipo. */
 @media (max-width:760px){
-  /* La fila del texto es `auto` y la del vídeo `1fr`: manda el texto, que pide
-     lo que necesita, y la banda se queda con lo que sobre. Al revés —banda fija
-     y texto en 1fr— el bloque medía 514px en un hueco de 456 y el `overflow:clip`
-     del contenedor pegado se comía los botones. El mínimo de 150px evita que en
-     un teléfono muy corto la banda desaparezca del todo. */
-  .hero-fisso{grid-template-columns:1fr;grid-template-rows:minmax(150px,1fr) auto;place-items:stretch;background:var(--notte)}
-  /* Vídeo y velo dejan de ser capas absolutas y pasan a compartir la MISMA
-     celda: así el velo mide exactamente lo que mide la banda, que es variable y
-     no se puede escribir como una altura fija. El velo va después en el HTML,
-     de modo que se pinta encima sin necesidad de z-index. */
-  .hero-video,.hero-velo{position:relative;inset:auto;grid-area:1/1;width:100%;height:100%}
-  .hero-video{object-position:center 46%}
-  .hero-velo{background:linear-gradient(to bottom,rgba(16,11,18,.42) 0%,rgba(16,11,18,.18) 46%,rgba(16,11,18,.70) 86%,var(--notte) 100%)}
-  /* 68 abajo, no 26: la banda de prototipo mide 56px y se comía el botón de
-     «Guarda le occasioni». Al publicar, sin esa banda, basta con 26. */
-  .hero-tipo{grid-area:2/1;align-self:end;padding-block:14px 68px}
-  .hero h1{margin-top:14px}
-  .hero .guida{margin-top:16px}
-  .hero-azioni{margin-top:24px}
-  /* Con el texto abajo, el rótulo de «scorri» le caería encima. */
-  .scorri{display:none}
+  .hero-tipo{padding-bottom:46px}
 }
 
 /* Máscara de línea: el texto sube desde debajo del borde. overflow:hidden en
@@ -274,6 +255,9 @@ em{font-style:italic;color:var(--acc)}
 
 .scorri{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.65);font-size:11px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .4s ease}
 .scorri i{display:block;width:1px;height:34px;background:linear-gradient(to bottom,rgba(255,255,255,.7),transparent)}
+/* En móvil sube por encima de la banda de prototipo, que mide 56px y le cortaba
+   la línea por la mitad. Al publicar, sin esa banda, vuelve a 26. */
+@media (max-width:760px){ .scorri{bottom:72px} }
 
 /* ---- tira de servicios ---------------------------------------------------- */
 .tira{background:var(--notte);color:#fff;overflow:hidden;display:flex;border-block:1px solid rgba(255,255,255,.1)}
