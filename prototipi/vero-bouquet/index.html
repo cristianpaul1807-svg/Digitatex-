@@ -84,6 +84,8 @@
   --acc:#d92d6f;
   --acc-scuro:#a81f54;
   --acc-tenue:#f7e2ea;
+  /* El acento aclarado, para el bloque oscuro de allestimenti. */
+  --acc-chiaro:#ff9ec4;
 
   --linea:rgba(36,28,38,.12);
   --linea-forte:rgba(36,28,38,.22);
@@ -128,10 +130,31 @@ img{display:block;max-width:100%;height:auto}
 #campo{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 main,footer,.barra{position:relative;z-index:2}
 
+/* Grano. Un plano de color liso se lee como plano de color liso; con una capa
+   de ruido finísimo encima empieza a parecer papel impreso. Es un 5%: no se ve,
+   se nota. Va por encima del contenido —incluidas las fotos— porque si va
+   debajo, las imágenes se quedan fuera y son justo las que más lo agradecen.
+   En multiply para que oscurezca en vez de lavar los tonos. */
+body::after{
+  content:'';position:fixed;inset:0;z-index:3;pointer-events:none;
+  opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+  background-size:180px 180px;
+}
+
 /* ---- tipografía ---------------------------------------------------------- */
-h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.01em;line-height:1.08;text-wrap:balance}
-h1{font-size:clamp(34px,4.4vw,58px);line-height:1.1}
-h2{font-size:clamp(34px,4.6vw,62px)}
+/* La escala sube y el interlineado baja. Antes los titulares eran correctos y
+   se quedaban ahí: a 62px sobre un lienzo de 1440 con este aire alrededor, un
+   titular no manda, acompaña. En editorial la autoridad la da el CONTRASTE de
+   tamaño entre el titular y el cuerpo, no el tamaño del titular; por eso sube
+   a 84 y el interlineado cierra a 1.02, para que las dos líneas formen un
+   bloque macizo en vez de dos frases sueltas.
+
+   El tracking negativo va con el cuerpo: a este tamaño la Instrument Serif abre
+   demasiado y las palabras se deshilachan. */
+h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.018em;line-height:1.06;text-wrap:balance}
+h1{font-size:clamp(36px,4.8vw,64px);line-height:1.06}
+h2{font-size:clamp(38px,5.6vw,84px);line-height:1.02}
 h3{font-size:clamp(21px,2.2vw,27px);line-height:1.2}
 em{font-style:italic;color:var(--acc)}
 
@@ -217,14 +240,57 @@ em{font-style:italic;color:var(--acc)}
    es donde vive el texto. Con uno solo o el vídeo se apaga entero o el titular
    no se lee. */
 .hero-velo{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,11,18,.55) 0%,rgba(16,11,18,.30) 38%,rgba(16,11,18,.82) 100%)}
-.hero-tipo{position:relative;width:100%;max-width:var(--largo);margin:0 auto;padding:0 var(--margine);color:#fff;text-align:center}
-.hero-tipo .occhiello{color:#ffb3cd;justify-content:center}
-.hero h1{color:#fff;margin-top:20px;font-size:clamp(38px,5.6vw,76px)}
+/* El hero pasa de centrado a alineado a la izquierda, y el titular sube de 76
+   a 110px. El motivo no es de gusto: un titular centrado sobre un vídeo, con un
+   párrafo centrado debajo y dos botones centrados, es la portada que tiene todo
+   el mundo — se reconoce como plantilla antes de leerla. Un eje a la izquierda
+   con el texto colgando de él es una decisión, y de paso deja despejado el lado
+   derecho del plano, que es donde está el arco de globos.
+
+   El titular tiene que ser lo más grande de la página, por encima incluso de
+   los titulares de sección (84px). Estaba por debajo, y eso invierte la
+   jerarquía: la portada pesaba menos que sus propias secciones. */
+.hero-tipo{position:relative;width:100%;max-width:var(--largo);margin:0 auto;padding:0 var(--margine);color:#fff;text-align:left}
+.hero-tipo .occhiello{color:#ffb3cd}
+.hero h1{color:#fff;margin-top:22px;font-size:clamp(40px,7vw,110px);line-height:.98;max-width:15ch}
 .hero h1 em{color:#ffb3cd}
-.hero .guida{color:rgba(255,255,255,.8);margin:22px auto 0;text-align:center}
-.hero-azioni{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;justify-content:center}
+.hero .guida{color:rgba(255,255,255,.82);margin:26px 0 0;text-align:left;max-width:46ch}
+.hero-azioni{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;justify-content:flex-start}
 .hero .btn-vuoto{border-color:rgba(255,255,255,.4);color:#fff}
 .hero .btn-vuoto:hover{border-color:#fff}
+
+/* Franja de hechos al pie del hero. Tres datos concretos —qué incluye, hasta
+   dónde llega, en cuánto contesta— puestos justo donde acaba el primer vistazo.
+   Es lo que separa una portada bonita de una portada que ya ha contestado la
+   primera pregunta que se hace el cliente. */
+.hero-fatti{
+  /* Se aparta de la banda de prototipo, que va fija abajo del todo y le comía
+     la línea. Al publicar, sin esa banda, `bottom` vuelve a 0. */
+  position:absolute;left:0;right:0;bottom:38px;z-index:2;
+  border-top:1px solid rgba(255,255,255,.16);
+}
+@media (max-width:760px){ .hero-fatti{bottom:56px} }
+.hero-fatti ul{
+  list-style:none;display:grid;grid-template-columns:1fr;
+  max-width:var(--largo);margin:0 auto;padding:0 var(--margine);
+}
+@media (min-width:820px){ .hero-fatti ul{grid-template-columns:repeat(3,1fr)} }
+.hero-fatti li{
+  padding:15px 0;color:rgba(255,255,255,.78);
+  font-size:13.5px;display:flex;align-items:center;gap:11px;
+}
+@media (min-width:820px){
+  .hero-fatti li + li{border-left:1px solid rgba(255,255,255,.16);padding-left:26px}
+}
+/* En móvil solo cabe uno; los otros dos se repiten más abajo en la página.
+   El hueco de la derecha es para el botón de WhatsApp, que va fijo en esa
+   esquina: sin él la frase le pasaba por debajo y se cortaba. */
+@media (max-width:819px){
+  .hero-fatti li:not(:first-child){display:none}
+  .hero-fatti li{padding-right:74px}
+}
+.hero-fatti b{color:#fff;font-weight:600}
+.hero-fatti svg{flex:none;color:#ffb3cd}
 
 /* ---- el hero en vertical ----------------------------------------------------
    El vídeo va a sangre también en el móvil, y puede hacerlo porque el archivo
@@ -253,11 +319,6 @@ em{font-style:italic;color:var(--acc)}
 .riga:nth-child(2) > span{transition-delay:.08s}
 .riga:nth-child(3) > span{transition-delay:.16s}
 
-.scorri{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.65);font-size:11px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .4s ease}
-.scorri i{display:block;width:1px;height:34px;background:linear-gradient(to bottom,rgba(255,255,255,.7),transparent)}
-/* En móvil sube por encima de la banda de prototipo, que mide 56px y le cortaba
-   la línea por la mitad. Al publicar, sin esa banda, vuelve a 26. */
-@media (max-width:760px){ .scorri{bottom:72px} }
 
 /* ---- tira de servicios ---------------------------------------------------- */
 .tira{background:var(--notte);color:#fff;overflow:hidden;display:flex;border-block:1px solid rgba(255,255,255,.1)}
@@ -293,10 +354,27 @@ section{padding-block:var(--aria)}
   transition:opacity .5s ease,transform .5s ease;
 }
 .occ-scheda.viva{opacity:1;transform:none;pointer-events:auto}
-.occ-scheda h3{font-size:clamp(30px,3.6vw,46px);margin:14px 0 14px}
+
+/* El nombre de la ocasión pasa a ser lo más grande de la página después del
+   titular del hero. Esta sección es lo único que esta web tiene y ninguna otra
+   del sector: el color de todo el sitio cambia con la ocasión que estás
+   mirando. Estaba contado a 46px, del tamaño de un subtítulo cualquiera, y una
+   idea contada en pequeño no se lee como una idea. */
+.occ-num{
+  display:block;font-family:'Instrument Serif',Georgia,serif;
+  font-size:16px;letter-spacing:.14em;color:var(--acc);
+  font-variant-numeric:tabular-nums;transition:color .5s ease;
+}
+.occ-num i{font-style:normal;opacity:.45}
+.occ-scheda h3{font-size:clamp(42px,6.2vw,92px);line-height:.97;margin:12px 0 18px}
 .occ-scheda p{color:var(--inchiostro-2);max-width:44ch}
-.paletta{display:flex;gap:8px;margin-top:26px}
-.paletta span{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+
+/* Las muestras de color son la prueba de la idea, así que se ven: círculos
+   grandes, en fila, con un aro finísimo para que el blanco puro no desaparezca
+   sobre el crema. */
+.paletta{display:flex;gap:10px;margin-top:30px}
+.paletta span{width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.10)}
+@media (max-width:919px){ .paletta span{width:36px;height:36px} }
 
 /* Las fotos se apilan en el mismo hueco y se cruzan. La que entra sube un poco
    y se escala: sin ese movimiento el cambio se lee como un parpadeo. */
@@ -335,11 +413,35 @@ section{padding-block:var(--aria)}
 }
 
 /* ---- elementos ------------------------------------------------------------ */
-.elementi{margin-top:52px;border-top:1px solid var(--linea)}
-.el{display:grid;gap:6px 26px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--linea);transition:padding-left .3s ease}
-@media (min-width:820px){ .el{grid-template-columns:52px 1fr 1.1fr} .el:hover{padding-left:14px} }
-.el b{font-family:'Instrument Serif',Georgia,serif;font-size:20px;color:var(--acc);transition:color .5s ease}
-.el p{font-size:15.5px;color:var(--inchiostro-2)}
+/* ---- allestimenti · el bloque oscuro --------------------------------------
+   Toda la página iba sobre el mismo crema, sección tras sección, con la misma
+   receta: antetítulo, titular serif, párrafo. Leída de una sentada se volvía
+   plana — no porque cada pieza estuviera mal, sino porque no había ni un solo
+   cambio de suelo en el que descansar la vista.
+
+   Esta sección pasa a fondo noche y hace de columna vertebral: parte la página
+   en dos y da al desplazamiento un antes y un después. Es también la que mejor
+   lo aguanta, porque es una lista numerada —la parte más gráfica del sitio— y
+   en negativo los números en color de acento se leen como una ficha técnica.  */
+#allestimenti{background:var(--notte);color:var(--panna);margin-block:0}
+#allestimenti h2{color:var(--panna)}
+#allestimenti .guida{color:rgba(250,246,240,.70)}
+#allestimenti .occhiello{color:var(--acc-chiaro)}
+
+.elementi{margin-top:clamp(44px,6vw,72px);border-top:1px solid rgba(250,246,240,.16)}
+.el{display:grid;gap:6px 26px;align-items:baseline;padding:26px 0;border-bottom:1px solid rgba(250,246,240,.16);transition:padding-left .35s cubic-bezier(.16,1,.3,1),background-color .35s ease}
+@media (min-width:820px){
+  .el{grid-template-columns:76px 1fr 1.1fr}
+  /* El sangrado al pasar por encima necesita un fondo que lo acompañe: sin él
+     la fila se mueve pero nada indica que esté seleccionada. */
+  .el:hover{padding-left:18px;background:rgba(250,246,240,.045)}
+}
+/* Numeración grande y tabular. Es lo que convierte una lista en un índice:
+   `tabular-nums` para que el 01 y el 06 ocupen exactamente lo mismo y la
+   columna quede a plomo. */
+.el b{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(28px,3vw,40px);line-height:1;color:var(--acc-chiaro);font-variant-numeric:tabular-nums;transition:color .5s ease}
+.el h3{color:var(--panna)}
+.el p{font-size:15.5px;color:rgba(250,246,240,.66)}
 
 /* ---- galería -------------------------------------------------------------- */
 .galleria{display:grid;gap:14px;margin-top:52px}
@@ -361,26 +463,60 @@ section{padding-block:var(--aria)}
 /* ---- chi sono ------------------------------------------------------------- */
 .dossier{display:grid;gap:clamp(28px,4vw,60px);align-items:center}
 @media (min-width:860px){ .dossier{grid-template-columns:.8fr 1.2fr} }
-.ritratto{aspect-ratio:4/5;border-radius:18px;border:1px dashed var(--linea-forte);background:var(--panna-2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px}
-.ritratto span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600}
-.ritratto small{font-size:13.5px;color:var(--tenue);line-height:1.45;max-width:24ch}
+/* Era un recuadro de línea discontinua con el rótulo «FOTO — RITRATTO». En una
+   presentación, un recuadro de puntos no se lee como «pendiente», se lee como
+   «no lo han terminado», y eso se lo lleva por delante todo lo demás. */
+/* --zoom-reposo hace falta AQUÍ aunque no se vea: la regla del telón dice
+   `scale(var(--zoom-reposo))`, y si la variable no existe la declaración entera
+   se descarta y la escala cae a 1 — justo por debajo de lo que el paralaje
+   necesita, con el borde del marco al descubierto. */
+.ritratto{--zoom-reposo:1.12;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--panna-2)}
+.ritratto img{width:100%;height:100%;object-fit:cover}
 
 /* ---- recensioni ----------------------------------------------------------- */
 .recensioni{display:grid;gap:18px;margin-top:52px}
 @media (min-width:820px){ .recensioni{grid-template-columns:repeat(3,1fr)} }
-.rec{padding:28px;border-radius:18px;background:var(--panna-2);border:1px dashed var(--linea-forte);display:flex;flex-direction:column;justify-content:space-between;gap:22px;min-height:190px}
-.rec p{font-family:'Instrument Serif',Georgia,serif;font-size:22px;line-height:1.3;color:var(--tenue)}
-.rec p::before{content:'\201C'} .rec p::after{content:'\201D'}
-.rec cite{font-style:normal;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);font-weight:600}
+/* Estas tres tarjetas están VACÍAS a propósito y van a seguir estándolo hasta
+   que lleguen tres reseñas reales: son la única sección que no se puede
+   inventar. Pero estaban resueltas con borde de línea discontinua, y un borde
+   discontinuo no comunica «reservado», comunica «roto» — en una presentación
+   se lee como que la web no está terminada.
+
+   Así que el hueco pasa a estar DISEÑADO: tarjeta llena, comilla grande de
+   adorno en color de acento muy tenue, y el índice arriba. Se sigue viendo que
+   falta el contenido, que es lo que tiene que verse, pero se ve como un sitio
+   preparado para recibirlo. */
+.rec{
+  position:relative;padding:30px;border-radius:18px;overflow:hidden;
+  background:var(--panna-2);border:1px solid var(--linea);
+  display:flex;flex-direction:column;justify-content:flex-end;gap:18px;min-height:210px;
+}
+/* La comilla decorativa, enorme y detrás de todo. `line-height:1` y la posición
+   negativa la sacan por arriba a propósito: cortada parece un ornamento
+   tipográfico, entera parecería un emoji. */
+.rec::before{
+  content:'\201C';position:absolute;top:-26px;left:18px;
+  font-family:'Instrument Serif',Georgia,serif;font-size:150px;line-height:1;
+  color:var(--acc);opacity:.13;pointer-events:none;transition:color .5s ease;
+}
+.rec b{
+  position:relative;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tenue);font-weight:600;margin-bottom:auto;
+}
+.rec p{position:relative;font-family:'Instrument Serif',Georgia,serif;font-size:23px;line-height:1.28;color:var(--tenue)}
+.rec cite{position:relative;font-style:normal;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);font-weight:600}
 .nota-vuoto{margin-top:24px;font-size:14px;color:var(--tenue);max-width:62ch;line-height:1.6}
 
 /* ---- instagram ------------------------------------------------------------ */
 .ig{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:52px}
 @media (min-width:700px){ .ig{grid-template-columns:repeat(6,1fr)} }
-.ig-cella{aspect-ratio:1;border-radius:12px;border:1px dashed var(--linea-forte);background:var(--panna-2);display:grid;place-items:center;text-decoration:none;transition:border-color .18s ease,transform .18s ease}
-.ig-cella:hover{border-color:var(--acc);transform:translateY(-3px)}
-@media (prefers-reduced-motion:reduce){ .ig-cella:hover{transform:none} }
-.ig-cella span{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--tenue);font-weight:600}
+.ig-cella{aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--panna-2);display:block;text-decoration:none}
+.ig-cella img{width:100%;height:100%;object-fit:cover}
+/* El zoom parte de la escala en reposo del telón, igual que en la galería: por
+   debajo de ella el paralaje descubriría el borde del marco. */
+.ig{--zoom-reposo:1.12}
+.ig-cella:hover img{transform:scale(calc(var(--zoom-reposo) + .07))}
+@media (prefers-reduced-motion:reduce){ .ig-cella:hover img{transform:none} }
 
 /* ---- preventivo ----------------------------------------------------------- */
 .chiusura{background:var(--notte);color:var(--panna);border-radius:26px;padding:clamp(30px,5vw,64px);overflow:hidden}
@@ -567,7 +703,14 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
         </div>
       </div>
 
-      <div class="scorri" id="scorri" aria-hidden="true"><span>Scorri</span><i></i></div>
+      <div class="hero-fatti">
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Montaggio</b> e smontaggio inclusi nel prezzo.</span></li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg><span><b>Sant'Ilario d'Enza,</b> Reggio Emilia, Parma e comuni intorno.</span></li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg><span><b>Rispondiamo in 24 h</b> con una proposta e un prezzo.</span></li>
+        </ul>
+      </div>
+
     </div>
   </section>
 
@@ -590,31 +733,37 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
           <p class="occhiello">Occasioni</p>
           <div class="occ-testo" id="occ-testo">
             <article class="occ-scheda viva">
+              <span class="occ-num">01 <i>/06</i></span>
               <h3>Compleanni</h3>
               <p>Dall'arco sul tavolo della torta all'allestimento che prende tutta la parete. Con numero luminoso, se il numero conta.</p>
               <div class="paletta"><span style="background:#1b34b0"></span><span style="background:#c2c7d1"></span><span style="background:#e8eaf0"></span><span style="background:#8f96b8"></span></div>
             </article>
             <article class="occ-scheda">
+              <span class="occ-num">02 <i>/06</i></span>
               <h3>18 anni</h3>
               <p>La festa più fotografata di tutte. Parete scintillante, insegna al neon, numero luminoso alto un metro: fatta per stare dentro un ritratto.</p>
               <div class="paletta"><span style="background:#e3b6a3"></span><span style="background:#c2c7d1"></span><span style="background:#8d5a4a"></span><span style="background:#f2ebe2"></span></div>
             </article>
             <article class="occ-scheda">
+              <span class="occ-num">03 <i>/06</i></span>
               <h3>Battesimi e nascite</h3>
               <p>Toni delicati, nome del bambino ritagliato su misura, composizioni basse che non coprono i tavoli. Anche per baby shower e primo compleanno.</p>
               <div class="paletta"><span style="background:#f2ebe2"></span><span style="background:#d9c4ad"></span><span style="background:#a98d6d"></span><span style="background:#c9a24b"></span></div>
             </article>
             <article class="occ-scheda">
+              <span class="occ-num">04 <i>/06</i></span>
               <h3>Matrimoni</h3>
               <p>Bouquet, centrotavola, arco della cerimonia e tableau. La parte floreale e quella dei palloncini pensate insieme, non sommate.</p>
               <div class="paletta"><span style="background:#ffffff"></span><span style="background:#f2ebe2"></span><span style="background:#7fa88b"></span><span style="background:#d9c4ad"></span></div>
             </article>
             <article class="occ-scheda">
+              <span class="occ-num">05 <i>/06</i></span>
               <h3>Feste a tema</h3>
               <p>Tropicale, Stranger Things, supereroi, unicorni. Il tema lo scegliete voi; noi lo teniamo elegante anche quando è scatenato.</p>
               <div class="paletta"><span style="background:#e8407f"></span><span style="background:#3fbdcb"></span><span style="background:#9fd8c0"></span><span style="background:#ff9ec4"></span></div>
             </article>
             <article class="occ-scheda">
+              <span class="occ-num">06 <i>/06</i></span>
               <h3>Aziende e negozi</h3>
               <p>Inaugurazioni, anniversari, vetrine e stand. Allestimenti nei colori del vostro marchio, montati fuori orario di apertura.</p>
               <div class="paletta"><span style="background:#241c26"></span><span style="background:#b0246a"></span><span style="background:#c9a24b"></span><span style="background:#f2ebe2"></span></div>
@@ -686,7 +835,7 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
        ====================================================================== -->
   <section id="chi">
     <div class="wrap dossier rivela">
-      <div class="ritratto"><span>Foto — ritratto</span><small>Veronika al lavoro, mentre monta. Meglio in azione che in posa.</small></div>
+      <figure class="ritratto svela" data-par><img src="media/vero.webp" alt="Mani che legano palloncini rosa, avorio e cromati su una striscia da ghirlanda, sul tavolo da lavoro con bobine di nastro" width="900" height="1125" loading="lazy"></figure>
       <div>
         <p class="occhiello">Chi sono</p>
         <h2 style="margin-top:16px">Ciao, sono <em>Veronika</em>.</h2>
@@ -711,9 +860,9 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
         <h2>Le parole di chi<br>ha già festeggiato.</h2>
       </div>
       <div class="recensioni">
-        <blockquote class="rec rivela"><p>Qui va una recensione vera.</p><cite>Nome del cliente · tipo di festa</cite></blockquote>
-        <blockquote class="rec rivela"><p>Qui va una recensione vera.</p><cite>Nome del cliente · tipo di festa</cite></blockquote>
-        <blockquote class="rec rivela"><p>Qui va una recensione vera.</p><cite>Nome del cliente · tipo di festa</cite></blockquote>
+        <blockquote class="rec rivela"><b>Recensione 1 di 3</b><p>Lo spazio è pronto: qui andrà quello che ha scritto una cliente vera.</p><cite>Nome · tipo di festa</cite></blockquote>
+        <blockquote class="rec rivela"><b>Recensione 2 di 3</b><p>Lo spazio è pronto: qui andrà quello che ha scritto una cliente vera.</p><cite>Nome · tipo di festa</cite></blockquote>
+        <blockquote class="rec rivela"><b>Recensione 3 di 3</b><p>Lo spazio è pronto: qui andrà quello che ha scritto una cliente vera.</p><cite>Nome · tipo di festa</cite></blockquote>
       </div>
       <p class="nota-vuoto rivela">
         Servono tre recensioni reali — vanno bene quelle già ricevute su Facebook o via
@@ -734,12 +883,12 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea);margin-top:var(--ar
         <p class="guida">Su <a href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener">@vero_bouquet</a> ci sono 703 allestimenti. Qui sotto gli ultimi.</p>
       </div>
       <div class="ig">
-        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 1</span></a>
-        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 2</span></a>
-        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 3</span></a>
-        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 4</span></a>
-        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 5</span></a>
-        <a class="ig-cella rivela" href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener"><span>Post 6</span></a>
+        <a class="ig-cella svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener" aria-label="Vai al profilo Instagram di Vero Bouquet"><img src="media/i1.webp" alt="Palloncini cromati e rosa in primo piano" width="620" height="620" loading="lazy"></a>
+        <a class="ig-cella svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener" aria-label="Vai al profilo Instagram di Vero Bouquet"><img src="media/i2.webp" alt="Insegna al neon accesa su un fondale chiaro" width="620" height="620" loading="lazy"></a>
+        <a class="ig-cella svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener" aria-label="Vai al profilo Instagram di Vero Bouquet"><img src="media/i3.webp" alt="Lettere luminose a lampadine accanto a una ghirlanda" width="620" height="620" loading="lazy"></a>
+        <a class="ig-cella svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener" aria-label="Vai al profilo Instagram di Vero Bouquet"><img src="media/i4.webp" alt="Centrotavola di rose chiare con candele accese" width="620" height="620" loading="lazy"></a>
+        <a class="ig-cella svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener" aria-label="Vai al profilo Instagram di Vero Bouquet"><img src="media/i5.webp" alt="Parete a paillettes dorate accanto a un arco di palloncini" width="620" height="620" loading="lazy"></a>
+        <a class="ig-cella svela" data-par href="https://www.instagram.com/vero_bouquet/" target="_blank" rel="noopener" aria-label="Vai al profilo Instagram di Vero Bouquet"><img src="media/i6.webp" alt="Dettaglio di un arco organico di palloncini opachi e cromati" width="620" height="620" loading="lazy"></a>
       </div>
     </div>
   </section>
@@ -869,13 +1018,17 @@ var QUIETO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
    acento que se le presta a toda la interfaz; `globi` son los colores del
    campo de globos del fondo, y `cromo` los que se pintan con reflejo metálico.
    --------------------------------------------------------------------------- */
+/* `chiaro` es el mismo acento aclarado, para usarlo SOBRE FONDO OSCURO. No es
+   un capricho: el acento de marca (#d92d6f) sobre el fondo noche se queda en
+   3,4:1 y no llega al mínimo legible. Va escrito a mano y no calculado, porque
+   aclarar por fórmula desatura los azules y ensucia los verdes. */
 var PALETTE = [
-  { acc:'#1b34b0', scuro:'#12246f', tenue:'#e2e6f6', globi:['#1b34b0','#2f4ad0','#e8eaf0','#8f96b8'], cromo:['#c2c7d1','#9aa3b4'] },
-  { acc:'#b5715c', scuro:'#8a5343', tenue:'#f6e7e1', globi:['#e3b6a3','#f2ded3','#c98f79','#8d5a4a'], cromo:['#c2c7d1','#a8aebd'] },
-  { acc:'#a98d6d', scuro:'#836b50', tenue:'#f4ece1', globi:['#f2ebe2','#d9c4ad','#a98d6d','#e8dccb'], cromo:['#c9a24b','#dcc07a'] },
-  { acc:'#5f8a6e', scuro:'#456552', tenue:'#e6eee9', globi:['#ffffff','#f2ebe2','#7fa88b','#d9c4ad'], cromo:['#e8e2d4','#cfc7b6'] },
-  { acc:'#e8407f', scuro:'#b32a5e', tenue:'#fde4ee', globi:['#e8407f','#ff9ec4','#3fbdcb','#9fd8c0'], cromo:['#9fd8c0','#c2c7d1'] },
-  { acc:'#b0246a','scuro':'#84184e', tenue:'#f9e0ec', globi:['#241c26','#b0246a','#c9a24b','#f2ebe2'], cromo:['#c9a24b','#dcc07a'] }
+  { acc:'#1b34b0', scuro:'#12246f', tenue:'#e2e6f6', chiaro:'#93a8f2', globi:['#1b34b0','#2f4ad0','#e8eaf0','#8f96b8'], cromo:['#c2c7d1','#9aa3b4'] },
+  { acc:'#b5715c', scuro:'#8a5343', tenue:'#f6e7e1', chiaro:'#eab6a2', globi:['#e3b6a3','#f2ded3','#c98f79','#8d5a4a'], cromo:['#c2c7d1','#a8aebd'] },
+  { acc:'#a98d6d', scuro:'#836b50', tenue:'#f4ece1', chiaro:'#e2cbaa', globi:['#f2ebe2','#d9c4ad','#a98d6d','#e8dccb'], cromo:['#c9a24b','#dcc07a'] },
+  { acc:'#5f8a6e', scuro:'#456552', tenue:'#e6eee9', chiaro:'#a9cfb7', globi:['#ffffff','#f2ebe2','#7fa88b','#d9c4ad'], cromo:['#e8e2d4','#cfc7b6'] },
+  { acc:'#e8407f', scuro:'#b32a5e', tenue:'#fde4ee', chiaro:'#ff9ec4', globi:['#e8407f','#ff9ec4','#3fbdcb','#9fd8c0'], cromo:['#9fd8c0','#c2c7d1'] },
+  { acc:'#b0246a','scuro':'#84184e', tenue:'#f9e0ec', chiaro:'#f28cb7', globi:['#241c26','#b0246a','#c9a24b','#f2ebe2'], cromo:['#c9a24b','#dcc07a'] }
 ];
 
 /* Interpolación de color en sRGB. Suficiente aquí: los saltos son entre tonos
@@ -890,7 +1043,7 @@ function mezcla(a,b,t){
    ocasiones: el hero, los allestimenti, el formulario. Sin ella la página
    arrancaba con el acento azul de la primera ocasión, y un botón azul encima
    de un vídeo de globos cipria no es una decisión, es un descuido. */
-var MARCA = { acc:'#d92d6f', scuro:'#a81f54', tenue:'#f7e2ea', globi:['#e3b6a3','#f2ded3','#d92d6f','#ff9ec4'], cromo:['#c2c7d1','#dcc07a'] };
+var MARCA = { acc:'#d92d6f', scuro:'#a81f54', tenue:'#f7e2ea', chiaro:'#ff9ec4', globi:['#e3b6a3','#f2ded3','#d92d6f','#ff9ec4'], cromo:['#c2c7d1','#dcc07a'] };
 
 var pintaActual = -1;  // índice fraccionario; -1 = paleta de marca
 function paletaEn(pos){
@@ -901,7 +1054,8 @@ function paletaEn(pos){
   return {
     acc:   mezcla(PALETTE[i].acc,   PALETTE[j].acc,   t),
     scuro: mezcla(PALETTE[i].scuro, PALETTE[j].scuro, t),
-    tenue: mezcla(PALETTE[i].tenue, PALETTE[j].tenue, t)
+    tenue: mezcla(PALETTE[i].tenue, PALETTE[j].tenue, t),
+    chiaro:mezcla(PALETTE[i].chiaro,PALETTE[j].chiaro,t)
   };
 }
 function aplicaPaleta(pos){
@@ -911,23 +1065,43 @@ function aplicaPaleta(pos){
   r.setProperty('--acc', c.acc);
   r.setProperty('--acc-scuro', c.scuro);
   r.setProperty('--acc-tenue', c.tenue);
+  r.setProperty('--acc-chiaro', c.chiaro);
 }
 
 /* ---------------------------------------------------------------------------
-   EL CAMPO DE GLOBOS
-   Globos que suben despacio por detrás de todo, con los colores de la paleta
-   que esté activa. El puntero los aparta.
+   EL AMBIENTE DE COLOR
+   Tres manchas enormes y muy difusas que se mueven despacio por detrás de todo,
+   teñidas con la paleta que esté activa. Cuando la sección de ocasiones cambia
+   de color, el aire de la página cambia con ella.
 
-   En canvas y no en DOM: son cuarenta objetos moviéndose a la vez, y cuarenta
-   nodos con transform obligan al navegador a componer cuarenta capas. Un
-   lienzo es una sola.
+   AQUÍ HUBO UN ERROR DE CRITERIO QUE CONVIENE NO REPETIR. Antes esto pintaba
+   cuarenta GLOBOS: círculos con brillo y borde definido, subiendo por delante
+   del fondo. Se veían perfectamente por encima de los titulares y del cuerpo de
+   texto, y bajarles la opacidad no arregló nada — un objeto reconocible cruzando
+   una línea de texto sigue leyéndose como un objeto por muy pálido que esté, y
+   hacía que la página entera pareciera un salvapantallas.
+
+   La diferencia no es de cantidad, es de clase: una mancha sin borde no compite
+   con el texto porque no tiene forma que mirar. El ambiente se nota; los globos
+   se miraban.
+
+   En canvas y no en CSS porque el color sale de la paleta viva, que cambia con
+   el scroll, y son degradados grandes que hay que recomponer en cada cuadro.
    --------------------------------------------------------------------------- */
-function campoGlobi(){
+function ambiente(){
   var c = document.getElementById('campo');
   if(!c || QUIETO) return;
   var ctx = c.getContext('2d');
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W=0, H=0, globi=[], raton={x:-999,y:-999};
+  // 1 y no 2: son degradados desenfocados, no hay detalle que resolver, y a
+  // doble resolución se pintan cuatro veces más píxeles para nada.
+  var dpr = 1;
+  var W=0, H=0;
+
+  var MANCHAS = [
+    { bx:.16, by:.20, r:.60, idx:0, fase:0.0, vel:.000090, ax:.09, ay:.06 },
+    { bx:.84, by:.38, r:.52, idx:2, fase:2.1, vel:.000115, ax:.07, ay:.09 },
+    { bx:.52, by:.88, r:.66, idx:3, fase:4.2, vel:.000075, ax:.11, ay:.05 }
+  ];
 
   function medir(){
     W = c.clientWidth; H = c.clientHeight;
@@ -935,90 +1109,42 @@ function campoGlobi(){
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
 
-  function nace(y){
-    return {
-      x: Math.random()*W,
-      y: y===undefined ? Math.random()*H : y,
-      r: 11 + Math.random()*32,
-      v: 0.12 + Math.random()*0.42,      // subida
-      d: (Math.random()-0.5)*0.25,       // deriva lateral
-      fase: Math.random()*Math.PI*2,     // balanceo
-      idx: Math.floor(Math.random()*4),
-      cromo: Math.random() < 0.28,
-      dx:0, dy:0                          // empuje del puntero, se disipa
-    };
+  function rgba(hex, a){
+    var v = hexRgb(hex);
+    return 'rgba('+v[0]+','+v[1]+','+v[2]+','+a+')';
   }
 
-  function color(g){
+  function color(i){
     var p = pintaActual < 0 ? MARCA
           : PALETTE[Math.max(0, Math.min(PALETTE.length-1, Math.round(pintaActual)))];
-    return g.cromo ? p.cromo[g.idx % p.cromo.length] : p.globi[g.idx % p.globi.length];
+    return p.globi[i % p.globi.length];
   }
 
-  function pinta(){
+  function pinta(t){
     ctx.clearRect(0,0,W,H);
-    for(var k=0;k<globi.length;k++){
-      var g = globi[k];
-      var col = color(g);
-
-      // El empuje del puntero se suma a la posición y se apaga solo: así el
-      // globo vuelve a su camino en vez de quedarse donde lo dejaron.
-      var px = g.x + g.dx, py = g.y + g.dy;
-
-      var grd = ctx.createRadialGradient(px-g.r*0.34, py-g.r*0.34, g.r*0.12, px, py, g.r);
-      if(g.cromo){
-        grd.addColorStop(0,'rgba(255,255,255,.92)');
-        grd.addColorStop(0.3,col);
-        grd.addColorStop(0.78,col);
-        grd.addColorStop(1,'rgba(40,40,52,.5)');
-      }else{
-        grd.addColorStop(0,'rgba(255,255,255,.55)');
-        grd.addColorStop(0.42,col);
-        grd.addColorStop(1,col);
-      }
-      /* 0.2 y no medio. A la mitad los globos cruzaban por delante del cuerpo
-         de texto y había que leer entre ellos: dejaban de ser ambiente y
-         pasaban a ser ruido. Un fondo se nota, no se mira. */
-      ctx.globalAlpha = 0.2;
-      ctx.beginPath(); ctx.arc(px,py,g.r,0,Math.PI*2); ctx.fillStyle=grd; ctx.fill();
-      ctx.globalAlpha = 1;
+    var diag = Math.sqrt(W*W + H*H) * 0.5;
+    for(var k=0;k<MANCHAS.length;k++){
+      var m = MANCHAS[k];
+      var x = (m.bx + Math.sin(t*m.vel + m.fase) * m.ax) * W;
+      var y = (m.by + Math.cos(t*m.vel*0.78 + m.fase) * m.ay) * H;
+      var r = m.r * diag;
+      var col = color(m.idx);
+      var g = ctx.createRadialGradient(x,y,0,x,y,r);
+      /* Tres paradas y la última en alpha 0: con dos, el degradado corta de
+         golpe en el radio y se ve el círculo — que es justo lo que se quería
+         quitar. La caída tiene que morir suave. */
+      g.addColorStop(0,   rgba(col,.26));
+      g.addColorStop(.45, rgba(col,.11));
+      g.addColorStop(1,   rgba(col,0));
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,W,H);
     }
   }
 
-  function paso(){
-    for(var k=0;k<globi.length;k++){
-      var g = globi[k];
-      g.fase += 0.006;
-      g.y -= g.v;
-      g.x += g.d + Math.sin(g.fase)*0.28;
+  function paso(t){ pinta(t); requestAnimationFrame(paso); }
 
-      var ex = (g.x+g.dx) - raton.x, ey = (g.y+g.dy) - raton.y;
-      var dist2 = ex*ex + ey*ey, R = 150;
-      if(dist2 < R*R && dist2 > 1){
-        var d = Math.sqrt(dist2), f = (1 - d/R) * 2.4;
-        g.dx += (ex/d)*f; g.dy += (ey/d)*f;
-      }
-      g.dx *= 0.92; g.dy *= 0.92;
-
-      if(g.y + g.r < -20) { globi[k] = nace(H + g.r + 20); }
-      if(g.x < -80) g.x = W+70; if(g.x > W+80) g.x = -70;
-    }
-    pinta();
-    requestAnimationFrame(paso);
-  }
-
-  function pobla(){
-    // La densidad va por área: en un móvil estrecho cuarenta globos son una
-    // cortina, y en un monitor ancho seis son un descuido.
-    var n = Math.round(Math.min(34, Math.max(9, (W*H)/46000)));
-    globi = [];
-    for(var i=0;i<n;i++) globi.push(nace());
-  }
-
-  medir(); pobla();
-  window.addEventListener('resize', function(){ medir(); pobla(); });
-  window.addEventListener('pointermove', function(e){ raton.x=e.clientX; raton.y=e.clientY; }, {passive:true});
-  window.addEventListener('pointerleave', function(){ raton.x=-999; raton.y=-999; });
+  medir();
+  window.addEventListener('resize', medir);
   requestAnimationFrame(paso);
 }
 
@@ -1327,7 +1453,7 @@ function modulo(){
 
 document.addEventListener('DOMContentLoaded', function(){
   aplicaPaleta(-1);
-  campoGlobi();
+  ambiente();
   heroFilm();
   occasioni();
   barra();
