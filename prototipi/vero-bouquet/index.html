@@ -251,7 +251,8 @@ em{font-style:italic;color:var(--acc)}
 .hero-fisso{position:sticky;top:0;height:100svh;overflow:clip;display:grid;place-items:center}
 /* 50% y no un valor sesgado hacia arriba: la parte de arriba del plano es
    techo vacío, y lo que hay que conservar es el arco y las letras. */
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%;
+  filter:brightness(1.12) saturate(1.08) contrast(1.02)}
 /* Velo DIRECCIONAL, no plano. El anterior era un degradado vertical uniforme,
    calibrado para el plano de salón oscuro que había antes; sobre este material
    —una instalación al aire libre, a pleno día— apagaba la escena entera y la
@@ -267,11 +268,47 @@ em{font-style:italic;color:var(--acc)}
 .hero-velo{
   position:absolute;inset:0;
   background:
-    linear-gradient(to bottom,rgba(16,11,18,.40) 0%,rgba(16,11,18,0) 24%,rgba(16,11,18,0) 60%,rgba(16,11,18,.58) 100%),
-    linear-gradient(100deg,rgba(16,11,18,.82) 0%,rgba(16,11,18,.56) 32%,rgba(16,11,18,.12) 62%,rgba(16,11,18,.26) 100%);
+    linear-gradient(to bottom,rgba(16,11,18,.26) 0%,rgba(16,11,18,0) 18%,rgba(16,11,18,0) 66%,rgba(16,11,18,.42) 100%),
+    linear-gradient(100deg,rgba(16,11,18,.34) 0%,rgba(16,11,18,.14) 30%,rgba(16,11,18,0) 54%,rgba(16,11,18,.05) 100%);
 }
 @media (max-width:760px){
-  .hero-velo{background:linear-gradient(to bottom,rgba(16,11,18,.52) 0%,rgba(16,11,18,.34) 26%,rgba(16,11,18,.56) 66%,rgba(16,11,18,.80) 100%)}
+  .hero-velo{background:linear-gradient(to bottom,rgba(16,11,18,.30) 0%,rgba(16,11,18,.08) 22%,rgba(16,11,18,.22) 60%,rgba(16,11,18,.52) 100%)}
+}
+
+/* SOMBRA LOCAL, detrás del texto y de nada más.
+   Es lo que permite que el velo general sea tan flojo. El plano es un jardín a
+   pleno sol con un fondal casi blanco: para que el párrafo se leyera sobre eso
+   con un velo a pantalla completa había que bajar la escena entera hasta el
+   gris, y entonces ya no se ve la luz natural, que es justo lo que hay que
+   enseñar. Aquí la oscuridad se pone SOLO donde hay letras y se disuelve antes
+   de llegar al arco.
+
+   Sale a sangre por la izquierda (-50vw) para que no se le vea el borde: una
+   mancha oscura con final visible se lee como una caja mal puesta. */
+.hero-tipo::before{
+  content:'';position:absolute;z-index:-1;pointer-events:none;
+  inset:-14% -14% -16% -50vw;
+  background:radial-gradient(120% 88% at 26% 50%,
+    rgba(16,11,18,.62) 0%, rgba(16,11,18,.46) 34%, rgba(16,11,18,.18) 58%, rgba(16,11,18,0) 76%);
+}
+@media (max-width:760px){
+  /* En vertical el texto ocupa todo el ancho, así que la mancha se centra y se
+     ensancha en vez de colgar de la izquierda. */
+  .hero-tipo::before{inset:-10% -30% -14% -30%;
+    background:radial-gradient(115% 78% at 50% 50%,
+      rgba(16,11,18,.60) 0%, rgba(16,11,18,.44) 40%, rgba(16,11,18,.16) 64%, rgba(16,11,18,0) 82%)}
+}
+
+/* La sombra del texto es lo que PERMITE que el velo sea tan flojo. Sin ella,
+   para que el titular blanco se leyera había que apagar el plano entero, y
+   apagar un jardín a pleno sol para poder poner un texto encima es cambiar lo
+   que se vende por el envoltorio.
+
+   Con la sombra, el contraste se resuelve pegado a la letra —donde hace falta—
+   en vez de a pantalla completa. Va muy abierta y sin desplazamiento para que
+   no se lea como sombra: solo separa la letra de lo que tenga detrás. */
+.hero-tipo .occhiello,.hero h1,.hero .guida{
+  text-shadow:0 1px 2px rgba(16,11,18,.35),0 2px 30px rgba(16,11,18,.55);
 }
 /* El hero pasa de centrado a alineado a la izquierda, y el titular sube de 76
    a 110px. El motivo no es de gusto: un titular centrado sobre un vídeo, con un
@@ -283,7 +320,12 @@ em{font-style:italic;color:var(--acc)}
    El titular tiene que ser lo más grande de la página, por encima incluso de
    los titulares de sección (84px). Estaba por debajo, y eso invierte la
    jerarquía: la portada pesaba menos que sus propias secciones. */
-.hero-tipo{position:relative;width:100%;max-width:var(--largo);margin:0 auto;padding:0 var(--margine);color:#fff;text-align:left}
+/* z-index:1 no es decorativo: crea el contexto de apilamiento propio del
+   bloque de texto. Sin él, el `z-index:-1` de la sombra local sube hasta el
+   contexto de `.hero-fisso` —que lo crea su `position:sticky`— y la mancha se
+   pinta DETRÁS del vídeo, donde no se ve. Con contexto propio, el -1 queda
+   detrás de las letras pero delante del velo, que es donde tiene que estar. */
+.hero-tipo{position:relative;z-index:1;width:100%;max-width:var(--largo);margin:0 auto;padding:0 var(--margine);color:#fff;text-align:left}
 .hero-tipo .occhiello{color:#ffb3cd}
 .hero h1{color:#fff;margin-top:22px;font-size:clamp(40px,7vw,110px);line-height:.98;max-width:15ch}
 .hero h1 em{color:#ffb3cd}
