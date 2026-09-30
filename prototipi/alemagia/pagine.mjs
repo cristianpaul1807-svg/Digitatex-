@@ -39,10 +39,22 @@ const DUO = (r, a, b) => `
     </div>
   </section>`;
 
+/* La foto de cabecera va en una banda apaisada y las fotos de ella son
+   verticales: recortándolas para llenarla se quedaba en pantalla una franja de
+   globos sin ni la base ni el globo del mensaje —el objeto entero desaparecía
+   justo en la imagen más grande de la página—.
+
+   Así que la foto entra ENTERA y lo que llena la banda por detrás es ella
+   misma, ampliada y desenfocada. Sale gratis —no hay un segundo archivo que
+   recortar y mantener por cada foto—, funciona igual con las verticales y con
+   las apaisadas, y el fondo siempre pega porque son los mismos colores.
+
+   La dirección del archivo se pasa en una propiedad del elemento porque la
+   hoja de estilos no puede saber cuál es cada foto. */
 const UNA = (r, a, ratio) => `
   <section class="banda-foto">
     <div class="wrap">
-      <figure class="svela ${ratio || 'larga'}" data-par>${IMG(r, a.f, a.alt, a.w, a.h)}</figure>
+      <figure class="svela ${ratio || 'larga'}" style="--foto:url('${r}media/${a.f}')" data-par>${IMG(r, a.f, a.alt, a.w, a.h)}</figure>
     </div>
   </section>`;
 
@@ -164,7 +176,7 @@ export const PAGINE = [
     og: 'o1.webp',
     datos: [servicioDatos('Anchetas personalizadas a domicilio', 'Anchetas y canastas de regalo armadas a pedido con mecato, chocolates, globos personalizados y flores, con entrega a domicilio en Medellín.'), faqDatos(faqAnchetas)],
     cuerpo: (r) => `
-${UNA(r, { f: 'o1.webp', alt: 'Ancheta con mecato, chocolates y globos de colores sobre una base de madera', w: 804, h: 926 })}
+${UNA(r, { f: 'o1.webp', alt: 'Ancheta de cumpleaños con mecato, bebidas y fotos impresas sobre base de madera, con globos azules y plateados', w: 900, h: 1200 })}
 ${INCLUYE('Cómo se arma', [
   { t: 'La base', d: 'Mecato y chocolates escogidos, montados sobre base de madera o dentro de canasta. Es lo que le da cuerpo al detalle y lo que primero se ve.' },
   { t: 'El globo con el mensaje', d: 'Globo de burbuja transparente con el nombre y la ocasión impresos. Es lo que hace que la foto se entienda sola.' },
@@ -178,8 +190,8 @@ ${PROSA([
   'Si nos dices qué le gusta a la persona —lo que toma, lo que come, el equipo del que es— armamos el detalle alrededor de eso. Sale mejor que una lista, y se nota al abrirlo.',
 ])}
 ${DUO(r,
-  { f: 'o5.webp', alt: 'Globo de burbuja personalizado con globos de colores adentro', w: 804, h: 688 },
-  { f: 'o4.webp', alt: 'Caja de rosas rojas con globo de burbuja de San Valentín', w: 804, h: 926 })}
+  { f: 'o5.webp', alt: 'Arco de globos infantil con globo de burbuja transparente encima y desayuno en bandeja de madera', w: 804, h: 688 },
+  { f: 'o4.webp', alt: 'Caja de rosas rojas con bombones y mariposa dorada, con globo de burbuja de San Valentín', w: 900, h: 1200 })}
 ${PREGUNTAS(faqAnchetas)}`,
   },
 
@@ -195,7 +207,7 @@ ${PREGUNTAS(faqAnchetas)}`,
     og: 'o5.webp',
     datos: [servicioDatos('Desayunos sorpresa a domicilio', 'Desayunos sorpresa armados a pedido con bebida, panadería, fruta, globo personalizado y flores, entregados a domicilio en Medellín.'), faqDatos(faqDesayunos)],
     cuerpo: (r) => `
-${UNA(r, { f: 'o5.webp', alt: 'Desayuno sorpresa con flores, chocolates y una tarjeta sobre una superficie clara', w: 804, h: 688 })}
+${UNA(r, { f: 'o5.webp', alt: 'Arco de globos infantil con globo de burbuja transparente encima y desayuno en bandeja de madera', w: 804, h: 688 })}
 ${INCLUYE('Qué lleva', [
   { t: 'El desayuno', d: 'Bebida, panadería, fruta y un dulce. Si la persona tiene alguna restricción, dínoslo y lo cambiamos sin problema.' },
   { t: 'El globo con el mensaje', d: 'Con el nombre y lo que le quieras decir. Es lo que convierte un desayuno en un detalle.' },
@@ -225,7 +237,7 @@ ${PREGUNTAS(faqDesayunos)}`,
     og: 'o5.webp',
     datos: [servicioDatos('Globos de burbuja personalizados', 'Globos de burbuja transparentes personalizados con nombre y mensaje, con confeti o globos interiores, solos o integrados en detalles.'), faqDatos(faqGlobos)],
     cuerpo: (r) => `
-${UNA(r, { f: 'o5.webp', alt: 'Globo de burbuja personalizado con globos de colores adentro', w: 804, h: 688 })}
+${UNA(r, { f: 'o5.webp', alt: 'Arco de globos infantil con globo de burbuja transparente encima y desayuno en bandeja de madera', w: 804, h: 688 })}
 ${INCLUYE('Lo que se puede pedir', [
   { t: 'Globo con nombre y ocasión', d: 'El mensaje va impreso encima del globo transparente. Cumpleaños, grado, aniversario, lo que sea: se lee de una.' },
   { t: 'Relleno de confeti', d: 'En los colores del detalle. Es lo que le da el brillo que se ve en las fotos.' },
@@ -238,7 +250,7 @@ ${PROSA([
   'Por eso pedimos el texto exactamente como quieres que quede, con los nombres y las tildes. Un nombre mal escrito en un globo no se arregla el día de la entrega.',
 ])}
 ${DUO(r,
-  { f: 'o3.webp', alt: 'Arreglo de grado con globos negros y dorados', w: 804, h: 926 },
+  { f: 'o3.webp', alt: 'Arreglo de grado con arco de globos negros y dorados, birrete y globo de burbuja personalizado', w: 900, h: 1200 },
   { f: 'o2.webp', alt: 'Arco de globos infantil con personajes', w: 804, h: 688 })}
 ${PREGUNTAS(faqGlobos)}`,
   },
@@ -255,7 +267,7 @@ ${PREGUNTAS(faqGlobos)}`,
     og: 'o1.webp',
     datos: [servicioDatos('Detalles de cumpleaños a domicilio', 'Anchetas, globos personalizados y arreglos de cumpleaños para niños y adultos, con entrega a domicilio en Medellín.'), faqDatos(faqCumple)],
     cuerpo: (r) => `
-${UNA(r, { f: 'o1.webp', alt: 'Arreglo de cumpleaños con globos de colores, mecato y una base de madera', w: 804, h: 926 })}
+${UNA(r, { f: 'o1.webp', alt: 'Ancheta de cumpleaños con mecato, bebidas y fotos impresas sobre base de madera, con globos azules y plateados', w: 900, h: 1200 })}
 ${INCLUYE('Cómo lo armamos', [
   { t: 'Para niños', d: 'Va por el personaje y los colores. El globo con el nombre, mecato que se puedan comer ellos, y el arreglo montado para que se vea grande en la foto.' },
   { t: 'Para adultos', d: 'Va por lo que la persona toma, come o colecciona. Dinos algo que le guste y el detalle se arma alrededor de eso.' },
@@ -268,8 +280,8 @@ ${PROSA([
   'Por eso preguntamos poco pero preguntamos eso. Con la edad y dos cosas que le gusten ya se puede armar un detalle que no parezca comprado en la esquina.',
 ])}
 ${DUO(r,
-  { f: 'o5.webp', alt: 'Globo de burbuja personalizado con globos de colores adentro', w: 804, h: 688 },
-  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con caja de regalo', w: 804, h: 688 })}
+  { f: 'o5.webp', alt: 'Arco de globos infantil con globo de burbuja transparente encima y desayuno en bandeja de madera', w: 804, h: 688 },
+  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con letrero de cumpleaños y bandeja con detalles', w: 804, h: 688 })}
 ${PREGUNTAS(faqCumple)}`,
   },
 
@@ -282,10 +294,10 @@ ${PREGUNTAS(faqCumple)}`,
     occhiello: 'Grados',
     h1: 'El día que se trabajó durante años.',
     intro: 'Arreglos de grado con globos en negro y dorado, el nombre y la carrera impresos, y la ancheta que lo acompaña. Se entrega donde nos digas.',
-    og: 'o2.webp',
+    og: 'o3.webp',
     datos: [servicioDatos('Regalos y arreglos de grado', 'Arreglos de grado con globos personalizados, anchetas y flores, con entrega a domicilio en Medellín.'), faqDatos(faqGrado)],
     cuerpo: (r) => `
-${UNA(r, { f: 'o2.webp', alt: 'Arreglo de grado con globos negros y dorados, diploma y chocolates sobre base de madera', w: 804, h: 688 })}
+${UNA(r, { f: 'o3.webp', alt: 'Arreglo de grado con arco de globos negros y dorados, birrete y globo de burbuja personalizado', w: 900, h: 1200 })}
 ${INCLUYE('Qué se suele pedir', [
   { t: 'El arreglo en negro y dorado', d: 'Es el que más piden y el que mejor se ve en las fotos de ese día. Globos cromados, opacos y transparentes en el mismo diseño.' },
   { t: 'El globo con el nombre', d: 'Nombre, «felicitaciones» y la carrera si quieres. Mándanos el texto exacto: en los grados es donde más se cuidan las tildes y los apellidos.' },
@@ -298,8 +310,8 @@ ${PROSA([
   'Y tiene otra: los horarios de ceremonia se corren. Si nos dices con quién coordinamos la entrega allá, evitamos que el detalle llegue a un auditorio vacío.',
 ])}
 ${DUO(r,
-  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con caja de regalo', w: 804, h: 688 },
-  { f: 'o4.webp', alt: 'Caja de rosas rojas con globo de burbuja de San Valentín', w: 804, h: 926 })}
+  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con letrero de cumpleaños y bandeja con detalles', w: 804, h: 688 },
+  { f: 'o4.webp', alt: 'Caja de rosas rojas con bombones y mariposa dorada, con globo de burbuja de San Valentín', w: 900, h: 1200 })}
 ${PREGUNTAS(faqGrado)}`,
   },
 
@@ -327,7 +339,7 @@ ${PROSA([
 ])}
 ${DUO(r,
   { f: 'o2.webp', alt: 'Arco de globos infantil con personajes y globo de burbuja', w: 804, h: 688 },
-  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con caja de regalo', w: 804, h: 688 })}`,
+  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con letrero de cumpleaños y bandeja con detalles', w: 804, h: 688 })}`,
   },
 
   /* --------------------------------------------------------- QUIÉNES SOMOS */
@@ -343,7 +355,7 @@ ${DUO(r,
     cuerpo: (r) => `
   <section class="ritratto-blocco">
     <div class="wrap dossier">
-      <figure class="ritratto svela" data-par>${IMG(r, 'taller.webp', 'Manos atando una cinta de raso sobre una caja de regalo, en la mesa de trabajo con carretes de cinta y tijeras', 900, 1125)}</figure>
+      <figure class="ritratto svela" data-par>${IMG(r, 'taller.webp', 'Caja de rosas rojas con bombones y mariposa dorada, sostenida en la mano, con un globo de burbuja rosado encima', 900, 1125)}</figure>
       <div>
         <h2 class="rivela">Se arma a pedido, no se saca de una estantería</h2>
         <p class="guida rivela">Cada detalle se monta cuando entra el pedido. Por eso se puede cambiar lo que lleva adentro, sumar algo que tú nos mandes o ajustar los colores a lo que estás celebrando.</p>
@@ -356,8 +368,8 @@ ${PROSA([
   'Buena parte de los pedidos los hace alguien que no está en la ciudad. Escriben desde otra parte del país o desde fuera, y la sorpresa la recibe alguien aquí. La foto de la entrega es la forma de cerrar eso.',
 ])}
 ${DUO(r,
-  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con caja de regalo', w: 804, h: 688 },
-  { f: 'o5.webp', alt: 'Globo de burbuja personalizado con globos de colores adentro', w: 804, h: 688 })}
+  { f: 'o6.webp', alt: 'Arco de globos cromados en rosado y dorado con letrero de cumpleaños y bandeja con detalles', w: 804, h: 688 },
+  { f: 'o5.webp', alt: 'Arco de globos infantil con globo de burbuja transparente encima y desayuno en bandeja de madera', w: 804, h: 688 })}
   <section class="zone-blocco">
     <div class="wrap">
       <h2 class="rivela">Dónde entregamos</h2>

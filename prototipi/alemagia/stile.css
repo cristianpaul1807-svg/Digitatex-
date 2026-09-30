@@ -772,6 +772,25 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 .banda-foto figure img{width:100%;height:100%;object-fit:cover}
 .banda-foto .larga{aspect-ratio:16/10}
 @media (max-width:760px){ .banda-foto .larga{aspect-ratio:4/5} }
+
+/* La foto entra entera y el hueco lo llena ella misma, ampliada y desenfocada.
+   Sin esto, una foto vertical dentro de una banda 16:10 se recorta al 47% de
+   su altura: en la imagen más grande de la página se quedaba una franja de
+   globos, sin la base ni el globo del mensaje.
+
+   `isolation:isolate` no es decoración: sin ella el `z-index:-1` se escapa al
+   contexto de apilado de más arriba y el desenfoque acaba pintándose DETRÁS de
+   la sección, no detrás de la foto. Ya pasó una vez en este mismo sitio.
+
+   Y el zoom de reposo baja a 1 porque con la foto contenida no hay holgura que
+   recorrer: el paralaje movería el marco entero y asomaría el borde. */
+.banda-foto .larga{position:relative;isolation:isolate;--zoom-reposo:1}
+.banda-foto .larga::before{
+  content:'';position:absolute;inset:-8%;z-index:-1;pointer-events:none;
+  background:var(--foto) center/cover no-repeat;
+  filter:blur(28px) saturate(.88) brightness(1.05);
+}
+.banda-foto .larga img{object-fit:contain}
 .duo{display:grid;gap:14px}
 @media (min-width:760px){ .duo{grid-template-columns:1fr 1fr} }
 .duo figure{aspect-ratio:4/5}
