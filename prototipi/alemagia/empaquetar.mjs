@@ -41,7 +41,12 @@ const dataUri = (p) => {
 const s = readFileSync(aqui('index.html'), 'utf8');
 
 const fuentes = [...s.matchAll(/<link[^>]+fonts\.(?:googleapis|gstatic)\.com[^>]*>/g)].map((m) => m[0]);
-const titulo = /<title>([\s\S]*?)<\/title>/.exec(s)?.[1] ?? 'ALEmagia';
+/* El título del index es el de Google —una frase con la ciudad y el servicio—
+   y ahí está bien. Aquí no: este archivo se publica como una tarjeta con su
+   nombre debajo, y una frase de once palabras en ese sitio se lee como un
+   error. El de buscador se queda en la página desplegada, que es la que Google
+   mira; esto es una copia para enseñar. */
+const titulo = 'ALEmagia';
 const estilos = readFileSync(aqui('stile.css'), 'utf8');
 let cuerpo = /<body[^>]*>([\s\S]*?)<\/body>/.exec(s)[1];
 
