@@ -65,81 +65,13 @@ if (cuerpo === antes) throw new Error('no he encontrado la etiqueta de comune.js
 // Todo lo que sea imagen de media/ pasa a data URI, esté en src o en poster.
 cuerpo = cuerpo.replace(/(src|poster)="(media\/[^"]+\.webp)"/g, (_m, at, p) => `${at}="${dataUri(p)}"`);
 
-/* ---------------------------------------------------------------------------
-   EL VÍDEO DEL MONTAJE
-   Entra en versión ligera —960 de ancho en vez de 1280— porque aquí no se
-   sirve por trozos: el archivo suelto no empieza a verse hasta que ha llegado
-   ENTERO, y la diferencia entre 4,9 y 2,2 megas es la diferencia entre que la
-   persona a la que se lo mandas lo abra o cierre la pestaña. En el servidor se
-   queda el de 1280, que sí se sirve por trozos y se ve mejor.
-
-   No se pone como `src="data:…"`: Safari ha sido históricamente caprichoso
-   buscando dentro de un vídeo en data URI, y buscar es LO ÚNICO que este vídeo
-   hace. Va como Blob, que es un origen normal para el buscador del navegador.
-
-   El guion se escribe ANTES que el de la portada porque `montaje()` lee la
-   duración: si la fuente no está puesta cuando arranca, no hay duración que
-   leer y la ancheta no se mueve.
-   --------------------------------------------------------------------------- */
-const VIDEO = 'media/montaje-ligero.mp4';
-const videoB64 = readFileSync(aqui(VIDEO)).toString('base64');
-const antesVideo = cuerpo;
-cuerpo = cuerpo.replace(/\s*<source src="media\/montaje\.mp4"[^>]*>/g, () => '');
-if (cuerpo === antesVideo) throw new Error('no he encontrado la fuente del vídeo del montaje');
-
-/* Se intenta primero como Blob, que es lo que mejor se busca. Pero un Blob vive
-   en un origen `blob:` y hay contenedores que no lo dejan pasar en `media-src`:
-   ahí el vídeo no falla con estruendo, simplemente no aparece nunca. Por eso, si
-   salta el `error` del elemento, se reintenta con el data URI —peor buscando,
-   pero de origen normal— antes de darse por vencido. Un archivo suelto se manda
-   por ahí y se abre en sitios que uno no controla; que se vea es más importante
-   que que se busque fino. */
-const guionVideo = `
-(function(){
-  var v = document.getElementById('mon-video');
-  var d = document.getElementById('mon-datos');
-  if(!v || !d) return;
-  var b64 = d.textContent.replace(/\\s+/g, '');
-  var plan = 0;
-
-  function conBlob(){
-    var cruda = atob(b64);
-    var bytes = new Uint8Array(cruda.length);
-    for(var i=0;i<cruda.length;i++) bytes[i] = cruda.charCodeAt(i);
-    v.src = URL.createObjectURL(new Blob([bytes], {type:'video/mp4'}));
-    v.load();
-  }
-  function conDatos(){
-    v.src = 'data:video/mp4;base64,' + b64;
-    v.load();
-  }
-  v.addEventListener('error', function(){
-    if(plan === 0){ plan = 1; conDatos(); }
-  });
-  v.addEventListener('loadedmetadata', function(){
-    d.textContent = '';   // ya cargó: fuera los megas de texto del documento
-  });
-  try{ conBlob(); }catch(e){ plan = 1; conDatos(); }
-})();`;
-
-/* Los enlaces a las páginas interiores se vuelven absolutos. Dentro del archivo
-   único una ruta como `anchetas/` no lleva a ninguna parte; apuntando a la
-   dirección publicada, el que mire el archivo suelto puede seguir navegando. */
-cuerpo = cuerpo.replace(/href="((?!https?:|#|mailto:|tel:)[a-z0-9-]+\/)"/g, (_m, r) => `href="${PUBLICADO}${r}"`);
-
 const escapar = (t) => t.replace(/<\/script/gi, () => '<\\/script');
 
-/* El base64 va en un <script> con un tipo que el navegador no ejecuta: es la
-   forma de meter tres megas de texto en la página sin que el analizador de
-   HTML se ponga a buscar etiquetas dentro. El alfabeto de base64 no contiene
-   `<`, así que no hay nada que escapar. */
 const doc = `<title>${titulo}</title>
 ${fuentes.join('\n')}
 <style>${estilos}</style>
 ${cuerpo}
-<script type="application/octet-stream" id="mon-datos">${videoB64}</script>
 <script>${escapar(comun)}</script>
-<script>${guionVideo}</script>
 <script>${escapar(js)}</script>
 `;
 
