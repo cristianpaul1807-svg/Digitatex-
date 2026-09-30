@@ -1,3 +1,11 @@
 node_modules/
 package-lock.json
 .DS_Store
+
+# Los vídeos de los prototipos NO entran aquí. Se quedaron dentro una vez, el
+# repositorio engordó y quedó dicho que no se repitiera: se alojan fuera y la
+# página los pide por su dirección. Esta línea está para que no vuelva a pasar
+# por descuido, con un `git add .` cualquiera.
+prototipi/**/*.mp4
+prototipi/**/*.webm
+prototipi/**/*.mov
