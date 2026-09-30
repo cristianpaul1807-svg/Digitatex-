@@ -978,3 +978,95 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 .galleria a{aspect-ratio:3/4}
 .galleria a:first-child{aspect-ratio:3/4}
 @media (min-width:700px){ .galleria a:first-child{aspect-ratio:3/4} }
+
+/* ============================================================================
+   EL MONTAJE · el vídeo que se recorre con el desplazamiento
+   ----------------------------------------------------------------------------
+   Toda la web repite una frase: «se arma a pedido». Es lo único que separa a
+   este taller de una vitrina, y hasta aquí estaba solo escrita. Esta sección la
+   ENSEÑA: el vídeo no se reproduce, se recorre, y quien baja por la página va
+   montando la ancheta con su propio dedo. Cuando llega abajo ha visto salir de
+   una tabla vacía exactamente lo que se le entrega.
+
+   Por eso el vídeo va DENTRO DE UN MARCO y no a sangre detrás del texto. A
+   sangre habría que oscurecerlo para que las letras se leyeran, y lo que hay
+   que mirar aquí es el objeto, no el texto. Separados, ninguno le quita luz al
+   otro y el texto se lee sobre el crema como en el resto del sitio.
+
+   El marco cambia de proporción según el ancho, y no es un capricho: el plano
+   es apaisado y la ancheta ocupa la franja central. En el móvil un 16:9 la
+   dejaría del tamaño de un sello, así que el marco se vuelve casi cuadrado y
+   `object-fit:cover` recorta a los lados —que son fondo desenfocado— sin tocar
+   ni el globo de la estrella ni las fotos del cordel. Medido sobre el último
+   fotograma: el objeto vive entre el 17% y el 75% del ancho, y el recorte más
+   agresivo que hacemos aquí empieza en el 15%.
+   ========================================================================== */
+.montaje{position:relative;padding:0;background:linear-gradient(180deg,var(--panna) 0%,#f3faf7 42%,var(--panna) 100%)}
+.mon-fisso{position:sticky;top:0;min-height:100svh;display:grid;align-items:center;padding-block:96px 40px}
+.mon-griglia{display:grid;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media (min-width:960px){ .mon-griglia{grid-template-columns:0.78fr 1.22fr} }
+
+.mon-tipo h2{font-size:clamp(30px,4.4vw,58px);line-height:1.02;margin:14px 0 0;max-width:15ch}
+
+/* Los siete pasos van superpuestos y solo se ve el del tramo en el que estás.
+   La caja se mide desde el guion con el paso más alto, por lo mismo que en las
+   ocasiones: centrados dentro de una caja más baja se salen por arriba. */
+.mon-passi{position:relative;margin-top:clamp(22px,3vw,34px)}
+.mon-passo{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-start;
+  opacity:0;transform:translateY(12px);pointer-events:none;
+  transition:opacity .45s ease,transform .45s ease;
+}
+.mon-passo.viva{opacity:1;transform:none;pointer-events:auto}
+.mon-num{
+  display:block;font-family:'Instrument Serif',Georgia,serif;
+  font-size:15px;letter-spacing:.14em;color:var(--acc);
+  font-variant-numeric:tabular-nums;transition:color .5s ease;
+}
+.mon-num i{font-style:normal;opacity:.45}
+.mon-passo h3{font-size:clamp(24px,3vw,34px);line-height:1.05;margin:8px 0 10px}
+.mon-passo p{color:var(--inchiostro-2);max-width:40ch;margin:0}
+
+/* El riel. Es la única pieza de la página que dice cuánto falta, y aquí hace
+   falta: sin él, una sección de cinco pantallas que no se mueve de sitio se
+   siente atascada en vez de en marcha. */
+.mon-barra{position:relative;height:2px;border-radius:2px;background:var(--linea-forte);margin-top:clamp(26px,3.4vw,40px);overflow:hidden}
+.mon-barra b{position:absolute;inset:0 auto 0 0;width:0;background:var(--acc);border-radius:2px;transition:background-color .5s ease}
+
+.mon-marco{
+  position:relative;aspect-ratio:5/4;border-radius:20px;overflow:hidden;
+  background:var(--panna-2) center/cover no-repeat;
+  box-shadow:0 26px 60px rgba(28,43,40,.18);
+}
+@media (min-width:700px){ .mon-marco{aspect-ratio:16/9} }
+/* Más alto en pantalla grande: `cover` recorta por los lados, que es donde
+   solo hay fondo desenfocado, y nunca por arriba —ahí está la punta del globo
+   de la estrella, a diez píxeles del borde del plano—. */
+@media (min-width:1100px){ .mon-marco{aspect-ratio:16/10} }
+/* El vídeo tapa el fondo del marco cuando carga; si no carga, el fondo es el
+   fotograma de portada y la sección sigue teniendo algo que enseñar en vez de
+   un rectángulo gris. */
+.mon-marco video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:transparent}
+
+/* ---- el montaje en una columna --------------------------------------------
+   Igual que en las ocasiones: el vídeo arriba, el texto debajo, y la pantalla
+   repartida en dos filas para que nada quede fuera ni debajo de la banda. */
+@media (max-width:959px){
+  .mon-fisso{height:100svh;padding-block:72px calc(var(--banda) + 12px);align-items:stretch}
+  .mon-griglia{grid-template-rows:auto minmax(0,1fr);height:100%;gap:18px;align-items:stretch}
+  .mon-marco{order:-1}
+  .mon-tipo h2{font-size:clamp(24px,6vw,34px);max-width:none}
+  .mon-passo p{max-width:none}
+  .mon-barra{margin-top:16px}
+}
+
+/* Con el movimiento reducido no hay recorrido: la sección mide lo que mide,
+   el vídeo se queda en el último fotograma —la ancheta terminada— y los siete
+   pasos pasan a ser una lista normal, uno debajo de otro. */
+@media (prefers-reduced-motion:reduce){
+  .montaje{height:auto !important}
+  .mon-fisso{position:static;min-height:0;height:auto;padding-block:var(--aria)}
+  .mon-passi{min-height:0 !important}
+  .mon-passo{position:static;opacity:1;transform:none;pointer-events:auto;margin-bottom:22px}
+  .mon-barra{display:none}
+}

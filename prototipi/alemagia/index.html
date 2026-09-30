@@ -165,6 +165,72 @@
   </div>
 
   <!-- ======================================================================
+       MONTAJE · el vídeo no se reproduce, se recorre
+       Un pedido real montándose de una tabla vacía a la ancheta terminada. El
+       texto va al lado y no encima: lo que hay que mirar es el objeto.
+       ====================================================================== -->
+  <section class="montaje" id="montaje">
+    <div class="mon-fisso">
+      <div class="wrap mon-griglia">
+
+        <div class="mon-tipo">
+          <p class="occhiello">Cómo se arma</p>
+          <h2>Nada de esto estaba hecho antes del pedido.</h2>
+
+          <div class="mon-passi" id="mon-passi">
+            <article class="mon-passo viva">
+              <span class="mon-num">01 <i>/07</i></span>
+              <h3>La base</h3>
+              <p>Una tabla de madera del tamaño que pida el pedido. Aquí todavía no hay nada.</p>
+            </article>
+            <article class="mon-passo">
+              <span class="mon-num">02 <i>/07</i></span>
+              <h3>El relleno</h3>
+              <p>Papel picado del color de la celebración. Es lo que sostiene todo lo que viene encima.</p>
+            </article>
+            <article class="mon-passo">
+              <span class="mon-num">03 <i>/07</i></span>
+              <h3>Lo que sí se toma</h3>
+              <p>La bebida de esa persona. La que pide, no la que quedaba.</p>
+            </article>
+            <article class="mon-passo">
+              <span class="mon-num">04 <i>/07</i></span>
+              <h3>El mecato</h3>
+              <p>Los paquetes que le gustan a ella. Por eso preguntamos para quién es antes de preguntar cuánto quieres gastar.</p>
+            </article>
+            <article class="mon-passo">
+              <span class="mon-num">05 <i>/07</i></span>
+              <h3>Las fotos</h3>
+              <p>Las que nos mandas, impresas y colgadas con ganchitos. Es la parte que no se puede comprar hecha.</p>
+            </article>
+            <article class="mon-passo">
+              <span class="mon-num">06 <i>/07</i></span>
+              <h3>Los globos</h3>
+              <p>Los del color de la fiesta y el que lleva el mensaje. Son los que hacen que se vea grande en la foto.</p>
+            </article>
+            <article class="mon-passo">
+              <span class="mon-num">07 <i>/07</i></span>
+              <h3>El moño</h3>
+              <p>Lo último que se pone y lo primero que ve quien lo recibe. Y entonces te mandamos la foto.</p>
+            </article>
+          </div>
+
+          <div class="mon-barra" aria-hidden="true"><b id="mon-llena"></b></div>
+        </div>
+
+        <div class="mon-marco" id="mon-marco">
+          <video id="mon-video" muted playsinline autoplay preload="auto"
+                 poster="media/montaje-poster.webp" width="1280" height="720"
+                 aria-hidden="true" tabindex="-1">
+            <source src="media/montaje.mp4" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
        OCASIONES · aquí es donde la página cambia de color
        ====================================================================== -->
   <section class="occasioni" id="ocasiones">
@@ -455,6 +521,143 @@
    fotografía cada pedido se nota a la primera.
    ========================================================================== */
 
+/* ----------------------------------------------------------------------------
+   EL MONTAJE
+   El vídeo no se reproduce: su `currentTime` va atado a la posición del scroll.
+   Subir y bajar desmonta y monta la ancheta, que es justo lo que se quiere
+   enseñar.
+
+   Tres cosas de aquí no son adorno y conviene no «simplificarlas»:
+
+   1. EN iOS NO SE PAUSA, NUNCA. Safari dibuja su botón de play encima de
+      cualquier vídeo pausado, da igual cómo llegara a estarlo, y ese botón
+      aparece en medio de la ancheta. La única forma de tenerlo quieto es
+      seguir «reproduciendo» a velocidad cero. Si el navegador lo pausa por su
+      cuenta, el oyente de `pause` vuelve a cebarlo.
+
+   2. EL TIEMPO SE PERSIGUE, NO SE CLAVA. Escribir `currentTime` con el valor
+      exacto en cada rueda de scroll da un salto duro por cada muesca. Aquí se
+      mueve una fracción del camino en cada cuadro, que es lo que hace que se
+      vea como un movimiento y no como una tira de fotos.
+
+   3. SOLO CORRE MIENTRAS SE VE. Fuera de la sección el bucle se apaga: es un
+      vídeo de nueve segundos descodificándose cuadro a cuadro y no tiene por
+      qué seguir haciéndolo mientras alguien lee el formulario.
+
+   Los siete tramos NO están repartidos a partes iguales. Salen de dónde ocurre
+   cada cosa en el plano —medido fotograma a fotograma sobre el archivo de 9,25
+   segundos—, porque poner la bebida tarda menos que colgar las cinco fotos.
+   Si se cambia el vídeo hay que volver a medirlos; con los de un reparto
+   igualado el texto habla de los globos mientras en pantalla entra el mecato.
+   ---------------------------------------------------------------------------- */
+function montaje(){
+  var sec = document.getElementById('montaje');
+  var caja = document.getElementById('mon-passi');
+  var v = document.getElementById('mon-video');
+  var llena = document.getElementById('mon-llena');
+  if(!sec || !caja || !v) return;
+
+  var pasos = caja.querySelectorAll('.mon-passo');
+  var N = pasos.length;
+  var CORTES = [0, .08, .16, .30, .49, .62, .82];
+
+  function medirPasos(){
+    caja.style.minHeight = '0px';
+    var alto = 0, k;
+    for(k=0;k<N;k++) pasos[k].style.bottom = 'auto';
+    for(k=0;k<N;k++) alto = Math.max(alto, pasos[k].offsetHeight);
+    for(k=0;k<N;k++) pasos[k].style.bottom = '';
+    caja.style.minHeight = Math.ceil(alto) + 'px';
+  }
+  medirPasos();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(medirPasos);
+  window.addEventListener('resize', medirPasos);
+
+  /* Con el movimiento reducido no hay recorrido que valga: la hoja de estilos
+     ya deja los siete pasos en lista y la sección a su altura normal, y aquí
+     solo se deja el vídeo en el último fotograma, la ancheta terminada. */
+  if(QUIETO){
+    v.removeAttribute('autoplay');
+    /* Si los metadatos ya están, el oyente no llega a saltar nunca y el vídeo
+       se queda en la tabla vacía, que es justo lo contrario de lo que se
+       quiere enseñar a quien no va a recorrer nada. */
+    var alFinal = function(){
+      if(v.duration && isFinite(v.duration)){ try{ v.currentTime = v.duration - .08; }catch(e){} }
+    };
+    if(v.readyState >= 1) alFinal(); else v.addEventListener('loadedmetadata', alFinal);
+    return;
+  }
+
+  sec.style.height = '520svh';
+
+  /* La velocidad se pone a cero ANTES de llamar a play() y se vuelve a poner
+     cada vez que algo la cambia. Poniéndola solo DESPUÉS, en la promesa, el
+     vídeo corre a velocidad normal durante el rato que tarda en resolverse
+     —poco, pero suficiente para llegar al final del plano— y entonces pasa lo
+     de abajo.
+
+     Y si ha llegado al final, hay que RETROCEDERLO antes de volver a cebarlo:
+     llamar a play() sobre un vídeo terminado lo rebobina al primer fotograma,
+     así que el cebado contra el botón de Safari acababa dejando la tabla vacía
+     justo después de que se viera la ancheta montada. */
+  function quieto(){ if(v.playbackRate !== 0){ try{ v.playbackRate = 0; }catch(e){} } }
+  function cebar(){
+    if(v.ended){ try{ v.currentTime = Math.max(0, (v.duration || 0) - .08); }catch(e){} }
+    quieto();
+    var p = v.play();
+    if(p && p.then) p.then(quieto, function(){});
+  }
+  v.addEventListener('ratechange', quieto);
+  v.addEventListener('playing', quieto);
+  v.addEventListener('pause', cebar);
+  v.addEventListener('loadedmetadata', cebar);
+  cebar();
+
+  var actual = -1, destino = 0, ahora = 0, corriendo = false, visible = false;
+
+  function pinta(){
+    if(!corriendo) return;
+    ahora += (destino - ahora) * .18;
+    quieto();
+    var d = v.duration;
+    if(d && isFinite(d)){
+      /* Nunca se llega al último fotograma exacto: al tocarlo salta `ended`,
+         y de ahí sale el rebobinado que se explica arriba. */
+      var t = Math.max(0, Math.min(d - .06, ahora * d));
+      if(Math.abs(v.currentTime - t) > .012 && v.readyState >= 1 && !v.seeking){
+        try{ v.currentTime = t; }catch(e){}
+      }
+    }
+    if(Math.abs(destino - ahora) < .0005 && !visible){ corriendo = false; return; }
+    requestAnimationFrame(pinta);
+  }
+
+  function alScroll(){
+    var total = sec.offsetHeight - window.innerHeight;
+    if(total <= 0) return;
+    var r = sec.getBoundingClientRect();
+    visible = r.bottom > 0 && r.top < window.innerHeight;
+
+    var p = Math.max(0, Math.min(1, -r.top / total));
+    destino = p;
+
+    if(llena) llena.style.width = (p * 100).toFixed(2) + '%';
+
+    var i = 0;
+    for(var k=N-1;k>=0;k--){ if(p >= CORTES[k]){ i = k; break; } }
+    if(i !== actual){
+      actual = i;
+      for(var j=0;j<N;j++) pasos[j].classList.toggle('viva', j===i);
+    }
+
+    if(visible && !corriendo){ corriendo = true; requestAnimationFrame(pinta); }
+  }
+
+  document.addEventListener('scroll', alScroll, {passive:true});
+  window.addEventListener('resize', alScroll);
+  alScroll();
+}
+
 function occasioni(){
   var sec = document.getElementById('ocasiones');
   var caja = document.getElementById('occ-testo');
@@ -554,6 +757,7 @@ function occasioni(){
 document.addEventListener('DOMContentLoaded', function(){
   aplicaPaleta(-1);
   ambiente();
+  montaje();
   occasioni();
   barra();
   menuMobile();
