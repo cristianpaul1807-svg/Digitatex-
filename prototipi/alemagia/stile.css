@@ -940,28 +940,6 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 .hero-tipo::before{display:none}
 .hero-tipo .occhiello,.hero h1,.hero .guida{text-shadow:none}
 
-/* Las fichas. Tres fotos suyas, escalonadas, con la del centro adelantada.
-   Se dibujan a 2x de lo que miden en pantalla: vienen de una captura del
-   perfil y a tamaño nativo se verían blandas. */
-.hero-fotos{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:center;
-}
-.hero-fotos figure{
-  --zoom-reposo:1.06;
-  border-radius:18px;overflow:hidden;background:var(--panna-2);
-  aspect-ratio:3/4;box-shadow:0 18px 40px rgba(28,43,40,.14);
-}
-.hero-fotos img{width:100%;height:100%;object-fit:cover}
-/* La del medio sube y crece: sin ese desnivel las tres se leen como una tira
-   de catálogo en vez de como una composición. */
-.hero-fotos .hf-b{transform:translateY(-22px) scale(1.06);z-index:2;box-shadow:0 24px 52px rgba(28,43,40,.2)}
-.hero-fotos .hf-a{transform:translateY(14px)}
-.hero-fotos .hf-c{transform:translateY(10px)}
-@media (max-width:620px){
-  .hero-fotos{gap:8px}
-  .hero-fotos .hf-b{transform:translateY(-12px) scale(1.04)}
-  .hero-fotos .hf-a,.hero-fotos .hf-c{transform:none}
-}
 @media (prefers-reduced-motion:reduce){
   .hero-fotos figure{transform:none!important}
 }
@@ -1061,7 +1039,7 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
 /* Más alto en pantalla grande: `cover` recorta por los lados, que es donde
    solo hay fondo desenfocado, y nunca por arriba —ahí está la punta del globo
    de la estrella, a diez píxeles del borde del plano—. */
-@media (min-width:1100px){ .mon-marco{aspect-ratio:16/10} }
+@media (min-width:960px){ .mon-marco{aspect-ratio:16/10} }
 /* El vídeo tapa el fondo del marco cuando carga; si no carga, el fondo es el
    fotograma de portada y la sección sigue teniendo algo que enseñar en vez de
    un rectángulo gris. */
@@ -1088,4 +1066,65 @@ footer{padding:44px 0 34px;border-top:1px solid var(--linea)}
   .mon-passi{min-height:0 !important}
   .mon-passo{position:static;opacity:1;transform:none;pointer-events:auto;margin-bottom:22px}
   .mon-barra{display:none}
+}
+
+/* ============================================================================
+   LA PORTADA ES EL MONTAJE
+   ----------------------------------------------------------------------------
+   El vídeo pasó de estar a media página a abrir el sitio, así que la portada
+   deja de ser un bloque quieto con tres fotos y se convierte en el recorrido.
+   Lo que sigue ajusta lo que traía la portada anterior a vivir dentro de una
+   sección que mide cinco pantallas y va pegada.
+   ========================================================================== */
+
+/* Los datos —qué se arma, dónde se entrega, a qué hora— iban pegados al fondo
+   del hero con `position:absolute`. Con un hero de cinco pantallas eso los
+   dejaba flotando sobre el vídeo a la altura de la banda de prototipo. Ahora
+   son una franja normal justo después. */
+.hero-fatti{position:static;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);background:var(--panna)}
+.hero-fatti ul{padding-block:4px}
+
+/* El titular convive ahora con los siete pasos en la misma columna, así que
+   baja de tamaño: a 84px empujaba los pasos fuera de la pantalla. */
+.hero.montaje h1{font-size:clamp(32px,4.4vw,60px);max-width:13ch;margin-top:18px}
+.hero.montaje .guida{margin-top:14px;max-width:46ch}
+.hero.montaje .hero-azioni{margin-top:clamp(18px,2.4vw,28px)}
+@media (min-width:960px){ .mon-griglia{grid-template-columns:1fr 1fr} }
+@media (min-width:1200px){ .mon-griglia{grid-template-columns:.86fr 1.14fr} }
+
+/* El paso, en una sola pieza: número, nombre y explicación. En la sección que
+   esto era, cada paso ocupaba un bloque con su titular; en la portada comparte
+   sitio con el titular de la página y tiene que caber. */
+.mon-passi{margin-top:clamp(18px,2.6vw,28px)}
+.mon-passo{display:block;margin:0}
+.mon-passo b{
+  font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:14px;letter-spacing:.14em;color:var(--acc);
+  font-variant-numeric:tabular-nums;margin-right:10px;transition:color .5s ease;
+}
+.mon-passo strong{
+  font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:clamp(20px,2.3vw,27px);color:var(--inchiostro);
+}
+.mon-passo span{display:block;margin-top:7px;color:var(--inchiostro-2);font-size:15px;max-width:46ch}
+.mon-barra{margin-top:clamp(18px,2.2vw,26px)}
+
+/* En el móvil no caben a la vez el vídeo, el titular, el párrafo, los siete
+   pasos y dos botones. Se va el párrafo —lo que cuenta ya lo están contando
+   los pasos, y el texto sigue en la página para quien lea con un lector— y el
+   segundo botón, que solo servía para bajar y aquí se baja solo. */
+@media (max-width:959px){
+  .hero.montaje .guida{display:none}
+  .hero.montaje h1{font-size:clamp(28px,7.2vw,38px);margin-top:10px}
+  .hero.montaje .hero-azioni{margin-top:14px}
+  .hero.montaje .hero-azioni .btn-vuoto{display:none}
+  /* Ancho completo no: el botón flotante de WhatsApp vive en esa esquina y
+     los dos se pisaban, dos llamadas al mismo sitio una encima de otra. */
+  .hero.montaje .hero-azioni .btn-pieno{width:calc(100% - 84px);justify-content:center}
+  .mon-passi{margin-top:14px}
+  .mon-passo strong{font-size:21px}
+  .mon-passo span{font-size:14px}
+  /* La reserva de la banda la hace ya `.mon-fisso`; repetirla aquí subía todo
+     el bloque el doble de lo que hacía falta. */
+  .hero-tipo{padding-bottom:0}
 }

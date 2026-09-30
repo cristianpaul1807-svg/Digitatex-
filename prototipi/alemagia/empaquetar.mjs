@@ -87,17 +87,39 @@ const antesVideo = cuerpo;
 cuerpo = cuerpo.replace(/\s*<source src="media\/montaje\.mp4"[^>]*>/g, () => '');
 if (cuerpo === antesVideo) throw new Error('no he encontrado la fuente del vídeo del montaje');
 
+/* Se intenta primero como Blob, que es lo que mejor se busca. Pero un Blob vive
+   en un origen `blob:` y hay contenedores que no lo dejan pasar en `media-src`:
+   ahí el vídeo no falla con estruendo, simplemente no aparece nunca. Por eso, si
+   salta el `error` del elemento, se reintenta con el data URI —peor buscando,
+   pero de origen normal— antes de darse por vencido. Un archivo suelto se manda
+   por ahí y se abre en sitios que uno no controla; que se vea es más importante
+   que que se busque fino. */
 const guionVideo = `
 (function(){
   var v = document.getElementById('mon-video');
   var d = document.getElementById('mon-datos');
   if(!v || !d) return;
-  var cruda = atob(d.textContent.replace(/\\s+/g, ''));
-  var bytes = new Uint8Array(cruda.length);
-  for(var i=0;i<cruda.length;i++) bytes[i] = cruda.charCodeAt(i);
-  d.textContent = '';                       // 3 MB de texto que ya no hacen falta
-  v.src = URL.createObjectURL(new Blob([bytes], {type:'video/mp4'}));
-  v.load();
+  var b64 = d.textContent.replace(/\\s+/g, '');
+  var plan = 0;
+
+  function conBlob(){
+    var cruda = atob(b64);
+    var bytes = new Uint8Array(cruda.length);
+    for(var i=0;i<cruda.length;i++) bytes[i] = cruda.charCodeAt(i);
+    v.src = URL.createObjectURL(new Blob([bytes], {type:'video/mp4'}));
+    v.load();
+  }
+  function conDatos(){
+    v.src = 'data:video/mp4;base64,' + b64;
+    v.load();
+  }
+  v.addEventListener('error', function(){
+    if(plan === 0){ plan = 1; conDatos(); }
+  });
+  v.addEventListener('loadedmetadata', function(){
+    d.textContent = '';   // ya cargó: fuera los megas de texto del documento
+  });
+  try{ conBlob(); }catch(e){ plan = 1; conDatos(); }
 })();`;
 
 /* Los enlaces a las páginas interiores se vuelven absolutos. Dentro del archivo

@@ -182,7 +182,6 @@
               </div>
               <div class="campo"><label for="nombre">Nombre y apellido *</label><input type="text" id="nombre" name="nombre" autocomplete="name" required></div>
               <div class="campo"><label for="tel">WhatsApp *</label><input type="tel" id="tel" name="whatsapp" autocomplete="tel" required></div>
-              <div class="campo"><label for="email">Correo</label><input type="email" id="email" name="email" autocomplete="email"></div>
               <div class="campo">
                 <label for="tipo">Ocasión *</label>
                 <select id="tipo" name="ocasion" required>
@@ -214,16 +213,17 @@
               <div class="campo lungo">
                 <label for="foto">Una foto que te guste — opcional, pero ayuda mucho</label>
                 <input type="file" id="foto" name="foto" accept="image/*">
-                <p class="aiuto">Una captura de Instagram o de Pinterest sirve perfecto. Se entiende en un segundo lo que por mensaje toma diez.</p>
+                <p class="aiuto">Una captura de Instagram o de Pinterest sirve perfecto. La adjuntas en el chat al mandar el mensaje.</p>
               </div>
               <div class="campo lungo"><label for="notas">Algo más que debamos saber</label><textarea id="notas" name="notas" placeholder="¿Hay alguna alergia? ¿A qué hora conviene entregar? ¿Quién recibe?"></textarea></div>
               <div class="invio">
-                <button class="btn btn-pieno" type="submit">Enviar el pedido
+                <button class="btn btn-pieno" type="submit">Enviar por WhatsApp
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </button>
                 <span class="stato" id="stato" role="status" aria-live="polite"></span>
               </div>
-              <p class="nota-privacy">Los datos sirven solo para responderte el pedido. No los usamos para nada más ni se los pasamos a nadie.</p>
+              <p class="nota-privacy">Al enviar se abre WhatsApp con el mensaje ya escrito y tú decides si lo mandas.
+                Aquí no se guarda nada ni pasa por ningún correo: el pedido va directo al chat de ALEmagia.</p>
             </div>
           </form>
       </div>

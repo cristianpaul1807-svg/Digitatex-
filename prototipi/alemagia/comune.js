@@ -342,38 +342,92 @@ function whatsapp(){
   setTimeout(function(){ w.classList.add('dentro'); }, 1100);
 }
 
-/* VARIABLE: endpoint de envío. Vacío a propósito en el prototipo — las
-   solicitudes tienen que llegar al correo de la clienta, no al nuestro. */
-var FORM_ENDPOINT = '';
+/* ---------------------------------------------------------------------------
+   EL FORMULARIO SALE POR WHATSAPP
+   No hay correo, ni servicio de formularios, ni nada que guarde los datos por
+   el camino. Al enviar se arma el mensaje con lo que se escribió y se abre
+   WhatsApp con él ya redactado, en el chat de ella.
+
+   Es mejor que el correo para este negocio, y no por comodidad: el pedido
+   aterriza donde ella ya trabaja, la conversación sigue ahí mismo —preguntar
+   el color, mandar la foto de referencia, pasar el precio— y el cliente ve el
+   mensaje antes de mandarlo, así que sabe exactamente qué está enviando. Un
+   formulario que contesta «¡Gracias!» y desaparece no le da ninguna de esas
+   tres cosas.
+
+   Lo único que no viaja es la foto de referencia: un archivo no cabe en un
+   enlace. Si se escogió una, el mensaje lo dice y se pide adjuntarla en el
+   chat, que es un gesto que ya se sabe hacer.
+
+   VARIABLE: el número. Sale del enlace que ella publica en su perfil. Si
+   cambia de número, se cambia aquí y en el enlace del botón flotante. */
+var WHATSAPP_NUMERO = '573009577820';
 
 function modulo(){
   var f = document.getElementById('modulo');
   if(!f) return;
   var st = document.getElementById('stato');
+
+  function etiqueta(c){
+    var l = f.querySelector('label[for="' + c.id + '"]');
+    return (l ? l.textContent : c.name).replace(' *', '').trim();
+  }
+
+  /* La fecha llega como 2026-10-12 y en Colombia se lee 12/10/2026. Se parte a
+     mano en vez de con `new Date`, que interpreta esa cadena como UTC y en un
+     huso al oeste devuelve el día anterior: el pedido llegaría con la fecha
+     corrida un día, que en este negocio es el problema entero. */
+  function fecha(v){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+    return m ? m[3] + '/' + m[2] + '/' + m[1] : v;
+  }
+
+  function mensaje(){
+    var d = new FormData(f);
+    var lineas = ['Hola ALEmagia, quiero pedir un detalle.', ''];
+    function poner(titulo, valor){
+      if(valor && String(valor).trim()) lineas.push('• ' + titulo + ': ' + String(valor).trim());
+    }
+    poner('Fecha de entrega', fecha(d.get('fecha')));
+    poner('Nombre', d.get('nombre'));
+    poner('Mi WhatsApp', d.get('whatsapp'));
+    poner('Ocasión', d.get('ocasion'));
+    poner('Zona de entrega', d.get('zona'));
+    poner('Para quién es', d.get('para'));
+    poner('Qué me gustaría que llevara', d.getAll('lleva').join(', '));
+    poner('Colores o tema', d.get('colores'));
+    poner('Algo más', d.get('notas'));
+
+    var foto = f.querySelector('input[type="file"]');
+    if(foto && foto.files && foto.files.length){
+      lineas.push('', 'Tengo una foto de referencia y te la adjunto aquí mismo.');
+    }
+    return lineas.join('\n');
+  }
+
   f.addEventListener('submit', function(e){
     e.preventDefault();
     // Validación propia y no la nativa: el mensaje del navegador sale en el
     // idioma del sistema y señala un campo cada vez.
     var faltan = Array.prototype.filter.call(f.querySelectorAll('[required]'), function(c){ return !c.value.trim(); });
     if(faltan.length){
-      st.textContent = 'Faltan campos obligatorios: ' + faltan.map(function(c){
-        return f.querySelector('label[for="'+c.id+'"]').textContent.replace(' *','').trim();
-      }).join(', ') + '.';
+      st.textContent = 'Faltan campos obligatorios: ' + faltan.map(etiqueta).join(', ') + '.';
       st.className = 'stato err';
       faltan[0].focus();
       return;
     }
-    if(!FORM_ENDPOINT){
-      st.textContent = 'Prototipo: el formulario todavía no está conectado. Escríbenos por WhatsApp.';
-      st.className = 'stato err';
-      return;
-    }
-    st.textContent = 'Enviando…'; st.className = 'stato';
-    fetch(FORM_ENDPOINT, {method:'POST', body:new FormData(f), headers:{Accept:'application/json'}})
-      .then(function(r){
-        if(r.ok){ st.textContent='¡Gracias! Te respondemos muy pronto.'; st.className='stato ok'; f.reset(); }
-        else{ st.textContent='No se pudo enviar. Inténtalo de nuevo o escríbenos por WhatsApp.'; st.className='stato err'; }
-      })
-      .catch(function(){ st.textContent='No se pudo enviar. Inténtalo de nuevo o escríbenos por WhatsApp.'; st.className='stato err'; });
+
+    var url = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(mensaje());
+
+    /* Abrir en otra pestaña deja la página como estaba, que es lo que conviene
+       si la persona decide no mandarlo. Los bloqueadores de ventanas suelen
+       dejar pasar esto por venir de una pulsación, pero cuando no, `open`
+       devuelve null y entonces se navega en la misma pestaña. */
+    var v = window.open(url, '_blank', 'noopener');
+    if(!v) window.location.href = url;
+
+    st.innerHTML = 'Abriendo WhatsApp con tu pedido ya escrito. Si no se abrió, ' +
+                   '<a href="' + url.replace(/&/g, '&amp;') + '" target="_blank" rel="noopener">toca aquí</a>.';
+    st.className = 'stato ok';
   });
 }
