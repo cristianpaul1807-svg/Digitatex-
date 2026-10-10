@@ -1218,6 +1218,7 @@
   .admin-lead{border:1px solid var(--line);padding:14px 16px;background:var(--ink);font-size:12.5px;line-height:1.7;color:var(--bone-dim);}
   .admin-lead b{color:var(--bone);font-family:'Fraunces',serif;font-weight:400;font-size:14px;}
   .admin-lead a{color:var(--brass-2);text-decoration:none;border-bottom:1px solid rgba(224,190,130,0.35);}
+  .lead-msg{display:block;white-space:pre-wrap;margin-top:7px;color:var(--bone);}
   .lead-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
   .lead-del{background:none;border:1px solid var(--line);color:var(--stone);width:26px;height:26px;
     border-radius:50%;cursor:pointer;font-size:12px;line-height:1;flex-shrink:0;transition:all .2s ease;}
@@ -1715,7 +1716,7 @@
   <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
        herramientas, si lo que se esta viendo es la ultima subida o una copia
        guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v32</span>
+  <span class="build-tag">v33</span>
   <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
 </footer>
 
@@ -3514,7 +3515,6 @@
     setTimeout(()=>resolve(supabaseClient), 8000);
   });
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xyegywvk';
 
   /* ============================================================
      TESTIMONIOS — se cargan de Supabase y se muestran como
@@ -4157,7 +4157,7 @@
           escapeHtml(l.project_type || '') + extras +
           '<br><b style="font-size:12.5px;">€' + (l.estimated_price_min||0) + '–' + (l.estimated_price_max||0) + '</b>' +
           ' · ' + (l.estimated_maintenance_min||0) + '–' + (l.estimated_maintenance_max||0) + ' €/mes' +
-          (l.message ? '<br>' + escapeHtml(l.message) : '') +
+          (l.message ? '<span class="lead-msg">' + escapeHtml(l.message) + '</span>' : '') +
           tiras +
         '</div>';
       }).join('');
@@ -4381,24 +4381,18 @@
           estimated_maintenance_max: est.maintMax
         };
 
+        /* Si el cliente adjunto fotos y ninguna llego a subirse (Supabase
+           caido, o una extension del navegador bloqueandolo), la solicitud
+           aparecia sin fotos y sin decir nada: parecia que no habia mandado
+           ninguna. Antes esto lo avisaba el correo; ahora que no hay correo,
+           se anota en el propio mensaje, que es lo que se lee en el panel. */
+        if(compressedPhotos.length && !photoUrls.length){
+          leadPayload.message = (leadPayload.message ? leadPayload.message + '\n\n' : '') +
+            '[Adjunto ' + compressedPhotos.length + ' foto(s) y no se pudieron subir. Pideselas.]';
+        }
+
         const tasks = [];
         if(supabaseClient) tasks.push(supabaseClient.from('leads').insert(leadPayload));
-        if(FORMSPREE_ENDPOINT){
-          const fd = new FormData();
-          Object.entries(leadPayload).forEach(([k,v])=>{
-            fd.append(k, Array.isArray(v) ? v.join(', ') : (v === null ? '' : v));
-          });
-          // Si el cliente adjunto fotos y ninguna llego a subirse (Supabase
-          // caido, o una extension del navegador bloqueandolo), el correo
-          // salia sin fotos y sin decir nada: parecia que no habia mandado
-          // ninguna. Mejor que lo diga, asi se le pueden pedir.
-          if(compressedPhotos.length && !photoUrls.length){
-            fd.set('product_photo_urls',
-              'ATENCION: el cliente adjunto ' + compressedPhotos.length +
-              ' foto(s) pero no se pudieron subir. Pideselas por email.');
-          }
-          tasks.push(fetch(FORMSPREE_ENDPOINT, { method:'POST', body: fd, headers:{ Accept:'application/json' } }));
-        }
 
         const results = await Promise.allSettled(tasks);
         const okAny = tasks.length > 0 && results.some(r => {
