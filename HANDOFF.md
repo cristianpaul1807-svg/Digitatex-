@@ -35,7 +35,6 @@ momento.**
 ```
 Navegador del visitante ──> Servidor (Hostinger/Easypanel) ──> entrega index.html y ya
                        └──> Supabase        (base de datos y vídeos, directo)
-                       └──> Formspree       (envío del correo, directo)
 ```
 
 Consecuencia práctica: **no hay variables de entorno que configurar.** No existe
@@ -242,13 +241,25 @@ cero filas.
 
 ---
 
-## 9. Correo
+## 9. Las solicitudes
 
-Formspree, endpoint `xyegywvk`. Cada solicitud llega con todos los campos y
-**los enlaces públicos a las fotos que subió el cliente**.
+**No hay correo.** Lo hubo —Formspree reenviando a una cuenta de Gmail— y se
+quitó: en dos meses entró una sola solicitud y era spam, y el correo añadía una
+pieza de terceros que podía caerse sin avisar. Las solicitudes se guardan en la
+tabla `leads` y se leen en el panel, en «Solicitudes de cotización recibidas».
 
-Si el cliente adjuntó fotos y no se pudieron subir, el correo lo dice
-explícitamente para poder pedírselas.
+Cada una llega con todos los campos, el presupuesto que le salió al cliente, su
+mensaje y **las fotos que subió, como miniaturas que se abren**. El correo y el
+teléfono son pulsables: el correo abre el cliente de correo, el teléfono abre
+WhatsApp.
+
+Si el cliente adjuntó fotos y no se pudieron subir, la solicitud lo dice al
+final del mensaje para poder pedírselas.
+
+Consecuencia que conviene tener presente: **nada avisa solo.** Antes llegaba un
+correo; ahora hay que entrar al panel a mirar. Si algún día entran solicitudes
+de verdad y con frecuencia, lo que toca es un aviso —correo o WhatsApp— desde
+una función de Supabase, no volver a colgar el sitio de un servicio externo.
 
 ---
 
