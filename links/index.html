@@ -10,10 +10,10 @@
      etiqueta de aqui y la regla de robots.txt hacen lo mismo por dos vias. -->
 <meta name="robots" content="noindex, nofollow">
 <title>Christian Paul · Digitatex</title>
-<meta name="description" content="Enlaces oficiales de Christian Paul — Digitatex y Trimm.online.">
+<meta name="description" content="Enlaces oficiales de Christian Paul — Digitatex, Trimm.online y Logiciel Construction.">
 
 <meta property="og:title" content="Christian Paul · Digitatex">
-<meta property="og:description" content="Agencia web premium y software para negocios de belleza.">
+<meta property="og:description" content="Agencia web premium y software de gestión para belleza y construcción.">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://digitatex.com/links/">
 <meta property="og:image" content="https://digitatex.com/assets/og-card.jpg">
@@ -209,6 +209,7 @@
      saturados que romperian el tono oscuro */
   .red[data-red="instagram"]:hover,.red[data-red="instagram"]:focus-visible{color:#e17bb0;}
   .red[data-red="tiktok"]:hover,.red[data-red="tiktok"]:focus-visible{color:#5ce1e6;}
+  .red[data-red="youtube"]:hover,.red[data-red="youtube"]:focus-visible{color:#ff4e45;}
   .red:focus-visible{outline:2px solid var(--laton-2);outline-offset:2px;}
 
   .texto{flex:1;min-width:0;}
@@ -286,7 +287,7 @@
       <span class="iniciales" id="iniciales">CP</span>
     </div>
     <h1 class="nombre sube">Christian Paul</h1>
-    <p class="cargo sube">Founder <b>@digitatex_</b> &nbsp;|&nbsp; Creador de <b>Trimm.online</b></p>
+    <p class="cargo sube">Founder <b>@digitatex_</b> &nbsp;|&nbsp; Creador de <b>Trimm.online</b> y <b>Logiciel Construction</b></p>
     <span class="insignia sube"><s></s>Webs 3D que convierten</span>
   </header>
 
@@ -318,7 +319,7 @@
        tono        'whatsapp' pinta el icono de verde. Se puede omitir.
        redes       redes sociales DE ESE PROYECTO, dentro de su propia tarjeta:
                      redes: [ {red:'instagram', url:'…'}, {red:'tiktok', url:'…'} ]
-                   Se dibuja el logo de cada red. Reconocidas: instagram, tiktok.
+                   Se dibuja el logo de cada red. Reconocidas: instagram, tiktok, youtube.
        proximamente: true  -> sale en gris y no se puede pulsar
      ========================================================================== */
 
@@ -347,10 +348,23 @@
       ]
     },
     {
-      titulo: 'Software de Gestión para Construcción',
-      sub:    'Obras, partes de trabajo, facturas y nóminas en un sitio',
+      titulo: 'Logiciel Construction — Software para empresas de construcción',
+      sub:    'Presupuestos, obras, equipo y facturas · Québec e Italia',
+      url:    'https://logiciel-construction.com/es/?utm_source=digitatex&utm_medium=links',
+      icono:  { img: '/assets/logo-logiciel.png', fondo: 'claro' },
+      redes: [
+        { red:'youtube', url:'https://www.youtube.com/@LogicielConstruction' }
+      ]
+    },
+    {
+      titulo: 'Gana 30 % recomendando Logiciel',
+      sub:    'Programa de afiliados · 12 meses de comisión',
+      // La pagina todavia no existe: /afiliados devuelve lo mismo que una
+      // direccion inventada. Cuando este publicada, se quita `proximamente` y
+      // se devuelve esta linea:
+      // url: 'https://logiciel-construction.com/afiliados?lang=es&utm_source=digitatex&utm_medium=links',
       proximamente: true,
-      icono:  { img: '/assets/logo-construccion.png' }
+      icono:  { texto: '30%' }
     },
     {
       titulo: 'Reserva tu auditoría gratis',
@@ -389,6 +403,11 @@
            '<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/>' +
            '<circle cx="12" cy="12" r="4.1"/>' +
            '<circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
+    },
+    youtube: {
+      nombre: 'YouTube',
+      svg: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+           '<path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg>'
     },
     tiktok: {
       nombre: 'TikTok',
