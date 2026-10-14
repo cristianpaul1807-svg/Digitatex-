@@ -9,6 +9,10 @@ Disallow: /supabase-setup.sql
 # encima de la web real. La pagina lleva ademas su propia etiqueta noindex.
 Disallow: /links
 
+# Los prototipos son webs de otras empresas alojadas aqui temporalmente para
+# ensenarlas. Indexarlas bajo nuestro dominio les haria competencia a ellas.
+Disallow: /prototipi
+
 # El sistema de movimiento es documentacion interna del equipo, no contenido
 # publico. Lleva ademas su propia etiqueta noindex.
 Disallow: /motion

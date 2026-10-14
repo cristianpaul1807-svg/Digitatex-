@@ -1,3 +1,9 @@
 node_modules/
 package-lock.json
 .DS_Store
+
+# Los vídeos de los prototipos no entran: engordan el repositorio y ya quedó
+# dicho una vez. La excepción es el que la página necesita para funcionar, que
+# va a mano con `git add -f`. El de demo y los originales se quedan fuera.
+prototipi/**/demo-*.mp4
+prototipi/**/*-original.mp4

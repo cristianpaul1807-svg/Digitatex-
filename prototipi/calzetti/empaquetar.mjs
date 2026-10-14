@@ -55,7 +55,7 @@ cuerpo = cuerpo.replace(/(src|poster)="(media\/[^"]+\.(?:webp|png))"/g, (_m, at,
 
 // La fuente del vídeo se quita: la pone el guion de abajo, como Blob.
 const antesVideo = cuerpo;
-cuerpo = cuerpo.replace(/\s*<source src="media\/lavaggio\.mp4"[^>]*>/g, () => '');
+cuerpo = cuerpo.replace(/\s*<source src="media\/lavaggio-ligero\.mp4"[^>]*>/g, () => '');
 if (cuerpo === antesVideo) throw new Error('no encuentro la fuente del vídeo');
 
 // El enlace a la página de reseñas no lleva a ninguna parte dentro del archivo
