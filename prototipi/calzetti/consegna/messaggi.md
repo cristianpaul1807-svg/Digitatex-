@@ -50,8 +50,21 @@ non costa niente. Vendere viene dopo.
 > [foto del cartello]
 >
 > Il sito intero lo guardi qui: [link]
+
 >
 > Se ti va ci prendiamo un caffè e te lo spiego in dieci minuti.
+
+**`[foto del cartello]` è una foto, non il file.** Una schermata, o il cartello
+fotografato in mano. Il PNG pronto da stampare non si manda su WhatsApp: quello
+si consegna quando ha pagato. Vedere va bene, avere no — vedi *Chi stampa il
+cartello, e quando*, più sotto.
+
+Sul sito l'anteprima del codice si vede, ed è giusto così: deve capire cosa
+compra. In teoria potrebbe fotografare lo schermo e stamparsi quello. Non è un
+problema da chiudere, è un problema che si risolve da sé: quella pagina delle
+recensioni sta su `digitatex.com` e la governi tu. Il giorno che non è cliente,
+quella pagina non c'è. E se si prende il disturbo di fotografare lo schermo e
+stampare, quello è uno che ha già deciso che la cosa gli serve.
 
 ---
 
@@ -97,9 +110,9 @@ l'errore: se difendi tutto non ti crede su niente.
 > Quella lista diventa tua e non la paghi a nessuno — ed è l'unica cosa in
 > tutto il discorso che nessun concorrente ti può copiare.
 >
-> Se vuoi la prossima volta che passo da Fidenza ti porto il cartello già
-> stampato e lo attacchi. Se in due settimane non arriva una recensione, l'hai
-> buttato: è un foglio.
+> Guardati il sito con calma, è un minuto. Poi se ti va dieci minuti al
+> telefono o un caffè: ti spiego come si mette in piedi e quanto costa, e
+> decidi.
 
 **Versione corta,** se preferisci non scrivere un muro:
 
@@ -111,7 +124,7 @@ l'errore: se difendi tutto non ti crede su niente.
 > recensioni che portano gente: l'Ineout ne ha 331 e tu 6, ed è per quello che
 > sei terzo. Il cartello è il primo anello, non tutta la catena.
 >
-> Ti porto il cartello stampato la prossima volta che passo?
+> Guardati il sito con calma. Poi dieci minuti al telefono e decidi.
 
 **Perché si ammette l'errore per primo:** lui ha trovato un difetto vero in due
 minuti di telefono. Chi ti segnala un difetto vero e ti sente dire «no, è che
@@ -168,6 +181,51 @@ negandoglielo.
 >
 > Cristian Paul — Digitatex
 > digitatex.com
+
+---
+
+## Chi stampa il cartello, e quando
+
+**Il cartello non si porta mai prima del sì.** Non perché costi — un A5 costa
+pochi centesimi — ma perché il cartello *è* la cosa che gli vendi a 390 €.
+Regalarlo per entrare dalla porta significa vendere a zero il passo 1 e
+rimanere senza il gancio per il passo 3. Vale la regola che è già scritta in
+`prezzo.md`: un lavoro gratis vale zero anche agli occhi di chi lo riceve.
+
+L'ordine è questo e non si salta:
+
+1. **Guarda il sito** dal telefono — gratis, non deve dire niente.
+2. **Dieci minuti** al telefono o un caffè: gli si dice il prezzo.
+3. **Dice sì e paga.**
+4. **Allora** gli arriva il file del cartello, pronto da stampare, e si
+   collega il link vero delle recensioni dal suo pannello Google.
+
+Al punto 2 si può *far vedere* il cartello stampato — portarlo in mano al
+caffè, come campione. Vedere e toccare non è ricevere: il foglio torna in
+tasca e si consegna al punto 4. Se lo chiede prima, la risposta è una frase
+sola: «Te lo do appena partiamo, è la prima cosa che ti consegno.»
+
+**Se chiede «e come lo stampo?»** — è una buona domanda, e la risposta è
+comoda per lui:
+
+> Lo stampi tu, da qualsiasi copisteria o anche dalla stampante dell'ufficio.
+> Ti mando il file pronto in A5: lo porti, lo stampi, e te ne fai quante copie
+> vuoi — uno alla cassa e uno su ogni pista. Se se ne rovina uno lo ristampi,
+> non devi chiedere niente a me.
+
+**Perché il QR punta a una pagina mia e non direttamente a Google:** così il
+link si cambia senza ristampare niente — e questo è anche la risposta onesta
+al perché non si può semplicemente stampare un QR fai-da-te. Un QR che va
+diretto a Google, il giorno che Google cambia l'indirizzo della scheda, è
+carta da buttare in tutte le copie appese.
+
+**Il file:** `consegna/cartello-a5.png` — 1748 × 2480 pixel, A5 a 300 dpi
+(14,8 × 21 cm), con i dati di stampa dentro il file, così in copisteria esce
+della misura giusta e non va riscalato a mano. Il codice è stato verificato: si
+legge e porta a `digitatex.com/prototipi/calzetti/recensioni/`.
+
+Sta in `consegna/`, non in `media/`: **non è un'immagine del sito, è la merce.**
+Dalla cartella `consegna/` non esce niente online.
 
 ---
 
