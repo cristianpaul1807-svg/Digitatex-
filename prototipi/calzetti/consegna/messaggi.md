@@ -14,7 +14,8 @@ arrivi al sito.
 
 ## 1 · WhatsApp — primo contatto
 
-> Ciao Cristian, sono Cristian Paul di Digitatex (quelli dei siti, qui di zona).
+> Ciao Cristian, sono Cristian Paul — vengo a lavare l'auto da te. Di lavoro
+> faccio siti, qui a Fidenza.
 >
 > Ho dato un'occhiata all'autolavaggio su Google per curiosità e mi è saltata
 > all'occhio una cosa: su "autolavaggio fidenza" sei terzo, ma l'Ineout ha 331
@@ -26,9 +27,20 @@ arrivi al sito.
 >
 > Ti mando un video di 20 secondi?
 
-**Perché così:** gli si dà un dato suo, verificabile in dieci secondi sul suo
-telefono. Non gli si dice che il suo sito è brutto — gliel'ha fatto qualcuno,
-magari lui stesso, e partire da lì chiude la conversazione.
+**Perché così:** la prima riga non è una presentazione, è una credenziale.
+**Sei un suo cliente e sei di Fidenza** — non è un contatto a freddo, è un
+cliente che gli porta un'idea. In un paese quello conta più di qualsiasi
+portfolio: non ti può liquidare come «uno che vende siti al telefono», perché
+la prossima volta ti trova in piazzale.
+
+Non si dice il nome dell'azienda nella prima riga. «Sono Cristian Paul, vengo a
+lavare l'auto da te» apre; «sono Cristian Paul di Digitatex» mette una società
+in mezzo e suona come una chiamata commerciale. Digitatex arriva dopo, quando
+chiede chi sei.
+
+Poi gli si dà un dato suo, verificabile in dieci secondi sul suo telefono. Non
+gli si dice che il suo sito è brutto — gliel'ha fatto qualcuno, magari lui
+stesso, e partire da lì chiude la conversazione.
 
 La domanda finale è piccola apposta: dire di sì a un video di venti secondi
 non costa niente. Vendere viene dopo.
@@ -110,9 +122,8 @@ l'errore: se difendi tutto non ti crede su niente.
 > Quella lista diventa tua e non la paghi a nessuno — ed è l'unica cosa in
 > tutto il discorso che nessun concorrente ti può copiare.
 >
-> Guardati il sito con calma, è un minuto. Poi se ti va dieci minuti al
-> telefono o un caffè: ti spiego come si mette in piedi e quanto costa, e
-> decidi.
+> Guardati il sito con calma, è un minuto. Tanto passo a lavare l'auto da te:
+> ne parliamo lì, senza fretta.
 
 **Versione corta,** se preferisci non scrivere un muro:
 
@@ -124,7 +135,7 @@ l'errore: se difendi tutto non ti crede su niente.
 > recensioni che portano gente: l'Ineout ne ha 331 e tu 6, ed è per quello che
 > sei terzo. Il cartello è il primo anello, non tutta la catena.
 >
-> Guardati il sito con calma. Poi dieci minuti al telefono e decidi.
+> Guardati il sito con calma. Ne parliamo quando passo a lavare l'auto.
 
 **Perché si ammette l'errore per primo:** lui ha trovato un difetto vero in due
 minuti di telefono. Chi ti segnala un difetto vero e ti sente dire «no, è che
@@ -147,7 +158,8 @@ negandoglielo.
 
 > Ciao Cristian,
 >
-> ti scrivo perché ho guardato l'autolavaggio su Google e c'è una cosa che si
+> sono un tuo cliente — vengo a lavare l'auto da te — e di lavoro faccio siti.
+> Ti scrivo perché ho guardato l'autolavaggio su Google e c'è una cosa che si
 > sistema in fretta e ti cambia il telefono.
 >
 > Cercando "autolavaggio fidenza" compari terzo. Davanti a te c'è l'Ineout con
@@ -177,7 +189,8 @@ negandoglielo.
 >
 > Guarda, sono due minuti: [link]
 >
-> Se ha senso, ci sentiamo. Se non ha senso, me lo dici e amici come prima.
+> Poi ne parliamo in piazzale la prossima volta che passo. Se non ha senso me
+> lo dici lì e amici come prima.
 >
 > Cristian Paul — Digitatex
 > digitatex.com
@@ -195,15 +208,22 @@ rimanere senza il gancio per il passo 3. Vale la regola che è già scritta in
 L'ordine è questo e non si salta:
 
 1. **Guarda il sito** dal telefono — gratis, non deve dire niente.
-2. **Dieci minuti** al telefono o un caffè: gli si dice il prezzo.
+2. **Si parla in piazzale**, quando passi a lavare l'auto: gli si dice il
+   prezzo.
 3. **Dice sì e paga.**
 4. **Allora** gli arriva il file del cartello, pronto da stampare, e si
    collega il link vero delle recensioni dal suo pannello Google.
 
-Al punto 2 si può *far vedere* il cartello stampato — portarlo in mano al
-caffè, come campione. Vedere e toccare non è ricevere: il foglio torna in
-tasca e si consegna al punto 4. Se lo chiede prima, la risposta è una frase
-sola: «Te lo do appena partiamo, è la prima cosa che ti consegno.»
+Il punto 2 è il vantaggio più grosso che hai in questa trattativa, e non costa
+niente: **non devi chiedere un appuntamento.** Vai a lavare l'auto come fai
+sempre e ne parli mentre aspetti. Nessuna chiamata da concedere, nessuna data
+da fissare — e un no detto di persona a un cliente è molto più difficile di un
+no scritto su WhatsApp.
+
+Al punto 2 si può *far vedere* il cartello stampato — portarlo in tasca e
+tirarlo fuori lì. Vedere e toccare non è ricevere: il foglio torna in tasca e
+si consegna al punto 4. Se lo chiede prima, la risposta è una frase sola:
+«Te lo do appena partiamo, è la prima cosa che ti consegno.»
 
 **Se chiede «e come lo stampo?»** — è una buona domanda, e la risposta è
 comoda per lui:
