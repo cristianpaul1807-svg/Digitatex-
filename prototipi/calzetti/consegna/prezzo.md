@@ -53,6 +53,49 @@ chiederà lo sconto su tutto per sempre.
 
 ---
 
+## La lista dei contatti: cosa costa e a chi
+
+**È già dentro il prezzo, e deve starci.** Il documento che legge lui promette
+il «Passo 2 · la lista clienti» nella stessa settimana del cartello. Alzare il
+prezzo dopo che l'ha letto è cambiare il patto a tavolino.
+
+**Infrastruttura: zero euro in più.** La lista va nello stesso Supabase che
+regge già il pannello di Digitatex — tabella a parte, scrittura sola, e i
+contatti si vedono nel pannello. Il piano gratuito tiene 5 GB al mese: una
+lista di un autolavaggio di Fidenza non ci arriva nemmeno scherzando.
+
+**Mandare le offerte, dopo:** Resend, 3.000 email al mese gratis (100 al
+giorno). Con qualche centinaio di contatti non si paga niente. Se un giorno la
+lista cresce tanto da sforare, sono circa 20 $ al mese **a carico suo** — e
+succede solo se la cosa ha funzionato, che è una bella notizia, non un costo a
+sorpresa. Va detto adesso, non quando arriva la fattura.
+
+**Il lavoro c'è** e sta nel prezzo: tabella, permessi, il modulo collegato, la
+vista nel pannello, l'export, il consenso. Due o tre ore.
+
+**Cosa paga il mensile** (19 € o 59 €): la lista in piedi e salvata, l'export
+quando lo chiede, e ogni mese quante persone hanno inquadrato il QR. Il
+documento dice che la lista è **sua** — quindi quando la chiede gliela si dà,
+in CSV, senza fare storie. Trattenerla per tenerlo legato è il modo più veloce
+di perdere un cliente a Fidenza.
+
+### Prima della prima email raccolta davvero: il consenso
+
+Oggi la pagina ha una riga di cortesia sulla privacy, e basta. Per raccogliere
+email per marketing in Italia servono tre cose che **ora non ci sono**:
+
+- una **casella da spuntare**, non preselezionata, separata dall'invio;
+- l'informativa con il **titolare del trattamento**, che è **lui** — nome
+  dell'attività e partita IVA, non Digitatex;
+- un modo per **cancellarsi** in un clic, in ogni email che manda.
+
+Per questo la partita IVA non serve solo per il piè di pagina. Finché la lista
+non è collegata non si raccoglie niente e non c'è esposizione; si costruisce al
+punto 4, dopo il sì, insieme a questo. Non si collega il modulo e «poi vediamo
+la privacy».
+
+---
+
 ## Quello che non si fa
 
 - **Non si dà il prezzo nel primo messaggio.** Prima guarda il video e vede il
