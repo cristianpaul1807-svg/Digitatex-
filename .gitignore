@@ -7,3 +7,7 @@ package-lock.json
 # va a mano con `git add -f`. El de demo y los originales se quedan fuera.
 prototipi/**/demo-*.mp4
 prototipi/**/*-original.mp4
+
+# El material de venta de cada prototipo (precio, PDF de la reunión, notas) no
+# se publica nunca: está dentro del repositorio pero fuera del despliegue, y
+# nginx además lo bloquea por si alguien lo sube sin querer.
