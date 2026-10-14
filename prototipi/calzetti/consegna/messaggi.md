@@ -54,7 +54,7 @@ non costa niente. Vendere viene dopo.
 >
 > [video]
 >
-> E questo è il cartello col QR: si stampa, si attacca alla cassa e su ogni
+> E questo è il cartello col QR: si stampa, si attacca sulla colonnina dei gettoni e su ogni
 > pista. Chi lo inquadra arriva in un tocco alla pagina per lasciare la
 > recensione — e se vuole lascia anche la mail, così hai la lista dei tuoi
 > clienti per quando fai un'offerta.
@@ -169,49 +169,107 @@ Lui ha già dato due fasce. **Non si chiede «quando ti va?» a chi ha appena
 detto quando gli va** — si sceglie, si propone una data precisa e gli si
 lascia solo da confermare l'ora.
 
-> Perfetto. Allora sabato mattina, che c'è più calma: sabato 17 ti va? Dimmi tu
-> l'ora e io mi adatto.
+> Perfetto, allora sabato mattina: sabato 17 ti va? Dimmi tu l'ora e io mi
+> adatto.
 >
-> Porto tutto sul telefono, sono venti minuti. E se arriva gente tu vai, io
-> aspetto — non ti blocco il piazzale.
+> Meglio con la luce che alle 19:30 — così facciamo due passi in piazzale e ti
+> faccio vedere dove andrebbero i cartelli. Venti minuti, non di più.
 
-**Perché sabato e non le 19:30:** alle 19:30 ha dietro una giornata intera di
-lavoro a Parma più la strada. Non è il momento di fargli guardare uno schermo e
-sentire un prezzo. Il sabato mattina è più scomodo per lui come lavoro — è
-quando gli entra la gente — ma è l'unico dei due in cui è sveglio e lucido. La
-frase «se arriva gente tu vai, io aspetto» serve proprio a togliere quella
-scusa di mezzo.
+**Perché sabato e non le 19:30, e perché la ragione si dice:** a metà ottobre a
+Fidenza alle 19:30 è buio da un'ora. Non si cammina in un piazzale al buio a
+indicare dove va un cartello, e lui dopo una giornata intera a Parma più la
+strada non è nelle condizioni di guardare uno schermo e sentire un prezzo.
+
+Ma la frase importante è l'altra: **«facciamo due passi in piazzale».** Non è
+una presentazione, è un sopralluogo — e cambia tutto. Seduti, uno guarda un PDF
+e pensa «quanto mi costa». Camminando e indicando *questa colonnina, questa
+pista, questa*, pensa «qui ce ne vogliono tre» — ha già smesso di decidere *se*
+e ha cominciato a decidere *dove*. Il buio delle 19:30 toglie l'unica cosa che
+vende davvero.
 
 Se il sabato salta, la seconda scelta è le 19:30 di un giorno in cui *non*
 piove: con la pioggia il piazzale è vuoto e lui è di malumore, con il bello ha
 lavorato e ha incassato.
 
+### Il PDF: stampato, lì, e non prima
+
+**Non si manda adesso.** Tre pagine su WhatsApp, lette da solo sul telefono fra
+una cosa e l'altra, fanno due danni:
+
+- La pagina 2 è l'elenco di sei difetti del suo sito — «il pulsante porta alla
+  Coop», «una foto è rotta». Letta da solo, senza nessuno che dica *«chi l'ha
+  fatto sapeva quello che faceva»*, è una critica a lui o a un suo amico. Con
+  te davanti è un'analisi; da solo sul telefono è uno sconosciuto che gli
+  elenca i difetti.
+- E soprattutto **gli toglie il motivo di vedersi.** Se l'ha già letto, sabato
+  può liquidarlo con «l'ho visto, ci penso» — che è un no detto bene.
+
+**Nemmeno sul telefono.** Tre pagine con una tabella non si leggono su uno
+schermo da sei pollici, e per fargliele vedere devi passargli il tuo telefono:
+lui scorre, tu guardi, e hai perso il ritmo e il controllo di quale pagina
+guarda.
+
+**Stampato, in mano, lì.** La carta si consegna una pagina alla volta: apri
+alla prima, il **6 contro 331** gli arriva mentre tu lo guardi in faccia, e da
+quella faccia capisci se stai vendendo il cartello o tutto il pacchetto. E alla
+fine **glielo lasci**. È la cosa che gli resta sul bancone quando te ne vai —
+un telefono si chiude, tre fogli stampati restano lì a guardarlo.
+
+Il sito invece sì, sul telefono: quello è fatto per il telefono, ed è già nelle
+sue mani da ieri.
+
 ### L'informazione nuova, che vale più dell'appuntamento
 
-**«Lavoro a Parma tutto il giorno.»** Non l'avevamo e cambia l'argomento
-principale.
+**«Lavoro a Parma tutto il giorno»** — e l'autolavaggio è **automatico, senza
+personale**. Lavora da solo, tutto il giorno, senza nessuno dentro.
 
-Non è uno che ha poco tempo per il marketing: è uno che **non è lì** mentre il
-suo autolavaggio lavora. Nessuno chiede le recensioni ai clienti, perché non
-c'è nessuno a chiederle.
+Questo non è un dettaglio: è l'argomento principale, ed è il motivo per cui le
+recensioni sono sei. Non è che chiede male — **non c'è nessuno che le possa
+chiedere.** Ineout ha 331 recensioni; chiunque ci sia dietro, qualcuno le ha
+chieste. Qui non c'è nessuno, mai.
 
-Ed è esattamente quello che il cartello fa al posto suo. Da dire all'incontro,
-non prima:
+Il che vuol dire una cosa sola: **il cartello non è un'opzione fra tante, è
+l'unico modo che esiste in questo autolavaggio per raccogliere una recensione.**
+Non c'è un'alternativa più semplice da proporgli, perché non c'è un cassiere
+che possa dire «ci lascia due righe su Google?». Da dire all'incontro, non
+prima:
 
-> Tu sei a Parma tutto il giorno, e intanto qui entra ed esce gente. Quelli lì
-> non te la lascia nessuno, la recensione, perché non c'è nessuno a chiederla.
-> Il cartello la chiede per te mentre tu sei al lavoro. È l'unico dipendente
-> che non paghi.
+> Tu sei a Parma e qui non c'è nessuno: la macchina lavora da sola tutto il
+> giorno. Entra gente, esce pulita, e nessuno le chiede niente — perché non c'è
+> nessuno. Il cartello è l'unico che può chiederlo al posto tuo, e lavora le
+> ore che fa l'impianto, non le tue. È l'unico dipendente che non paghi.
 
 Vale lo stesso per la lista delle mail e per il sito con gli orari e i prezzi:
 tutto quello che gli stiamo vendendo serve a far funzionare il piazzale quando
-lui non c'è. Questo è il filo del discorso di sabato.
+lui non c'è — che è sempre. Questo è il filo del discorso di sabato.
+
+### E una conseguenza pratica: la carta non regge fuori
+
+Un impianto senza personale è un impianto **all'aperto**. Un A5 di carta
+attaccato alla colonnina dura due piogge, poi è una macchia grigia — e un
+cartello scolorito fa più danno che nessun cartello.
+
+Quindi al cartello serve **plastificazione o stampa su PVC adesivo**. In
+copisteria sono pochi euro a pezzo. Due cose, dicendolo lui per primo:
+
+- gli risparmia la figura di attaccare un foglio che si rovina in una
+  settimana;
+- e soprattutto **gli dimostra che hai guardato il suo piazzale**, non solo il
+  suo sito. Per uno che riceve proposte da gente che non è mai passata, quella
+  frase vale più di tutto il PDF.
+
+Da dire così, senza farne un problema:
+
+> Una cosa: stampalo plastificato o su adesivo, non su carta semplice. Qui è
+> tutto all'aperto, un foglio normale dopo due temporali non si legge più.
+> Sono pochi euro in copisteria.
 
 ### Cosa portarsi sabato
 
-- **Il cartello A5 stampato**, in tasca. Si fa vedere, non si consegna — vedi
-  *Chi stampa il cartello, e quando*.
-- **Il PDF stampato**, 3 pagine. Sul telefono non si legge una tabella.
+- **Il cartello A5 stampato**, in tasca. Per far vedere basta la carta — il
+  plastificato è roba sua, dopo. Si fa vedere, non si consegna: vedi *Chi
+  stampa il cartello, e quando*.
+- **Il PDF stampato**, 3 pagine, e **glielo lasci** andando via.
 - **Il prezzo in testa**, senza cercarlo nel telefono davanti a lui:
   1.390 € + 59 €/mese tutto, oppure 390 € + 19 €/mese solo il passo 1.
 - **Il sito aperto sul telefono**, già caricato prima di scendere dall'auto.
@@ -265,7 +323,7 @@ ha qualcosa da fare per te.
 > che hai già online — qui si percorre invece di guardarlo.
 >
 > E c'è una cosa che il sito di adesso non ha: un cartello con un QR da
-> stampare e attaccare alla cassa. Chi lo inquadra lascia la recensione in
+> stampare e attaccare sulla colonnina dei gettoni. Chi lo inquadra lascia la recensione in
 > trenta secondi e, se vuole, ti lascia la mail per le offerte. Così la lista
 > dei clienti diventa tua.
 >
@@ -319,7 +377,7 @@ comoda per lui:
 
 > Lo stampi tu, da qualsiasi copisteria o anche dalla stampante dell'ufficio.
 > Ti mando il file pronto in A5: lo porti, lo stampi, e te ne fai quante copie
-> vuoi — uno alla cassa e uno su ogni pista. Se se ne rovina uno lo ristampi,
+> vuoi — uno sulla colonnina dei gettoni e uno su ogni pista. Se se ne rovina uno lo ristampi,
 > non devi chiedere niente a me.
 
 **Perché il QR punta a una pagina mia e non direttamente a Google:** così il
