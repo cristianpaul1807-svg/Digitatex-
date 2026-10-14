@@ -146,7 +146,7 @@
 </footer>
 
 <div class="avviso qr-avviso">
-  <span>Prototipo Digitatex · Link recensioni provvisorio · Lista email da collegare</span>
+  <span>Prototipo Digitatex · Lista email da collegare</span>
   <a class="avviso-btn" href="https://digitatex.com" target="_blank" rel="noopener">digitatex.com</a>
 </div>
 
@@ -179,9 +179,11 @@
          https://g.page/r/XXXXXXXXXXXX/review
      Ese abre directamente el cuadro de las estrellas. Un toque, no cuatro.
 
-     Mientras llega, se deja la búsqueda: un botón que lleva a algún sitio
-     razonable es mejor que uno apagado, y para enseñar el prototipo funciona. */
-  var RECENSIONI = 'https://www.google.com/search?q=recensioni+di+autolavaggio+calzett%C3%AC+cristian+fidenza';
+     Mientras llega, se usa el enlace por CID, sacado del identificador de su
+     ficha: abre SU ficha directamente en vez de una página de resultados. Un
+     toque menos que la búsqueda que había antes, y el botón de escribir la
+     reseña ya está a la vista al aterrizar. */
+  var RECENSIONI = 'https://maps.google.com/?cid=13680620949419284541';
   var LISTA      = '';   // ej. endpoint propio, Supabase, Brevo…
 
   var boton = document.getElementById('vai-recensione');
