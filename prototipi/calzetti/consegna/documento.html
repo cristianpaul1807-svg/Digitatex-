@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Autolavaggio Calzetti — analisi e proposta · Digitatex</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Pensato per la STAMPA e per essere letto al tavolo, non per lo schermo.
+     A4, margini larghi, una idea per blocco e il numero che conta sempre in
+     grande: chi legge questo lo sfoglia in tre minuti mentre tu parli. */
+  @page{size:A4;margin:16mm 15mm}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;color:#132742;font-size:10.5pt;line-height:1.5}
+  h1,h2,h3{font-family:'Archivo',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-.01em}
+
+  .pagina{page-break-after:always;padding-bottom:4mm}
+  .pagina:last-child{page-break-after:auto}
+
+  .cappello{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:3px solid #ffd836;padding-bottom:8px;margin-bottom:22px}
+  .cappello b{font-family:'Archivo',sans-serif;font-size:12pt;color:#102f5b}
+  .cappello span{font-size:8.5pt;color:#6b7c92;letter-spacing:.1em;text-transform:uppercase}
+
+  h1{font-size:30pt;color:#102f5b;margin-bottom:10px}
+  h1 em{font-style:normal;background:#ffd836;padding:0 6px}
+  .sottotitolo{font-size:12pt;color:#4a5d76;max-width:46em;margin-bottom:26px}
+
+  h2{font-size:16pt;color:#102f5b;margin:26px 0 10px}
+  h3{font-size:11.5pt;color:#102f5b;margin-bottom:4px}
+  p{margin-bottom:9px;max-width:50em}
+
+  .numerone{display:flex;align-items:baseline;gap:14px;background:#102f5b;color:#fff;
+    border-radius:12px;padding:20px 24px;margin:18px 0}
+  .numerone b{font-family:'Archivo',sans-serif;font-size:42pt;color:#ffd836;line-height:1}
+  .numerone span{font-size:11pt;max-width:30em}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:10pt}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #dde4ed}
+  th{font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:#6b7c92}
+  tr.noi td{background:#fff8d9;font-weight:700}
+  td.num{font-family:'Archivo',sans-serif;font-size:13pt}
+
+  .difetto{display:grid;grid-template-columns:26px 1fr;gap:12px;margin-bottom:14px;break-inside:avoid}
+  .difetto b{width:26px;height:26px;border-radius:50%;background:#102f5b;color:#ffd836;
+    display:grid;place-items:center;font-family:'Archivo',sans-serif;font-size:10pt}
+  .difetto p{margin:0;color:#4a5d76;font-size:10pt}
+
+  .passo{border-left:4px solid #ffd836;padding:4px 0 4px 16px;margin-bottom:18px;break-inside:avoid}
+  .passo .quando{font-size:8.5pt;letter-spacing:.1em;text-transform:uppercase;color:#1861a6;font-weight:700}
+
+  .scatola{border:1px solid #dde4ed;border-radius:12px;padding:18px 20px;margin:16px 0;break-inside:avoid}
+  .scatola.giallo{background:#fff8d9;border-color:#f0dc8a}
+
+  .piede{margin-top:26px;padding-top:12px;border-top:1px solid #dde4ed;
+    font-size:8.5pt;color:#8294a9;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<!-- ===================== PAGINA 1 ===================== -->
+<section class="pagina">
+  <div class="cappello">
+    <b>AUTOLAVAGGIO CALZETTI · FIDENZA</b>
+    <span>Analisi — ottobre 2026</span>
+  </div>
+
+  <h1>Il problema non è<br>il sito. È che <em>siete in sei</em>.</h1>
+  <p class="sottotitolo">
+    Analisi della presenza online dell'autolavaggio, fatta dall'esterno e senza
+    accessi. Tre cose in ordine di quanto portano, non di quanto costano.
+  </p>
+
+  <div class="numerone">
+    <b>6</b>
+    <span>Le recensioni su Google dell'Autolavaggio Calzetti. Il concorrente che
+    compare per primo ne ha <b style="font-size:inherit;color:#fff">331</b>.</span>
+  </div>
+
+  <p>
+    Cercando <b>«autolavaggio fidenza»</b> da Fidenza, Google mostra tre attività.
+    Calzetti è la terza. Non è una questione di sito: è questa tabella.
+  </p>
+
+  <table>
+    <tr><th>Attività</th><th>Recensioni</th><th>Voto</th><th>Orario</th></tr>
+    <tr><td>Autolavaggio Ineout</td><td class="num">331</td><td>4,7</td><td>24 ore su 24</td></tr>
+    <tr><td>Autolavaggio Fidenza</td><td class="num">72</td><td>3,8</td><td>dalle 8</td></tr>
+    <tr class="noi"><td>Autolavaggio Calzetti</td><td class="num">6</td><td>4,2</td><td>non indicato</td></tr>
+  </table>
+
+  <div class="scatola giallo">
+    <h3>Cosa significa, in pratica</h3>
+    <p style="margin:0">
+      Le recensioni non si comprano e non si recuperano con la pubblicità: si
+      chiedono a chi esce dal piazzale con l'auto pulita. È l'unica voce di
+      questo documento che <b>non costa niente</b> e che da sola sposta la
+      posizione su Google. Tutto il resto viene dopo.
+    </p>
+  </div>
+
+  <h2>E la scheda Google dice «self-service»</h2>
+  <p>
+    La categoria registrata è <b>autolavaggio self-service</b>. Ma l'attività ha
+    due impianti automatici nuovi, che sono anche quelli che il cliente paga di
+    più. Chi a Fidenza cerca <b>«autolavaggio automatico»</b> oggi non vi trova.
+  </p>
+
+  <div class="piede"><span>Digitatex · digitatex.com</span><span>1 / 3</span></div>
+</section>
+
+<!-- ===================== PAGINA 2 ===================== -->
+<section class="pagina">
+  <div class="cappello">
+    <b>AUTOLAVAGGIO CALZETTI · FIDENZA</b>
+    <span>Il sito di oggi</span>
+  </div>
+
+  <h1 style="font-size:24pt">Quello che funziona,<br>e quello che perde clienti.</h1>
+
+  <div class="scatola">
+    <h3>Prima: quello che è fatto bene</h3>
+    <p style="margin:0;color:#4a5d76">
+      Il sito è <b>leggero e veloce</b> (27 KB, nessun file esterno da scaricare),
+      tutte le foto hanno la descrizione per chi non vede, i video non partono da
+      soli e non si scaricano finché non li apri, e sul telefono non si sballa.
+      Chi l'ha fatto sapeva quello che faceva. Quello che segue non toglie niente
+      a questo.
+    </p>
+  </div>
+
+  <h2>Le sei cose che oggi vi costano clienti</h2>
+
+  <div class="difetto"><b>1</b><div>
+    <h3>Non c'è l'indirizzo, non ci sono gli orari, non ci sono i prezzi</h3>
+    <p>Nel sito non compare nemmeno la parola «Via». Le vostre stesse domande
+    frequenti chiedono «dove trovo i prezzi dei programmi» e la pagina non
+    risponde. Sono le tre cose che chiede chi deve decidere se venire.</p>
+  </div></div>
+
+  <div class="difetto"><b>2</b><div>
+    <h3>Il pulsante della mappa porta alla Coop</h3>
+    <p>Il tasto «Apri la zona su Maps» cerca «Coop Superstore Fidenza». Il
+    cliente arriva al supermercato, non da voi — e la vostra scheda Google
+    esiste.</p>
+  </div></div>
+
+  <div class="difetto"><b>3</b><div>
+    <h3>Quando mandate il link su WhatsApp non esce niente</h3>
+    <p>Mancano le etichette che generano l'anteprima: niente foto, niente
+    titolo, solo un indirizzo nudo. Per un'attività che vive di Instagram è la
+    vendita persa nel gesto ripetuto ogni giorno.</p>
+  </div></div>
+
+  <div class="difetto"><b>4</b><div>
+    <h3>Google non sa che siete un'attività</h3>
+    <p>Manca del tutto il blocco di dati che i motori leggono per capire
+    indirizzo, servizi e orari di un'attività locale. Senza, il sito è solo
+    un'altra pagina.</p>
+  </div></div>
+
+  <div class="difetto"><b>5</b><div>
+    <h3>Una foto della galleria è rotta</h3>
+    <p>Il file <code>apertura-piste.webp</code> pesa zero byte: nella galleria
+    si vede un buco. Verificato sul server.</p>
+  </div></div>
+
+  <div class="difetto"><b>6</b><div>
+    <h3>Qualsiasi indirizzo sbagliato risponde «va tutto bene»</h3>
+    <p>Un indirizzo inventato restituisce la pagina iniziale con codice 200
+    invece di un errore, e i file <code>robots.txt</code> e
+    <code>sitemap.xml</code> restituiscono HTML al posto del loro contenuto.
+    Google lo registra come segnale di sito mal tenuto.</p>
+  </div></div>
+
+  <div class="piede"><span>Digitatex · digitatex.com</span><span>2 / 3</span></div>
+</section>
+
+<!-- ===================== PAGINA 3 ===================== -->
+<section class="pagina">
+  <div class="cappello">
+    <b>AUTOLAVAGGIO CALZETTI · FIDENZA</b>
+    <span>Proposta</span>
+  </div>
+
+  <h1 style="font-size:24pt">Tre passi,<br>in quest'ordine.</h1>
+  <p class="sottotitolo" style="margin-bottom:20px">
+    L'ordine conta: il primo passo porta clienti da solo, anche senza gli altri due.
+  </p>
+
+  <div class="passo">
+    <p class="quando">Passo 1 · subito, costo zero</p>
+    <h3>Il cartello col QR per le recensioni</h3>
+    <p>Un cartello A5 da stampare e attaccare alla cassa e su ogni pista. Chi lo
+    inquadra arriva a una pagina con un pulsante solo: lascia la recensione su
+    Google in trenta secondi. Il QR punta a una pagina vostra, non direttamente
+    a Google: così si può cambiare il link senza ristampare niente, e si sa
+    quante persone lo usano.</p>
+  </div>
+
+  <div class="passo">
+    <p class="quando">Passo 2 · stessa settimana</p>
+    <h3>La lista clienti</h3>
+    <p>Sulla stessa pagina, sotto il pulsante della recensione, chi vuole lascia
+    la mail per essere avvisato delle offerte. Non è obbligatorio e viene dopo
+    la recensione, apposta. In tre mesi diventa una lista di clienti vostra, da
+    usare quando il piazzale è vuoto: un messaggio e tornano.</p>
+  </div>
+
+  <div class="passo">
+    <p class="quando">Passo 3 · il sito</p>
+    <h3>Il lavaggio che si percorre col dito</h3>
+    <p>Il vostro video dell'automatico messo in copertina, legato allo scorrimento:
+    si scende col dito e la macchina si copre di schiuma. È il vostro filmato,
+    quello già online — qui si percorre invece di guardarlo. Con dentro indirizzo,
+    orari, prezzi e i dati che Google legge.</p>
+  </div>
+
+  <div class="scatola giallo">
+    <h3>Quello che serve da voi</h3>
+    <p style="margin:0">
+      Orari di apertura · prezzi dei programmi · modalità di pagamento ·
+      il link diretto alle recensioni dal vostro pannello Google ·
+      partita IVA per il piè di pagina.
+    </p>
+  </div>
+
+  <div class="scatola">
+    <h3>Quello che non prometto</h3>
+    <p style="margin:0;color:#4a5d76">
+      Nessuno può promettere di arrivare primi su Google, e chi lo promette sta
+      mentendo. Con 331 recensioni il concorrente non sparisce in un mese. Quello
+      che si può fare è smettere di perdere i clienti che vi cercano già: quelli
+      che non trovano l'orario, che finiscono alla Coop, o che non vedono
+      l'anteprima quando qualcuno gira il vostro link.
+    </p>
+  </div>
+
+  <div class="piede"><span>Digitatex · digitatex.com · Cristian Paul</span><span>3 / 3</span></div>
+</section>
+
+</body>
+</html>

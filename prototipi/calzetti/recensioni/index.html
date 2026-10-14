@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Questa pagina non va su Google: è la destinazione di un codice QR stampato,
+     non un contenuto che debba competere nelle ricerche. -->
+<meta name="robots" content="noindex, follow">
+
+<title>Lascia la tua recensione — Autolavaggio Calzetti Fidenza</title>
+<meta name="description" content="Lascia una recensione all'Autolavaggio Calzetti di Fidenza ed entra nella lista per offerte e novità.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../stile.css">
+<meta name="theme-color" content="#102f5b">
+
+<style>
+  /* ==========================================================================
+     LA PÁGINA DEL CÓDIGO QR
+
+     Aquí llega alguien de pie, al lado de su coche mojado, con una mano
+     ocupada. Tiene treinta segundos y ni uno más. Así que:
+
+     - Una sola pantalla, sin barra de navegación y sin nada que leer de más.
+     - El botón de la reseña es LO PRIMERO y es enorme. Es a lo que vino.
+     - El correo va DESPUÉS y es opcional de verdad: si se pone antes, la
+       mitad se va sin dejar la reseña, que es lo que de verdad vale dinero.
+
+     El orden no es estético, es de negocio: la reseña sube el negocio en
+     Google hoy; el correo sirve para venderle otra vez dentro de tres meses.
+     ========================================================================== */
+  body{background:var(--navy);color:#fff;display:flex;flex-direction:column;min-height:100svh}
+  .qr-envoltura{flex:1;display:flex;flex-direction:column;justify-content:center;
+    width:100%;max-width:520px;margin:0 auto;padding:40px var(--margine) 34px}
+
+  .qr-marchio{display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:30px}
+  .qr-marchio .marchio-sigla{background:var(--giallo)}
+  .qr-marchio .marchio-sigla svg{color:var(--navy)}
+  .qr-marchio .marchio-nome{color:#fff}
+  .qr-marchio .marchio-nome span{color:var(--giallo)}
+
+  .qr-testa{text-align:center}
+  .qr-testa h1{font-size:clamp(30px,8vw,44px);line-height:1.02}
+  .qr-testa h1 em{font-style:normal;color:var(--giallo)}
+  .qr-testa p{color:rgba(255,255,255,.76);margin-top:14px;font-size:15.5px}
+
+  .qr-stelle{display:flex;justify-content:center;gap:5px;margin:22px 0 26px}
+  .qr-stelle svg{width:30px;height:30px;color:var(--giallo)}
+
+  .qr-azione{display:block;width:100%;text-align:center;justify-content:center;
+    font-size:17px;padding:19px 26px}
+
+  .qr-oppure{display:flex;align-items:center;gap:14px;margin:30px 0 22px;
+    color:rgba(255,255,255,.45);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .qr-oppure::before,.qr-oppure::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.18)}
+
+  .qr-club{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:20px;padding:24px 22px}
+  .qr-club h2{font-size:20px}
+  .qr-club p{color:rgba(255,255,255,.7);font-size:14px;margin-top:8px}
+  .qr-campo{margin-top:18px}
+  .qr-campo label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--giallo);margin-bottom:7px}
+  .qr-campo input{width:100%;padding:15px 16px;border-radius:12px;
+    border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);
+    color:#fff;font:inherit;font-size:16px}  /* 16px: por debajo, iOS hace zoom al tocar */
+  .qr-campo input::placeholder{color:rgba(255,255,255,.4)}
+  .qr-campo input:focus{outline:2px solid var(--giallo);outline-offset:2px}
+  .qr-club .btn{width:100%;justify-content:center;margin-top:16px}
+  .qr-privacy{font-size:12px;color:rgba(255,255,255,.5);margin-top:14px;line-height:1.5}
+
+  .qr-stato{display:block;margin-top:14px;font-size:14px;font-weight:600;min-height:20px}
+  .qr-stato.ok{color:var(--giallo)}
+  .qr-stato.err{color:#ff9d8f}
+
+  .qr-pie{text-align:center;padding:0 var(--margine) 26px;font-size:12.5px;color:rgba(255,255,255,.45)}
+  .qr-pie a{color:rgba(255,255,255,.7)}
+
+  /* El aviso de prototipo aquí va en el flujo, no fijo: esta pantalla se mira
+     entera de una vez y una banda flotante le comería el botón. */
+  .qr-avviso{position:static;margin-top:auto}
+</style>
+</head>
+<body>
+
+<div class="qr-envoltura">
+
+  <div class="qr-marchio">
+    <span class="marchio-sigla">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 15h16M6 10.5h13M9 6h9"/>
+      </svg>
+    </span>
+    <span class="marchio-nome">CALZETTI<span>Autolavaggio · Fidenza</span></span>
+  </div>
+
+  <div class="qr-testa">
+    <h1>Com'è andata, <em>bene?</em></h1>
+    <p>Trenta secondi del tuo tempo ci aiutano più di qualsiasi cartellone.</p>
+    <div class="qr-stelle" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+    </div>
+  </div>
+
+  <a class="btn btn-pieno qr-azione" id="vai-recensione" href="#" target="_blank" rel="noopener">
+    Lascia la recensione su Google
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+  </a>
+
+  <p class="qr-oppure">e inoltre</p>
+
+  <div class="qr-club">
+    <h2>Entra nella lista Calzetti</h2>
+    <p>Ti scriviamo solo quando c'è un'offerta vera o una novità in struttura. Niente altro.</p>
+
+    <form id="modulo-club" novalidate>
+      <div class="qr-campo">
+        <label for="email">La tua email</label>
+        <input type="email" id="email" name="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" required>
+      </div>
+      <div class="qr-campo">
+        <label for="nome">Nome <span style="color:rgba(255,255,255,.4);font-weight:600">(facoltativo)</span></label>
+        <input type="text" id="nome" name="nome" autocomplete="given-name" placeholder="Come ti chiamiamo">
+      </div>
+      <button class="btn btn-pieno" type="submit">Entro nella lista</button>
+      <span class="qr-stato" id="stato" role="status" aria-live="polite"></span>
+      <p class="qr-privacy">
+        L'email serve solo per scriverti offerte e novità dell'autolavaggio. Non la diamo
+        a nessuno e ti cancelli quando vuoi con un clic.
+      </p>
+    </form>
+  </div>
+
+</div>
+
+<footer class="qr-pie">
+  <p>Autolavaggio Calzetti · Via Giavazzoli 1/a, Fidenza (PR)</p>
+  <p style="margin-top:6px"><a href="../">Vai al sito</a> · <a href="https://wa.me/393391641014" target="_blank" rel="noopener">WhatsApp</a></p>
+</footer>
+
+<div class="avviso qr-avviso">
+  <span>Prototipo Digitatex · Link recensioni e lista email da collegare</span>
+  <a class="avviso-btn" href="https://digitatex.com" target="_blank" rel="noopener">digitatex.com</a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ==========================================================================
+     LAS DOS COSAS QUE HAY QUE ENCHUFAR AQUÍ
+
+     1. RECENSIONI: el enlace directo a dejar reseña en su ficha de Google.
+        Se saca desde su panel de Perfil de Empresa → «Chiedi recensioni», que
+        da una dirección corta tipo g.page/r/XXXXXXXX/review. NO vale el enlace
+        del mapa: ese lleva a la ficha y el cliente tiene que buscar el botón,
+        y ahí se pierde la mitad.
+
+        Vacío a propósito: un enlace inventado manda las reseñas a otro negocio.
+
+     2. LISTA: dónde se guardan los correos. Hoy no se guarda nada; el
+        formulario avisa de ello en vez de fingir que sí. Al conectarlo,
+        cualquier destino sirve mientras devuelva 200.
+     ========================================================================== */
+  var RECENSIONI = '';   // ej. 'https://g.page/r/XXXXXXXXXXXX/review'
+  var LISTA      = '';   // ej. endpoint propio, Supabase, Brevo…
+
+  var boton = document.getElementById('vai-recensione');
+  if(RECENSIONI){
+    boton.href = RECENSIONI;
+  } else {
+    /* Sin enlace no se deja un botón que no lleva a ninguna parte: se desactiva
+       y se dice por qué. En el prototipo esto es lo honesto; en producción esta
+       rama no debería ejecutarse nunca. */
+    boton.setAttribute('aria-disabled','true');
+    boton.style.opacity = '.55';
+    boton.style.pointerEvents = 'none';
+    boton.innerHTML = 'Link Google da collegare';
+  }
+
+  var f = document.getElementById('modulo-club');
+  var st = document.getElementById('stato');
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = f.email.value.trim();
+
+    /* Validación propia y no la del navegador: su mensaje sale en el idioma del
+       sistema, que aquí puede no ser italiano, y señala un campo cada vez. */
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
+      st.textContent = 'Controlla l’email: manca qualcosa.';
+      st.className = 'qr-stato err';
+      f.email.focus();
+      return;
+    }
+
+    if(!LISTA){
+      st.textContent = 'Prototipo: la lista non è ancora collegata.';
+      st.className = 'qr-stato err';
+      return;
+    }
+
+    st.textContent = 'Un attimo…';
+    st.className = 'qr-stato';
+    fetch(LISTA, {
+      method:'POST',
+      headers:{'Content-Type':'application/json', Accept:'application/json'},
+      body: JSON.stringify({ email: email, nome: f.nome.value.trim() || null, origine: 'qr-autolavaggio' })
+    }).then(function(r){
+      if(r.ok){
+        st.textContent = 'Ci sei. Ti scriviamo solo quando serve.';
+        st.className = 'qr-stato ok';
+        f.reset();
+      } else {
+        st.textContent = 'Non ha funzionato. Riprova fra un attimo.';
+        st.className = 'qr-stato err';
+      }
+    }).catch(function(){
+      st.textContent = 'Non ha funzionato. Riprova fra un attimo.';
+      st.className = 'qr-stato err';
+    });
+  });
+})();
+</script>
+</body>
+</html>
