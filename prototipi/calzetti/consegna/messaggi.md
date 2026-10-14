@@ -122,8 +122,9 @@ l'errore: se difendi tutto non ti crede su niente.
 > Quella lista diventa tua e non la paghi a nessuno — ed è l'unica cosa in
 > tutto il discorso che nessun concorrente ti può copiare.
 >
-> Guardati il sito con calma, è un minuto. Tanto passo a lavare l'auto da te:
-> ne parliamo lì, senza fretta.
+> Guardati il sito con calma. Quando ti sei fatto un'idea, chiamami e fissiamo
+> un incontro quando fa comodo a te. In fondo sono un tuo cliente anch'io, al
+> lavaggio — abito qui vicino.
 
 **Versione corta,** se preferisci non scrivere un muro:
 
@@ -135,7 +136,8 @@ l'errore: se difendi tutto non ti crede su niente.
 > recensioni che portano gente: l'Ineout ne ha 331 e tu 6, ed è per quello che
 > sei terzo. Il cartello è il primo anello, non tutta la catena.
 >
-> Guardati il sito con calma. Ne parliamo quando passo a lavare l'auto.
+> Dagli un'occhiata con calma, poi chiamami e fissiamo un incontro. In fondo al
+> lavaggio sono un tuo cliente anch'io — abito qui vicino.
 
 **Perché si ammette l'errore per primo:** lui ha trovato un difetto vero in due
 minuti di telefono. Chi ti segnala un difetto vero e ti sente dire «no, è che
@@ -189,8 +191,9 @@ negandoglielo.
 >
 > Guarda, sono due minuti: [link]
 >
-> Poi ne parliamo in piazzale la prossima volta che passo. Se non ha senso me
-> lo dici lì e amici come prima.
+> Quando te lo sei guardato, chiamami e fissiamo un incontro. In fondo sono un
+> tuo cliente anch'io, al lavaggio — abito qui vicino. Se non ha senso me lo
+> dici e amici come prima.
 >
 > Cristian Paul — Digitatex
 > digitatex.com
@@ -208,22 +211,28 @@ rimanere senza il gancio per il passo 3. Vale la regola che è già scritta in
 L'ordine è questo e non si salta:
 
 1. **Guarda il sito** dal telefono — gratis, non deve dire niente.
-2. **Si parla in piazzale**, quando passi a lavare l'auto: gli si dice il
-   prezzo.
+2. **Chiama lui** e si fissa l'incontro: lì si dice il prezzo.
 3. **Dice sì e paga.**
 4. **Allora** gli arriva il file del cartello, pronto da stampare, e si
    collega il link vero delle recensioni dal suo pannello Google.
 
-Il punto 2 è il vantaggio più grosso che hai in questa trattativa, e non costa
-niente: **non devi chiedere un appuntamento.** Vai a lavare l'auto come fai
-sempre e ne parli mentre aspetti. Nessuna chiamata da concedere, nessuna data
-da fissare — e un no detto di persona a un cliente è molto più difficile di un
-no scritto su WhatsApp.
-
-Al punto 2 si può *far vedere* il cartello stampato — portarlo in tasca e
+All'incontro si può *far vedere* il cartello stampato — portarlo in tasca e
 tirarlo fuori lì. Vedere e toccare non è ricevere: il foglio torna in tasca e
 si consegna al punto 4. Se lo chiede prima, la risposta è una frase sola:
 «Te lo do appena partiamo, è la prima cosa che ti consegno.»
+
+**Il punto 2 aspetta lui, e questa è la parte da tenere d'occhio.** Chiedere di
+essere chiamato è la mossa giusta — non rincorri, e l'incontro lo fissa lui,
+quindi ci arriva avendo già deciso di ascoltare. Ma un titolare che lavora in
+piazzale non chiama: non perché non gli interessa, perché ha quaranta cose
+prima.
+
+Quindi la rete di sicurezza è quella che hai già e non ti costa niente:
+**sei un suo cliente e abiti vicino.** Se in una settimana non chiama, vai a
+lavare l'auto come fai sempre e glielo chiedi lì, in due parole —
+«L'hai visto quel sito? Dimmi tu quando ne parliamo.» Non è insistere, è una
+domanda in piazzale fra due che si conoscono. Ed è la ragione per cui questa
+trattativa non muore mai: non puoi essere ignorato da uno che vedi di persona.
 
 **Se chiede «e come lo stampo?»** — è una buona domanda, e la risposta è
 comoda per lui:
