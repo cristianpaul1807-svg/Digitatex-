@@ -50,7 +50,13 @@ body{
 }
 
 h1,h2,h3{font-family:'Archivo',Impact,'Arial Narrow',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.02}
-img,video{display:block;max-width:100%}
+/* `height:auto` no es opcional. Las imágenes llevan `width` y `height` en el
+   HTML —hacen falta para que el navegador reserve el hueco y la página no dé
+   saltos al cargar—, pero si luego el CSS solo toca el ancho, el alto se queda
+   en el del atributo y la imagen sale aplastada. Pasó con el código QR: 137
+   píxeles de ancho por 600 de alto, ilegible. Las que llevan alto propio en
+   CSS (las de `object-fit:cover`) mandan sobre esto por especificidad. */
+img,video{display:block;max-width:100%;height:auto}
 a{color:inherit}
 
 .wrap{max-width:var(--largo);margin:0 auto;padding-inline:var(--margine)}
@@ -358,4 +364,19 @@ section{padding-block:var(--aria)}
    botón flotante tiene que estar donde el pulgar lo espera. */
 @media (max-width:700px){
   .hero-azioni .btn{max-width:calc(100% - 78px)}
+}
+
+/* El código QR dentro de la web era un error de bulto, y lo señaló el propio
+   cliente: quien lee esta página la lee DESDE el teléfono, y con el teléfono
+   no se puede escanear la propia pantalla.
+
+   El QR solo tiene sentido IMPRESO y colgado en la caja. Aquí se enseña como
+   anticipo de lo que se va a imprimir —que es información útil para el dueño—
+   y la acción para quien está leyendo es un botón, que sí se puede pulsar.
+
+   En pantalla pequeña el código se encoge todavía más: es una miniatura de un
+   cartel, no algo que haya que leer. */
+.cartello-azione{width:100%;justify-content:center;margin-top:18px}
+@media (max-width:620px){
+  .cartello img{width:min(150px,46%)}
 }
