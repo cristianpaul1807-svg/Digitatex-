@@ -146,7 +146,7 @@
 </footer>
 
 <div class="avviso qr-avviso">
-  <span>Prototipo Digitatex · Link recensioni e lista email da collegare</span>
+  <span>Prototipo Digitatex · Link recensioni provvisorio · Lista email da collegare</span>
   <a class="avviso-btn" href="https://digitatex.com" target="_blank" rel="noopener">digitatex.com</a>
 </div>
 
@@ -169,7 +169,19 @@
         formulario avisa de ello en vez de fingir que sí. Al conectarlo,
         cualquier destino sirve mientras devuelva 200.
      ========================================================================== */
-  var RECENSIONI = '';   // ej. 'https://g.page/r/XXXXXXXXXXXX/review'
+  /* PROVISIONAL. Esto NO es el enlace bueno: es una búsqueda en Google, no la
+     acción de escribir la reseña. El cliente aterriza en los resultados y
+     todavía le quedan dos o tres toques hasta el formulario, y en cada uno se
+     cae gente.
+
+     El bueno sale del panel de Perfil de Empresa de Google, en «Chiedi
+     recensioni» / «Ask for reviews», y tiene esta forma:
+         https://g.page/r/XXXXXXXXXXXX/review
+     Ese abre directamente el cuadro de las estrellas. Un toque, no cuatro.
+
+     Mientras llega, se deja la búsqueda: un botón que lleva a algún sitio
+     razonable es mejor que uno apagado, y para enseñar el prototipo funciona. */
+  var RECENSIONI = 'https://www.google.com/search?q=recensioni+di+autolavaggio+calzett%C3%AC+cristian+fidenza';
   var LISTA      = '';   // ej. endpoint propio, Supabase, Brevo…
 
   var boton = document.getElementById('vai-recensione');
