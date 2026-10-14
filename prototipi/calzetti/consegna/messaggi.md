@@ -154,6 +154,86 @@ negandoglielo.
 
 ---
 
+## 2 ter · WhatsApp — ha detto di sì all'incontro
+
+Ha risposto, parole sue:
+
+> «Per fare 2 chiacchiere non ci sono problemi, però io per ora lavoro a Parma
+> tutto il giorno. A Fidenza nell'autolavaggio ci sono alla sera alle 19:30
+> oppure il sabato mattina»
+
+**Questo è un sì.** Non si rivende più niente: si chiude la data e basta. Il
+messaggio più lungo di due righe, qui, fa solo danno.
+
+Lui ha già dato due fasce. **Non si chiede «quando ti va?» a chi ha appena
+detto quando gli va** — si sceglie, si propone una data precisa e gli si
+lascia solo da confermare l'ora.
+
+> Perfetto. Allora sabato mattina, che c'è più calma: sabato 17 ti va? Dimmi tu
+> l'ora e io mi adatto.
+>
+> Porto tutto sul telefono, sono venti minuti. E se arriva gente tu vai, io
+> aspetto — non ti blocco il piazzale.
+
+**Perché sabato e non le 19:30:** alle 19:30 ha dietro una giornata intera di
+lavoro a Parma più la strada. Non è il momento di fargli guardare uno schermo e
+sentire un prezzo. Il sabato mattina è più scomodo per lui come lavoro — è
+quando gli entra la gente — ma è l'unico dei due in cui è sveglio e lucido. La
+frase «se arriva gente tu vai, io aspetto» serve proprio a togliere quella
+scusa di mezzo.
+
+Se il sabato salta, la seconda scelta è le 19:30 di un giorno in cui *non*
+piove: con la pioggia il piazzale è vuoto e lui è di malumore, con il bello ha
+lavorato e ha incassato.
+
+### L'informazione nuova, che vale più dell'appuntamento
+
+**«Lavoro a Parma tutto il giorno.»** Non l'avevamo e cambia l'argomento
+principale.
+
+Non è uno che ha poco tempo per il marketing: è uno che **non è lì** mentre il
+suo autolavaggio lavora. Nessuno chiede le recensioni ai clienti, perché non
+c'è nessuno a chiederle.
+
+Ed è esattamente quello che il cartello fa al posto suo. Da dire all'incontro,
+non prima:
+
+> Tu sei a Parma tutto il giorno, e intanto qui entra ed esce gente. Quelli lì
+> non te la lascia nessuno, la recensione, perché non c'è nessuno a chiederla.
+> Il cartello la chiede per te mentre tu sei al lavoro. È l'unico dipendente
+> che non paghi.
+
+Vale lo stesso per la lista delle mail e per il sito con gli orari e i prezzi:
+tutto quello che gli stiamo vendendo serve a far funzionare il piazzale quando
+lui non c'è. Questo è il filo del discorso di sabato.
+
+### Cosa portarsi sabato
+
+- **Il cartello A5 stampato**, in tasca. Si fa vedere, non si consegna — vedi
+  *Chi stampa il cartello, e quando*.
+- **Il PDF stampato**, 3 pagine. Sul telefono non si legge una tabella.
+- **Il prezzo in testa**, senza cercarlo nel telefono davanti a lui:
+  1.390 € + 59 €/mese tutto, oppure 390 € + 19 €/mese solo il passo 1.
+- **Il sito aperto sul telefono**, già caricato prima di scendere dall'auto.
+
+### Cosa chiedergli, prima di andare via
+
+Questo è il vero scopo dell'incontro, anche se dice di no al prezzo:
+
+- gli **orari** di apertura;
+- i **prezzi** dei programmi;
+- le **modalità di pagamento**;
+- la **partita IVA** — serve per il piè di pagina *e* perché il titolare del
+  trattamento della lista mail è lui, non Digitatex;
+- il **link diretto alle recensioni** dal suo pannello Google Business (quello
+  che usiamo adesso è provvisorio: apre la scheda invece del modulo).
+
+Senza queste cinque cose il sito non si può finire, quindi si chiedono comunque
+— e chiederle è anche il modo più naturale di far finire l'incontro con lui che
+ha qualcosa da fare per te.
+
+---
+
 ## 3 · Email
 
 **Oggetto:** Autolavaggio Calzetti — 6 recensioni contro 331
