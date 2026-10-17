@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Digitatex</title>
+<meta name="description" content="Come Digitatex tratta i dati inviati dal modulo di preventivo: quali dati, per cosa, dove restano, per quanto tempo e come chiederne la cancellazione.">
+<!-- Una pagina legal no tiene que salir en Google compitiendo con la home. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0c0c0d">
+<link rel="canonical" href="https://digitatex.com/privacy/">
+<link rel="icon" href="../assets/logo.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@300;400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@300;400;500&display=swap"></noscript>
+
+<style>
+  /* Los mismos tokens que la web, para que esto no parezca otra página.
+     --stone solo se usa en textos pequeños: 7,7:1 sobre el fondo. */
+  :root{
+    --ink:#0c0c0d; --bone:#efe9dd; --bone-dim:#c9c2b2; --stone:#a8a294;
+    --brass:#b9924f; --brass-2:#e0be82; --line:rgba(239,233,221,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--bone-dim);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{display:block;max-width:100%;height:auto}
+  a{color:var(--brass-2);text-decoration:underline;text-underline-offset:3px}
+  a:hover{color:var(--bone)}
+
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+
+  header{border-bottom:1px solid var(--line);padding:22px 0;position:sticky;top:0;
+    background:rgba(12,12,13,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:10}
+  .head-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .marca{font-family:'Fraunces',Georgia,serif;font-size:19px;color:var(--bone);
+    letter-spacing:-0.01em;text-decoration:none}
+  .marca:hover{color:var(--brass-2)}
+
+  .langsw{display:flex;gap:2px}
+  .langsw button{background:none;border:1px solid transparent;color:var(--stone);
+    font:inherit;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:color .25s,border-color .25s}
+  .langsw button:hover{color:var(--bone)}
+  .langsw button.active{color:var(--ink);background:var(--brass-2);border-color:var(--brass-2)}
+
+  main{padding:56px 0 80px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;color:var(--bone);
+    font-size:clamp(30px,6vw,44px);line-height:1.1;letter-spacing:-0.01em;margin-bottom:14px}
+  .aggiornato{font-size:12px;color:var(--stone);letter-spacing:0.08em;text-transform:uppercase;
+    margin-bottom:34px}
+  h2{font-family:'Fraunces',Georgia,serif;font-weight:400;color:var(--bone);
+    font-size:22px;line-height:1.25;margin:40px 0 12px}
+  p{margin-bottom:14px}
+  ul{margin:0 0 16px 20px}
+  li{margin-bottom:8px}
+  strong{color:var(--bone);font-weight:500}
+
+  .scatola{border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:26px 0;
+    background:rgba(255,255,255,0.02)}
+  .scatola p:last-child{margin-bottom:0}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color:var(--stone);
+    display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--stone)}
+
+  @media (max-width:560px){
+    main{padding:40px 0 60px}
+    .scatola{padding:18px 18px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head-row">
+    <a class="marca" href="../">Digitatex</a>
+    <div class="langsw" role="group" aria-label="Lingua">
+      <button type="button" data-lang="it" class="active">IT</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="fr">FR</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1 data-k="h1">Privacy Policy</h1>
+    <p class="aggiornato" data-k="aggiornato">Ultimo aggiornamento: 17 ottobre 2026</p>
+
+    <div class="scatola">
+      <p data-k="riassunto"><strong>In breve:</strong> i dati che lasci nel modulo servono solo a risponderti con un preventivo. Non si vendono, non si cedono a nessuno e non si usano per mandarti pubblicità. Se vuoi che spariscano, scrivi su WhatsApp e spariscono.</p>
+    </div>
+
+    <h2 data-k="h_titolare">Chi tratta i dati</h2>
+    <p data-k="p_titolare">Il titolare del trattamento è <strong>Christhian Paul Rodriguez Almarales — Digitatex</strong>, Fidenza (PR), Italia. Per qualsiasi cosa riguardi i tuoi dati il contatto è WhatsApp: <a href="https://wa.me/393290914158" target="_blank" rel="noopener">+39 329 091 4158</a>.</p>
+
+    <h2 data-k="h_dati">Quali dati vengono raccolti</h2>
+    <p data-k="p_dati">Solo quelli che scrivi tu nel modulo di preventivo:</p>
+    <ul>
+      <li data-k="d1"><strong>Nome</strong> — obbligatorio, per sapere come chiamarti.</li>
+      <li data-k="d2"><strong>Email</strong> e/o <strong>telefono</strong> — almeno uno dei due, altrimenti non c'è modo di risponderti.</li>
+      <li data-k="d3"><strong>Messaggio</strong>, tipo di progetto, integrazioni richieste e indirizzo del sito esistente, se lo indichi.</li>
+      <li data-k="d4"><strong>Foto</strong> che carichi tu, fino a cinque, se il progetto le richiede.</li>
+    </ul>
+    <p data-k="p_dati2">Non ci sono cookie di profilazione, non c'è Google Analytics e non c'è nessun pixel pubblicitario. La lingua che scegli resta salvata nel tuo browser, sul tuo telefono: non arriva a noi.</p>
+
+    <h2 data-k="h_perche">Per cosa vengono usati</h2>
+    <p data-k="p_perche">Per una cosa sola: <strong>leggere la tua richiesta e risponderti con un preventivo.</strong> Non vengono usati per mandarti newsletter o offerte, non vengono venduti e non vengono comunicati a terzi. La base giuridica è il consenso che dai spuntando la casella nel modulo (art. 6.1.a GDPR) e le trattative precontrattuali che chiedi tu stesso (art. 6.1.b).</p>
+
+    <h2 data-k="h_dove">Dove restano e per quanto</h2>
+    <p data-k="p_dove">I dati del modulo e le foto sono conservati su <strong>Supabase</strong>, che li ospita su server nell'Unione Europea e agisce come responsabile del trattamento. L'accesso è protetto da password e lo ha solo il titolare.</p>
+    <p data-k="p_dove2">Le richieste restano al massimo <strong>24 mesi</strong> dall'ultimo contatto, poi vengono cancellate. Se diventi cliente, i dati necessari al lavoro e agli obblighi fiscali restano per il tempo che la legge impone.</p>
+    <p data-k="p_dove3">Il sito carica i caratteri tipografici da Google Fonts: per farlo, il tuo browser contatta un server di Google, che riceve il tuo indirizzo IP. È l'unico terzo che il sito contatta da solo.</p>
+
+    <h2 data-k="h_diritti">I tuoi diritti</h2>
+    <p data-k="p_diritti">Puoi chiedere in qualsiasi momento di <strong>vedere</strong> i dati che ci sono su di te, di <strong>correggerli</strong>, di <strong>cancellarli</strong> o di <strong>revocare il consenso</strong>. Non serve un modulo né una raccomandata: basta un messaggio.</p>
+    <div class="scatola">
+      <p data-k="p_cancella">Per far cancellare tutto, scrivi su WhatsApp a <a href="https://wa.me/393290914158" target="_blank" rel="noopener">+39 329 091 4158</a> dicendo semplicemente che vuoi essere cancellato. Si fa entro 30 giorni, di solito molto prima, e ti arriva conferma.</p>
+    </div>
+    <p data-k="p_garante">Se pensi che i tuoi dati siano trattati male, puoi rivolgerti al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">garanteprivacy.it</a>).</p>
+
+    <h2 data-k="h_modifiche">Modifiche</h2>
+    <p data-k="p_modifiche">Se questa pagina cambia, cambia anche la data in alto. Non si applicano cambiamenti retroattivi ai dati già raccolti senza avvisare.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
+    <span>© 2026 Digitatex</span>
+    <span data-k="f_luogo">Fidenza (PR), Italia</span>
+    <a href="https://wa.me/393290914158" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="../" data-k="f_home">Torna al sito</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* Las traducciones van por clave, igual que en la home, pero aquí el
+     contenido lleva etiquetas dentro (enlaces, negritas), así que se escribe
+     el HTML completo de cada bloque y se mete con innerHTML. El texto es
+     nuestro, no de nadie de fuera: no hay nada que escapar. */
+  var WA = '<a href="https://wa.me/393290914158" target="_blank" rel="noopener">+39 329 091 4158</a>';
+
+  var T = {
+    it: {
+      titulo:"Privacy Policy — Digitatex",
+      h1:"Privacy Policy", aggiornato:"Ultimo aggiornamento: 17 ottobre 2026",
+      riassunto:"<strong>In breve:</strong> i dati che lasci nel modulo servono solo a risponderti con un preventivo. Non si vendono, non si cedono a nessuno e non si usano per mandarti pubblicità. Se vuoi che spariscano, scrivi su WhatsApp e spariscono.",
+      h_titolare:"Chi tratta i dati",
+      p_titolare:"Il titolare del trattamento è <strong>Christhian Paul Rodriguez Almarales — Digitatex</strong>, Fidenza (PR), Italia. Per qualsiasi cosa riguardi i tuoi dati il contatto è WhatsApp: "+WA+".",
+      h_dati:"Quali dati vengono raccolti", p_dati:"Solo quelli che scrivi tu nel modulo di preventivo:",
+      d1:"<strong>Nome</strong> — obbligatorio, per sapere come chiamarti.",
+      d2:"<strong>Email</strong> e/o <strong>telefono</strong> — almeno uno dei due, altrimenti non c'è modo di risponderti.",
+      d3:"<strong>Messaggio</strong>, tipo di progetto, integrazioni richieste e indirizzo del sito esistente, se lo indichi.",
+      d4:"<strong>Foto</strong> che carichi tu, fino a cinque, se il progetto le richiede.",
+      p_dati2:"Non ci sono cookie di profilazione, non c'è Google Analytics e non c'è nessun pixel pubblicitario. La lingua che scegli resta salvata nel tuo browser, sul tuo telefono: non arriva a noi.",
+      h_perche:"Per cosa vengono usati",
+      p_perche:"Per una cosa sola: <strong>leggere la tua richiesta e risponderti con un preventivo.</strong> Non vengono usati per mandarti newsletter o offerte, non vengono venduti e non vengono comunicati a terzi. La base giuridica è il consenso che dai spuntando la casella nel modulo (art. 6.1.a GDPR) e le trattative precontrattuali che chiedi tu stesso (art. 6.1.b).",
+      h_dove:"Dove restano e per quanto",
+      p_dove:"I dati del modulo e le foto sono conservati su <strong>Supabase</strong>, che li ospita su server nell'Unione Europea e agisce come responsabile del trattamento. L'accesso è protetto da password e lo ha solo il titolare.",
+      p_dove2:"Le richieste restano al massimo <strong>24 mesi</strong> dall'ultimo contatto, poi vengono cancellate. Se diventi cliente, i dati necessari al lavoro e agli obblighi fiscali restano per il tempo che la legge impone.",
+      p_dove3:"Il sito carica i caratteri tipografici da Google Fonts: per farlo, il tuo browser contatta un server di Google, che riceve il tuo indirizzo IP. È l'unico terzo che il sito contatta da solo.",
+      h_diritti:"I tuoi diritti",
+      p_diritti:"Puoi chiedere in qualsiasi momento di <strong>vedere</strong> i dati che ci sono su di te, di <strong>correggerli</strong>, di <strong>cancellarli</strong> o di <strong>revocare il consenso</strong>. Non serve un modulo né una raccomandata: basta un messaggio.",
+      p_cancella:"Per far cancellare tutto, scrivi su WhatsApp a "+WA+" dicendo semplicemente che vuoi essere cancellato. Si fa entro 30 giorni, di solito molto prima, e ti arriva conferma.",
+      p_garante:"Se pensi che i tuoi dati siano trattati male, puoi rivolgerti al Garante per la protezione dei dati personali (<a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a>).",
+      h_modifiche:"Modifiche",
+      p_modifiche:"Se questa pagina cambia, cambia anche la data in alto. Non si applicano cambiamenti retroattivi ai dati già raccolti senza avvisare.",
+      f_luogo:"Fidenza (PR), Italia", f_home:"Torna al sito"
+    },
+    en: {
+      titulo:"Privacy Policy — Digitatex",
+      h1:"Privacy Policy", aggiornato:"Last updated: 17 October 2026",
+      riassunto:"<strong>In short:</strong> what you type into the form is used only to send you a quote. It is never sold, never passed to anyone else and never used to advertise at you. If you want it gone, message us on WhatsApp and it's gone.",
+      h_titolare:"Who handles your data",
+      p_titolare:"The data controller is <strong>Christhian Paul Rodriguez Almarales — Digitatex</strong>, Fidenza (PR), Italy. For anything to do with your data, the contact is WhatsApp: "+WA+".",
+      h_dati:"What is collected", p_dati:"Only what you type into the quote form:",
+      d1:"<strong>Name</strong> — required, so we know what to call you.",
+      d2:"<strong>Email</strong> and/or <strong>phone</strong> — at least one, otherwise there is no way to reply.",
+      d3:"<strong>Message</strong>, project type, requested integrations and your existing website address, if you give one.",
+      d4:"<strong>Photos</strong> you upload yourself, up to five, if the project needs them.",
+      p_dati2:"There are no tracking cookies, no Google Analytics and no advertising pixels. The language you pick is stored in your own browser, on your own device — it never reaches us.",
+      h_perche:"What it is used for",
+      p_perche:"One thing only: <strong>reading your request and replying with a quote.</strong> It is not used for newsletters or offers, it is not sold, and it is not shared with third parties. The legal basis is the consent you give by ticking the box in the form (art. 6.1.a GDPR) and the pre-contractual steps you asked for yourself (art. 6.1.b).",
+      h_dove:"Where it is kept, and for how long",
+      p_dove:"Form data and photos are stored on <strong>Supabase</strong>, which hosts them on servers inside the European Union and acts as data processor. Access is password-protected and only the controller has it.",
+      p_dove2:"Requests are kept for at most <strong>24 months</strong> from the last contact, then deleted. If you become a client, the data needed for the work and for tax obligations is kept for as long as the law requires.",
+      p_dove3:"The site loads its typefaces from Google Fonts: to do that, your browser contacts a Google server, which receives your IP address. It is the only third party the site contacts on its own.",
+      h_diritti:"Your rights",
+      p_diritti:"At any time you can ask to <strong>see</strong> the data held about you, to <strong>correct</strong> it, to <strong>delete</strong> it or to <strong>withdraw your consent</strong>. No form and no registered letter needed — a message is enough.",
+      p_cancella:"To have everything deleted, message WhatsApp at "+WA+" and simply say you want to be removed. It is done within 30 days, usually much sooner, and you get a confirmation.",
+      p_garante:"If you believe your data is being mishandled, you can complain to the Italian data protection authority (<a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a>).",
+      h_modifiche:"Changes",
+      p_modifiche:"If this page changes, the date at the top changes too. No retroactive changes are applied to data already collected without telling you.",
+      f_luogo:"Fidenza (PR), Italy", f_home:"Back to the site"
+    },
+    es: {
+      titulo:"Política de Privacidad — Digitatex",
+      h1:"Política de Privacidad", aggiornato:"Última actualización: 17 de octubre de 2026",
+      riassunto:"<strong>En corto:</strong> lo que escribes en el formulario sirve solo para responderte con un presupuesto. No se vende, no se cede a nadie y no se usa para mandarte publicidad. Si quieres que desaparezca, escribe por WhatsApp y desaparece.",
+      h_titolare:"Quién trata los datos",
+      p_titolare:"El responsable del tratamiento es <strong>Christhian Paul Rodriguez Almarales — Digitatex</strong>, Fidenza (PR), Italia. Para cualquier cosa sobre tus datos, el contacto es WhatsApp: "+WA+".",
+      h_dati:"Qué datos se recogen", p_dati:"Solo los que escribes tú en el formulario de presupuesto:",
+      d1:"<strong>Nombre</strong> — obligatorio, para saber cómo llamarte.",
+      d2:"<strong>Email</strong> y/o <strong>teléfono</strong> — al menos uno, si no, no hay forma de responderte.",
+      d3:"<strong>Mensaje</strong>, tipo de proyecto, integraciones pedidas y la dirección de tu web actual, si la pones.",
+      d4:"<strong>Fotos</strong> que subes tú, hasta cinco, si el proyecto las necesita.",
+      p_dati2:"No hay cookies de rastreo, no hay Google Analytics y no hay ningún píxel publicitario. El idioma que eliges se guarda en tu navegador, en tu propio móvil: no nos llega.",
+      h_perche:"Para qué se usan",
+      p_perche:"Para una sola cosa: <strong>leer tu solicitud y responderte con un presupuesto.</strong> No se usan para newsletters ni ofertas, no se venden y no se ceden a terceros. La base legal es el consentimiento que das marcando la casilla del formulario (art. 6.1.a RGPD) y los tratos previos al contrato que pides tú mismo (art. 6.1.b).",
+      h_dove:"Dónde se guardan y cuánto tiempo",
+      p_dove:"Los datos del formulario y las fotos se guardan en <strong>Supabase</strong>, que los aloja en servidores de la Unión Europea y actúa como encargado del tratamiento. El acceso está protegido por contraseña y lo tiene solo el responsable.",
+      p_dove2:"Las solicitudes se guardan como mucho <strong>24 meses</strong> desde el último contacto, y luego se borran. Si te conviertes en cliente, los datos necesarios para el trabajo y para las obligaciones fiscales se guardan el tiempo que exija la ley.",
+      p_dove3:"La web carga las tipografías desde Google Fonts: para eso, tu navegador contacta con un servidor de Google, que recibe tu dirección IP. Es el único tercero con el que la web habla por su cuenta.",
+      h_diritti:"Tus derechos",
+      p_diritti:"Puedes pedir en cualquier momento <strong>ver</strong> los datos que hay sobre ti, <strong>corregirlos</strong>, <strong>borrarlos</strong> o <strong>retirar el consentimiento</strong>. No hace falta ningún formulario ni ningún burofax: basta un mensaje.",
+      p_cancella:"Para que se borre todo, escribe por WhatsApp a "+WA+" diciendo simplemente que quieres que te borren. Se hace en 30 días como mucho, normalmente mucho antes, y te llega confirmación.",
+      p_garante:"Si crees que tus datos se están tratando mal, puedes acudir a la autoridad italiana de protección de datos (<a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a>).",
+      h_modifiche:"Cambios",
+      p_modifiche:"Si esta página cambia, cambia también la fecha de arriba. No se aplican cambios retroactivos a los datos ya recogidos sin avisar.",
+      f_luogo:"Fidenza (PR), Italia", f_home:"Volver a la web"
+    },
+    fr: {
+      titulo:"Politique de confidentialité — Digitatex",
+      h1:"Politique de confidentialité", aggiornato:"Dernière mise à jour : 17 octobre 2026",
+      riassunto:"<strong>En bref :</strong> ce que vous écrivez dans le formulaire sert uniquement à vous répondre avec un devis. Rien n'est vendu, rien n'est cédé à personne et rien ne sert à vous envoyer de la publicité. Si vous voulez que tout disparaisse, écrivez sur WhatsApp et c'est effacé.",
+      h_titolare:"Qui traite les données",
+      p_titolare:"Le responsable du traitement est <strong>Christhian Paul Rodriguez Almarales — Digitatex</strong>, Fidenza (PR), Italie. Pour tout ce qui concerne vos données, le contact est WhatsApp : "+WA+".",
+      h_dati:"Quelles données sont collectées", p_dati:"Uniquement celles que vous saisissez dans le formulaire de devis :",
+      d1:"<strong>Nom</strong> — obligatoire, pour savoir comment vous appeler.",
+      d2:"<strong>E-mail</strong> et/ou <strong>téléphone</strong> — au moins l'un des deux, sinon il n'y a aucun moyen de vous répondre.",
+      d3:"<strong>Message</strong>, type de projet, intégrations demandées et adresse de votre site existant, si vous l'indiquez.",
+      d4:"<strong>Photos</strong> que vous envoyez vous-même, jusqu'à cinq, si le projet le demande.",
+      p_dati2:"Il n'y a aucun cookie de profilage, aucun Google Analytics et aucun pixel publicitaire. La langue que vous choisissez reste dans votre navigateur, sur votre téléphone : elle ne nous parvient pas.",
+      h_perche:"À quoi elles servent",
+      p_perche:"À une seule chose : <strong>lire votre demande et vous répondre avec un devis.</strong> Elles ne servent pas à des newsletters ni à des offres, ne sont pas vendues et ne sont pas communiquées à des tiers. La base légale est le consentement donné en cochant la case du formulaire (art. 6.1.a RGPD) et les démarches précontractuelles que vous demandez vous-même (art. 6.1.b).",
+      h_dove:"Où elles restent, et combien de temps",
+      p_dove:"Les données du formulaire et les photos sont conservées sur <strong>Supabase</strong>, qui les héberge sur des serveurs situés dans l'Union européenne et agit comme sous-traitant. L'accès est protégé par mot de passe et seul le responsable l'a.",
+      p_dove2:"Les demandes sont conservées au maximum <strong>24 mois</strong> à compter du dernier contact, puis supprimées. Si vous devenez client, les données nécessaires au travail et aux obligations fiscales sont conservées le temps imposé par la loi.",
+      p_dove3:"Le site charge ses polices depuis Google Fonts : pour cela, votre navigateur contacte un serveur de Google, qui reçoit votre adresse IP. C'est le seul tiers que le site contacte de lui-même.",
+      h_diritti:"Vos droits",
+      p_diritti:"Vous pouvez à tout moment demander à <strong>consulter</strong> les données vous concernant, à les <strong>corriger</strong>, à les <strong>supprimer</strong> ou à <strong>retirer votre consentement</strong>. Ni formulaire ni lettre recommandée : un message suffit.",
+      p_cancella:"Pour tout faire supprimer, écrivez sur WhatsApp au "+WA+" en disant simplement que vous voulez être effacé. C'est fait sous 30 jours, en général bien plus vite, et vous recevez une confirmation.",
+      p_garante:"Si vous estimez que vos données sont mal traitées, vous pouvez saisir l'autorité italienne de protection des données (<a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a>).",
+      h_modifiche:"Modifications",
+      p_modifiche:"Si cette page change, la date en haut change aussi. Aucune modification rétroactive n'est appliquée aux données déjà collectées sans vous prévenir.",
+      f_luogo:"Fidenza (PR), Italie", f_home:"Retour au site"
+    }
+  };
+
+  function aplicar(lang){
+    var d = T[lang]; if(!d) return;
+    document.querySelectorAll('[data-k]').forEach(function(el){
+      var k = el.getAttribute('data-k');
+      if(d[k] !== undefined) el.innerHTML = d[k];
+    });
+    document.documentElement.lang = lang;
+    document.title = d.titulo;
+    document.querySelectorAll('.langsw button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    /* Se comparte con la home: quien llega aquí en español vuelve en español. */
+    try{ localStorage.setItem('digitatex_lang', lang); }catch(e){}
+    var volver = document.querySelector('[data-k="f_home"]');
+    if(volver) volver.setAttribute('href', lang === 'it' ? '../' : '../?lang=' + lang);
+  }
+
+  document.querySelectorAll('.langsw button').forEach(function(b){
+    b.addEventListener('click', function(){ aplicar(b.dataset.lang); });
+  });
+
+  /* Mismo orden que la home, y por la misma razon: ?lang= manda, luego lo que
+     el visitante eligio alguna vez, y si no, italiano. El idioma del navegador
+     no entra — si entrara, esta pagina abriria en un idioma y la home en otro
+     para la misma persona. */
+  var url = new URLSearchParams(location.search).get('lang');
+  var guardado = null;
+  try{ guardado = localStorage.getItem('digitatex_lang'); }catch(e){}
+  aplicar([url, guardado].filter(function(l){ return l && T[l]; })[0] || 'it');
+})();
+</script>
+</body>
+</html>

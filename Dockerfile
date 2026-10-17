@@ -12,6 +12,10 @@ COPY assets/ /usr/share/nginx/html/assets/
 # sea /links: nginx sirve el index.html de dentro. Si esta linea falta, la
 # pagina existe en el repositorio y da 404 en produccion.
 COPY links/ /usr/share/nginx/html/links/
+# La pagina de privacidad. Es obligatoria en Italia y la enlaza el pie y la
+# casilla del formulario: si esta linea falta, los dos enlaces dan 404 y el
+# consentimiento del formulario apunta a la nada.
+COPY privacy/ /usr/share/nginx/html/privacy/
 # Prototipos que se ensenan a clientes antes de contratar. Van sin indexar y
 # fuera del sitemap: son webs de otras empresas, no contenido de Digitatex.
 COPY prototipi/ /usr/share/nginx/html/prototipi/

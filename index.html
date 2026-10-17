@@ -1,31 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Digitatex — Cinematic Web Design &amp; Business Software Studio</title>
-<meta name="description" content="Digitatex is a web &amp; product studio building cinematic scroll-driven websites and the business software behind them — bookings, payments, client management. Free quote in minutes.">
+<title>Digitatex — Siti web e software per attività locali | Fidenza, Parma</title>
+<meta name="description" content="Studio di Fidenza: siti web su misura, video legati allo scroll e software gestionale per attività locali di Fidenza, Parma e dintorni. Preventivo gratuito in pochi minuti.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Digitatex">
 <meta name="theme-color" content="#0c0c0d">
+<!-- Sello de version. Ya no se enseña en el pie; se comprueba desde el codigo
+     fuente. Se sube a mano en cada despliegue. -->
+<meta name="build" content="v40">
 <link rel="canonical" href="https://digitatex.com/">
 
-<link rel="alternate" hreflang="en" href="https://digitatex.com/">
+<!-- La raiz es la italiana: los clientes son negocios de Fidenza y Parma.
+     Cada direccion se declara canonica de si misma mas abajo, en aplicarSeo();
+     si todas apuntaran a la raiz, Google trataria las cuatro como la misma
+     pagina y tiraria el grupo hreflang entero. -->
+<link rel="alternate" hreflang="it" href="https://digitatex.com/">
+<link rel="alternate" hreflang="en" href="https://digitatex.com/?lang=en">
 <link rel="alternate" hreflang="es" href="https://digitatex.com/?lang=es">
 <link rel="alternate" hreflang="fr" href="https://digitatex.com/?lang=fr">
-<link rel="alternate" hreflang="it" href="https://digitatex.com/?lang=it">
 <link rel="alternate" hreflang="x-default" href="https://digitatex.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Digitatex">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="es_ES">
 <meta property="og:locale:alternate" content="fr_FR">
-<meta property="og:locale:alternate" content="it_IT">
 <meta property="og:url" content="https://digitatex.com/">
-<meta property="og:title" content="Digitatex — Cinematic Web Design &amp; Business Software Studio">
-<meta property="og:description" content="Cinematic scroll-driven websites and the business software behind them. Free quote in minutes.">
+<meta property="og:title" content="Digitatex — Siti web e software per attività locali | Fidenza, Parma">
+<meta property="og:description" content="Studio di Fidenza: siti web su misura, video legati allo scroll e software gestionale per attività locali di Fidenza, Parma e dintorni. Preventivo gratuito in pochi minuti.">
 <!-- La tarjeta que se ve al pegar el enlace en WhatsApp, Facebook o LinkedIn.
      Antes apuntaba al logo, de 194x240: esas plataformas piden 1200x630 y lo
      recortaban o lo enmarcaban en gris. -->
@@ -33,11 +40,11 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:alt" content="Digitatex — sitios que se mueven como el cine">
+<meta property="og:image:alt" content="Digitatex — studio di siti web e software a Fidenza">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Digitatex — Cinematic Web Design &amp; Business Software Studio">
-<meta name="twitter:description" content="Cinematic scroll-driven websites and the business software behind them. Free quote in minutes.">
+<meta name="twitter:title" content="Digitatex — Siti web e software per attività locali | Fidenza, Parma">
+<meta name="twitter:description" content="Studio di Fidenza: siti web su misura, video legati allo scroll e software gestionale per attività locali di Fidenza, Parma e dintorni. Preventivo gratuito in pochi minuti.">
 <meta name="twitter:image" content="https://digitatex.com/assets/og-card.jpg">
 
 <link rel="icon" href="assets/logo.png" type="image/png">
@@ -65,13 +72,19 @@
       "name": "Digitatex",
       "url": "https://digitatex.com/",
       "logo": "https://digitatex.com/assets/logo.png",
-      "description": "Web and product studio building cinematic scroll-driven websites and business software.",
+      "description": "Studio di Fidenza (PR): siti web su misura, video legati allo scroll e software gestionale per attività locali di Fidenza, Parma e dintorni.",
       "sameAs": ["https://www.instagram.com/digitatex_/", "https://trimm.online"],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Fidenza",
+        "addressRegion": "PR",
+        "addressCountry": "IT"
+      },
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "sales",
         "telephone": "+39-329-091-4158",
-        "availableLanguage": ["English", "Spanish", "French", "Italian"]
+        "availableLanguage": ["Italian", "Spanish", "English", "French"]
       }
     },
     {
@@ -82,8 +95,21 @@
       "url": "https://digitatex.com/",
       "telephone": "+39-329-091-4158",
       "priceRange": "€€",
+      "currenciesAccepted": "EUR",
       "parentOrganization": { "@id": "https://digitatex.com/#organization" },
-      "areaServed": { "@type": "Place", "name": "Worldwide" },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Fidenza",
+        "addressRegion": "PR",
+        "addressCountry": "IT"
+      },
+      "sameAs": ["https://www.instagram.com/digitatex_/", "https://trimm.online"],
+      "areaServed": [
+        { "@type": "City", "name": "Fidenza" },
+        { "@type": "City", "name": "Parma" },
+        { "@type": "AdministrativeArea", "name": "Provincia di Parma" }
+      ],
+      "knowsLanguage": ["it", "es", "en", "fr"],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Digitatex services",
@@ -100,7 +126,7 @@
       "url": "https://digitatex.com/",
       "name": "Digitatex",
       "publisher": { "@id": "https://digitatex.com/#organization" },
-      "inLanguage": ["en", "es", "fr", "it"]
+      "inLanguage": ["it", "en", "es", "fr"]
     }
   ]
 }
@@ -155,7 +181,10 @@
   ::selection{background:var(--brass);color:var(--ink);}
   h1,h2,h3,.serif{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:400;letter-spacing:-0.01em;}
   a{color:inherit;text-decoration:none;}
-  img{display:block;max-width:100%;}
+  /* height:auto no es opcional: si una imagen lleva los atributos width/height
+     en el HTML —hacen falta para que el navegador reserve el hueco— y el CSS
+     solo toca el ancho, el alto se queda en el del atributo y sale aplastada. */
+  img{display:block;max-width:100%;height:auto;}
   .eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brass-2);font-weight:500;display:flex;align-items:center;gap:10px;}
   .eyebrow::before{content:'';width:22px;height:1px;background:var(--brass);display:inline-block;}
   .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
@@ -571,7 +600,15 @@
   .case-row h3{font-size:clamp(24px,3.2vw,40px);line-height:1.08;}
   .case-copy{margin-top:16px;font-size:15px;line-height:1.85;color:var(--bone-dim);max-width:48ch;}
   .case-meta{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap;}
-  .case-meta div{font-size:11.5px;color:var(--stone);letter-spacing:0.04em;max-width:22ch;line-height:1.55;}
+  /* El contraste de este texto no era el problema: #a8a294 sobre la tarjeta da
+     6,5:1 medido, muy por encima del 4,5 que pide la AA. Lo que costaba leerlo
+     en el telefono era el tamaño — 11,5 px con interlineado justo. Sube a 12,5
+     con mas aire, y en pantalla chica el color pasa a --bone-dim (9,4:1), que
+     es donde se nota de verdad. */
+  .case-meta div{font-size:12.5px;color:var(--stone);letter-spacing:0.04em;max-width:22ch;line-height:1.65;}
+  @media (max-width:760px){
+    .case-meta div{font-size:13px;color:var(--bone-dim);line-height:1.7;}
+  }
   .case-meta strong{display:block;color:var(--bone);font-family:'Fraunces',serif;font-size:16px;font-weight:400;margin-bottom:5px;}
   .case-link{margin-top:26px;display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.06em;
     text-transform:uppercase;color:var(--brass-2);border-bottom:1px solid var(--brass);padding-bottom:3px;transition:gap .3s;}
@@ -1174,6 +1211,16 @@
   .estimate-note{margin-top:20px;font-size:14px;line-height:1.7;color:var(--bone-dim);}
   .estimate-premium{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;line-height:1.7;color:var(--brass-2);}
   .quote-form .submit-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:6px;}
+  /* La casilla de privacidad se separa del grupo de integraciones: no es una
+     opcion mas, es la condicion para enviar. */
+  .privacy-opt{align-items:flex-start;line-height:1.55;font-size:13.5px;color:var(--bone-dim);
+    border-top:1px solid var(--line);padding-top:20px;margin-top:-6px;}
+  /* La casilla de 22px la heredaba del grupo de integraciones, donde el texto
+     es de 16. Aqui el texto es mas chico y un cuadro blanco de 22 se comia la
+     frase. 19 y pegada a la primera linea, no centrada en el bloque. */
+  .privacy-opt input{width:19px;height:19px;margin-top:2px;}
+  .privacy-opt a{color:var(--brass-2);text-decoration:underline;text-underline-offset:2px;}
+  .privacy-opt a:hover{color:var(--bone);}
   /* El aviso de "enviado" o de error tiene que verse a la primera. */
   .form-status{font-size:15px;color:var(--bone);}
   .form-status.ok{color:var(--brass-2);}
@@ -1182,7 +1229,16 @@
   footer{padding:30px 48px;border-top:1px solid var(--line);background:rgba(10,10,12,0.5);display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:11px;color:var(--stone);letter-spacing:0.04em;flex-wrap:wrap;}
   footer a{transition:color .3s;}
   footer a:hover{color:var(--brass-2);}
-  @media (max-width:760px){ footer{flex-direction:column;gap:10px;padding:24px;text-align:center;} }
+  /* En columna, con seis elementos, el pie medía media pantalla. En fila con
+     salto queda en dos o tres lineas.
+
+     El relleno de abajo tampoco es decoracion: el boton de WhatsApp va fijo en
+     la esquina inferior derecha, y al llegar al final de la pagina se plantaba
+     justo encima del enlace a la Privacy Policy. Un enlace legal obligatorio
+     tapado por una burbuja verde. Los 92px lo dejan por encima del boton. */
+  @media (max-width:760px){
+    footer{justify-content:center;text-align:center;padding:24px 24px 92px;row-gap:9px;column-gap:16px;}
+  }
 
   /* ============================================================
      PANEL DE GESTION (admin)
@@ -1252,7 +1308,7 @@
 <div id="seam"></div>
 
 <a href="https://wa.me/393290914158" target="_blank" rel="noopener" draggable="false" class="wa-fab-group" aria-label="Free personalized consultation via WhatsApp">
-  <span class="wa-label" data-i18n="wa_bubble">Free personalized <strong>consultation</strong></span>
+  <span class="wa-label" data-i18n="wa_bubble">Consulenza personalizzata <strong>gratuita</strong></span>
   <span class="wa-bubble">
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.001 3C9.096 3 3.5 8.596 3.5 15.5c0 2.42.687 4.68 1.878 6.598L3 29l7.106-2.34a12.44 12.44 0 0 0 5.895 1.5h.005c6.905 0 12.5-5.596 12.5-12.5S22.906 3 16.001 3zm0 22.7h-.004a10.2 10.2 0 0 1-5.2-1.424l-.373-.222-3.86 1.272 1.29-3.762-.243-.386a10.166 10.166 0 0 1-1.56-5.428c0-5.63 4.583-10.213 10.216-10.213 2.73 0 5.293 1.064 7.222 2.995a10.15 10.15 0 0 1 2.988 7.223c0 5.63-4.583 10.213-10.216 10.213l-.26.132zm5.6-7.65c-.307-.154-1.815-.896-2.096-.998-.281-.102-.486-.154-.69.154-.205.307-.79.997-.97 1.202-.178.205-.357.23-.663.077-.307-.154-1.294-.477-2.465-1.522-.911-.812-1.526-1.816-1.705-2.123-.178-.307-.02-.473.135-.626.138-.138.307-.358.46-.537.154-.18.205-.307.307-.512.102-.205.05-.384-.026-.538-.077-.154-.69-1.663-.945-2.278-.249-.598-.501-.518-.69-.528-.178-.008-.383-.01-.588-.01a1.13 1.13 0 0 0-.818.384c-.281.307-1.074 1.05-1.074 2.56s1.1 2.97 1.253 3.176c.154.205 2.164 3.305 5.243 4.633.732.316 1.303.505 1.748.646.734.234 1.402.201 1.93.122.588-.088 1.815-.742 2.07-1.459.256-.717.256-1.331.179-1.459-.077-.128-.281-.205-.588-.359z"/></svg>
   </span>
@@ -1263,19 +1319,19 @@
 <nav id="site-nav">
   <a href="#hero" class="brand-mark" aria-label="Digitatex home">DIGITATEX</a>
   <div class="navlinks" id="navlinks">
-    <a href="#work" data-i18n="nav_work">Work</a>
-    <a href="#services" data-i18n="nav_services">Services</a>
-    <a href="#styles" data-i18n="nav_styles">Styles</a>
+    <a href="#work" data-i18n="nav_work">Progetti</a>
+    <a href="#services" data-i18n="nav_services">Servizi</a>
+    <a href="#styles" data-i18n="nav_styles">Stili</a>
     <!-- Ocultos de entrada y los enciende renderTestimonials() si hay algo que
          ensenar: asi la seccion no aparece y desaparece mientras carga. -->
-    <a href="#testimonials" data-i18n="nav_testimonials" hidden>Testimonials</a>
-    <a href="#about" data-i18n="nav_about">About</a>
-    <a href="#quote" data-i18n="nav_quote">Quote</a>
-    <div class="langsw" role="group" aria-label="Language">
-      <button data-lang="en" class="active"><span class="flag">🇬🇧</span>EN</button>
+    <a href="#testimonials" data-i18n="nav_testimonials" hidden>Testimonianze</a>
+    <a href="#about" data-i18n="nav_about">Chi siamo</a>
+    <a href="#quote" data-i18n="nav_quote">Preventivo</a>
+    <div class="langsw" role="group" aria-label="Lingua">
+      <button data-lang="it" class="active"><span class="flag">🇮🇹</span>IT</button>
+      <button data-lang="en"><span class="flag">🇬🇧</span>EN</button>
       <button data-lang="es"><span class="flag">🇪🇸</span>ES</button>
       <button data-lang="fr"><span class="flag">🇫🇷</span>FR</button>
-      <button data-lang="it"><span class="flag">🇮🇹</span>IT</button>
     </div>
   </div>
   <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
@@ -1301,31 +1357,31 @@
     <div class="hero-rocks" id="hero-rocks" aria-hidden="true"></div>
     <span class="sec-counter">01 — <span data-i18n="sec_hero">Studio</span></span>
     <div class="wrap hero-inner chapter-content">
-      <p class="eyebrow" data-i18n="hero_eyebrow">Web &amp; product studio</p>
-      <h1 data-i18n="hero_h1">Sites that move<br>like <em>film</em>.</h1>
+      <p class="eyebrow" data-i18n="hero_eyebrow">Studio web &amp; software</p>
+      <h1 data-i18n="hero_h1">Siti che si muovono<br>come un <em>film</em>.</h1>
       <div class="hero-sub glass">
-        <p class="scroll-words" data-i18n="hero_sub">We design cinematic, scroll-driven websites and the software behind real businesses — from construction firms to salon management platforms.</p>
+        <p class="scroll-words" data-i18n="hero_sub"><span class="sw-word lit">Progettiamo</span> <span class="sw-word lit">siti</span> <span class="sw-word lit">cinematografici</span> <span class="sw-word lit">guidati</span> <span class="sw-word lit">dallo</span> <span class="sw-word lit">scroll</span> <span class="sw-word lit">e</span> <span class="sw-word lit">il</span> <span class="sw-word">software</span> <span class="sw-word">dietro</span> <span class="sw-word">aziende</span> <span class="sw-word">reali</span> <span class="sw-word">—</span> <span class="sw-word">da</span> <span class="sw-word">imprese</span> <span class="sw-word">edili</span> <span class="sw-word">a</span> <span class="sw-word">piattaforme</span> <span class="sw-word">di</span> <span class="sw-word">gestione</span> <span class="sw-word">per</span> <span class="sw-word">saloni.</span></p>
         <div class="hero-actions">
-          <a href="#quote" class="btn btn-solid"><span data-i18n="hero_btn2">Get a free quote</span>
+          <a href="#quote" class="btn btn-solid"><span data-i18n="hero_btn2">Preventivo gratuito</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a href="#work" class="btn"><span data-i18n="hero_btn">See our work</span></a>
+          <a href="#work" class="btn"><span data-i18n="hero_btn">Guarda i lavori</span></a>
         </div>
       </div>
     </div>
-    <div class="scroll-cue"><span data-i18n="hero_cue">Scroll to explore</span><span class="line"></span></div>
+    <div class="scroll-cue"><span data-i18n="hero_cue">Scorri per esplorare</span><span class="line"></span></div>
   </section>
 </div>
 
 <!-- ==================== WORK — recorrido lateral ==================== -->
 <!-- ==================== WORK ==================== -->
 <section id="work">
-  <span class="sec-counter">02 — <span data-i18n="sec_work">Work</span></span>
+  <span class="sec-counter">02 — <span data-i18n="sec_work">Progetti</span></span>
   <div class="wrap">
     <div class="work-head glass reveal">
-      <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
-      <h2 data-i18n="work_h2">Different problems.<br>Different builds.</h2>
-      <p class="scroll-words" data-i18n="work_p">Every project starts from the same question: what does this business actually need to move faster — a story people scroll through, or a system they run their day on?</p>
+      <p class="eyebrow" data-i18n="work_eyebrow">Progetti selezionati</p>
+      <h2 data-i18n="work_h2">Problemi diversi.<br>Soluzioni diverse.</h2>
+      <p class="scroll-words" data-i18n="work_p"><span class="sw-word">Ogni</span> <span class="sw-word">progetto</span> <span class="sw-word">parte</span> <span class="sw-word">dalla</span> <span class="sw-word">stessa</span> <span class="sw-word">domanda:</span> <span class="sw-word">di</span> <span class="sw-word">cosa</span> <span class="sw-word">ha</span> <span class="sw-word">davvero</span> <span class="sw-word">bisogno</span> <span class="sw-word">questa</span> <span class="sw-word">attività</span> <span class="sw-word">per</span> <span class="sw-word">andare</span> <span class="sw-word">più</span> <span class="sw-word">veloce</span> <span class="sw-word">—</span> <span class="sw-word">una</span> <span class="sw-word">storia</span> <span class="sw-word">da</span> <span class="sw-word">scorrere,</span> <span class="sw-word">o</span> <span class="sw-word">un</span> <span class="sw-word">sistema</span> <span class="sw-word">con</span> <span class="sw-word">cui</span> <span class="sw-word">gestire</span> <span class="sw-word">la</span> <span class="sw-word">giornata?</span></p>
     </div>
 
     <!-- Aca se pintan los casos de clientes que subis desde el panel. Mientras
@@ -1341,7 +1397,7 @@
     <article class="case-row flip" id="system-builtin">
       <div class="case-visual reveal rv-depth">
         <div class="own-card">
-          <span class="own-badge" data-i18n="case2_kind">Our own product</span>
+          <span class="own-badge" data-i18n="case2_kind">Prodotto nostro</span>
           <div class="own-view">
             <video id="own-demo" muted loop playsinline preload="none"
                    style="display:none;" aria-hidden="true" tabindex="-1"
@@ -1356,14 +1412,14 @@
         </div>
       </div>
       <div class="case-body glass reveal rv-left d1">
-        <p class="case-tag" data-i18n="case2_tag">SaaS · Booking &amp; business management</p>
+        <p class="case-tag" data-i18n="case2_tag">SaaS · Prenotazioni &amp; gestione aziendale</p>
         <h3>Trimm</h3>
-        <p class="case-copy" data-i18n="case2_p">An all-in-one platform for service businesses — salons and beyond — handling bookings, in-person payments, client records, and automated reminders over email and WhatsApp.</p>
+        <p class="case-copy" data-i18n="case2_p">Una piattaforma all-in-one per attività di servizi — saloni e non solo — che gestisce prenotazioni, pagamenti in negozio, schede clienti e promemoria automatici via email e WhatsApp.</p>
         <div class="case-meta">
-          <div><strong data-i18n="case2_m1s">All-in-one</strong><span data-i18n="case2_m1">Bookings, payments and clients in one system</span></div>
-          <div><strong data-i18n="case2_m2s">Automated</strong><span data-i18n="case2_m2">Reminders sent without manual follow-up</span></div>
+          <div><strong data-i18n="case2_m1s">Tutto in uno</strong><span data-i18n="case2_m1">Prenotazioni, pagamenti e clienti in un unico sistema</span></div>
+          <div><strong data-i18n="case2_m2s">Automatizzato</strong><span data-i18n="case2_m2">Promemoria inviati senza follow-up manuale</span></div>
         </div>
-        <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visit trimm.online</span> →</a>
+        <a href="https://trimm.online" target="_blank" rel="noopener" class="case-link"><span data-i18n="case2_link">Visita trimm.online</span> →</a>
       </div>
     </article>
   </div>
@@ -1371,27 +1427,27 @@
 
 <!-- ==================== SERVICES ==================== -->
 <section id="services">
-  <span class="sec-counter">03 — <span data-i18n="sec_services">Services</span></span>
+  <span class="sec-counter">03 — <span data-i18n="sec_services">Servizi</span></span>
   <div class="wrap">
     <div class="serv-head reveal">
-      <p class="eyebrow" data-i18n="serv_eyebrow">What we build</p>
-      <h2 data-i18n="serv_h2">One studio, three disciplines.</h2>
+      <p class="eyebrow" data-i18n="serv_eyebrow">Cosa costruiamo</p>
+      <h2 data-i18n="serv_h2">Uno studio, tre discipline.</h2>
     </div>
     <div class="serv-grid">
       <div class="serv-card reveal rv-down">
         <span class="serv-num">01</span>
-        <h3 data-i18n="serv1_h">Cinematic web design</h3>
-        <p data-i18n="serv1_p">Scroll-driven, story-led sites for brands that need to feel premium from the first second — built for conversion, not just looks.</p>
+        <h3 data-i18n="serv1_h">Design web cinematografico</h3>
+        <p data-i18n="serv1_p">Siti narrativi guidati dallo scroll per marchi che devono sembrare premium dal primo secondo — pensati per convertire, non solo per apparire belli.</p>
       </div>
       <div class="serv-card reveal rv-down d1">
         <span class="serv-num">02</span>
-        <h3 data-i18n="serv2_h">Business software</h3>
-        <p data-i18n="serv2_p">Booking systems, client management and internal tools built around how your business actually runs day to day.</p>
+        <h3 data-i18n="serv2_h">Software aziendale</h3>
+        <p data-i18n="serv2_p">Sistemi di prenotazione, gestione clienti e strumenti interni costruiti attorno a come la tua attività funziona davvero ogni giorno.</p>
       </div>
       <div class="serv-card reveal rv-down d2">
         <span class="serv-num">03</span>
-        <h3 data-i18n="serv3_h">Brand &amp; digital identity</h3>
-        <p data-i18n="serv3_p">Naming, visual system and tone of voice that hold together across your site, product and social presence.</p>
+        <h3 data-i18n="serv3_h">Brand &amp; identità digitale</h3>
+        <p data-i18n="serv3_p">Naming, sistema visivo e tono di voce coerenti su sito, prodotto e social.</p>
       </div>
     </div>
   </div>
@@ -1400,12 +1456,12 @@
 
 <!-- ==================== MUESTRAS DE ESTILO ==================== -->
 <section id="styles">
-  <span class="sec-counter">04 — <span data-i18n="sec_styles">Styles</span></span>
+  <span class="sec-counter">04 — <span data-i18n="sec_styles">Stili</span></span>
   <div class="wrap">
     <div class="st-head reveal">
-      <p class="eyebrow" data-i18n="st_eyebrow">What we can build for you</p>
-      <h2 data-i18n="st_h2">Six directions.<br>One studio.</h2>
-      <p class="scroll-words" data-i18n="st_p">Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.</p>
+      <p class="eyebrow" data-i18n="st_eyebrow">Cosa possiamo costruirti</p>
+      <h2 data-i18n="st_h2">Sei direzioni.<br>Uno studio.</h2>
+      <p class="scroll-words" data-i18n="st_p"><span class="sw-word">Non</span> <span class="sw-word">tutte</span> <span class="sw-word">le</span> <span class="sw-word">attività</span> <span class="sw-word">hanno</span> <span class="sw-word">bisogno</span> <span class="sw-word">dello</span> <span class="sw-word">stesso</span> <span class="sw-word">sito.</span> <span class="sw-word">Queste</span> <span class="sw-word">sono</span> <span class="sw-word">le</span> <span class="sw-word">direzioni</span> <span class="sw-word">in</span> <span class="sw-word">cui</span> <span class="sw-word">lavoriamo</span> <span class="sw-word">—</span> <span class="sw-word">scegli</span> <span class="sw-word">quella</span> <span class="sw-word">che</span> <span class="sw-word">ti</span> <span class="sw-word">somiglia,</span> <span class="sw-word">o</span> <span class="sw-word">raccontaci</span> <span class="sw-word">cosa</span> <span class="sw-word">hai</span> <span class="sw-word">in</span> <span class="sw-word">mente.</span></p>
     </div>
 
     <div class="st-grid">
@@ -1419,9 +1475,9 @@
             <span class="search"><s></s>Search</span>
             <span class="icons"><u></u><u></u><u class="av"></u></span>
           </div>
-          <div class="h" data-i18n="st1_h">Timeless craft<br>meets luxury</div>
-          <div class="sub" data-i18n="st1_s">Premium pieces, refined details, made to last.</div>
-          <div class="cta"><span data-i18n="st_cta_shop2">Shop now</span><s></s></div>
+          <div class="h" data-i18n="st1_h">La luce<br>inizia qui</div>
+          <div class="sub" data-i18n="st1_s">Pezzi premium, dettagli curati, fatti per durare.</div>
+          <div class="cta"><span data-i18n="st_cta_shop2">Acquista</span><s></s></div>
           <div class="hero-img"></div>
           <div class="badge">
             <svg viewBox="0 0 100 100">
@@ -1433,14 +1489,14 @@
           <div class="thumb">
             <div class="ph"></div>
             <b>Apex Chronograph</b>
-            <span data-i18n="st1_card">Precision. Timeless design.</span>
+            <span data-i18n="st1_card">Valutato da 2.400 clienti</span>
           </div>
           <div class="dots"><i class="on"></i><i></i><i></i></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st1_t">Boutique &amp; e-commerce</h3>
-          <p data-i18n="st1_d">Editorial photography, generous space and a single clear action. For brands sold on how they look.</p>
-          <span class="st-tag" data-i18n="st1_g">Beauty · Fashion · Retail</span>
+          <p data-i18n="st1_d">Fotografia editoriale, molto respiro e una sola azione chiara. Per marchi che si vendono per come appaiono.</p>
+          <span class="st-tag" data-i18n="st1_g">Beauty · Moda · Retail</span>
         </div>
       </article>
 
@@ -1450,22 +1506,22 @@
           <div class="bar">
             <span class="logo"></span><span class="brand">Triloe</span>
             <span class="nav"><i>Home</i><i>About</i><i class="on">Service</i><i>Pricing</i></span>
-            <span class="pill" data-i18n="st_cta_contact">Contact us</span>
+            <span class="pill" data-i18n="st_cta_contact">Contatti</span>
           </div>
-          <div class="tag" data-i18n="st2_tag">Smart marketing</div>
-          <div class="h" data-i18n="st2_h">Our tailored services</div>
-          <div class="sub" data-i18n="st2_s">From brand building to data-led campaigns, we shape a unique identity.</div>
+          <div class="tag" data-i18n="st2_tag">Marketing intelligente</div>
+          <div class="h" data-i18n="st2_h">Scelto dai team che consegnano</div>
+          <div class="sub" data-i18n="st2_s">Tutto ciò che serve al tuo team, in un unico posto.</div>
           <div class="photo"></div>
-          <div class="stat a"><b>99%</b><span data-i18n="st2_st1">Actionable insight</span></div>
-          <div class="stat b"><b>2.5M</b><span data-i18n="st2_card">Users impacted</span></div>
-          <div class="stat c"><b>4.8</b><span data-i18n="st2_st3">Average rating</span></div>
+          <div class="stat a"><b>99%</b><span data-i18n="st2_st1">Decisioni concrete</span></div>
+          <div class="stat b"><b>2.5M</b><span data-i18n="st2_card">Utenti attivi</span></div>
+          <div class="stat c"><b>4.8</b><span data-i18n="st2_st3">Voto medio</span></div>
           <div class="chips"><i>Designing</i><i>Branding</i><i>Consulting</i><i>Marketing</i><i>Web design</i></div>
-          <div class="cta"><span data-i18n="st_cta_demo">Book a demo</span><s></s></div>
+          <div class="cta"><span data-i18n="st_cta_demo">Richiedi demo</span><s></s></div>
         </div>
         <div class="st-foot">
           <h3 data-i18n="st2_t">Corporate &amp; SaaS</h3>
-          <p data-i18n="st2_d">Clean, bright and built around trust signals: numbers, logos and a demo one tap away.</p>
-          <span class="st-tag" data-i18n="st2_g">Software · B2B · Consulting</span>
+          <p data-i18n="st2_d">Pulito, luminoso e costruito su segnali di fiducia: numeri, loghi e una demo a un tocco.</p>
+          <span class="st-tag" data-i18n="st2_g">Software · B2B · Consulenza</span>
         </div>
       </article>
 
@@ -1475,22 +1531,22 @@
           <div class="bar">
             <span class="logo"></span><span class="brand">Maison</span>
             <span class="nav"><i>Home</i><i>Listings</i><i>Journal</i><i>About</i></span>
-            <span class="pill" data-i18n="st_cta_contact">Contact us</span>
+            <span class="pill" data-i18n="st_cta_contact">Contatti</span>
           </div>
-          <div class="tag" data-i18n="st3_tag">Our clients</div>
-          <div class="h" data-i18n="st3_h">Trusted feedback<br><em>that moves us</em></div>
-          <div class="sub" data-i18n="st3_s">We value every voice. Feedback pushes us to refine and grow.</div>
+          <div class="tag" data-i18n="st3_tag">I nostri clienti</div>
+          <div class="h" data-i18n="st3_h">Opinioni che<br><em>ci fanno crescere</em></div>
+          <div class="sub" data-i18n="st3_s">Ogni voce conta. I vostri riscontri ci spingono a migliorare.</div>
           <div class="author">
             <span class="av"></span>
-            <span><b>Kalsey Hand</b><em data-i18n="st3_role">Marketing manager</em></span>
+            <span><b>Kalsey Hand</b><em data-i18n="st3_role">Direttrice marketing</em></span>
           </div>
           <div class="meta"><i>Business</i><i>06 / 04</i></div>
           <div class="photo"></div>
         </div>
         <div class="st-foot">
-          <h3 data-i18n="st3_t">Editorial &amp; property</h3>
-          <p data-i18n="st3_d">Warm paper tones and serif italics. The look that makes a listing feel like a magazine spread.</p>
-          <span class="st-tag" data-i18n="st3_g">Real estate · Architecture · Hotels</span>
+          <h3 data-i18n="st3_t">Editoriale &amp; immobiliare</h3>
+          <p data-i18n="st3_d">Toni caldi di carta e corsivi serif. Il look che fa sembrare un annuncio una rivista.</p>
+          <span class="st-tag" data-i18n="st3_g">Immobiliare · Architettura · Hotel</span>
         </div>
       </article>
 
@@ -1501,11 +1557,11 @@
           <div class="bar">
             <span class="logo"></span><span class="brand">Winzy</span>
             <span class="nav"><i>Stays</i><i>Experiences</i><i>Blog</i><i>About</i></span>
-            <span class="pill" data-i18n="st_cta_start">Get started</span>
+            <span class="pill" data-i18n="st_cta_start">Inizia</span>
           </div>
-          <div class="h" data-i18n="st4_h">Explore new horizons<br>with every journey</div>
-          <div class="sub" data-i18n="st4_s">Unique cultures, stunning landscapes, moments you keep.</div>
-          <div class="cta"><span data-i18n="st_cta_start">Get started</span><s></s></div>
+          <div class="h" data-i18n="st4_h">Esplora nuovi orizzonti</div>
+          <div class="sub" data-i18n="st4_s">Luoghi unici, guide vere, momenti che restano.</div>
+          <div class="cta"><span data-i18n="st_cta_start">Inizia</span><s></s></div>
           <div class="preview">
             <div class="ph"></div>
             <em>01 / 10</em>
@@ -1520,14 +1576,14 @@
           </div>
           <div class="faces">
             <span><i></i><i></i><i></i><i></i></span>
-            <b data-i18n="st4_card">10K+ travellers</b>
+            <b data-i18n="st4_card">Viaggiatori ospitati</b>
           </div>
           <div class="socials"><u></u><u></u><u></u></div>
         </div>
         <div class="st-foot">
-          <h3 data-i18n="st4_t">Immersive &amp; photographic</h3>
-          <p data-i18n="st4_d">A full-bleed image carries the page, with glass cards floating over it. Sells a feeling, not a spec sheet.</p>
-          <span class="st-tag" data-i18n="st4_g">Travel · Restaurants · Events</span>
+          <h3 data-i18n="st4_t">Immersivo &amp; fotografico</h3>
+          <p data-i18n="st4_d">Un'immagine a tutto campo regge la pagina, con schede di vetro sopra. Vende una sensazione, non una scheda tecnica.</p>
+          <span class="st-tag" data-i18n="st4_g">Viaggi · Ristoranti · Eventi</span>
         </div>
       </article>
 
@@ -1537,16 +1593,16 @@
           <div class="bar">
             <span class="logo"></span><span class="brand">Lumen</span>
             <span class="nav"><i>Courses</i><i>Mentors</i><i>Pricing</i><i>Blog</i></span>
-            <span class="pill" data-i18n="st_cta_join">Register</span>
+            <span class="pill" data-i18n="st_cta_join">Iscriviti</span>
           </div>
           <div class="ghost">LEARN</div>
-          <div class="h" data-i18n="st5_h">Choose the right course for your goal</div>
+          <div class="h" data-i18n="st5_h">Scegli il corso giusto per il tuo obiettivo</div>
           <div class="stats">
-            <div><b>20K+</b><span data-i18n="st5_st1">Students</span></div>
-            <div><b>2K+</b><span data-i18n="st5_card2">Mentors</span></div>
-            <div><b>4.5</b><span data-i18n="st5_card">Rated</span></div>
+            <div><b>20K+</b><span data-i18n="st5_st1">Studenti</span></div>
+            <div><b>2K+</b><span data-i18n="st5_card2">Mentori esperti</span></div>
+            <div><b>4.5</b><span data-i18n="st5_card">Scelto in tutto il mondo</span></div>
           </div>
-          <div class="cta"><span data-i18n="st_cta_join">Register</span><s></s></div>
+          <div class="cta"><span data-i18n="st_cta_join">Iscriviti</span><s></s></div>
           <div class="preview">
             <div class="ph"></div>
             <em>01 / 10</em>
@@ -1554,9 +1610,9 @@
           </div>
         </div>
         <div class="st-foot">
-          <h3 data-i18n="st5_t">Bold colour block</h3>
-          <p data-i18n="st5_d">One saturated colour doing the heavy lifting. Reads instantly on a phone, impossible to confuse with a competitor.</p>
-          <span class="st-tag" data-i18n="st5_g">Education · Apps · Startups</span>
+          <h3 data-i18n="st5_t">Blocco di colore</h3>
+          <p data-i18n="st5_d">Un colore saturo che fa tutto il lavoro. Si legge subito su un telefono, impossibile confonderlo.</p>
+          <span class="st-tag" data-i18n="st5_g">Formazione · App · Startup</span>
         </div>
       </article>
 
@@ -1570,16 +1626,16 @@
           <div class="bar">
             <span class="brand">DIGITATEX</span>
             <span class="nav"><i>Work</i><i>Services</i><i>Styles</i><i>About</i></span>
-            <span class="pill" data-i18n="st_cta_quote">Free quote</span>
+            <span class="pill" data-i18n="st_cta_quote">Preventivo</span>
           </div>
           <div class="h">Sites that move<br>like <em>film</em>.</div>
-          <div class="cta"><span data-i18n="st_cta_quote">Free quote</span><s></s></div>
-          <div class="cue"><span data-i18n="st6_cue">Scroll</span><i></i></div>
+          <div class="cta"><span data-i18n="st_cta_quote">Preventivo</span><s></s></div>
+          <div class="cue"><span data-i18n="st6_cue">Scorri</span><i></i></div>
         </div>
         <div class="st-foot">
-          <h3 data-i18n="st6_t">Cinematic &amp; scroll-driven</h3>
-          <p data-i18n="st6_d">Video tied to scroll position, like the site you're on. The most demanding to build — and the hardest to forget.</p>
-          <span class="st-tag" data-i18n="st6_g">Construction · Studios · Premium brands</span>
+          <h3 data-i18n="st6_t">Cinematografico con lo scroll</h3>
+          <p data-i18n="st6_d">Video legato alla posizione dello scroll, come il sito in cui sei. Il più impegnativo da costruire — e il più difficile da dimenticare.</p>
+          <span class="st-tag" data-i18n="st6_g">Edilizia · Studi · Marchi premium</span>
         </div>
       </article>
 
@@ -1589,14 +1645,14 @@
 
 <!-- ==================== TESTIMONIALS ==================== -->
 <section id="testimonials" hidden>
-  <span class="sec-counter">05 — <span data-i18n="sec_testi">Proof</span></span>
+  <span class="sec-counter">05 — <span data-i18n="sec_testi">Testimonianze</span></span>
   <div class="wrap">
     <div class="testi-head reveal rv-left">
       <div>
-        <p class="eyebrow" data-i18n="testi_eyebrow">Client proof</p>
-        <h2 data-i18n="testi_h2">Real clients.<br>Real reels.</h2>
+        <p class="eyebrow" data-i18n="testi_eyebrow">Prova reale</p>
+        <h2 data-i18n="testi_h2">Clienti veri.<br>Reel veri.</h2>
       </div>
-      <div data-i18n="testi_p">Testimonials published straight from Instagram — tap any card to watch the full reel on Instagram.</div>
+      <div data-i18n="testi_p">Testimonianze pubblicate direttamente da Instagram — tocca una card per vedere il reel completo su Instagram.</div>
     </div>
     <div class="testi-rail" id="testi-rail" role="list"></div>
   </div>
@@ -1609,26 +1665,26 @@
     <div class="reveal rv-left">
       <p class="eyebrow" data-i18n="about_eyebrow">Studio</p>
       <div class="about-stat">
-        <div><div class="stat-num">2</div><div class="stat-label" data-i18n="about_stat1">disciplines under one roof: web and software</div></div>
-        <div><div class="stat-num">100%</div><div class="stat-label" data-i18n="about_stat2">of projects led end-to-end by the same person</div></div>
+        <div><div class="stat-num">2</div><div class="stat-label" data-i18n="about_stat1">discipline sotto lo stesso tetto: web e software</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-label" data-i18n="about_stat2">dei progetti seguiti dall'inizio alla fine dalla stessa persona</div></div>
       </div>
     </div>
     <div class="about-copy glass reveal rv-right d1">
-      <p class="about-lead" data-i18n="about_lead">We don't separate the website from the tool that runs the business behind it. <em>Both are built by the same hand,</em> so they actually work together.</p>
-      <p class="about-body scroll-words" data-i18n="about_body">Digitatex is a small studio focused on two things: websites that feel like an experience, and the internal software that keeps a service business running — bookings, payments, clients, reminders. We take on a limited number of projects at a time, so every build gets full attention from first sketch to launch.</p>
+      <p class="about-lead" data-i18n="about_lead">Non separiamo il sito dallo strumento che gestisce l'attività dietro di esso. <em>Entrambi sono costruiti dalla stessa mano,</em> per questo funzionano davvero insieme.</p>
+      <p class="about-body scroll-words" data-i18n="about_body"><span class="sw-word">Digitatex</span> <span class="sw-word">è</span> <span class="sw-word">un</span> <span class="sw-word">piccolo</span> <span class="sw-word">studio</span> <span class="sw-word">concentrato</span> <span class="sw-word">su</span> <span class="sw-word">due</span> <span class="sw-word">cose:</span> <span class="sw-word">siti</span> <span class="sw-word">che</span> <span class="sw-word">si</span> <span class="sw-word">vivono</span> <span class="sw-word">come</span> <span class="sw-word">un'esperienza,</span> <span class="sw-word">e</span> <span class="sw-word">il</span> <span class="sw-word">software</span> <span class="sw-word">interno</span> <span class="sw-word">che</span> <span class="sw-word">tiene</span> <span class="sw-word">in</span> <span class="sw-word">funzione</span> <span class="sw-word">un'attività</span> <span class="sw-word">di</span> <span class="sw-word">servizi</span> <span class="sw-word">—</span> <span class="sw-word">prenotazioni,</span> <span class="sw-word">pagamenti,</span> <span class="sw-word">clienti,</span> <span class="sw-word">promemoria.</span> <span class="sw-word">Seguiamo</span> <span class="sw-word">un</span> <span class="sw-word">numero</span> <span class="sw-word">limitato</span> <span class="sw-word">di</span> <span class="sw-word">progetti</span> <span class="sw-word">alla</span> <span class="sw-word">volta,</span> <span class="sw-word">così</span> <span class="sw-word">ognuno</span> <span class="sw-word">riceve</span> <span class="sw-word">piena</span> <span class="sw-word">attenzione</span> <span class="sw-word">dal</span> <span class="sw-word">primo</span> <span class="sw-word">schizzo</span> <span class="sw-word">al</span> <span class="sw-word">lancio.</span></p>
     </div>
   </div>
 </section>
 
 <!-- ==================== CONTACT ==================== -->
 <section id="contact">
-  <span class="sec-counter">07 — <span data-i18n="sec_contact">Contact</span></span>
+  <span class="sec-counter">07 — <span data-i18n="sec_contact">Contatti</span></span>
   <div class="wrap">
-    <p class="eyebrow reveal" style="justify-content:center;" data-i18n="contact_eyebrow">Start a project</p>
-    <h2 class="reveal d1" data-i18n="contact_h2">Let's build <em>yours</em> next.</h2>
-    <p class="reveal d2" style="text-align:center;max-width:52ch;margin:22px auto 0;font-size:15px;color:var(--bone-dim);line-height:1.8;" data-i18n="contact_sub">Tell us about your project below and get an instant price estimate — the final price is always confirmed by Digitatex by email.</p>
+    <p class="eyebrow reveal" style="justify-content:center;" data-i18n="contact_eyebrow">Inizia un progetto</p>
+    <h2 class="reveal d1" data-i18n="contact_h2">Costruiamo <em>il tuo</em> ora.</h2>
+    <p class="reveal d2" style="text-align:center;max-width:52ch;margin:22px auto 0;font-size:15px;color:var(--bone-dim);line-height:1.8;" data-i18n="contact_sub">Raccontaci il tuo progetto qui sotto e ricevi subito una stima di prezzo — il prezzo finale è sempre confermato da Digitatex via email.</p>
     <div class="cta-actions reveal d3">
-      <a href="#quote" class="btn btn-solid"><span data-i18n="contact_btn1">Request a quote</span>
+      <a href="#quote" class="btn btn-solid"><span data-i18n="contact_btn1">Richiedi un preventivo</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a href="https://wa.me/393290914158" target="_blank" rel="noopener" class="btn"><span data-i18n="contact_btn3">WhatsApp</span></a>
@@ -1641,57 +1697,65 @@
 <section id="quote">
   <div class="wrap">
     <div class="work-head reveal">
-      <p class="eyebrow" data-i18n="quote_eyebrow">Request a quote</p>
-      <h2 data-i18n="quote_h2">Tell us about your project.</h2>
-      <p data-i18n="quote_p">Fill in the details below — you'll see a live price estimate as you go. This is orientative only; Digitatex always confirms the final price by email.</p>
+      <p class="eyebrow" data-i18n="quote_eyebrow">Richiedi un preventivo</p>
+      <h2 data-i18n="quote_h2">Raccontaci il tuo progetto.</h2>
+      <p data-i18n="quote_p">Compila i dati qui sotto — vedrai una stima di prezzo in tempo reale man mano che procedi. È solo indicativa; Digitatex conferma sempre il prezzo finale prima di iniziare.</p>
     </div>
 
     <div class="quote-grid">
       <form id="quote-form" class="quote-form reveal rv-left d1" novalidate>
         <div class="field">
-          <label data-i18n="q_type_label">Project type *</label>
+          <label data-i18n="q_type_label">Tipo di progetto *</label>
           <div class="radio-group">
-            <label class="radio-opt"><input type="radio" name="project_type" value="crear_desde_cero" required><span data-i18n="q_type_new">Create a website from scratch</span></label>
-            <label class="radio-opt"><input type="radio" name="project_type" value="arreglar_existente"><span data-i18n="q_type_fix">Fix or improve an existing website</span></label>
-            <label class="radio-opt"><input type="radio" name="project_type" value="integrar_funcionalidad"><span data-i18n="q_type_integrate">Integrate a feature into an existing website</span></label>
+            <label class="radio-opt"><input type="radio" name="project_type" value="crear_desde_cero" required><span data-i18n="q_type_new">Creare un sito da zero</span></label>
+            <label class="radio-opt"><input type="radio" name="project_type" value="arreglar_existente"><span data-i18n="q_type_fix">Sistemare o migliorare un sito esistente</span></label>
+            <label class="radio-opt"><input type="radio" name="project_type" value="integrar_funcionalidad"><span data-i18n="q_type_integrate">Integrare una funzionalità in un sito esistente</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label data-i18n="q_addons_label">Integrations you'd like</label>
+          <label data-i18n="q_addons_label">Integrazioni desiderate</label>
           <div class="check-group">
-            <label class="check-opt"><input type="checkbox" name="integrations" value="db_panel"><span data-i18n="q_addon_db">Database / admin panel</span></label>
-            <label class="check-opt"><input type="checkbox" name="integrations" value="form_advanced"><span data-i18n="q_addon_form">Advanced form (multi-step, files)</span></label>
-            <label class="check-opt"><input type="checkbox" name="integrations" value="payments_booking"><span data-i18n="q_addon_pay">Payments or bookings</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="db_panel"><span data-i18n="q_addon_db">Database / pannello admin</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="form_advanced"><span data-i18n="q_addon_form">Modulo avanzato (multi-step, file)</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="payments_booking"><span data-i18n="q_addon_pay">Pagamenti o prenotazioni</span></label>
             <label class="check-opt"><input type="checkbox" name="integrations" value="whatsapp"><span data-i18n="q_addon_wa">WhatsApp</span></label>
-            <label class="check-opt"><input type="checkbox" name="integrations" value="multilang"><span data-i18n="q_addon_lang">Multi-language</span></label>
-            <label class="check-opt"><input type="checkbox" name="integrations" value="video3d"><span data-i18n="q_addon_video">Scroll-driven product video / 3D</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="multilang"><span data-i18n="q_addon_lang">Multilingua</span></label>
+            <label class="check-opt"><input type="checkbox" name="integrations" value="video3d"><span data-i18n="q_addon_video">Video/3D del prodotto guidato dallo scroll</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label for="existing_url" data-i18n="q_url_label">Existing website URL (optional)</label>
+          <label for="existing_url" data-i18n="q_url_label">URL del sito esistente (opzionale)</label>
           <input type="url" id="existing_url" name="existing_url" placeholder="https://">
         </div>
 
         <div class="field">
-          <label data-i18n="q_photos_label">Product photos (optional, up to 5)</label>
+          <label data-i18n="q_photos_label">Foto del prodotto (opzionale, fino a 5)</label>
           <div class="file-drop" id="photo-drop">
-            <span data-i18n="q_photos_hint">Click to select up to 5 photos — especially useful if you selected the scroll video/3D option.</span>
+            <span data-i18n="q_photos_hint">Clicca per selezionare fino a 5 foto — particolarmente utile se hai scelto l'opzione video/3D con scroll.</span>
             <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" multiple style="display:none;">
           </div>
           <div class="photo-previews" id="photo-previews"></div>
         </div>
 
         <div class="two-col">
-          <div class="field"><label for="q_name" data-i18n="q_name_label">Name *</label><input type="text" id="q_name" name="name" required></div>
+          <div class="field"><label for="q_name" data-i18n="q_name_label">Nome *</label><input type="text" id="q_name" name="name" required></div>
           <div class="field"><label for="q_email" data-i18n="q_email_label">Email</label><input type="email" id="q_email" name="email"></div>
         </div>
-        <div class="field"><label for="q_phone" data-i18n="q_phone_label">Phone</label><input type="tel" id="q_phone" name="phone"></div>
-        <div class="field"><label for="q_message" data-i18n="q_message_label">Message</label><textarea id="q_message" name="message"></textarea></div>
+        <div class="field"><label for="q_phone" data-i18n="q_phone_label">Telefono</label><input type="tel" id="q_phone" name="phone"></div>
+        <div class="field"><label for="q_message" data-i18n="q_message_label">Messaggio</label><textarea id="q_message" name="message"></textarea></div>
+
+        <!-- Consentimiento. Obligatorio en Italia antes de guardar nada de nadie,
+             y por eso NO viene marcada: una casilla premarcada no es un
+             consentimiento, es un descuido con forma de casilla. -->
+        <label class="check-opt privacy-opt">
+          <input type="checkbox" id="q_privacy" name="privacy" required>
+          <span data-i18n="q_privacy">Ho letto la <a href="privacy/" target="_blank" rel="noopener">Privacy Policy</a> e acconsento al trattamento dei dati per ricevere il preventivo.</span>
+        </label>
 
         <div class="submit-row">
-          <button type="submit" class="btn btn-solid"><span data-i18n="q_submit">Send request</span>
+          <button type="submit" class="btn btn-solid"><span data-i18n="q_submit">Invia richiesta</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
           <span id="quote-status" class="form-status" role="status" aria-live="polite"></span>
@@ -1699,11 +1763,11 @@
       </form>
 
       <aside class="estimate-box reveal rv-right d2">
-        <h4 data-i18n="q_estimate_label">Your estimate</h4>
-        <div class="estimate-range" id="estimate-range" data-i18n="q_estimate_placeholder">Select a project type to see your estimate.</div>
+        <h4 data-i18n="q_estimate_label">La tua stima</h4>
+        <div class="estimate-range" id="estimate-range" data-i18n="q_estimate_placeholder">Seleziona un tipo di progetto per vedere la tua stima.</div>
         <div class="estimate-maint" id="estimate-maint"></div>
         <div class="estimate-premium" id="estimate-premium" style="display:none;"></div>
-        <p class="estimate-note" data-i18n="q_estimate_note">Orientative estimate only. Digitatex always confirms the final price by email after reviewing your project.</p>
+        <p class="estimate-note" data-i18n="q_estimate_note">Stima solo indicativa. Digitatex conferma sempre il prezzo finale prima di iniziare, dopo aver esaminato il tuo progetto.</p>
       </aside>
     </div>
   </div>
@@ -1712,12 +1776,23 @@
 
 <footer>
   <span>© 2026 Digitatex</span>
-  <span data-i18n="footer_tag">Web &amp; product studio</span>
-  <!-- Sello de version. Sirve para saber de un vistazo, desde el telefono y sin
-       herramientas, si lo que se esta viendo es la ultima subida o una copia
-       guardada por el navegador. Se cambia en cada despliegue. -->
-  <span class="build-tag">v39</span>
-  <a href="#admin" id="admin-link" data-i18n="footer_admin">Management</a>
+  <span data-i18n="footer_tag">Studio web &amp; software</span>
+  <span data-i18n="footer_place">Fidenza (PR), Italia</span>
+  <a href="https://wa.me/393290914158" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="https://www.instagram.com/digitatex_/" target="_blank" rel="noopener">Instagram</a>
+  <a href="privacy/" data-i18n="footer_privacy">Privacy Policy</a>
+  <!-- Hueco para la partita IVA. En Italia va en el pie en cuanto exista. Hoy
+       no la hay, y escribir un numero inventado o un "in attesa" es peor que no
+       escribir nada. Cuando llegue, va aqui:
+       <span>P. IVA 00000000000</span> -->
+  <!-- Ya no se enseña el enlace al panel: el panel sigue abriendose en
+       digitatex.com/#admin, que es lo unico que hacia este enlace. No es una
+       medida de seguridad —quien la proteje es la contraseña de Supabase— sino
+       de limpieza: un visitante no tiene por que ver una puerta que no es suya.
+       Tampoco se enseña el sello de version; sigue en <meta name="build"> de la
+       cabecera, asi que para saber si estas viendo la ultima subida o una copia
+       guardada por el navegador basta con mirar el codigo fuente (en el movil:
+       escribir  view-source:  delante de la direccion). -->
 </footer>
 
 <!-- ==================== PANEL DE GESTION ==================== -->
@@ -1871,9 +1946,9 @@
      ============================================================ */
   const i18n = {
     en: {
-      meta_title:"Digitatex — Cinematic Web Design & Business Software Studio", meta_desc:"We design cinematic, scroll-driven websites and the business software behind them — bookings, payments, client management. Free quote in minutes.",
+      meta_title:"Digitatex — Websites & business software for local businesses | Fidenza, Parma", meta_desc:"Studio based in Fidenza: custom websites, scroll-driven video and the business software behind them, for local businesses across Fidenza, Parma and nearby. Free quote in minutes.",
       admin_save:"Save",
-      case_preview:"Live preview of", case_visit:"Visit", case_tag_generic:"Client work · Custom website", case_generic:"Designed, built and launched by Digitatex. What you see above is the real site running — the recording moves with your scroll, exactly as the site behaves live.", case_g_m1s:"Scroll-scrub", case_g_m1:"Video tied to scroll position, not autoplay", case_g_m2s:"End to end", case_g_m2:"Design, build and launch handled in-house", sys_tag_generic:"Digitatex product · Business software", sys_generic:"Built end to end by Digitatex — product design, development and the system running behind it. The recording above is the real product in use.", sys_g_m1s:"Built in-house", sys_g_m1:"Product, interface and backend by Digitatex", sys_g_m2s:"In production", sys_g_m2:"Running with real businesses, not a prototype", sys_kind_own:"Our own product", sys_kind_collab:"In collaboration", admin_cases_h:"Client cases on the site", admin_case_name:"Client name *", admin_case_url:"Website (optional)", admin_case_add:"Add case", admin_case_novideo:"Pick a video first.", admin_case_max:"Three is the limit. Delete one to add another.", admin_confirm_case:"Delete this and its video? This cannot be undone.", admin_uploading:"Uploading…", admin_error:"Something went wrong.", admin_cases_note:"Up to three client cases appear on the site, in the order you add them. Landscape 16:9 recordings work best.", admin_sys_h:"Our own systems & collaborations", admin_sys_name:"System name *", admin_sys_kind:"Type", admin_sys_add:"Add system", admin_sys_note:"Trimm goes here. Up to three systems appear on the site, without the monitor frame — that frame is reserved for sites we deliver to a client.", admin_trimm_h:"Trimm video", admin_video_toobig:"That video is {mb} MB. The limit is 25 MB — compress it and try again.", admin_video_heavy:"Heads up: {mb} MB is heavy. Uploading anyway…", admin_video_unplayable:"The browser can't open that video. Export it as MP4 (H.264) and try again.", admin_video_long:"Heads up: {s} seconds is long — the scroll jumps a lot. Under 20 works best. ",
+      case_preview:"Live preview of", case_visit:"Visit", case_tag_generic:"Client work · Custom website", case_generic:"Designed, built and launched by Digitatex. What you see above is the real site running — the recording moves with your scroll, exactly as the site behaves live.", case_g_m1s:"Scroll-scrub", case_g_m1:"Video tied to scroll position, not autoplay", case_g_m2s:"End to end", case_g_m2:"Design, build and launch handled in-house", sys_tag_generic:"Digitatex product · Business software", sys_generic:"Built end to end by Digitatex — product design, development and the system running behind it. The recording above is the real product in use.", sys_g_m1s:"Built in-house", sys_g_m1:"Product, interface and backend by Digitatex", sys_g_m2s:"Ready to use", sys_g_m2:"A finished product, not a prototype", sys_kind_own:"Our own product", sys_kind_collab:"In collaboration", admin_cases_h:"Client cases on the site", admin_case_name:"Client name *", admin_case_url:"Website (optional)", admin_case_add:"Add case", admin_case_novideo:"Pick a video first.", admin_case_max:"Three is the limit. Delete one to add another.", admin_confirm_case:"Delete this and its video? This cannot be undone.", admin_uploading:"Uploading…", admin_error:"Something went wrong.", admin_cases_note:"Up to three client cases appear on the site, in the order you add them. Landscape 16:9 recordings work best.", admin_sys_h:"Our own systems & collaborations", admin_sys_name:"System name *", admin_sys_kind:"Type", admin_sys_add:"Add system", admin_sys_note:"Trimm goes here. Up to three systems appear on the site, without the monitor frame — that frame is reserved for sites we deliver to a client.", admin_trimm_h:"Trimm video", admin_video_toobig:"That video is {mb} MB. The limit is 25 MB — compress it and try again.", admin_video_heavy:"Heads up: {mb} MB is heavy. Uploading anyway…", admin_video_unplayable:"The browser can't open that video. Export it as MP4 (H.264) and try again.", admin_video_long:"Heads up: {s} seconds is long — the scroll jumps a lot. Under 20 works best. ",
       nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"What we can build for you", st_h2:"Six directions.<br>One studio.", st_p:"Not every business needs the same site. These are the directions we work in — pick the one that fits yours, or tell us what you have in mind and we'll take it from there.", st_cta_shop:"Shop", st_cta_shop2:"Shop now", st_cta_contact:"Contact us", st_cta_demo:"Book a demo", st_cta_start:"Get started", st_cta_join:"Register", st_cta_quote:"Free quote", st1_h:"Glow<br>begins here", st1_card:"Rated by 2,400 customers", st1_s:"Premium pieces, refined details, made to last.", st2_tag:"Smart marketing", st2_st1:"Actionable insight", st2_st3:"Average rating", st3_tag:"Our clients", st3_h:"Trusted feedback<br><em>that moves us</em>", st3_s:"We value every voice. Feedback pushes us to refine and grow.", st3_role:"Marketing manager", st5_st1:"Students", st6_cue:"Scroll",
       st1_t:"Boutique & e-commerce", st1_d:"Editorial photography, generous space and a single clear action. For brands sold on how they look.", st1_g:"Beauty · Fashion · Retail", st2_h:"Trusted by teams that ship", st2_s:"Everything your team needs, in one place, without the busywork.", st2_card:"Active users", st2_t:"Corporate & SaaS", st2_d:"Clean, bright and built around trust signals: numbers, logos and a demo one tap away.", st2_g:"Software · B2B · Consulting", st3_h2:"Experience", st3_cta:"Find a home", st3_card:"Happy clients · 5K partners", st3_t:"Editorial & property", st3_d:"Warm paper tones and serif italics. The look that makes a listing feel like a magazine spread.", st3_g:"Real estate · Architecture · Hotels", st4_h:"Explore new horizons", st4_s:"Unique places, real guides, moments you keep.", st4_card:"Travellers hosted", st4_t:"Immersive & photographic", st4_d:"A full-bleed image carries the page, with glass cards floating over it. Sells a feeling, not a spec sheet.", st4_g:"Travel · Restaurants · Events", st5_h:"Choose the right course for your goal", st5_s:"Learn at your own pace, with people who have done it.", st5_card:"Trusted worldwide", st5_card2:"Expert mentors", st5_t:"Bold colour block", st5_d:"One saturated colour doing the heavy lifting. Reads instantly on a phone, impossible to confuse with a competitor.", st5_g:"Education · Apps · Startups", st6_t:"Cinematic & scroll-driven", st6_d:"Video tied to scroll position, like the site you're on. The most demanding to build — and the hardest to forget.", st6_g:"Construction · Studios · Premium brands", nav_work:"Work", nav_services:"Services", nav_testimonials:"Testimonials", nav_about:"About", nav_quote:"Quote",
       sec_hero:"Studio", sec_work:"Work", sec_services:"Services", sec_testi:"Proof", sec_about:"Studio", sec_contact:"Contact",
@@ -1907,7 +1982,7 @@
       contact_btn1:"Request a quote", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
       wa_bubble:"Free personalized <strong>consultation</strong>",
       quote_eyebrow:"Request a quote", quote_h2:"Tell us about your project.",
-      quote_p:"Fill in the details below — you'll see a live price estimate as you go. This is orientative only; Digitatex always confirms the final price by email.",
+      quote_p:"Fill in the details below — you'll see a live price estimate as you go. This is orientative only; Digitatex always confirms the final price before starting.",
       q_type_label:"Project type *", q_type_new:"Create a website from scratch", q_type_fix:"Fix or improve an existing website", q_type_integrate:"Integrate a feature into an existing website",
       q_addons_label:"Integrations you'd like", q_addon_db:"Database / admin panel", q_addon_form:"Advanced form (multi-step, files)", q_addon_pay:"Payments or bookings", q_addon_wa:"WhatsApp", q_addon_lang:"Multi-language", q_addon_video:"Scroll-driven product video / 3D",
       q_url_label:"Existing website URL (optional)",
@@ -1915,8 +1990,13 @@
       q_name_label:"Name *", q_email_label:"Email", q_phone_label:"Phone", q_message_label:"Message",
       q_submit:"Send request",
       q_estimate_label:"Your estimate", q_estimate_placeholder:"Select a project type to see your estimate.",
-      q_estimate_note:"Orientative estimate only. Digitatex always confirms the final price by email after reviewing your project.",
+      q_estimate_note:"Orientative estimate only. Digitatex always confirms the final price before starting, after reviewing your project.",
       footer_tag:"Web & product studio", footer_admin:"Management",
+      footer_place:"Fidenza (PR), Italy", footer_privacy:"Privacy Policy",
+      q_privacy:"I have read the <a href=\"privacy/?lang=en\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and I consent to my data being processed so Digitatex can send me the quote.",
+      q_privacy_err:"Please accept the Privacy Policy before sending your request.",
+      sys_st_trimm_s:"Available", sys_st_trimm_d:"Launched — 14-day free trial",
+      sys_st_log_s:"Launching", sys_st_log_d:"First client being set up right now",
       admin_title:"Management panel", admin_close:"Close", admin_logout:"Log out",
       admin_login_h:"Sign in", admin_email:"Email", admin_pass:"Password", admin_signin:"Sign in",
       admin_login_note:"Credentials are created from your Supabase dashboard (Authentication → Users). No one can reach this panel without them.",
@@ -1929,9 +2009,9 @@
       admin_login_err:"Wrong email or password.", admin_generic_err:"Something failed. Try again."
     },
     es: {
-      meta_title:"Digitatex — Diseño web cinematográfico y software de gestión", meta_desc:"Diseñamos webs cinematográficas guiadas por scroll y el software de gestión que hay detrás: reservas, pagos, clientes. Presupuesto gratis en minutos.",
+      meta_title:"Digitatex — Webs y software para negocios locales | Fidenza, Parma", meta_desc:"Estudio en Fidenza: webs a medida, vídeo atado al scroll y el software de gestión que hay detrás, para negocios de Fidenza, Parma y alrededores. Presupuesto gratis en minutos.",
       admin_save:"Guardar",
-      case_preview:"Vista previa de", case_visit:"Visitar", case_tag_generic:"Trabajo de cliente · Web a medida", case_generic:"Diseñada, desarrollada y puesta en marcha por Digitatex. Lo que se ve arriba es el sitio real funcionando — la grabación avanza con tu scroll, igual que se comporta en vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"El vídeo va atado al scroll, no se reproduce solo", case_g_m2s:"De principio a fin", case_g_m2:"Diseño, desarrollo y lanzamiento hechos en casa", sys_tag_generic:"Producto Digitatex · Software de gestión", sys_generic:"Hecho de principio a fin por Digitatex — diseño de producto, desarrollo y el sistema que corre por detrás. La grabación de arriba es el producto real en uso.", sys_g_m1s:"Hecho en casa", sys_g_m1:"Producto, interfaz y backend por Digitatex", sys_g_m2s:"En producción", sys_g_m2:"Funcionando con negocios reales, no un prototipo", sys_kind_own:"Producto propio", sys_kind_collab:"En colaboración", admin_cases_h:"Casos de clientes en la web", admin_case_name:"Nombre del cliente *", admin_case_url:"Web (opcional)", admin_case_add:"Añadir caso", admin_case_novideo:"Elegí primero un vídeo.", admin_case_max:"El tope son tres. Borrá uno para añadir otro.", admin_confirm_case:"¿Borrar esto y su vídeo? No se puede deshacer.", admin_uploading:"Subiendo…", admin_error:"Algo salió mal.", admin_cases_note:"En la web salen hasta tres casos de clientes, en el orden en que los añadís. Lo ideal es grabar en horizontal 16:9.", admin_sys_h:"Sistemas propios y colaboraciones", admin_sys_name:"Nombre del sistema *", admin_sys_kind:"Tipo", admin_sys_add:"Añadir sistema", admin_sys_note:"Acá va Trimm. En la web salen hasta tres sistemas, sin el marco de monitor — ese marco queda para las webs que entregamos a un cliente.", admin_trimm_h:"Vídeo de Trimm", admin_video_toobig:"Ese vídeo pesa {mb} MB. El tope son 25 MB — comprimilo y volvé a intentar.", admin_video_heavy:"Ojo: {mb} MB es pesado. Se sube igual…", admin_video_unplayable:"El navegador no puede abrir ese vídeo. Expórtalo como MP4 (H.264) y volvé a intentar.", admin_video_long:"Ojo: {s} segundos es largo — el scroll pega saltos. Lo ideal es menos de 20. ",
+      case_preview:"Vista previa de", case_visit:"Visitar", case_tag_generic:"Trabajo de cliente · Web a medida", case_generic:"Diseñada, desarrollada y puesta en marcha por Digitatex. Lo que se ve arriba es el sitio real funcionando — la grabación avanza con tu scroll, igual que se comporta en vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"El vídeo va atado al scroll, no se reproduce solo", case_g_m2s:"De principio a fin", case_g_m2:"Diseño, desarrollo y lanzamiento hechos en casa", sys_tag_generic:"Producto Digitatex · Software de gestión", sys_generic:"Hecho de principio a fin por Digitatex — diseño de producto, desarrollo y el sistema que corre por detrás. La grabación de arriba es el producto real en uso.", sys_g_m1s:"Hecho en casa", sys_g_m1:"Producto, interfaz y backend por Digitatex", sys_g_m2s:"Listo para usar", sys_g_m2:"Producto terminado, no un prototipo", sys_kind_own:"Producto propio", sys_kind_collab:"En colaboración", admin_cases_h:"Casos de clientes en la web", admin_case_name:"Nombre del cliente *", admin_case_url:"Web (opcional)", admin_case_add:"Añadir caso", admin_case_novideo:"Elegí primero un vídeo.", admin_case_max:"El tope son tres. Borrá uno para añadir otro.", admin_confirm_case:"¿Borrar esto y su vídeo? No se puede deshacer.", admin_uploading:"Subiendo…", admin_error:"Algo salió mal.", admin_cases_note:"En la web salen hasta tres casos de clientes, en el orden en que los añadís. Lo ideal es grabar en horizontal 16:9.", admin_sys_h:"Sistemas propios y colaboraciones", admin_sys_name:"Nombre del sistema *", admin_sys_kind:"Tipo", admin_sys_add:"Añadir sistema", admin_sys_note:"Acá va Trimm. En la web salen hasta tres sistemas, sin el marco de monitor — ese marco queda para las webs que entregamos a un cliente.", admin_trimm_h:"Vídeo de Trimm", admin_video_toobig:"Ese vídeo pesa {mb} MB. El tope son 25 MB — comprimilo y volvé a intentar.", admin_video_heavy:"Ojo: {mb} MB es pesado. Se sube igual…", admin_video_unplayable:"El navegador no puede abrir ese vídeo. Expórtalo como MP4 (H.264) y volvé a intentar.", admin_video_long:"Ojo: {s} segundos es largo — el scroll pega saltos. Lo ideal es menos de 20. ",
       nav_styles:"Estilos", sec_styles:"Estilos", st_eyebrow:"Lo que podemos montarte", st_h2:"Seis direcciones.<br>Un estudio.", st_p:"No todos los negocios necesitan la misma web. Estas son las direcciones en las que trabajamos — elegí la que encaje con la tuya, o contanos qué tenés en mente y lo tomamos desde ahí.", st_cta_shop:"Tienda", st_cta_shop2:"Comprar", st_cta_contact:"Contacto", st_cta_demo:"Pedir demo", st_cta_start:"Empezar", st_cta_join:"Inscribirme", st_cta_quote:"Cotización", st1_h:"El brillo<br>empieza acá", st1_card:"Valorado por 2.400 clientes", st1_s:"Piezas premium, detalles cuidados, hechas para durar.", st2_tag:"Marketing inteligente", st2_st1:"Decisiones accionables", st2_st3:"Valoración media", st3_tag:"Nuestros clientes", st3_h:"Opiniones que<br><em>nos mueven</em>", st3_s:"Valoramos cada voz. Lo que nos dicen es lo que nos hace mejorar.", st3_role:"Directora de marketing", st5_st1:"Alumnos", st6_cue:"Baja",
       st1_t:"Boutique y e-commerce", st1_d:"Fotografía editorial, mucho aire y una sola acción clara. Para marcas que se venden por cómo se ven.", st1_g:"Belleza · Moda · Retail", st2_h:"La eligen los equipos que entregan", st2_s:"Todo lo que tu equipo necesita, en un solo lugar.", st2_card:"Usuarios activos", st2_t:"Corporativa y SaaS", st2_d:"Limpia, luminosa y construida sobre señales de confianza: números, logos y una demo a un toque.", st2_g:"Software · B2B · Consultoría", st3_h2:"Experiencia", st3_cta:"Buscar casa", st3_card:"Clientes felices · 5K socios", st3_t:"Editorial e inmobiliaria", st3_d:"Tonos cálidos de papel y serif en itálica. El look que hace que una propiedad parezca una revista.", st3_g:"Inmobiliaria · Arquitectura · Hoteles", st4_h:"Explorá nuevos horizontes", st4_s:"Lugares únicos, guías reales, momentos que te quedan.", st4_card:"Viajeros alojados", st4_t:"Inmersiva y fotográfica", st4_d:"Una imagen a sangre sostiene la página, con tarjetas de vidrio flotando encima. Vende una sensación, no una ficha técnica.", st4_g:"Viajes · Restaurantes · Eventos", st5_h:"Elegí el curso para tu objetivo", st5_s:"Aprendé a tu ritmo, con gente que ya lo hizo.", st5_card:"Confían en todo el mundo", st5_card2:"Mentores expertos", st5_t:"Bloque de color", st5_d:"Un color saturado haciendo todo el trabajo. Se lee al instante en un teléfono e imposible de confundir con la competencia.", st5_g:"Formación · Apps · Startups", st6_t:"Cinematográfica con scroll", st6_d:"Video atado a la posición del scroll, como la web en la que estás. La más exigente de construir — y la más difícil de olvidar.", st6_g:"Construcción · Estudios · Marcas premium", nav_work:"Proyectos", nav_services:"Servicios", nav_testimonials:"Testimonios", nav_about:"Nosotros", nav_quote:"Cotización",
       sec_hero:"Estudio", sec_work:"Proyectos", sec_services:"Servicios", sec_testi:"Testimonios", sec_about:"Estudio", sec_contact:"Contacto",
@@ -1965,7 +2045,7 @@
       contact_btn1:"Solicitar cotización", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
       wa_bubble:"Consulta personalizada <strong>gratuita</strong>",
       quote_eyebrow:"Solicitar cotización", quote_h2:"Cuéntanos sobre tu proyecto.",
-      quote_p:"Completa los datos aquí abajo — verás un estimado de precio en vivo a medida que avanzas. Es solo orientativo; Digitatex siempre confirma el precio final por correo.",
+      quote_p:"Completa los datos aquí abajo — verás un estimado de precio en vivo a medida que avanzas. Es solo orientativo; Digitatex siempre confirma el precio final antes de empezar.",
       q_type_label:"Tipo de proyecto *", q_type_new:"Crear web desde cero", q_type_fix:"Arreglar o mejorar una web existente", q_type_integrate:"Integrar una funcionalidad a una web existente",
       q_addons_label:"Integraciones deseadas", q_addon_db:"Base de datos / panel admin", q_addon_form:"Formulario avanzado (multi-paso, archivos)", q_addon_pay:"Pagos o reservas", q_addon_wa:"WhatsApp", q_addon_lang:"Multi-idioma", q_addon_video:"Video/3D del producto con scroll",
       q_url_label:"URL del sitio existente (opcional)",
@@ -1973,8 +2053,13 @@
       q_name_label:"Nombre *", q_email_label:"Correo", q_phone_label:"Teléfono", q_message_label:"Mensaje",
       q_submit:"Enviar solicitud",
       q_estimate_label:"Tu estimado", q_estimate_placeholder:"Selecciona un tipo de proyecto para ver tu estimado.",
-      q_estimate_note:"Estimado solo orientativo. Digitatex siempre confirma el precio final por correo tras revisar tu proyecto.",
+      q_estimate_note:"Estimado solo orientativo. Digitatex siempre confirma el precio final antes de empezar, tras revisar tu proyecto.",
       footer_tag:"Estudio de web y software", footer_admin:"Gestión",
+      footer_place:"Fidenza (PR), Italia", footer_privacy:"Política de Privacidad",
+      q_privacy:"He leído la <a href=\"privacy/?lang=es\" target=\"_blank\" rel=\"noopener\">Política de Privacidad</a> y acepto el tratamiento de mis datos para recibir el presupuesto.",
+      q_privacy_err:"Para enviar la solicitud tienes que aceptar la Política de Privacidad.",
+      sys_st_trimm_s:"Disponible", sys_st_trimm_d:"Lanzado — prueba gratis de 14 días",
+      sys_st_log_s:"En lanzamiento", sys_st_log_d:"Primer cliente configurándose ahora",
       admin_title:"Panel de gestión", admin_close:"Cerrar", admin_logout:"Cerrar sesión",
       admin_login_h:"Iniciar sesión", admin_email:"Correo", admin_pass:"Contraseña", admin_signin:"Entrar",
       admin_login_note:"Las credenciales se crean desde tu panel de Supabase (Authentication → Users). Nadie puede entrar acá sin ellas.",
@@ -1987,9 +2072,9 @@
       admin_login_err:"Correo o contraseña incorrectos.", admin_generic_err:"Algo falló. Intentá de nuevo."
     },
     fr: {
-      meta_title:"Digitatex — Sites cinématographiques et logiciels métier", meta_desc:"Nous concevons des sites cinématographiques pilotés par le défilement et les logiciels de gestion derrière : réservations, paiements, clients. Devis gratuit en quelques minutes.",
+      meta_title:"Digitatex — Sites web et logiciels pour entreprises locales | Fidenza, Parme", meta_desc:"Studio à Fidenza : sites sur mesure, vidéo liée au défilement et les logiciels de gestion derrière, pour les entreprises de Fidenza, Parme et alentours. Devis gratuit en quelques minutes.",
       admin_save:"Enregistrer",
-      case_preview:"Aperçu en direct de", case_visit:"Visiter", case_tag_generic:"Projet client · Site sur mesure", case_generic:"Conçu, développé et mis en ligne par Digitatex. Ce que vous voyez ci-dessus est le site réel en fonctionnement — la vidéo avance au rythme de votre défilement, exactement comme en vrai.", case_g_m1s:"Scroll-scrub", case_g_m1:"La vidéo suit le défilement, pas de lecture automatique", case_g_m2s:"De bout en bout", case_g_m2:"Conception, développement et lancement en interne", sys_tag_generic:"Produit Digitatex · Logiciel de gestion", sys_generic:"Réalisé de bout en bout par Digitatex — conception produit, développement et le système qui tourne derrière. La vidéo ci-dessus montre le produit réel en usage.", sys_g_m1s:"Fait en interne", sys_g_m1:"Produit, interface et backend par Digitatex", sys_g_m2s:"En production", sys_g_m2:"Utilisé par de vraies entreprises, pas un prototype", sys_kind_own:"Notre produit", sys_kind_collab:"En collaboration", admin_cases_h:"Projets clients sur le site", admin_case_name:"Nom du client *", admin_case_url:"Site web (facultatif)", admin_case_add:"Ajouter le projet", admin_case_novideo:"Choisissez d'abord une vidéo.", admin_case_max:"Trois maximum. Supprimez-en un pour en ajouter un autre.", admin_confirm_case:"Supprimer ceci et sa vidéo ? Action irréversible.", admin_uploading:"Envoi en cours…", admin_error:"Une erreur est survenue.", admin_cases_note:"Le site affiche jusqu'à trois projets clients, dans l'ordre où vous les ajoutez. Filmez de préférence en 16:9 horizontal.", admin_sys_h:"Nos systèmes et collaborations", admin_sys_name:"Nom du système *", admin_sys_kind:"Type", admin_sys_add:"Ajouter le système", admin_sys_note:"Trimm va ici. Le site affiche jusqu'à trois systèmes, sans le cadre d'écran — ce cadre est réservé aux sites livrés à un client.", admin_trimm_h:"Vidéo de Trimm", admin_video_toobig:"Cette vidéo fait {mb} Mo. La limite est de 25 Mo — compressez-la et réessayez.", admin_video_heavy:"Attention : {mb} Mo, c'est lourd. Envoi en cours quand même…", admin_video_unplayable:"Le navigateur ne peut pas ouvrir cette vidéo. Exportez-la en MP4 (H.264) et réessayez.", admin_video_long:"Attention : {s} secondes, c'est long — le défilement saute beaucoup. Moins de 20 est idéal. ",
+      case_preview:"Aperçu en direct de", case_visit:"Visiter", case_tag_generic:"Projet client · Site sur mesure", case_generic:"Conçu, développé et mis en ligne par Digitatex. Ce que vous voyez ci-dessus est le site réel en fonctionnement — la vidéo avance au rythme de votre défilement, exactement comme en vrai.", case_g_m1s:"Scroll-scrub", case_g_m1:"La vidéo suit le défilement, pas de lecture automatique", case_g_m2s:"De bout en bout", case_g_m2:"Conception, développement et lancement en interne", sys_tag_generic:"Produit Digitatex · Logiciel de gestion", sys_generic:"Réalisé de bout en bout par Digitatex — conception produit, développement et le système qui tourne derrière. La vidéo ci-dessus montre le produit réel en usage.", sys_g_m1s:"Fait en interne", sys_g_m1:"Produit, interface et backend par Digitatex", sys_g_m2s:"Prêt à l'emploi", sys_g_m2:"Un produit fini, pas un prototype", sys_kind_own:"Notre produit", sys_kind_collab:"En collaboration", admin_cases_h:"Projets clients sur le site", admin_case_name:"Nom du client *", admin_case_url:"Site web (facultatif)", admin_case_add:"Ajouter le projet", admin_case_novideo:"Choisissez d'abord une vidéo.", admin_case_max:"Trois maximum. Supprimez-en un pour en ajouter un autre.", admin_confirm_case:"Supprimer ceci et sa vidéo ? Action irréversible.", admin_uploading:"Envoi en cours…", admin_error:"Une erreur est survenue.", admin_cases_note:"Le site affiche jusqu'à trois projets clients, dans l'ordre où vous les ajoutez. Filmez de préférence en 16:9 horizontal.", admin_sys_h:"Nos systèmes et collaborations", admin_sys_name:"Nom du système *", admin_sys_kind:"Type", admin_sys_add:"Ajouter le système", admin_sys_note:"Trimm va ici. Le site affiche jusqu'à trois systèmes, sans le cadre d'écran — ce cadre est réservé aux sites livrés à un client.", admin_trimm_h:"Vidéo de Trimm", admin_video_toobig:"Cette vidéo fait {mb} Mo. La limite est de 25 Mo — compressez-la et réessayez.", admin_video_heavy:"Attention : {mb} Mo, c'est lourd. Envoi en cours quand même…", admin_video_unplayable:"Le navigateur ne peut pas ouvrir cette vidéo. Exportez-la en MP4 (H.264) et réessayez.", admin_video_long:"Attention : {s} secondes, c'est long — le défilement saute beaucoup. Moins de 20 est idéal. ",
       nav_styles:"Styles", sec_styles:"Styles", st_eyebrow:"Ce que nous pouvons construire", st_h2:"Six directions.<br>Un studio.", st_p:"Toutes les entreprises n'ont pas besoin du même site. Voici les directions dans lesquelles nous travaillons — choisissez celle qui vous ressemble, ou dites-nous ce que vous avez en tête.", st_cta_shop:"Boutique", st_cta_shop2:"Acheter", st_cta_contact:"Contact", st_cta_demo:"Demander une démo", st_cta_start:"Commencer", st_cta_join:"S'inscrire", st_cta_quote:"Devis gratuit", st1_h:"L'éclat<br>commence ici", st1_card:"Noté par 2 400 clients", st1_s:"Des pièces premium, des détails soignés, faites pour durer.", st2_tag:"Marketing intelligent", st2_st1:"Décisions concrètes", st2_st3:"Note moyenne", st3_tag:"Nos clients", st3_h:"Des retours qui<br><em>nous font avancer</em>", st3_s:"Chaque voix compte. Vos retours nous poussent à progresser.", st3_role:"Directrice marketing", st5_st1:"Élèves", st6_cue:"Défiler",
       st1_t:"Boutique & e-commerce", st1_d:"Photographie éditoriale, beaucoup d'espace et une seule action claire. Pour les marques qui se vendent par leur allure.", st1_g:"Beauté · Mode · Retail", st2_h:"Choisi par les équipes qui livrent", st2_s:"Tout ce dont votre équipe a besoin, au même endroit.", st2_card:"Utilisateurs actifs", st2_t:"Corporate & SaaS", st2_d:"Clair, lumineux et bâti sur des signaux de confiance : chiffres, logos et une démo à portée de clic.", st2_g:"Logiciel · B2B · Conseil", st3_h2:"Expérience", st3_cta:"Trouver un bien", st3_card:"Clients satisfaits · 5K partenaires", st3_t:"Éditorial & immobilier", st3_d:"Tons chauds de papier et italiques serif. Le look qui transforme une annonce en pages de magazine.", st3_g:"Immobilier · Architecture · Hôtels", st4_h:"Explorez de nouveaux horizons", st4_s:"Des lieux uniques, de vrais guides, des moments qui restent.", st4_card:"Voyageurs accueillis", st4_t:"Immersif & photographique", st4_d:"Une image plein cadre porte la page, avec des cartes de verre par-dessus. Vend une sensation, pas une fiche technique.", st4_g:"Voyage · Restaurants · Événements", st5_h:"Choisissez le cours qui vous mène au but", st5_s:"Apprenez à votre rythme, avec ceux qui l'ont fait.", st5_card:"Reconnu partout", st5_card2:"Mentors experts", st5_t:"Bloc de couleur", st5_d:"Une couleur saturée qui fait tout le travail. Se lit instantanément sur un téléphone, impossible à confondre.", st5_g:"Formation · Apps · Startups", st6_t:"Cinématographique au scroll", st6_d:"Vidéo liée à la position du scroll, comme le site où vous êtes. Le plus exigeant à construire — et le plus difficile à oublier.", st6_g:"Construction · Studios · Marques premium", nav_work:"Projets", nav_services:"Services", nav_testimonials:"Témoignages", nav_about:"À propos", nav_quote:"Devis",
       sec_hero:"Studio", sec_work:"Projets", sec_services:"Services", sec_testi:"Témoignages", sec_about:"Studio", sec_contact:"Contact",
@@ -2023,7 +2108,7 @@
       contact_btn1:"Demander un devis", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
       wa_bubble:"Consultation personnalisée <strong>gratuite</strong>",
       quote_eyebrow:"Demander un devis", quote_h2:"Parlez-nous de votre projet.",
-      quote_p:"Remplissez les détails ci-dessous — vous verrez une estimation de prix en direct au fur et à mesure. C'est indicatif uniquement ; Digitatex confirme toujours le prix final par e-mail.",
+      quote_p:"Remplissez les détails ci-dessous — vous verrez une estimation de prix en direct au fur et à mesure. C'est indicatif uniquement ; Digitatex confirme toujours le prix final avant de commencer.",
       q_type_label:"Type de projet *", q_type_new:"Créer un site depuis zéro", q_type_fix:"Réparer ou améliorer un site existant", q_type_integrate:"Intégrer une fonctionnalité à un site existant",
       q_addons_label:"Intégrations souhaitées", q_addon_db:"Base de données / panneau admin", q_addon_form:"Formulaire avancé (multi-étapes, fichiers)", q_addon_pay:"Paiements ou réservations", q_addon_wa:"WhatsApp", q_addon_lang:"Multilingue", q_addon_video:"Vidéo/3D du produit pilotée par le scroll",
       q_url_label:"URL du site existant (facultatif)",
@@ -2031,8 +2116,13 @@
       q_name_label:"Nom *", q_email_label:"E-mail", q_phone_label:"Téléphone", q_message_label:"Message",
       q_submit:"Envoyer la demande",
       q_estimate_label:"Votre estimation", q_estimate_placeholder:"Sélectionnez un type de projet pour voir votre estimation.",
-      q_estimate_note:"Estimation indicative uniquement. Digitatex confirme toujours le prix final par e-mail après examen de votre projet.",
+      q_estimate_note:"Estimation indicative uniquement. Digitatex confirme toujours le prix final avant de commencer, après examen de votre projet.",
       footer_tag:"Studio web & logiciel", footer_admin:"Gestion",
+      footer_place:"Fidenza (PR), Italie", footer_privacy:"Politique de confidentialité",
+      q_privacy:"J'ai lu la <a href=\"privacy/?lang=fr\" target=\"_blank\" rel=\"noopener\">Politique de confidentialité</a> et j'accepte le traitement de mes données pour recevoir le devis.",
+      q_privacy_err:"Veuillez accepter la Politique de confidentialité pour envoyer votre demande.",
+      sys_st_trimm_s:"Disponible", sys_st_trimm_d:"Lancé — essai gratuit de 14 jours",
+      sys_st_log_s:"En lancement", sys_st_log_d:"Premier client en cours d'installation",
       admin_title:"Panneau de gestion", admin_close:"Fermer", admin_logout:"Déconnexion",
       admin_login_h:"Connexion", admin_email:"E-mail", admin_pass:"Mot de passe", admin_signin:"Se connecter",
       admin_login_note:"Les identifiants se créent depuis votre tableau de bord Supabase (Authentication → Users). Personne ne peut accéder à ce panneau sans eux.",
@@ -2045,9 +2135,9 @@
       admin_login_err:"E-mail ou mot de passe incorrect.", admin_generic_err:"Échec. Réessayez."
     },
     it: {
-      meta_title:"Digitatex — Siti web cinematografici e software gestionali", meta_desc:"Progettiamo siti cinematografici guidati dallo scroll e il software gestionale dietro: prenotazioni, pagamenti, clienti. Preventivo gratuito in pochi minuti.",
+      meta_title:"Digitatex — Siti web e software per attività locali | Fidenza, Parma", meta_desc:"Studio di Fidenza: siti web su misura, video legati allo scroll e software gestionale per attività locali di Fidenza, Parma e dintorni. Preventivo gratuito in pochi minuti.",
       admin_save:"Salva",
-      case_preview:"Anteprima dal vivo di", case_visit:"Visita", case_tag_generic:"Lavoro per cliente · Sito su misura", case_generic:"Progettato, sviluppato e messo online da Digitatex. Quello che vedi sopra è il sito vero in funzione — il video avanza con il tuo scroll, esattamente come si comporta dal vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"Il video è legato allo scroll, non parte da solo", case_g_m2s:"Dall'inizio alla fine", case_g_m2:"Design, sviluppo e lancio fatti in casa", sys_tag_generic:"Prodotto Digitatex · Software gestionale", sys_generic:"Realizzato dall'inizio alla fine da Digitatex — design di prodotto, sviluppo e il sistema che gira dietro. Il video sopra è il prodotto vero in uso.", sys_g_m1s:"Fatto in casa", sys_g_m1:"Prodotto, interfaccia e backend di Digitatex", sys_g_m2s:"In produzione", sys_g_m2:"In uso da aziende vere, non un prototipo", sys_kind_own:"Prodotto nostro", sys_kind_collab:"In collaborazione", admin_cases_h:"Lavori per clienti sul sito", admin_case_name:"Nome del cliente *", admin_case_url:"Sito web (facoltativo)", admin_case_add:"Aggiungi lavoro", admin_case_novideo:"Scegli prima un video.", admin_case_max:"Il limite è tre. Eliminane uno per aggiungerne un altro.", admin_confirm_case:"Eliminare questo e il suo video? Non si può annullare.", admin_uploading:"Caricamento…", admin_error:"Qualcosa è andato storto.", admin_cases_note:"Sul sito compaiono fino a tre lavori per clienti, nell'ordine in cui li aggiungi. Meglio registrare in orizzontale 16:9.", admin_sys_h:"Sistemi nostri e collaborazioni", admin_sys_name:"Nome del sistema *", admin_sys_kind:"Tipo", admin_sys_add:"Aggiungi sistema", admin_sys_note:"Qui va Trimm. Sul sito compaiono fino a tre sistemi, senza la cornice del monitor — quella cornice resta per i siti che consegniamo a un cliente.", admin_trimm_h:"Video di Trimm", admin_video_toobig:"Questo video pesa {mb} MB. Il limite è 25 MB — comprimilo e riprova.", admin_video_heavy:"Attenzione: {mb} MB è pesante. Si carica lo stesso…", admin_video_unplayable:"Il browser non riesce ad aprire questo video. Esportalo in MP4 (H.264) e riprova.", admin_video_long:"Attenzione: {s} secondi è lungo — lo scroll fa salti. Meglio meno di 20. ",
+      case_preview:"Anteprima dal vivo di", case_visit:"Visita", case_tag_generic:"Lavoro per cliente · Sito su misura", case_generic:"Progettato, sviluppato e messo online da Digitatex. Quello che vedi sopra è il sito vero in funzione — il video avanza con il tuo scroll, esattamente come si comporta dal vivo.", case_g_m1s:"Scroll-scrub", case_g_m1:"Il video è legato allo scroll, non parte da solo", case_g_m2s:"Dall'inizio alla fine", case_g_m2:"Design, sviluppo e lancio fatti in casa", sys_tag_generic:"Prodotto Digitatex · Software gestionale", sys_generic:"Realizzato dall'inizio alla fine da Digitatex — design di prodotto, sviluppo e il sistema che gira dietro. Il video sopra è il prodotto vero in uso.", sys_g_m1s:"Fatto in casa", sys_g_m1:"Prodotto, interfaccia e backend di Digitatex", sys_g_m2s:"Pronto all'uso", sys_g_m2:"Un prodotto completo, non un prototipo", sys_kind_own:"Prodotto nostro", sys_kind_collab:"In collaborazione", admin_cases_h:"Lavori per clienti sul sito", admin_case_name:"Nome del cliente *", admin_case_url:"Sito web (facoltativo)", admin_case_add:"Aggiungi lavoro", admin_case_novideo:"Scegli prima un video.", admin_case_max:"Il limite è tre. Eliminane uno per aggiungerne un altro.", admin_confirm_case:"Eliminare questo e il suo video? Non si può annullare.", admin_uploading:"Caricamento…", admin_error:"Qualcosa è andato storto.", admin_cases_note:"Sul sito compaiono fino a tre lavori per clienti, nell'ordine in cui li aggiungi. Meglio registrare in orizzontale 16:9.", admin_sys_h:"Sistemi nostri e collaborazioni", admin_sys_name:"Nome del sistema *", admin_sys_kind:"Tipo", admin_sys_add:"Aggiungi sistema", admin_sys_note:"Qui va Trimm. Sul sito compaiono fino a tre sistemi, senza la cornice del monitor — quella cornice resta per i siti che consegniamo a un cliente.", admin_trimm_h:"Video di Trimm", admin_video_toobig:"Questo video pesa {mb} MB. Il limite è 25 MB — comprimilo e riprova.", admin_video_heavy:"Attenzione: {mb} MB è pesante. Si carica lo stesso…", admin_video_unplayable:"Il browser non riesce ad aprire questo video. Esportalo in MP4 (H.264) e riprova.", admin_video_long:"Attenzione: {s} secondi è lungo — lo scroll fa salti. Meglio meno di 20. ",
       nav_styles:"Stili", sec_styles:"Stili", st_eyebrow:"Cosa possiamo costruirti", st_h2:"Sei direzioni.<br>Uno studio.", st_p:"Non tutte le attività hanno bisogno dello stesso sito. Queste sono le direzioni in cui lavoriamo — scegli quella che ti somiglia, o raccontaci cosa hai in mente.", st_cta_shop:"Negozio", st_cta_shop2:"Acquista", st_cta_contact:"Contatti", st_cta_demo:"Richiedi demo", st_cta_start:"Inizia", st_cta_join:"Iscriviti", st_cta_quote:"Preventivo", st1_h:"La luce<br>inizia qui", st1_card:"Valutato da 2.400 clienti", st1_s:"Pezzi premium, dettagli curati, fatti per durare.", st2_tag:"Marketing intelligente", st2_st1:"Decisioni concrete", st2_st3:"Voto medio", st3_tag:"I nostri clienti", st3_h:"Opinioni che<br><em>ci fanno crescere</em>", st3_s:"Ogni voce conta. I vostri riscontri ci spingono a migliorare.", st3_role:"Direttrice marketing", st5_st1:"Studenti", st6_cue:"Scorri",
       st1_t:"Boutique & e-commerce", st1_d:"Fotografia editoriale, molto respiro e una sola azione chiara. Per marchi che si vendono per come appaiono.", st1_g:"Beauty · Moda · Retail", st2_h:"Scelto dai team che consegnano", st2_s:"Tutto ciò che serve al tuo team, in un unico posto.", st2_card:"Utenti attivi", st2_t:"Corporate & SaaS", st2_d:"Pulito, luminoso e costruito su segnali di fiducia: numeri, loghi e una demo a un tocco.", st2_g:"Software · B2B · Consulenza", st3_h2:"Esperienza", st3_cta:"Trova casa", st3_card:"Clienti soddisfatti · 5K partner", st3_t:"Editoriale & immobiliare", st3_d:"Toni caldi di carta e corsivi serif. Il look che fa sembrare un annuncio una rivista.", st3_g:"Immobiliare · Architettura · Hotel", st4_h:"Esplora nuovi orizzonti", st4_s:"Luoghi unici, guide vere, momenti che restano.", st4_card:"Viaggiatori ospitati", st4_t:"Immersivo & fotografico", st4_d:"Un'immagine a tutto campo regge la pagina, con schede di vetro sopra. Vende una sensazione, non una scheda tecnica.", st4_g:"Viaggi · Ristoranti · Eventi", st5_h:"Scegli il corso giusto per il tuo obiettivo", st5_s:"Impara al tuo ritmo, con chi lo ha già fatto.", st5_card:"Scelto in tutto il mondo", st5_card2:"Mentori esperti", st5_t:"Blocco di colore", st5_d:"Un colore saturo che fa tutto il lavoro. Si legge subito su un telefono, impossibile confonderlo.", st5_g:"Formazione · App · Startup", st6_t:"Cinematografico con lo scroll", st6_d:"Video legato alla posizione dello scroll, come il sito in cui sei. Il più impegnativo da costruire — e il più difficile da dimenticare.", st6_g:"Edilizia · Studi · Marchi premium", nav_work:"Progetti", nav_services:"Servizi", nav_testimonials:"Testimonianze", nav_about:"Chi siamo", nav_quote:"Preventivo",
       sec_hero:"Studio", sec_work:"Progetti", sec_services:"Servizi", sec_testi:"Testimonianze", sec_about:"Studio", sec_contact:"Contatti",
@@ -2081,7 +2171,7 @@
       contact_btn1:"Richiedi un preventivo", contact_btn2:"Instagram", contact_btn3:"WhatsApp",
       wa_bubble:"Consulenza personalizzata <strong>gratuita</strong>",
       quote_eyebrow:"Richiedi un preventivo", quote_h2:"Raccontaci il tuo progetto.",
-      quote_p:"Compila i dati qui sotto — vedrai una stima di prezzo in tempo reale man mano che procedi. È solo indicativa; Digitatex conferma sempre il prezzo finale via email.",
+      quote_p:"Compila i dati qui sotto — vedrai una stima di prezzo in tempo reale man mano che procedi. È solo indicativa; Digitatex conferma sempre il prezzo finale prima di iniziare.",
       q_type_label:"Tipo di progetto *", q_type_new:"Creare un sito da zero", q_type_fix:"Sistemare o migliorare un sito esistente", q_type_integrate:"Integrare una funzionalità in un sito esistente",
       q_addons_label:"Integrazioni desiderate", q_addon_db:"Database / pannello admin", q_addon_form:"Modulo avanzato (multi-step, file)", q_addon_pay:"Pagamenti o prenotazioni", q_addon_wa:"WhatsApp", q_addon_lang:"Multilingua", q_addon_video:"Video/3D del prodotto guidato dallo scroll",
       q_url_label:"URL del sito esistente (opzionale)",
@@ -2089,8 +2179,13 @@
       q_name_label:"Nome *", q_email_label:"Email", q_phone_label:"Telefono", q_message_label:"Messaggio",
       q_submit:"Invia richiesta",
       q_estimate_label:"La tua stima", q_estimate_placeholder:"Seleziona un tipo di progetto per vedere la tua stima.",
-      q_estimate_note:"Stima solo indicativa. Digitatex conferma sempre il prezzo finale via email dopo aver esaminato il tuo progetto.",
+      q_estimate_note:"Stima solo indicativa. Digitatex conferma sempre il prezzo finale prima di iniziare, dopo aver esaminato il tuo progetto.",
       footer_tag:"Studio web & software", footer_admin:"Gestione",
+      footer_place:"Fidenza (PR), Italia", footer_privacy:"Privacy Policy",
+      q_privacy:"Ho letto la <a href=\"privacy/\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> e acconsento al trattamento dei dati per ricevere il preventivo.",
+      q_privacy_err:"Per inviare la richiesta devi accettare la Privacy Policy.",
+      sys_st_trimm_s:"Disponibile", sys_st_trimm_d:"Prodotto lanciato — prova gratuita di 14 giorni",
+      sys_st_log_s:"In lancio", sys_st_log_d:"Primo cliente in fase di configurazione",
       admin_title:"Pannello di gestione", admin_close:"Chiudi", admin_logout:"Esci",
       admin_login_h:"Accedi", admin_email:"Email", admin_pass:"Password", admin_signin:"Accedi",
       admin_login_note:"Le credenziali si creano dalla dashboard Supabase (Authentication → Users). Nessuno può accedere a questo pannello senza di esse.",
@@ -2104,8 +2199,13 @@
     }
   };
 
-  let currentLang = 'en';
-  function t(key){ return (i18n[currentLang] && i18n[currentLang][key]) || i18n.en[key] || ''; }
+  /* El italiano es el idioma de la casa: los clientes son negocios de Fidenza
+     y Parma. El ingles queda como ultima red por si alguna clave llegara a
+     faltar en italiano. */
+  let currentLang = 'it';
+  function t(key){
+    return (i18n[currentLang] && i18n[currentLang][key]) || i18n.it[key] || i18n.en[key] || '';
+  }
 
   function applyLang(lang){
     const dict = i18n[lang];
@@ -2149,11 +2249,14 @@
     poner('meta[name="twitter:description"]', 'content', dict.meta_desc);
 
     const base = 'https://digitatex.com/';
-    const propia = lang === 'en' ? base : base + '?lang=' + lang;
+    /* La raiz sin parametro ES la italiana, asi que el italiano es canonico de
+       la raiz y los otros tres de su propia ?lang=. Esto tiene que coincidir
+       con los hreflang de la cabecera o el grupo no vale nada. */
+    const propia = lang === 'it' ? base : base + '?lang=' + lang;
     poner('link[rel="canonical"]', 'href', propia);
     poner('meta[property="og:url"]', 'content', propia);
     poner('meta[property="og:locale"]', 'content',
-      {en:'en_US', es:'es_ES', fr:'fr_FR', it:'it_IT'}[lang] || 'en_US');
+      {en:'en_US', es:'es_ES', fr:'fr_FR', it:'it_IT'}[lang] || 'it_IT');
   }
   document.querySelectorAll('.langsw button').forEach(b=>{
     b.addEventListener('click', ()=> applyLang(b.dataset.lang));
@@ -2171,8 +2274,18 @@
     const urlLang = new URLSearchParams(location.search).get('lang');
     let saved = null;
     try{ saved = localStorage.getItem('digitatex_lang'); }catch(e){}
-    const nav = (navigator.language || 'en').slice(0,2).toLowerCase();
-    return [urlLang, saved, nav].find(l => l && i18n[l]) || 'en';
+    /* El idioma del navegador ya no decide nada, y es a proposito.
+
+       Mientras decidia, digitatex.com servia un idioma distinto a cada
+       visitante en la MISMA direccion — y esa direccion se declara a Google
+       como la version italiana, tanto en el canonical como en el x-default.
+       Prometer italiano en una URL y servir ingles en ella es justo lo que
+       rompe un grupo hreflang.
+
+       Ahora la raiz es italiana para todo el mundo. El que quiera otro idioma
+       lo elige en el conmutador, y a partir de ahi se le recuerda. Que es lo
+       que pidio el dueño: italiano por defecto, los otros tres como opcion. */
+    return [urlLang, saved].find(l => l && i18n[l]) || 'it';
   }
 
   /* ============================================================
@@ -3190,6 +3303,25 @@
      y estos no lo son. Llevan su etiqueta de producto propio o colaboracion. */
   let systemsCache = [];
 
+  /* El estado de cada producto, por nombre.
+
+     La tabla `systems` no tiene columna para esto y no se puede añadir desde
+     aqui, asi que los dos productos que existen hoy se reconocen por su
+     nombre. No es elegante, pero la alternativa era peor: el texto generico
+     decia "en produccion, en uso por empresas reales" para todo lo que se
+     publicara, y de Trimm no era verdad —no tiene clientes todavia— ni de
+     Logiciel, que esta configurando al primero. Decir en la web algo que no es
+     cierto cuesta mas caro que un `if`.
+
+     Lo que no se reconozca cae en el generico, que ahora si es verdad para
+     cualquier cosa: "producto terminado, no un prototipo". */
+  function estadoDe(nombre){
+    const n = String(nombre || '').toLowerCase();
+    if(n.includes('trimm'))    return { s: t('sys_st_trimm_s'), d: t('sys_st_trimm_d') };
+    if(n.includes('logiciel')) return { s: t('sys_st_log_s'),   d: t('sys_st_log_d')   };
+    return { s: t('sys_g_m2s'), d: t('sys_g_m2') };
+  }
+
   function renderSystems(){
     const host = document.getElementById('system-list');
     const builtin = document.getElementById('system-builtin');
@@ -3204,6 +3336,7 @@
       const dominio = caseHost(item.site_url);
       const texto = item.note ? escapeHtml(item.note) : escapeHtml(t('sys_generic'));
       const etiqueta = item.kind === 'collab' ? t('sys_kind_collab') : t('sys_kind_own');
+      const estado = estadoDe(item.name);
       return '<article class="case-row' + flip + '">' +
         '<div class="case-visual reveal rv-depth">' +
           '<div class="own-card">' +
@@ -3226,7 +3359,7 @@
           '<p class="case-copy">' + texto + '</p>' +
           '<div class="case-meta">' +
             '<div><strong>' + escapeHtml(t('sys_g_m1s')) + '</strong><span>' + escapeHtml(t('sys_g_m1')) + '</span></div>' +
-            '<div><strong>' + escapeHtml(t('sys_g_m2s')) + '</strong><span>' + escapeHtml(t('sys_g_m2')) + '</span></div>' +
+            '<div><strong>' + escapeHtml(estado.s) + '</strong><span>' + escapeHtml(estado.d) + '</span></div>' +
           '</div>' +
           (item.site_url
             ? '<a href="' + escapeHtml(item.site_url) + '" target="_blank" rel="noopener" class="case-link">' +
@@ -3643,7 +3776,12 @@
       overlay.classList.remove('open'); document.body.style.overflow='';
       if(location.hash === '#admin') history.replaceState(null,'',location.pathname + location.search);
     }
-    document.getElementById('admin-link').addEventListener('click', (e)=>{ e.preventDefault(); openPanel(); });
+    /* El enlace del pie ya no se enseña. Si no esta, no se engancha nada: sin
+       esta guarda, getElementById devolvia null, addEventListener reventaba y
+       se llevaba por delante todo lo que quedaba del guion. El panel sigue
+       abriendose por #admin, mas abajo. */
+    const enlacePanel = document.getElementById('admin-link');
+    if(enlacePanel) enlacePanel.addEventListener('click', (e)=>{ e.preventDefault(); openPanel(); });
 
     /* Entrada rapida al panel: mantener pulsado el logotipo un segundo largo.
        El enlace del pie sigue estando, pero queda al final de trece pantallas y
@@ -4237,6 +4375,13 @@
 
   const quoteForm = document.getElementById('quote-form');
 
+  /* Un <a> dentro de un <label> hereda el clic: pulsar "Privacy Policy" abria
+     la pagina Y marcaba la casilla de paso. Marcar el consentimiento sin
+     querer es justo lo que la casilla existe para evitar. */
+  document.querySelectorAll('.privacy-opt a').forEach(enlace=>{
+    enlace.addEventListener('click', (e)=> e.stopPropagation());
+  });
+
   function calcEstimate(){
     const typeInput = quoteForm.querySelector('input[name="project_type"]:checked');
     if(!typeInput) return null;
@@ -4341,6 +4486,17 @@
       if(!name || (!email && !phone)){
         status.textContent = tt.errContact;
         status.className = 'form-status err';
+        return;
+      }
+
+      /* Sin consentimiento no se envia nada. Se comprueba aqui y no con el
+         `required` del navegador porque el formulario es novalidate: su aviso
+         sale en el idioma del sistema, que puede no ser el de la pagina. */
+      const consenso = document.getElementById('q_privacy');
+      if(consenso && !consenso.checked){
+        status.textContent = t('q_privacy_err');
+        status.className = 'form-status err';
+        consenso.focus();
         return;
       }
 
@@ -4544,7 +4700,12 @@
   }
 
   // El idioma se aplica el primero, pero ya con todo el script cargado.
-  arrancar('idioma', ()=>{ const l = pickInitialLang(); if(l !== 'en') applyLang(l); });
+  /* Se aplica siempre, sin excepciones. Antes se saltaba cuando el idioma
+     elegido era el ingles, porque el ingles era el que venia escrito en el
+     HTML. Ahora el que viene escrito es el italiano, y saltarse la pasada
+     dejaria al visitante ingles leyendo italiano. Aplicar siempre cuesta una
+     pasada por el DOM y se acabaron los casos raros. */
+  arrancar('idioma', ()=>{ applyLang(pickInitialLang()); });
   arrancar('palabras', splitScrollWords);
   arrancar('botones', dropButtons);
   arrancar('maquetas', initMockupPop);
